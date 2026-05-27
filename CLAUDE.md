@@ -5,6 +5,51 @@
 - **Domain:** `koushik.io` — `public/CNAME`. Do not change.
 - **Images:** `images: { unoptimized: true }` in `next.config.ts` — required for static export.
 
+## Video Files — Rules (READ BEFORE TOUCHING VIDEOS)
+
+Videos are an important part of the portfolio. They live in git but MUST be compressed before committing.
+
+### Hard limits
+- **GitHub hard limit: 100MB per file.** Files over 100MB are rejected at push time.
+- **GitHub recommended max: 50MB.** Files between 50–100MB trigger a warning and can corrupt the remote pack store, requiring full repo recreation. **Stay under 50MB per video.**
+- **Target: under 15MB per video** — keeps the repo lean and avoids pack issues.
+
+### Directory structure
+- `videos/` — raw source files (large, gitignored). Keep originals here.
+- `public/videos/` — compressed files only. These go to git and deploy.
+
+### Always compress before committing
+```bash
+# Compress to 1080p 60fps H.264 (typical result: 6–15MB)
+ffmpeg -y -i videos/source.mp4 \
+  -vf "scale=-2:1080" -r 60 \
+  -c:v libx264 -crf 30 -preset slow -an \
+  -movflags +faststart \
+  public/videos/output.mp4
+
+# Extract poster frame at 2s
+ffmpeg -y -i videos/source.mp4 \
+  -ss 2 -vframes 1 -vf "scale=-2:1080" -update 1 \
+  public/videos/output-poster.jpg
+```
+
+### Codec rules
+- **MP4 only (H.264).** Do not create or commit WebM files — VP9 is larger than H.264 for fast-motion/particle content.
+- No audio tracks (`-an` flag always).
+- `+faststart` flag always — enables streaming before full download.
+
+### Pre-commit size check — MANDATORY
+Always run this before `git add` on any video:
+```bash
+ls -lh public/videos/
+```
+If any file is over 50MB, compress further (raise CRF to 33–35, or drop to 720p) before proceeding.
+
+### What NOT to do
+- Never `git add videos/` — source files are gitignored for a reason.
+- Never commit a file over 50MB. Even if the push succeeds, it can corrupt GitHub's remote pack store and require deleting and recreating the repository (this happened — it cost an hour).
+- Never serve WebM alongside MP4 for these videos — MP4 is universally supported and smaller.
+
 ## Stack
 - Next.js 15 App Router, TypeScript, Tailwind CSS, `motion/react` (NOT framer-motion)
 - Fonts: **Geist Sans + Geist Mono** via `geist` npm package. **No Google Fonts CDN.**
