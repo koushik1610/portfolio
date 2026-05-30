@@ -116,19 +116,19 @@ export function AskAIFloat() {
               aria-label="Ask AI about Koushik"
               className="widget-shine"
               style={{
-                background: "linear-gradient(160deg, rgba(22,22,30,0.97) 0%, rgba(12,12,18,0.95) 100%)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "linear-gradient(155deg, rgba(48,44,66,0.99) 0%, rgba(22,20,36,0.99) 25%, rgba(10,8,18,1) 55%, rgba(20,18,32,0.99) 80%, rgba(36,32,52,0.99) 100%)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                border: "1px solid rgba(255,255,255,0.13)",
                 borderRadius: "14px",
                 padding: "0.65rem 1.1rem",
                 fontFamily: "var(--font-geist-mono), monospace",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-                gap: "0.25rem",
+                gap: "0.3rem",
                 whiteSpace: "nowrap",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07)",
+                boxShadow: "0 16px 48px rgba(0,0,0,0.8), 0 4px 16px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.5)",
                 cursor: "pointer",
                 pointerEvents: "auto",
                 userSelect: "none",
@@ -143,7 +143,7 @@ export function AskAIFloat() {
                   <GeminiIcon size={15} />
                   <PerplexityIcon size={15} />
                 </span>
-                <span style={{ fontSize: "0.8rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.92)", fontWeight: 500 }}>ASK AI ABOUT ME</span>
+                <span style={{ fontSize: "0.82rem", letterSpacing: "0.09em", color: "rgba(255,255,255,0.93)", fontWeight: 600 }}>ASK AI ABOUT ME</span>
               </div>
               <span style={{ fontSize: "0.67rem", letterSpacing: "0.07em", color: "rgba(255,255,255,0.38)", paddingLeft: "0.1rem" }}>
                 click to scroll down
