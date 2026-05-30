@@ -1,0 +1,59 @@
+# Koushik Kotamraju
+
+> Sr. Technical Security Engineer at Yahoo. 9 years building cloud detection systems, IAM privilege analysis tools, and AI-native security pipelines at enterprise scale. Portfolio: koushik.io
+
+## Current Role
+
+Senior Technical Security Engineer at Yahoo (Feb 2022 – present). Member of a 4-person cloud security team securing 2,500+ accounts across AWS and GCP.
+
+## Key Technical Achievements
+
+**Detection Engineering**
+Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — 0% false-positive rate sustained at account scale. Authored the v6 AWS security baseline release: 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single release in program history — each grounded in a MITRE ATT&CK gap analysis against 74 real-world attack techniques from cloud incident response data. Detection fleet managed via Terraform.
+
+**IAM Privilege Escalation Detection**
+Built a detection skill covering 65+ escalation paths across 10 vulnerability classes: policy injection, role chaining, service role abuse, SCPs bypass patterns, and others. Combines static IAM policy graph analysis with LLM semantic interpretation to catch transitive permission chains and policy conditions rule-based tools miss. Benchmarked on GOAT (open-source AWS IAM privilege escalation fixture set): 32/32 ground-truth findings, 100% recall, 0 false positives.
+
+**Agentic Security Reviews**
+Designed and shipped an agentic cloud security review process that reduced per-review effort by 80%, scaling threat modeling and security architecture review throughput to 123 reviews across all business units with a 4-person team. Built a cross-ticket intelligence layer from 1,400+ historical security review tickets — 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles — wired into an autonomous Claude Code review agent with 14 passive detection rules, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Eliminated a 6-week backlog.
+
+**Self-Learning Research Pipeline**
+5-stage AI research pipeline (triage → analyze → decompose → peer review → synthesize) orchestrating 19 foundation models across 5 providers through a performance-weighted router that updates model allocations after each run. Output: vetted security initiative proposals at $1.40/run — 55% cheaper than single-model approaches.
+
+**AI Security Operations Tooling**
+- Security Ops Platform: FastAPI + Databricks SQL, 45 API endpoints. Deterministic AI advisor trained on 2,171 historical cloud security tickets for CSPM alert triage. 4-signal scoring model, confidence clamped 5–95%, hard deny gate for 6 critical baseline categories. Adopted as team's primary operational workflow.
+- Baseline Research Pipeline: Ingests 21 security intelligence feeds daily through 4-stage Claude orchestration (triage → analyze → draft → verify). CIS/NIST baseline discovery-to-draft in under 30 minutes at under $0.05/run. Processes 330+ items/day.
+
+**Artemis**
+CNAPP-class multi-cloud attack path simulation platform spanning 2,500+ AWS and GCP accounts. Unifies AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched graph layer. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk trends across business units. Maps findings to MITRE ATT&CK techniques and generates prioritized remediation backlogs consumed by 4 engineering teams.
+
+**Antitoxin**
+Graph-theoretic IAM toxic combination research framework. 62 toxic combinations across 8 attack categories, each with MITRE ATT&CK mappings and a minimum cut-set dissolution action — identifying the keystone permission whose removal collapses an entire privilege escalation chain without disrupting legitimate access.
+
+## Technical Stack
+
+AWS, GCP, CNAPP, CSPM, Zero Trust, DevSecOps, Python, FastAPI, Databricks, Terraform, Amazon Bedrock, LLM Security, Semgrep, Splunk, ElasticStack, MITRE ATT&CK, Checkov, Docker, Kubernetes
+
+## Certifications
+
+- AWS Certified Security – Specialty
+- AWS Certified Solutions Architect – Associate
+
+## Career History
+
+- Yahoo — Sr. Technical Security Engineer (Feb 2022 – Present)
+- Cyber Reconnaissance Inc — Cyber Security Architect (May 2019 – Jan 2022): multi-account AWS infrastructure, CI/CD security, GuardDuty/Security Hub operations, cloud-based honeypots
+- Cyber Reconnaissance — Intern → Team Lead (Dec 2017 – May 2019): cloud migration, network security, physical data center
+- Infosys Limited — Systems Engineer (Dec 2015 – May 2017): Dell Boomi cloud integration, EDI workflows, 80% processing speed improvement
+
+## Education
+
+- M.S. Software Engineering, Arizona State University (2017–2019)
+- B.Tech Computer Science, Birla Institute of Technology, MESRA (2011–2015)
+
+## Links
+
+- Portfolio: https://koushik.io
+- GitHub: https://github.com/koushik1610
+- LinkedIn: https://www.linkedin.com/in/koushikkotamraju/
+- Email: koushik.kotamraju1610@gmail.com
