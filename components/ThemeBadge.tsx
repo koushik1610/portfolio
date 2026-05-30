@@ -21,11 +21,6 @@ export default function ThemeBadge() {
   return (
     <div
       style={{
-        position: "fixed",
-        top: "72px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 99,
         background: "rgba(0,0,0,0.8)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",

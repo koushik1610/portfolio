@@ -11,8 +11,21 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <ThemeBadge />
-      <AskAIFloat />
+      {/* Top-right fixed stack: theme badge above, Ask AI below */}
+      <div style={{
+        position: "fixed",
+        top: "1rem",
+        right: "1rem",
+        zIndex: 100,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        gap: "0.4rem",
+        pointerEvents: "none",
+      }}>
+        <ThemeBadge />
+        <AskAIFloat />
+      </div>
       <main>
         <Hero />
         <Experience />
