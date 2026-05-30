@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 const LLMS_URL = "https://koushik.io/llms.txt";
 
@@ -88,47 +89,71 @@ const TOOLS = [
 // ── Floating button ────────────────────────────────────────────────────────────
 
 export function AskAIFloat() {
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    const el = document.querySelector("#ask-ai");
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setShow(!entry.isIntersecting),
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <motion.div
-      style={{ position: "fixed", bottom: "2rem", right: "2rem", zIndex: 50 }}
-      animate={{ y: [0, -7, 0] }}
-      transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <motion.button
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.96 }}
-        onClick={() =>
-          document.querySelector("#ask-ai")?.scrollIntoView({ behavior: "smooth" })
-        }
-        aria-label="Ask AI about Koushik"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.55rem",
-          padding: "0.6rem 1.05rem 0.6rem 0.8rem",
-          background: "#fff",
-          border: "1px solid #e0e0e0",
-          borderRadius: "100px",
-          cursor: "pointer",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.07)",
-          fontSize: "0.78rem",
-          fontWeight: 600,
-          color: "#111",
-          letterSpacing: "-0.01em",
-          fontFamily: "inherit",
-          whiteSpace: "nowrap",
-          lineHeight: 1,
-        }}
-      >
-        <span style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-          <ClaudeIcon size={16} />
-          <ChatGPTIcon size={16} />
-          <GeminiIcon size={16} />
-          <PerplexityIcon size={16} />
-        </span>
-        <span>Ask AI about me</span>
-      </motion.button>
-    </motion.div>
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.88 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.88 }}
+          transition={{ duration: 0.2 }}
+        >
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() =>
+                document.querySelector("#ask-ai")?.scrollIntoView({ behavior: "smooth" })
+              }
+              aria-label="Ask AI about Koushik"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.55rem",
+                padding: "0.6rem 1.05rem 0.6rem 0.8rem",
+                background: "#fff",
+                border: "1px solid #e0e0e0",
+                borderRadius: "100px",
+                cursor: "pointer",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.07)",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                color: "#111",
+                letterSpacing: "-0.01em",
+                fontFamily: "inherit",
+                whiteSpace: "nowrap",
+                lineHeight: 1,
+                pointerEvents: "auto",
+              }}
+            >
+              <span style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                <ClaudeIcon size={16} />
+                <ChatGPTIcon size={16} />
+                <GeminiIcon size={16} />
+                <PerplexityIcon size={16} />
+              </span>
+              <span>Ask AI about me</span>
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
