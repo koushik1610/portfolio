@@ -178,10 +178,13 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
           </p>
           {/* Decorative display headline — aria-hidden so sr-only h1 is the sole page title */}
           <div aria-hidden="true" className="ath-headline">
+            Koushik Kotamraju
+          </div>
+          <p className="ath-tagline" aria-hidden="true">
             Beyond noise,{" "}
             <em>I build</em>
             {" "}what holds.
-          </div>
+          </p>
           <p className="ath-hero-desc">{BIO}</p>
           <a href="#work" className="ath-hero-cta">
             View Work
