@@ -13,6 +13,8 @@
 
 <h3 align="center">koushik.io</h3>
 
+  <img src="https://media.giphy.com/media/7j2hfyeVcDtf2/giphy.gif" alt="bird animation" width="200" />
+
   <p align="center">
     Personal portfolio for Koushik Kotamraju — Sr. Security Engineer building AI-native security platforms at enterprise scale. Features 20+ rotating visual themes, each a full layout redesign.
     <br />
