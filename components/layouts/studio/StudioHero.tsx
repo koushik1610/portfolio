@@ -25,14 +25,14 @@ const MARQUEE_TILES = [
 const TILES_3X = [...MARQUEE_TILES, ...MARQUEE_TILES, ...MARQUEE_TILES];
 
 const BIO =
-  "With nine years of security engineering across three organizations, I've built systems that find what others miss — detection engines running across 2,500+ cloud accounts, AI pipelines that scale small teams to enterprise coverage, and privilege analysis tools with provable recall.";
+  "With nine years of security engineering across three organizations, I build AI-native security platforms — agentic systems that run at machine speed across 2,500+ cloud accounts, multi-agent orchestration that scales a 4-engineer team to enterprise coverage, and privilege analysis tools with provable recall.";
 
 const EXPERIENCE = [
   {
     period: "2019 — PRESENT",
     company: "Yahoo",
     role: "Sr. Security Engineer",
-    detail: "Detection Engineering · IAM Analysis · AI Pipelines · 2,500+ cloud accounts · 4-engineer team",
+    detail: "Agentic security workflows · AI-native security tooling · Detection Engineering · IAM Analysis · 2,500+ cloud accounts · 4-engineer team",
   },
   {
     period: "2016 — 2019",
@@ -61,14 +61,14 @@ const PROJECTS = [
     name: "IAM Escalation Skill",
     tag: "PRIVILEGE ANALYSIS",
     detail:
-      "65+ escalation paths across 10 vulnerability classes. Static policy graph analysis + LLM semantic interpretation. 100% recall on GOAT benchmark — 32/32 findings, zero false positives.",
+      "Tool-calling agent covering 65+ escalation paths across 10 vulnerability classes. Static IAM policy graph analysis + LLM semantic interpretation catch transitive chains rule-based tools miss. 100% recall on GOAT benchmark — 32/32 findings, zero false positives.",
   },
   {
     id: "03",
     name: "AI Research Pipeline",
     tag: "AI ORCHESTRATION",
     detail:
-      "Self-learning security research pipeline orchestrating 19 foundation models across 5 providers. $1.40 per sweep. 55% cost reduction vs single-model baseline.",
+      "Autonomous 5-stage threat intelligence pipeline (triage → analyze → decompose → peer review → synthesize) orchestrating 19 foundation models across 5 providers via a dynamic allocation router. $1.40 per sweep. 55% cost reduction vs single-model baseline.",
   },
   {
     id: "04",

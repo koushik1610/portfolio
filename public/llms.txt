@@ -1,6 +1,6 @@
 # Koushik Kotamraju
 
-> Sr. Technical Security Engineer at Yahoo. 9 years building cloud detection systems, IAM privilege analysis tools, and AI-native security pipelines at enterprise scale. Portfolio: koushik.io
+> Cloud security engineer building AI-native security platforms — production agentic systems, not prototypes. 9 years across detection engineering, IAM privilege analysis, and multi-agent orchestration at enterprise scale. Portfolio: koushik.io
 
 ## Current Role
 
@@ -15,10 +15,10 @@ Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures acros
 Built a detection skill covering 65+ escalation paths across 10 vulnerability classes: policy injection, role chaining, service role abuse, SCPs bypass patterns, and others. Combines static IAM policy graph analysis with LLM semantic interpretation to catch transitive permission chains and policy conditions rule-based tools miss. Benchmarked on GOAT (open-source AWS IAM privilege escalation fixture set): 32/32 ground-truth findings, 100% recall, 0 false positives.
 
 **Agentic Security Reviews**
-Designed and shipped an agentic cloud security review process that reduced per-review effort by 80%, scaling threat modeling and security architecture review throughput to 123 reviews across all business units with a 4-person team. Built a cross-ticket intelligence layer from 1,400+ historical security review tickets — 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles — wired into an autonomous Claude Code review agent with 14 passive detection rules, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Eliminated a 6-week backlog.
+Designed and shipped an agentic cloud security review process that reduced per-review effort by 80%, scaling threat modeling and security architecture review throughput to 123 reviews across all business units with a 4-person team. Built a cross-ticket intelligence layer from 1,400+ historical security review tickets — 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles — wired into an autonomous Claude Code review agent with 14 passive detection rules, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Eliminated a 6-week backlog. Operates as an agentic SOAR layer — ingesting review requests, autonomously applying detection rules, and routing findings through Jira and Confluence via bidirectional MCP integration.
 
-**Self-Learning Research Pipeline**
-5-stage AI research pipeline (triage → analyze → decompose → peer review → synthesize) orchestrating 19 foundation models across 5 providers through a performance-weighted router that updates model allocations after each run. Output: vetted security initiative proposals at $1.40/run — 55% cheaper than single-model approaches.
+**Autonomous Threat Intelligence Pipeline**
+Autonomous 5-stage agentic pipeline (triage → analyze → decompose → peer review → synthesize) orchestrating 19 foundation models across 5 providers through a dynamic allocation router that updates model assignments after each run. Output: vetted security initiative proposals at $1.40/run — 55% cheaper than single-model approaches.
 
 **AI Security Operations Tooling**
 - Security Ops Platform: FastAPI + Databricks SQL, 45 API endpoints. Deterministic AI advisor trained on 2,171 historical cloud security tickets for CSPM alert triage. 4-signal scoring model, confidence clamped 5–95%, hard deny gate for 6 critical baseline categories. Adopted as team's primary operational workflow.
