@@ -32,7 +32,7 @@ Graph-theoretic IAM toxic combination research framework. 62 toxic combinations 
 
 ## Technical Stack
 
-AWS, GCP, CNAPP, CSPM, Zero Trust, DevSecOps, Python, FastAPI, Databricks, Terraform, Amazon Bedrock, LLM Security, Semgrep, Splunk, ElasticStack, MITRE ATT&CK, Checkov, Docker, Kubernetes
+AWS, GCP, CNAPP, CSPM, AI-SPM, Zero Trust, DevSecOps, Python, FastAPI, Databricks, Terraform, Amazon Bedrock, Multi-Agent Orchestration, LLM Security, Semgrep, Splunk, ElasticStack, MITRE ATT&CK, Checkov, Docker, Kubernetes
 
 ## Certifications
 
