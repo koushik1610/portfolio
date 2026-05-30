@@ -19,7 +19,7 @@ export default function Home() {
         zIndex: 100,
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-end",
+        alignItems: "stretch",
         gap: "0.4rem",
         pointerEvents: "none",
       }}>
