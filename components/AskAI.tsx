@@ -108,42 +108,44 @@ export function AskAIFloat() {
             transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
           >
             <motion.button
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
               onClick={() =>
                 document.querySelector("#ask-ai")?.scrollIntoView({ behavior: "smooth" })
               }
               aria-label="Ask AI about Koushik"
+              className="widget-shine"
               style={{
-                background: "rgba(255,255,255,0.95)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                border: "1px solid rgba(0,0,0,0.1)",
-                borderRadius: "12px",
-                padding: "0.5rem 1rem",
+                background: "linear-gradient(160deg, rgba(22,22,30,0.97) 0%, rgba(12,12,18,0.95) 100%)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "14px",
+                padding: "0.65rem 1.1rem",
                 fontFamily: "var(--font-geist-mono), monospace",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-                gap: "0.18rem",
+                gap: "0.25rem",
                 whiteSpace: "nowrap",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.07)",
                 cursor: "pointer",
                 pointerEvents: "auto",
                 userSelect: "none",
                 textAlign: "left",
+                width: "100%",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <span style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                  <ClaudeIcon size={14} />
-                  <ChatGPTIcon size={14} />
-                  <GeminiIcon size={14} />
-                  <PerplexityIcon size={14} />
+                  <ClaudeIcon size={15} />
+                  <ChatGPTIcon size={15} />
+                  <GeminiIcon size={15} />
+                  <PerplexityIcon size={15} />
                 </span>
-                <span style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#0a0a0a" }}>ASK AI ABOUT ME</span>
+                <span style={{ fontSize: "0.8rem", letterSpacing: "0.1em", color: "rgba(255,255,255,0.92)", fontWeight: 500 }}>ASK AI ABOUT ME</span>
               </div>
-              <span style={{ fontSize: "0.6rem", letterSpacing: "0.08em", color: "#888", paddingLeft: "0.1rem" }}>
+              <span style={{ fontSize: "0.67rem", letterSpacing: "0.07em", color: "rgba(255,255,255,0.38)", paddingLeft: "0.1rem" }}>
                 click to scroll down
               </span>
             </motion.button>
