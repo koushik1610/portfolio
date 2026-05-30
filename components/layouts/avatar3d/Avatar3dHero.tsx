@@ -306,32 +306,30 @@ export default function Avatar3dHero({ theme }: { theme: Theme }) {
         {/* Accessible page title — visually hidden, exposes h1 to assistive tech */}
         <h1 className="avt-sr-only">Koushik Kotamraju — Sr. Security Engineer</h1>
 
-        {/* Giant ghost heading — decorative, behind avatar, parallaxes up on scroll */}
-        <motion.div
-          className="avt-heading-wrap"
-          aria-hidden="true"
-          style={{ y: headingY, opacity: headingOpacity }}
-        >
-          <div className="avt-heading">
-            Hi, I&apos;m<br />Koushik
-          </div>
-        </motion.div>
+        {/* Two-column body: text left, avatar right */}
+        <div className="avt-hero-body">
+          {/* Left: heading + tagline + CTA */}
+          <motion.div
+            className="avt-hero-left"
+            style={{ y: headingY, opacity: headingOpacity }}
+          >
+            <div className="avt-heading">
+              Hi, I&apos;m<br />Koushik
+            </div>
+            <p className="avt-hero-desc">
+              sr. security engineer<br />
+              detection · IAM · AI pipelines
+            </p>
+            <a href="#projects" className="avt-discover-link">
+              View Work
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </motion.div>
 
-        {/* Avatar — magnetic, parallaxes slower than heading */}
-        <MagneticAvatar parallaxY={avatarY} />
-
-        {/* Bottom bar */}
-        <div className="avt-hero-bottom">
-          <p className="avt-hero-desc">
-            sr. security engineer<br />
-            detection · IAM · AI pipelines
-          </p>
-          <a href="#projects" className="avt-discover-link">
-            View Work
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
+          {/* Right: avatar */}
+          <MagneticAvatar parallaxY={avatarY} />
         </div>
       </section>
 
