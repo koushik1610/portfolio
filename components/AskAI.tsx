@@ -115,34 +115,37 @@ export function AskAIFloat() {
               }
               aria-label="Ask AI about Koushik"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.5rem 1rem",
                 background: "rgba(255,255,255,0.95)",
                 backdropFilter: "blur(8px)",
                 WebkitBackdropFilter: "blur(8px)",
                 border: "1px solid rgba(0,0,0,0.1)",
                 borderRadius: "12px",
-                cursor: "pointer",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05)",
-                fontSize: "0.7rem",
-                fontWeight: 500,
-                color: "#0a0a0a",
-                letterSpacing: "0.08em",
+                padding: "0.5rem 1rem",
                 fontFamily: "var(--font-geist-mono), monospace",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "0.18rem",
                 whiteSpace: "nowrap",
-                lineHeight: 1,
+                boxShadow: "0 2px 12px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05)",
+                cursor: "pointer",
                 pointerEvents: "auto",
+                userSelect: "none",
+                textAlign: "left",
               }}
             >
-              <span style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-                <ClaudeIcon size={18} />
-                <ChatGPTIcon size={18} />
-                <GeminiIcon size={18} />
-                <PerplexityIcon size={18} />
+              <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                <span style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                  <ClaudeIcon size={14} />
+                  <ChatGPTIcon size={14} />
+                  <GeminiIcon size={14} />
+                  <PerplexityIcon size={14} />
+                </span>
+                <span style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#0a0a0a" }}>ASK AI ABOUT ME</span>
+              </div>
+              <span style={{ fontSize: "0.6rem", letterSpacing: "0.08em", color: "#888", paddingLeft: "0.1rem" }}>
+                click to scroll down
               </span>
-              <span>Ask AI about me</span>
             </motion.button>
           </motion.div>
         </motion.div>
