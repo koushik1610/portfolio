@@ -181,9 +181,9 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
             Koushik Kotamraju
           </div>
           <p className="ath-tagline" aria-hidden="true">
-            Beyond noise,{" "}
-            <em>I build</em>
-            {" "}what holds.
+            I build the{" "}
+            <em>AI layer</em>
+            {" "}security was missing.
           </p>
           <p className="ath-hero-desc">{BIO}</p>
           <a href="#work" className="ath-hero-cta">
