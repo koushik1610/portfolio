@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+
+# Allow AI search agents to index and retrieve (user-initiated lookups)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Disallow AI training crawlers from using site content for model training
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+Sitemap: https://koushik.io/sitemap.xml
+
+# AI profile
+LLMs: https://koushik.io/llms.txt

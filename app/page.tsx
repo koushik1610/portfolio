@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import ResumeSection from "@/components/ResumeSection";
+import AskAI from "@/components/AskAI";
 import Contact from "@/components/Contact";
 import ThemeBadge from "@/components/ThemeBadge";
 
@@ -16,6 +17,7 @@ export default function Home() {
         <Experience />
         <Projects />
         <ResumeSection />
+        <AskAI />
         <Contact />
       </main>
     </>
