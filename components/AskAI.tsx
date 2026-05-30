@@ -5,25 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 const LLMS_URL = "https://koushik.io/llms.txt";
 
-// Key facts are embedded inline so AI tools don't need to fetch a URL.
-// Full machine-readable profile is also linked for tools that can fetch it.
-const PROMPT = `Here is Koushik Kotamraju's security engineering profile. Please give me a concise recruiter-style summary covering his technical background, key achievements, and what makes him stand out.
-
-== PROFILE ==
-Sr. Security Engineer at Yahoo (9 years experience). Member of a 4-person cloud security team securing 2,500+ cloud accounts across AWS and GCP.
-
-KEY ACHIEVEMENTS:
-- Detection Engineering: 200+ active Python/Lambda detection signatures, 0% false-positive rate at scale. Authored v6 AWS security baseline: 49 CIS-benchmarked controls, grounded in MITRE ATT&CK gap analysis against 74 real-world attack techniques.
-- IAM Privilege Escalation: 65+ escalation paths across 10 vulnerability classes. Benchmarked on GOAT: 32/32 findings, 100% recall, 0 false positives.
-- Agentic Security Reviews: Reduced per-review effort 80%. Scaled to 123 reviews with a 4-person team. Built from 1,400+ historical tickets — 1,767 knowledge nodes wired into an autonomous review agent with Jira + Confluence MCP integration.
-- AI Research Pipeline: 19 foundation models, 5 providers, performance-weighted router. Output: vetted security proposals at $1.40/run, 55% cheaper than single-model.
-- Artemis: CNAPP-class multi-cloud attack path simulation across 2,500+ accounts. Surfaces toxic IAM combos, crown-jewel exposure, MITRE ATT&CK-mapped findings.
-- Antitoxin: Graph-theoretic IAM toxic combination framework — 62 combinations, minimum cut-set dissolution for each.
-
-STACK: Python, AWS, GCP, Terraform, FastAPI, Databricks, Amazon Bedrock, MITRE ATT&CK, Splunk, Kubernetes
-CERTS: AWS Security Specialty, AWS Solutions Architect Associate
-FULL PROFILE: ${LLMS_URL}
-== END PROFILE ==`;
+const PROMPT = `I'm looking at Koushik Kotamraju's portfolio (koushik.io). Please read his full profile at ${LLMS_URL} and give me a concise summary of his technical background, key achievements, and what makes him stand out as a cloud security and AI security engineer.`;
 
 // ── Brand icons ────────────────────────────────────────────────────────────────
 
