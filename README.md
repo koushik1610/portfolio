@@ -57,8 +57,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![koushik.io][product-screenshot]](https://koushik.io)
-
 A personal portfolio that rotates through 20+ visually distinct themes — each one a full layout redesign with its own typography, color palette, animations, and feel. The theme badge in the top-right corner shows the active theme; click it to cycle to the next.
 
 **I-Themes** (custom bespoke layouts):
@@ -239,7 +237,6 @@ Project Link: [https://github.com/koushik1610/portfolio](https://github.com/kous
 [issues-url]: https://github.com/koushik1610/portfolio/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/koushikkotamraju
-[product-screenshot]: https://koushik.io/og-image.png
 
 [Next.js]: https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
