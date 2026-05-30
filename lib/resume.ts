@@ -4,9 +4,9 @@ export const certs = [
 ];
 
 export const stack = [
-  "AWS", "GCP", "CNAPP", "CSPM", "Zero Trust", "DevSecOps",
+  "AWS", "GCP", "CNAPP", "CSPM", "AI-SPM", "Zero Trust", "DevSecOps",
   "Python", "FastAPI", "Databricks", "Terraform",
-  "Amazon Bedrock", "LLM Security", "Semgrep",
+  "Amazon Bedrock", "Multi-Agent Orchestration", "LLM Security", "Semgrep",
   "Splunk", "ElasticStack", "MITRE ATT&CK",
   "Checkov", "Docker", "Kubernetes",
 ];
@@ -18,13 +18,13 @@ export const jobs = [
     period: "Feb 2022 – Present",
     current: true,
     bullets: [
-      "Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — maintaining a sustained 0% false-positive rate while adding net-new controls as the threat landscape evolves. The v6 AWS security baseline release shipped 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each grounded in a MITRE ATT&CK gap analysis against 74 real-world attack techniques from cloud incident response data. Detection fleet managed via Terraform-controlled infrastructure for reproducible, auditable deployment at scale.",
-      "Built an IAM privilege escalation detection skill covering 65+ escalation paths across 10 vulnerability classes — 100% recall (32/32 findings), 0% false positives on GOAT (open-source AWS IAM privilege escalation benchmark) fixtures. Layers static IAM policy graph traversal with LLM semantic interpretation to catch transitive permission chains and policy conditions rule-based tools cannot evaluate. Deployed via the internal security skills marketplace.",
-      "Designed and shipped an agentic cloud security review process that reduced per-review effort by 80% — scaling threat modeling and security architecture review throughput to 123 reviews across all business units with a 4-person team. Engineered a cross-ticket intelligence layer from 1,400+ historical security review tickets — 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles — wired into an autonomous review agent with 14 passive detection rules, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Established as the team's standard review methodology, eliminating a 6-week backlog.",
-      "Built a self-learning security research pipeline orchestrating 19 foundation models across 5 providers through a performance-weighted model router — generating 59 vetted initiative proposals at $1.40/run with 55% cost savings over single-model approaches.",
-      "Shipped a full-stack security operations platform (FastAPI + Databricks SQL, 45 API endpoints) automating cloud security ticket validation and alert suppression lifecycle management — adopted as the team's primary operational workflow. Deterministic heuristic AI advisor trained on 2,171 historical tickets, 4-signal scoring model with confidence clamped 5–95%, hard deny gate for 6 critical baseline categories.",
-      "Pioneered a graph-theoretic framework for IAM toxic combination dissolution — cataloguing 62 toxic combinations across 8 attack categories with MITRE ATT&CK mappings, and developing the minimum cut-set method that identifies the keystone permission whose removal collapses an entire privilege escalation chain without disrupting legitimate access.",
-      "Designed and shipped Artemis — a CNAPP-class multi-cloud attack path simulation platform spanning 2,500+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched graph layer. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk trends across business units; maps findings to MITRE ATT&CK techniques and generates prioritized remediation backlogs consumed by 4 engineering teams.",
+      "Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — sustaining a 0% false-positive rate at account scale while continuously expanding coverage as the threat landscape evolves. Authored the v6 AWS security baseline release: 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each grounded in a MITRE ATT&CK gap analysis against 74 real-world attack techniques sourced from cloud incident response data. Detection fleet deployed via Terraform-controlled infrastructure for reproducible, auditable rollout — enabling machine-speed detection and response across the full cloud account estate.",
+      "Architected an AI-native IAM audit agent — a production tool-calling skill that uses Boto3 to enumerate live AWS IAM configurations, traverses the privilege graph across 65+ escalation paths and 10 vulnerability classes, and applies LLM semantic reasoning to surface transitive permission chains and policy conditions that rule-based tools cannot evaluate. Generates risk-ranked remediation reports. Benchmarked against GOAT (open-source AWS IAM privilege escalation benchmark): 100% recall (32/32 findings), 0% false positives — eliminating the manual IAM review cycle.",
+      "Designed and shipped an agentic SOAR-style cloud security review platform that reduced per-review effort by 80% — scaling threat modeling and security architecture review throughput to 123 reviews across all business units with a 4-person team, eliminating a 6-week backlog. Engineered a cross-ticket intelligence layer from 1,400+ historical security review tickets — 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles — as the retrieval backbone for an autonomous review agent with 14 passive detection rules, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Established as the team's standard review methodology; scales security coverage without additional headcount.",
+      "Architected an autonomous threat intelligence pipeline using multi-agent orchestration across 19 foundation models and 5 providers — a performance-weighted model router dynamically assigns each stage (triage → analyze → decompose → peer review → synthesize) to the highest-performing model for that task, updating allocation weights after every run. Replaced a fully manual research process: 59 vetted security initiative proposals generated at $1.40/run — 55% cheaper than single-model approaches — with multi-persona peer review built into the evaluation chain.",
+      "Shipped a full-stack AI-augmented CSPM operations platform (FastAPI + Databricks SQL, 45 API endpoints) enabling autonomous alert triage and LLM-driven change request validation against policy baseline — adopted as the team's primary operational workflow. A deterministic AI advisor trained on 2,171 historical cloud security tickets powers a 4-signal scoring model (confidence clamped 5–95%) with a hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate; auto-validates security configuration changes and eliminates manual review cycles at scale.",
+      "Pioneered a graph-theoretic framework for AI-driven IAM toxic combination dissolution — cataloguing 62 toxic combinations across 8 attack categories with MITRE ATT&CK mappings, and developing the minimum cut-set method that identifies the keystone permission whose removal collapses an entire privilege escalation chain without disrupting legitimate access. Enables deterministic security controls for AI agents operating on IAM configurations, providing a policy-as-code enforcement foundation for auto-remediation workflows.",
+      "Designed and shipped Artemis — a CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,500+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched attack path graph. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk trends across business units; maps findings to MITRE ATT&CK techniques and generates prioritized AI-driven remediation backlogs consumed by 4 engineering teams — delivering AI-powered posture management at enterprise scale.",
     ],
   },
   {
@@ -70,23 +70,23 @@ export const projects = [
   {
     name: "Artemis",
     description:
-      "CNAPP-class multi-cloud attack path simulation platform spanning 2,500+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched graph layer. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk; maps to MITRE ATT&CK and generates prioritized remediation backlogs consumed by 4 engineering teams.",
+      "CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,500+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched attack path graph. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk; maps to MITRE ATT&CK and generates prioritized AI-driven remediation backlogs consumed by 4 engineering teams.",
     tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI", "Gemini", "BigQuery", "Databricks"],
     wip: false,
     link: null,
   },
   {
-    name: "Cloud Security Researcher",
+    name: "Autonomous Threat Intelligence Pipeline",
     description:
-      "Self-learning security research pipeline orchestrating 19 foundation models across 5 providers through a performance-weighted router. 5-stage multi-model evaluation (triage → analyze → decompose → peer review → synthesize). 59 vetted proposals generated at $1.40/run with 55% cost savings.",
-    tags: ["Python", "Multi-Model LLM", "OpenAI", "Anthropic", "Google", "Self-Learning Router"],
+      "Multi-agent orchestration pipeline across 19 foundation models and 5 providers with a performance-weighted router that autonomously assigns each stage (triage → analyze → decompose → peer review → synthesize) to the highest-performing model for that task. Replaced a fully manual research process: 59 vetted proposals generated at $1.40/run with 55% cost savings over single-model approaches.",
+    tags: ["Python", "Multi-Agent Orchestration", "OpenAI", "Anthropic", "Google", "Agentic Pipeline"],
     wip: false,
     link: null,
   },
   {
     name: "Security Ops Platform",
     description:
-      "Full-stack security operations platform (FastAPI + Databricks SQL) automating cloud security ticket validation. 45 API endpoints. Deterministic AI advisor trained on 2,171 historical tickets — 4-signal scoring, confidence clamped 5–95%, hard deny gate for 6 critical baselines.",
+      "AI-augmented CSPM operations platform (FastAPI + Databricks SQL, 45 API endpoints) enabling autonomous alert triage and LLM-driven change request validation against policy baseline. Deterministic AI advisor trained on 2,171 historical cloud security tickets — 4-signal scoring, confidence clamped 5–95%, hard deny gate for 6 critical baselines where auto-remediation is never appropriate.",
     tags: ["Python", "FastAPI", "Databricks", "Jira API", "Deterministic AI"],
     wip: false,
     link: null,
@@ -102,7 +102,7 @@ export const projects = [
   {
     name: "review-aws-iam-policies",
     description:
-      "Claude Code / Cursor security skill reviewing live AWS IAM configurations for 10 vulnerability classes and 65+ escalation paths. Benchmarked on GOAT (open-source AWS IAM privilege escalation benchmark) fixtures: 32 ground-truth findings, 100% recall, 0% false positives. Deployed via the internal security marketplace.",
+      "AI-native IAM audit agent — a production tool-calling skill using Boto3 to enumerate live AWS IAM configurations, traverse the privilege graph across 65+ escalation paths and 10 vulnerability classes, and apply LLM semantic reasoning to surface transitive chains rule-based tools miss. Generates risk-ranked remediation reports. Benchmarked on GOAT: 100% recall (32/32 findings), 0% false positives.",
     tags: ["Bash", "AWS CLI", "IAMOK", "LLM Semantic Analysis", "GOAT Benchmarking"],
     wip: false,
     link: null,
@@ -118,7 +118,7 @@ export const projects = [
   {
     name: "Security Review Workspace",
     description:
-      "AI-augmented cloud security review workstation turning Claude Code into a purpose-built review agent — 14 passive rules, 6 multi-step skills, 16 slash commands, MCP integration with Jira and Confluence. Backed by a 1,767-note Obsidian knowledge graph built from 1,400+ historical security review tickets across 11 security domains and 411 technology cards. 123 reviews conducted across all business units.",
+      "Agentic SOAR-style cloud security review platform — turns Claude Code into a purpose-built autonomous review agent with 14 passive detection rules, 6 multi-step skills, 16 slash commands, and MCP integration with Jira and Confluence. Backed by a 1,767-node knowledge graph from 1,400+ historical security review tickets across 11 security domains and 411 technology stacks. 123 reviews conducted across all business units; scales security coverage without additional headcount.",
     tags: ["Claude Code", "MCP", "Jira", "Obsidian", "Knowledge Graph", "Python"],
     wip: false,
     link: null,
@@ -126,7 +126,7 @@ export const projects = [
   {
     name: "Baseline Research Pipeline",
     description:
-      "Automated cloud security content pipeline ingesting 21 feeds daily through a 4-stage LLM pipeline (triage → analyze → draft → verify). Haiku handles triage, Sonnet+Opus draft CIS-aligned baseline documents in exact registry shape, and a programmatic verifier gates Slack delivery. Processes ~330 items/day, reducing baseline discovery-to-draft from days to minutes.",
+      "Autonomous threat intelligence ingestion agent using a 4-stage LLM-driven workflow (triage → analyze → draft → verify) across 21 security intelligence feeds daily. Haiku handles autonomous triage at volume; Sonnet+Opus draft CIS/NIST-aligned baseline documents in exact registry shape; a programmatic verifier gates Slack delivery. Processes ~330 items/day — reducing baseline discovery-to-draft from days to under 30 minutes at under $0.05/run.",
     tags: ["n8n", "Claude Haiku", "Claude Sonnet", "Slack Block Kit", "SHA-256 Dedup"],
     wip: false,
     link: null,
@@ -134,7 +134,7 @@ export const projects = [
   {
     name: "Security Intelligence Notifier",
     description:
-      "Weekly Jira triage bot for the cloud security team — classifies tickets for cloud infrastructure relevance using Claude CLI, performs deep security analysis with web research on flagged items, and posts structured attend/skip recommendations to Slack. Built from scratch in 5 commits with a keyword fallback for resilience.",
+      "Autonomous Jira triage agent for the cloud security team — LLM-driven workflow that classifies tickets for cloud infrastructure relevance using AI-assisted triage, performs deep security analysis with web research on flagged items, and posts structured attend/skip recommendations to Slack. Built from scratch in 5 commits with a deterministic keyword fallback for resilience.",
     tags: ["Python", "Claude CLI", "Jira REST API", "Slack Block Kit"],
     wip: false,
     link: null,

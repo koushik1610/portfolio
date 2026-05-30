@@ -7,33 +7,33 @@ import type { Theme } from "@/lib/themes";
 // ── Content ───────────────────────────────────────────────────────────────────
 
 const BIO =
-  "With nine years of security engineering across three organizations, I focus on detection at cloud account scale, IAM privilege analysis, and AI systems that give a small team genuine leverage over a large attack surface.";
+  "With nine years of security engineering across three organizations, I focus on detection at cloud account scale, IAM privilege analysis, and agentic security workflows — AI-native security tooling that gives a small team genuine leverage over a large attack surface.";
 
 const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "200+ active Python/Lambda signatures across our AWS estate. CIS-benchmarked baselines grounded in real MITRE ATT&CK technique coverage. Runtime error remediation, false positive root-causing, new control development.",
+    desc: "200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — sustaining a 0% false-positive rate while continuously expanding coverage. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
   },
   {
     num: "02",
     name: "IAM Privilege Analysis",
-    desc: "65+ privilege escalation paths across 10 vulnerability classes. Static policy graph analysis combined with LLM semantic interpretation. 100% recall on GOAT benchmark — 32/32 findings, zero false positives.",
+    desc: "AI-native IAM audit agent using Boto3 tool-calling to enumerate live AWS IAM configurations — traversing 65+ privilege escalation paths across 10 vulnerability classes with LLM semantic interpretation to surface transitive chains that rule-based tools miss. 100% recall on GOAT benchmark — 32/32 findings, zero false positives.",
   },
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-model orchestration across 19 foundation models from 5 providers. Security review agent backed by a 1,767-node knowledge graph built from 1,400+ historical tickets. 123 security reviews across all business units.",
+    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,767-node knowledge graph from 1,400+ historical tickets, serving as the autonomous review agent for 123 security reviews across all business units.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "Multi-cloud coverage across 2,500+ cloud accounts. Cross-cloud attack path simulation unifying GCP SCC and AWS Security Hub into a single AI-enriched data layer with crown-jewel exposure tracking.",
+    desc: "Multi-cloud coverage across 2,500+ AWS and GCP accounts. CNAPP-class attack path simulation unifying GCP SCC and AWS Security Hub into an AI-enriched graph layer with AI-augmented CSPM, crown-jewel exposure tracking, and toxic IAM combination trending. Zero Trust posture enforcement across the full cloud account estate.",
   },
   {
     num: "05",
     name: "Security Research",
-    desc: "Artemis: attack path simulation platform in active research. Antitoxin: graph-theoretic IAM toxic combination dissolution cataloguing 62 combinations across 8 attack categories with minimum cut-set remediation.",
+    desc: "Artemis: CNAPP-class multi-cloud attack path simulation platform — agentic pipeline mapping attack chains to dissolution playbooks. Antitoxin: graph-theoretic IAM privilege escalation analysis cataloguing 62 toxic combinations across 8 attack categories with minimum cut-set auto-remediation actions and policy-as-code output.",
   },
 ] as const;
 
@@ -41,34 +41,34 @@ const PROJECTS = [
   {
     id: "01",
     name: "Artemis",
-    desc: "Multi-cloud attack path simulation platform. GCP SCC + AWS Security Hub unified into a single AI-enriched data layer. Crown-jewel exposure, toxic combination trends, cross-cloud attack chains.",
+    desc: "CNAPP-class multi-cloud attack path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer via agentic pipeline. Crown-jewel exposure, toxic IAM combination trends, cross-cloud attack chains mapped to MITRE ATT&CK.",
     metric: "2,500+",
     metricLabel: "accounts unified",
     tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI"],
   },
   {
     id: "02",
-    name: "IAM Escalation Skill",
-    desc: "65+ privilege escalation paths across 10 vulnerability classes. Static policy graph analysis + LLM semantic interpretation. 100% recall on GOAT benchmark.",
+    name: "IAM Audit Agent",
+    desc: "AI-native IAM audit agent — Boto3 tool-calling to enumerate live AWS IAM configurations. 65+ escalation paths across 10 vulnerability classes. LLM semantic interpretation surfaces transitive chains. 100% recall on GOAT benchmark.",
     metric: "100%",
     metricLabel: "GOAT recall",
-    tags: ["IAM Analysis", "Graph Theory", "Python"],
+    tags: ["IAM Analysis", "Graph Theory", "Python", "Boto3"],
   },
   {
     id: "03",
-    name: "AI Research Pipeline",
-    desc: "Self-learning security research pipeline orchestrating 19 foundation models across 5 providers. Performance-weighted router that improves its own model selection over time.",
+    name: "Autonomous Threat Intelligence Pipeline",
+    desc: "Autonomous threat intelligence ingestion agent — multi-agent orchestration pipeline across 19 foundation models from 5 providers. Performance-weighted router delivering analyst-ready security proposals at $1.40/run. Replaced a fully manual weekly research process.",
     metric: "$1.40",
     metricLabel: "per research sweep",
-    tags: ["Python", "Claude", "Gemini", "GPT-4"],
+    tags: ["Python", "Multi-Agent Orchestration", "Claude", "Gemini", "GPT-4"],
   },
   {
     id: "04",
     name: "Detection Engine",
-    desc: "200+ active detection signatures. MITRE ATT&CK gap analysis against 74 real-world techniques from AWS CIRT incident data. Zero false positives across 1,500+ AWS accounts.",
+    desc: "200+ active detection signatures deployed via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis against 74 real-world techniques from cloud incident response data. Machine-speed detection and response — zero false positives at account scale.",
     metric: "200+",
     metricLabel: "active signatures",
-    tags: ["Python", "Lambda", "AWS", "MITRE ATT&CK"],
+    tags: ["Python", "Lambda", "AWS", "MITRE ATT&CK", "Terraform"],
   },
 ] as const;
 
