@@ -3,7 +3,6 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Instrument_Serif } from "next/font/google";
 import ThemeApplier from "@/components/ThemeApplier";
-import ThemeRotator from "@/components/ThemeRotator";
 import "./globals.css";
 
 const instrumentSerif = Instrument_Serif({
@@ -50,7 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
         <ThemeApplier />
         {children}
-        <ThemeRotator />
       </body>
     </html>
   );
