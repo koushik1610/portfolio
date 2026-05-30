@@ -28,48 +28,46 @@ export default function ThemeBadge() {
       onClick={rotate}
       title="Click to rotate theme"
       style={{
-        background: "rgba(0,0,0,0.82)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        border: "1px solid var(--accent)",
-        borderRadius: "10px",
-        padding: "0.45rem 1rem",
+        background: "rgba(255,255,255,0.95)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
+        border: "1px solid rgba(0,0,0,0.1)",
+        borderRadius: "12px",
+        padding: "0.5rem 1rem",
         fontFamily: "var(--font-geist-mono), monospace",
-        color: "var(--accent)",
-        letterSpacing: "0.12em",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: "0.2rem",
+        gap: "0.18rem",
         whiteSpace: "nowrap",
-        boxShadow: "0 0 20px rgba(0,0,0,0.6), 0 0 0 1px var(--border)",
+        boxShadow: "0 2px 12px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05)",
         cursor: "pointer",
         pointerEvents: "auto",
         userSelect: "none",
         textAlign: "left",
       }}
     >
-      {/* Top row: pulse dot + theme name + spin icon */}
       <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
         <span
           style={{
             width: "6px",
             height: "6px",
             borderRadius: "50%",
-            background: "var(--accent)",
+            background: "var(--accent, #818cf8)",
             display: "inline-block",
-            boxShadow: "0 0 8px var(--accent)",
+            boxShadow: "0 0 6px var(--accent, #818cf8)",
             animation: "dot-pulse 2s ease-in-out infinite",
             flexShrink: 0,
           }}
         />
-        <span style={{ fontSize: "0.68rem" }}>
-          THEME // {theme.name.toUpperCase()}
+        <span style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#0a0a0a" }}>
+          {theme.name.toUpperCase()}
         </span>
         <span
           style={{
-            fontSize: "0.9rem",
+            fontSize: "0.85rem",
             lineHeight: 1,
+            color: "#0a0a0a",
             display: "inline-block",
             transition: "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
             transform: spinning ? "rotate(360deg)" : "rotate(0deg)",
@@ -78,16 +76,8 @@ export default function ThemeBadge() {
           ↻
         </span>
       </div>
-      {/* Subtitle hint */}
-      <span
-        style={{
-          fontSize: "0.58rem",
-          letterSpacing: "0.1em",
-          opacity: 0.55,
-          paddingLeft: "0.1rem",
-        }}
-      >
-        CLICK TO ROTATE UI THEME
+      <span style={{ fontSize: "0.6rem", letterSpacing: "0.08em", color: "#888", paddingLeft: "0.1rem" }}>
+        click to rotate ui theme
       </span>
     </button>
   );
