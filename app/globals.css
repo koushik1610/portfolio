@@ -1432,79 +1432,41 @@ html[data-layout="avatar3d"] .avt-nav-link:focus-visible {
   border-radius: 2px;
 }
 
-/* Ghost heading — fills the upper hero, behind the avatar */
-html[data-layout="avatar3d"] .avt-heading-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+/* Two-column hero body: text left, avatar right */
+html[data-layout="avatar3d"] .avt-hero-body {
+  flex: 1;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 4rem;
-  pointer-events: none;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0 2.5rem 2rem;
   overflow: hidden;
+}
+
+html[data-layout="avatar3d"] .avt-hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.75rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+  z-index: 2;
 }
 
 html[data-layout="avatar3d"] .avt-heading {
   font-family: var(--font-instrument-serif), serif;
-  font-size: clamp(3.5rem, 14vw, 240px);
+  font-size: clamp(3.5rem, 10vw, 180px);
   font-weight: 400;
   font-style: italic;
   line-height: 1.0;
   letter-spacing: -0.02em;
-  text-align: center;
+  text-align: left;
   background: linear-gradient(170deg, #c8d8e4 0%, #7a9ab0 60%, #4a6a80 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
   user-select: none;
-}
-
-/* Avatar — magnetic, centered, bottom-anchored */
-html[data-layout="avatar3d"] .avt-avatar-wrap {
-  position: absolute;
-  z-index: 10;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  width: clamp(220px, 36vw, 520px);
-  cursor: crosshair;
-}
-
-html[data-layout="avatar3d"] .avt-avatar-img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: bottom center;
-  display: block;
-  mask-image: radial-gradient(
-    ellipse 72% 76% at 50% 50%,
-    black 20%,
-    rgba(0, 0, 0, 0.85) 40%,
-    rgba(0, 0, 0, 0.4) 62%,
-    transparent 80%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 72% 76% at 50% 50%,
-    black 20%,
-    rgba(0, 0, 0, 0.85) 40%,
-    rgba(0, 0, 0, 0.4) 62%,
-    transparent 80%
-  );
-}
-
-/* Bottom bar */
-html[data-layout="avatar3d"] .avt-hero-bottom {
-  position: absolute;
-  bottom: 1.75rem;
-  left: 0;
-  right: 0;
-  z-index: 60;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 0 2.5rem;
 }
 
 html[data-layout="avatar3d"] .avt-hero-desc {
@@ -1515,7 +1477,60 @@ html[data-layout="avatar3d"] .avt-hero-desc {
   color: #d7e2ea;
   line-height: 1.5;
   opacity: 0.85;
-  max-width: 240px;
+}
+
+/* Avatar — right column, bottom-anchored */
+html[data-layout="avatar3d"] .avt-avatar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  max-width: 50%;
+  cursor: crosshair;
+}
+
+html[data-layout="avatar3d"] .avt-avatar-img {
+  width: 100%;
+  max-width: clamp(220px, 38vw, 520px);
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+  mask-image: radial-gradient(
+    ellipse 80% 84% at 65% 54%,
+    black 22%,
+    rgba(0, 0, 0, 0.85) 42%,
+    rgba(0, 0, 0, 0.35) 63%,
+    transparent 80%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 84% at 65% 54%,
+    black 22%,
+    rgba(0, 0, 0, 0.85) 42%,
+    rgba(0, 0, 0, 0.35) 63%,
+    transparent 80%
+  );
+}
+
+@media (max-width: 768px) {
+  html[data-layout="avatar3d"] .avt-hero-body {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1.5rem 2rem;
+  }
+  html[data-layout="avatar3d"] .avt-hero-left {
+    padding-right: 0;
+    align-items: center;
+    text-align: center;
+  }
+  html[data-layout="avatar3d"] .avt-heading {
+    text-align: center;
+  }
+  html[data-layout="avatar3d"] .avt-avatar-wrap {
+    max-width: 80%;
+    width: 100%;
+    flex: unset;
+  }
 }
 
 html[data-layout="avatar3d"] .avt-discover-link {
