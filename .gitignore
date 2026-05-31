@@ -29,12 +29,22 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# private content (never commit)
+# claude context — local only, never commit
+CLAUDE.md
+
+# private content — never commit
 content.md
-linkedin-posts.md
-external-visibility-plan.md
-koushik-profile-council-analysis.md
 my-projects.md
+
+# career planning & council outputs — never commit
+koushik-dump/
+portfolio-positioning-may2026.md
+koushik-profile-council-analysis.md
+external-visibility-plan.md
+linkedin-posts.md
+linkedin-review.md
+resume-v1-impact.md
+resume-v2-technical.md
 
 # theme reference list (local only)
 REFERENCES.md
