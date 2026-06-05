@@ -94,7 +94,7 @@ export default function WTheme02Hero({ theme }: { theme: Theme }) {
     const splitH1 = SplitText.create(".w2-headline", {
       type: "words",
       mask: "words",
-      aria: "hidden",
+      aria: "none", // .w2-headline is already aria-hidden
     });
     gsap.from(splitH1.words, {
       yPercent: 105,
@@ -151,6 +151,7 @@ export default function WTheme02Hero({ theme }: { theme: Theme }) {
       scrollTrigger: {
         trigger: ".w2-expertise-section",
         start: "top 80%",
+        once: true,
       },
     });
 
@@ -164,6 +165,7 @@ export default function WTheme02Hero({ theme }: { theme: Theme }) {
       scrollTrigger: {
         trigger: ".w2-projects-section",
         start: "top 80%",
+        once: true,
       },
     });
   }, { scope: rootRef });
@@ -194,17 +196,19 @@ export default function WTheme02Hero({ theme }: { theme: Theme }) {
 
         {/* Left column */}
         <div id="w2-main" className="w2-hero-left">
+          {/* Name is the hero — this is a portfolio, the person is the subject */}
+          <p className="w2-name" aria-hidden="true">Koushik Kotamraju</p>
           <p className="w2-eyebrow" aria-hidden="true">
             Sr. Security Engineer · Yahoo Paranoids
           </p>
 
-          {/* Decorative display headline — aria-hidden; sr-only h1 is the real title */}
+          {/* Decorative tagline — aria-hidden; sr-only h1 is the real title */}
           <div
             id="w2-hero-heading"
             className="w2-headline"
             aria-hidden="true"
           >
-            Security at Yahoo&apos;s scale.
+            Security platforms at scale.
           </div>
 
           <p className="w2-sub">

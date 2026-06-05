@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -68,12 +68,37 @@ const STAT_TILES: StatTile[] = [
   },
 ];
 
+// Monoline SVG icons — keyed by EXPERTISE_COMPACT.icon
+const EXP_ICONS: Record<string, ReactNode> = {
+  shield: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />,
+  lock: (
+    <>
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </>
+  ),
+  cpu: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <rect x="9" y="9" width="6" height="6" />
+      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+    </>
+  ),
+  cloud: <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" />,
+  search: (
+    <>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m21 21-4.3-4.3" />
+    </>
+  ),
+};
+
 const EXPERTISE_COMPACT = [
-  { icon: "⚡", name: "Detection Engineering", brief: "222 sigs · 0% FP · 1,500+ accounts" },
-  { icon: "🔐", name: "IAM Privilege Analysis", brief: "65+ paths · 100% GOAT recall" },
-  { icon: "🤖", name: "AI Security Tooling", brief: "19 models · 1,767-node knowledge graph" },
-  { icon: "☁️", name: "Cloud Security Architecture", brief: "2,823 accounts · Zero Trust" },
-  { icon: "🔬", name: "Security Research", brief: "Artemis · Antitoxin · 62 toxic combos" },
+  { icon: "shield", name: "Detection Engineering", brief: "222 sigs · 0% FP · 1,500+ accounts" },
+  { icon: "lock", name: "IAM Privilege Analysis", brief: "65+ paths · 100% GOAT recall" },
+  { icon: "cpu", name: "AI Security Tooling", brief: "19 models · 1,767-node knowledge graph" },
+  { icon: "cloud", name: "Cloud Security Architecture", brief: "2,823 accounts · Zero Trust" },
+  { icon: "search", name: "Security Research", brief: "Artemis · Antitoxin · 62 toxic combos" },
 ] as const;
 
 const PROJECTS_BENTO = [
@@ -287,7 +312,20 @@ export default function WTheme05Hero({ theme }: { theme: Theme }) {
           <ul className="w5-expertise-list" role="list">
             {EXPERTISE_COMPACT.map((item) => (
               <li key={item.name} className="w5-expertise-item">
-                <span className="w5-exp-icon" aria-hidden="true">{item.icon}</span>
+                <span className="w5-exp-icon" aria-hidden="true">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {EXP_ICONS[item.icon]}
+                  </svg>
+                </span>
                 <div className="w5-exp-text">
                   <span className="w5-exp-name">{item.name}</span>
                   <span className="w5-exp-brief">{item.brief}</span>

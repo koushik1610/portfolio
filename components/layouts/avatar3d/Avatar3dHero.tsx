@@ -7,6 +7,7 @@ import {
   useTransform,
   useMotionValue,
   useSpring,
+  useReducedMotion,
   type MotionValue,
 } from "motion/react";
 import Image from "next/image";
@@ -35,7 +36,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — sustaining a 0% false-positive rate while continuously expanding coverage. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
+    desc: "222 active detection signatures across 1,500+ AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
   },
   {
     num: "02",
@@ -45,12 +46,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,767-node knowledge graph from 1,400+ historical tickets, serving as the autonomous review agent for 123 security reviews across all business units.",
+    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,767-node knowledge graph from 3,559 historical tickets, serving as the autonomous review agent for 123 security reviews across all business units.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "Multi-cloud coverage across 2,500+ AWS and GCP accounts. CNAPP-class attack path simulation unifying GCP SCC and AWS Security Hub into an AI-enriched graph layer with AI-augmented CSPM, crown-jewel exposure tracking, and toxic IAM combination trending. Zero Trust posture enforcement across the full cloud account estate.",
+    desc: "Multi-cloud coverage across 2,823 AWS and GCP accounts. CNAPP-class attack path simulation unifying GCP SCC and AWS Security Hub into an AI-enriched graph layer with AI-augmented CSPM, crown-jewel exposure tracking, and toxic IAM combination trending. Zero Trust posture enforcement across the full cloud account estate.",
   },
   {
     num: "05",
@@ -65,7 +66,7 @@ const PROJECTS = [
     name: "Artemis",
     category: "ATTACK PATH SIM",
     desc: "CNAPP-class multi-cloud attack path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer via agentic pipeline. Crown-jewel exposure, toxic IAM combination trends, cross-cloud attack chains mapped to MITRE ATT&CK.",
-    metric: "2,500+",
+    metric: "2,823+",
     metricLabel: "accounts unified",
     tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI", "BigQuery"],
   },
@@ -91,8 +92,8 @@ const PROJECTS = [
     id: "04",
     name: "Detection Engine",
     category: "DETECTION ENG",
-    desc: "200+ active detection signatures deployed via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis against 74 real-world techniques from cloud incident response data. Machine-speed detection and response — zero false positives at account scale.",
-    metric: "200+",
+    desc: "222 active detection signatures deployed via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis against 74 real-world techniques from cloud incident response data. Machine-speed detection and response — zero false positives at account scale.",
+    metric: "222",
     metricLabel: "active signatures",
     tags: ["Python", "Lambda", "AWS", "MITRE ATT&CK", "Terraform"],
   },
@@ -101,6 +102,7 @@ const PROJECTS = [
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function MagneticAvatar({ parallaxY }: { parallaxY: MotionValue<number> }) {
+  const reduce = useReducedMotion();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 120, damping: 18 });
@@ -109,8 +111,9 @@ function MagneticAvatar({ parallaxY }: { parallaxY: MotionValue<number> }) {
   return (
     <motion.div
       className="avt-avatar-wrap"
-      style={{ y: parallaxY }}
+      style={{ y: reduce ? 0 : parallaxY }}
       onMouseMove={(e) => {
+        if (reduce) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
@@ -122,7 +125,7 @@ function MagneticAvatar({ parallaxY }: { parallaxY: MotionValue<number> }) {
         mouseY.set(0);
       }}
     >
-      <motion.div style={{ x: springX, y: springY }}>
+      <motion.div style={{ x: reduce ? 0 : springX, y: reduce ? 0 : springY }}>
         <Image
           src="/my-3d-avatar.png"
           alt="Koushik Kotamraju 3D avatar"
@@ -145,9 +148,10 @@ function AnimatedWord({
   progress: MotionValue<number>;
   range: [number, number];
 }) {
-  const opacity = useTransform(progress, range, [0.15, 1]);
+  const reduce = useReducedMotion();
+  const opacityRaw = useTransform(progress, range, [0.15, 1]);
   return (
-    <motion.span className="avt-anim-word" style={{ opacity }}>
+    <motion.span className="avt-anim-word" style={{ opacity: reduce ? 1 : opacityRaw }}>
       {word}{" "}
     </motion.span>
   );
@@ -176,7 +180,12 @@ function AnimatedText({ text }: { text: string }) {
 
 const MARQUEE_SCROLL_RANGE = 2400;
 
+// Sticky project-card stack offsets (in rem)
+const CARD_STACK_BASE_REM = 7;
+const CARD_STACK_STEP_REM = 1.75;
+
 function ScrollMarquee() {
+  const reduce = useReducedMotion();
   const { scrollY } = useScroll();
   // Row 1 drifts right, row 2 drifts left as page scrolls
   const row1X = useTransform(scrollY, [0, MARQUEE_SCROLL_RANGE], [-160, 480]);
@@ -185,7 +194,7 @@ function ScrollMarquee() {
   return (
     <div className="avt-marquee-section" aria-hidden="true">
       <div className="avt-marquee-row-wrap">
-        <motion.div className="avt-marquee-row" style={{ x: row1X }}>
+        <motion.div className="avt-marquee-row" style={{ x: reduce ? 0 : row1X }}>
           {TILES_2X.map((tile, i) => (
             <div key={i} className="avt-tile">
               <span className="avt-tile-dot" />
@@ -195,7 +204,7 @@ function ScrollMarquee() {
         </motion.div>
       </div>
       <div className="avt-marquee-row-wrap">
-        <motion.div className="avt-marquee-row" style={{ x: row2X }}>
+        <motion.div className="avt-marquee-row" style={{ x: reduce ? 0 : row2X }}>
           {TILES_2X.map((tile, i) => (
             <div key={i} className="avt-tile">
               <span className="avt-tile-dot" />
@@ -239,6 +248,7 @@ function ProjectCard({
   project: (typeof PROJECTS)[number];
   index: number;
 }) {
+  const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -248,11 +258,18 @@ function ProjectCard({
   const scale = useTransform(scrollYProgress, [0.4, 1], [1, 0.94]);
   const opacity = useTransform(scrollYProgress, [0.6, 1], [1, 0.5]);
 
+  // Sticky-stack offset: each card pins slightly lower than the previous.
+  const stickyTop = `${CARD_STACK_BASE_REM + index * CARD_STACK_STEP_REM}rem`;
+
   return (
     <div ref={ref} className="avt-card-outer">
       <motion.article
         className="avt-card"
-        style={{ scale, opacity, top: `${7 + index * 1.75}rem` }}
+        style={{
+          scale: reduce ? 1 : scale,
+          opacity: reduce ? 1 : opacity,
+          top: stickyTop,
+        }}
         aria-label={`Project: ${project.name}`}
       >
         <div className="avt-card-top">
@@ -283,6 +300,7 @@ function ProjectCard({
 
 export default function Avatar3dHero({ theme }: { theme: Theme }) {
   void theme;
+  const reduce = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -290,10 +308,11 @@ export default function Avatar3dHero({ theme }: { theme: Theme }) {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
-    // "Hi, I'm Koushik" — words slide up with fade, warm personality entrance
+    // Name words slide up with fade, warm personality entrance.
+    // aria: "none" — .avt-heading is aria-hidden; the sr-only <h1> is the real title.
     const split = SplitText.create(".avt-heading", {
       type: "words",
-      aria: "auto",
+      aria: "none",
     });
     gsap.from(split.words, {
       autoAlpha: 0,
@@ -332,14 +351,14 @@ export default function Avatar3dHero({ theme }: { theme: Theme }) {
           {/* Left: heading + tagline + CTA */}
           <motion.div
             className="avt-hero-left"
-            style={{ y: headingY, opacity: headingOpacity }}
+            style={{ y: reduce ? 0 : headingY, opacity: reduce ? 1 : headingOpacity }}
           >
-            <div className="avt-heading">
-              Hi, I&apos;m<br />Koushik
+            <div className="avt-heading" aria-hidden="true">
+              Koushik<br />Kotamraju
             </div>
             <p className="avt-hero-desc">
-              sr. security engineer<br />
-              detection · IAM · AI pipelines
+              Sr. Security Engineer · Yahoo<br />
+              Detection · IAM · AI Security
             </p>
             <a href="#projects" className="avt-discover-link">
               View Work

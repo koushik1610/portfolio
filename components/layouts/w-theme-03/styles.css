@@ -664,3 +664,11 @@ html[data-layout="w3"] nav:not(.w3-nav) {
 #w3-contact {
   scroll-margin-top: 56px;
 }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.w3-root a:focus-visible,
+.w3-root button:focus-visible {
+  outline: 2px solid #58A6FF;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
