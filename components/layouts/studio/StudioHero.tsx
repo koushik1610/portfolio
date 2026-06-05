@@ -13,6 +13,7 @@ import Image from "next/image";
 import type { Theme } from "@/lib/themes";
 import CountUp from "@/components/CountUp";
 import { getCurrentStats } from "@/lib/stats";
+import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 
 const MARQUEE_TILES = [
   "Detection Engineering",
@@ -222,13 +223,34 @@ function ProjectCard({
 export default function StudioHero({ theme }: { theme: Theme }) {
   void theme;
   const heroRef = useRef<HTMLElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    // Editorial name reveal — "Koushik" then "Kotamraju" unmask upward from clip boundary
+    // type: "lines" preserves the <br /> split between "Koushik" and "Kotamraju"
+    const split = SplitText.create(".stu-name", {
+      type: "lines",
+      mask: "lines",
+      aria: "auto",
+    });
+    gsap.from(split.lines, {
+      yPercent: 110,
+      duration: 0.75,
+      stagger: 0.14,
+      ease: "power3.out",
+      delay: 0.1,
+    });
+  }, { scope: rootRef });
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end end"],
   });
 
   return (
-    <div className="stu-root">
+    <div className="stu-root" ref={rootRef}>
       {/* NAV */}
       <nav className="stu-nav" aria-label="Primary navigation">
         <span className="stu-nav-logo">KK</span>

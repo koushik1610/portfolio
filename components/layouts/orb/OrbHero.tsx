@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import type { Theme } from "@/lib/themes";
+import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 
 // ── Content ───────────────────────────────────────────────────────────────────
 
@@ -144,9 +145,39 @@ function VideoBackground() {
 
 export default function OrbHero({ theme }: { theme: Theme }) {
   void theme;
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const splitHeadline = SplitText.create(".ath-headline", {
+      type: "words",
+      mask: "words",
+      aria: "hidden",
+    });
+    const splitTagline = SplitText.create(".ath-tagline", {
+      type: "words",
+      aria: "hidden",
+    });
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.from(splitHeadline.words, {
+      yPercent: 110,
+      duration: 0.8,
+      stagger: 0.07,
+    })
+    .from(splitTagline.words, {
+      autoAlpha: 0,
+      y: 14,
+      duration: 0.5,
+      stagger: 0.05,
+    }, "-=0.5");
+  }, { scope: rootRef });
 
   return (
-    <div className="ath-root">
+    <div className="ath-root" ref={rootRef}>
       <a href="#ath-main" className="ath-skip">Skip to main content</a>
       <h1 className="ath-sr-only">Koushik Kotamraju — Sr. Security Engineer</h1>
 

@@ -11,6 +11,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import type { Theme } from "@/lib/themes";
+import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 
 // ── Content ───────────────────────────────────────────────────────────────────
 
@@ -283,6 +284,26 @@ function ProjectCard({
 export default function Avatar3dHero({ theme }: { theme: Theme }) {
   void theme;
   const heroRef = useRef<HTMLElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    // "Hi, I'm Koushik" — words slide up with fade, warm personality entrance
+    const split = SplitText.create(".avt-heading", {
+      type: "words",
+      aria: "auto",
+    });
+    gsap.from(split.words, {
+      autoAlpha: 0,
+      y: 22,
+      duration: 0.5,
+      stagger: 0.09,
+      ease: "power2.out",
+      delay: 0.05,
+    });
+  }, { scope: rootRef });
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -292,7 +313,7 @@ export default function Avatar3dHero({ theme }: { theme: Theme }) {
   const avatarY = useTransform(heroScroll, [0, 1], [0, -40]);
 
   return (
-    <div className="avt-root">
+    <div className="avt-root" ref={rootRef}>
       {/* ── SECTION 1: HERO ────────────────────────────────────────────────── */}
       <section id="about" className="avt-hero" ref={heroRef}>
         {/* Nav */}

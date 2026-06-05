@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "oracle" | "assembly" | "studio" | "avatar3d" | "aethera" | "orb";
+export type LayoutVariant = "oracle" | "assembly" | "studio" | "avatar3d" | "aethera" | "orb" | "w1" | "w2" | "w3" | "w4" | "w5";
 
 export interface ThemeContent {
   tagline: string;
@@ -94,6 +94,42 @@ export const themes: Theme[] = [
     },
     layout: "orb",
     content: { tagline: "Beyond noise, I build what holds.", bio: "Detection at scale. IAM analysis at depth. AI tooling that compounds.", cta: "View Work" },
+  },
+  // ── W-themes (added after existing 6, rotate after them) ─────────────────
+  {
+    name: "W-Cloud Native Pro",
+    id: "w-theme-01",
+    vars: { "--background": "#09090b", "--surface": "#18181b", "--surface-2": "#1f1f23", "--text-primary": "#fafafa", "--text-muted": "#71717a", "--accent": "#6366f1", "--accent-dim": "#4f46e5", "--border": "#27272a" },
+    layout: "w1",
+    content: { tagline: "Securing what the internet runs on.", bio: "AI-native platforms protecting 2,823 cloud accounts. Built for scale, built to last.", cta: "View Work" },
+  },
+  {
+    name: "W-Midnight Signal",
+    id: "w-theme-02",
+    vars: { "--background": "#020617", "--surface": "#0f172a", "--surface-2": "#1e293b", "--text-primary": "#f8fafc", "--text-muted": "#94a3b8", "--accent": "#818cf8", "--accent-dim": "#6366f1", "--border": "#1e293b" },
+    layout: "w2",
+    content: { tagline: "Security at Yahoo's scale.", bio: "AI-native platforms across 2,823 cloud accounts. Detection, IAM, and agentic security — production systems.", cta: "View Work" },
+  },
+  {
+    name: "W-Nexus Dark",
+    id: "w-theme-03",
+    vars: { "--background": "#0d1117", "--surface": "#161b22", "--surface-2": "#21262d", "--text-primary": "#e6edf3", "--text-muted": "#8b949e", "--accent": "#2f81f7", "--accent-dim": "#1f6feb", "--border": "#30363d" },
+    layout: "w3",
+    content: { tagline: "2,823 cloud accounts. 222 signatures. $1.40/run.", bio: "9 years building AI-native cloud security platforms at enterprise scale.", cta: "View Work" },
+  },
+  {
+    name: "W-Phantom Grid",
+    id: "w-theme-04",
+    vars: { "--background": "#080808", "--surface": "#111111", "--surface-2": "#1a1a1a", "--text-primary": "#f0f0f0", "--text-muted": "#5a5a5a", "--accent": "#ffffff", "--accent-dim": "#888888", "--border": "rgba(255,255,255,0.06)" },
+    layout: "w4",
+    content: { tagline: "Infrastructure. Precision. Security.", bio: "Yahoo · 2,823 cloud accounts · 9 years.", cta: "→ View Work" },
+  },
+  {
+    name: "W-Bento Dark",
+    id: "w-theme-05",
+    vars: { "--background": "#0a0a0a", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#fafafa", "--text-muted": "#71717a", "--accent": "#3ecf8e", "--accent-dim": "#6366f1", "--border": "rgba(255,255,255,0.07)" },
+    layout: "w5",
+    content: { tagline: "Sr. Security Engineer · Yahoo · 2026", bio: "AI-native platforms protecting 2,823 cloud accounts.", cta: "View Work" },
   },
 ];
 

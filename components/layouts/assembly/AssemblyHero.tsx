@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "motion/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import type { Theme } from "@/lib/themes";
 
 type Token = { t: string; c?: string };
@@ -200,9 +202,39 @@ const ANIMATE_FIRST = 40; // stagger first 40 lines, rest use whileInView
 
 export default function AssemblyHero({ theme }: { theme: Theme }) {
   void theme;
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    const tl = gsap.timeline({ defaults: { ease: "none" } });
+
+    // Binary scramble on window chrome title — feels like a disassembler parsing the binary
+    tl.to(".asm-chrome-title", {
+      duration: 1.4,
+      scrambleText: {
+        text: "koushik_kotamraju.asm — Disassembly View",
+        chars: "01 ",
+        revealDelay: 0.3,
+        speed: 0.4,
+      },
+    });
+
+    // Breadcrumb path resolves slightly after chrome
+    tl.to(".asm-toolbar", {
+      duration: 1.1,
+      scrambleText: {
+        text: "_experience › _yahoo_paranoids_2019 › .apply_now",
+        chars: "01 ._/>",
+        revealDelay: 0.2,
+        speed: 0.5,
+      },
+    }, "-=0.7");
+  }, { scope: containerRef });
 
   return (
-    <section id="about" className="asm-wrap">
+    <section id="about" className="asm-wrap" ref={containerRef}>
       {/* Window chrome */}
       <motion.div
         className="asm-window-chrome"
