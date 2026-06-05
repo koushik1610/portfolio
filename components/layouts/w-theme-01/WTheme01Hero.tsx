@@ -145,6 +145,7 @@ export default function WTheme01Hero({ theme }: { theme: Theme }) {
           scrollTrigger: {
             trigger: ".w1-stat-strip",
             start: "top 85%",
+            once: true,
           },
           onUpdate: function () {
             (node as HTMLElement).textContent = decimals
@@ -216,8 +217,11 @@ export default function WTheme01Hero({ theme }: { theme: Theme }) {
           {/* Pill badge */}
           <div className="w1-pill" aria-label="Current role">
             <span className="w1-pill-dot" aria-hidden="true" />
-            Sr. Security Engineer · Yahoo · 2026
+            Sr. Security Engineer · Yahoo
           </div>
+
+          {/* Name — the person, not the product */}
+          <p className="w1-hero-name" aria-hidden="true">Koushik Kotamraju</p>
 
           {/* Headline */}
           <h2 className="w1-hero-h1" aria-hidden="true">

@@ -136,7 +136,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 .w5-status-label {
   font-size: 12px;
   font-weight: 400;
-  color: #52525B;
+  color: #8A8A93;
   white-space: nowrap;
 }
 
@@ -396,7 +396,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 
 .w5-stat-sub {
   font-size: 11px;
-  color: #52525B;
+  color: #8A8A93;
   margin-top: 4px;
 }
 
@@ -446,7 +446,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
   font-family: "Geist Mono", "GeistMono", ui-monospace, monospace;
   font-size: 11px;
   font-weight: 400;
-  color: #3F3F46;
+  color: #71717A;
   letter-spacing: 0.04em;
 }
 
@@ -472,11 +472,13 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 }
 
 .w5-exp-icon {
-  font-size: 14px;
-  line-height: 1.4;
   flex-shrink: 0;
   width: 20px;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #818CF8;
+  margin-top: 1px;
 }
 
 .w5-exp-text {
@@ -498,7 +500,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 
 .w5-exp-brief {
   font-size: 11px;
-  color: #52525B;
+  color: #8A8A93;
   letter-spacing: 0.01em;
 }
 
@@ -604,7 +606,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 .w5-proj-metric-lbl {
   font-size: 10px;
   font-weight: 400;
-  color: #52525B;
+  color: #8A8A93;
   text-align: right;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -688,7 +690,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #3F3F46;
+  color: #71717A;
   margin: 0;
 }
 
@@ -740,7 +742,7 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 .w5-contact-social-link {
   font-size: 13px;
   font-weight: 400;
-  color: #52525B;
+  color: #8A8A93;
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -756,4 +758,12 @@ html[data-layout="w5"] nav:not(.w5-nav) {
 #w5-projects,
 #w5-contact {
   scroll-margin-top: 64px;
+}
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.w5-root a:focus-visible,
+.w5-root button:focus-visible {
+  outline: 2px solid #818CF8;
+  outline-offset: 2px;
+  border-radius: 3px;
 }

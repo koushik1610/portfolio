@@ -211,7 +211,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
           <article className="w3-stat-card" aria-label="2,823 cloud accounts">
             <div
               className="w3-stat-num w3-stat-num-accounts"
-              aria-live="polite"
+              aria-hidden="true"
             >
               0
             </div>
@@ -223,7 +223,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
           <article className="w3-stat-card" aria-label="222 active signatures">
             <div
               className="w3-stat-num w3-stat-num-sigs"
-              aria-live="polite"
+              aria-hidden="true"
             >
               0
             </div>
@@ -238,7 +238,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
           >
             <div
               className="w3-stat-num w3-stat-num-cost"
-              aria-live="polite"
+              aria-hidden="true"
             >
               $0.00
             </div>

@@ -166,6 +166,14 @@
 }
 
 /* H1 */
+.w1-hero-name {
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #F4F4F5;
+  margin: 0;
+}
+
 .w1-hero-h1 {
   font-size: clamp(40px, 6vw, 72px);
   font-weight: 700;
@@ -178,7 +186,7 @@
 .w1-hero-sub {
   font-size: 18px;
   font-weight: 400;
-  color: #71717A;
+  color: #8A8A93;
   line-height: 1.6;
   max-width: 520px;
   margin: 0 auto;
@@ -718,4 +726,12 @@
 #w1-expertise,
 #w1-contact {
   scroll-margin-top: 72px;
+}
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.w1-root a:focus-visible,
+.w1-root button:focus-visible {
+  outline: 2px solid #818CF8;
+  outline-offset: 2px;
+  border-radius: 3px;
 }

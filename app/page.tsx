@@ -16,7 +16,7 @@ export default function Home() {
         position: "fixed",
         top: "1rem",
         right: "1rem",
-        zIndex: 100,
+        zIndex: 10000,
         display: "flex",
         flexDirection: "column",
         alignItems: "stretch",

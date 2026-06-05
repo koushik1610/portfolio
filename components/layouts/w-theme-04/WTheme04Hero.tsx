@@ -95,7 +95,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
       const splitH1 = SplitText.create(".w4-headline", {
         type: "lines",
         mask: "lines",
-        aria: "auto",
+        aria: "none", // .w4-headline is already aria-hidden
       });
       gsap.from(splitH1.lines, {
         xPercent: -100,
@@ -132,6 +132,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
         scrollTrigger: {
           trigger: ".w4-section-a",
           start: "top 75%",
+          once: true,
         },
       });
       gsap.from(".w4-section-a .w4-stats-grid", {
@@ -142,6 +143,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
         scrollTrigger: {
           trigger: ".w4-section-a",
           start: "top 75%",
+          once: true,
         },
       });
 
@@ -154,6 +156,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
         scrollTrigger: {
           trigger: ".w4-section-b",
           start: "top 75%",
+          once: true,
         },
       });
       gsap.from(".w4-exp-row", {
@@ -165,6 +168,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
         scrollTrigger: {
           trigger: ".w4-section-b",
           start: "top 70%",
+          once: true,
         },
       });
 
@@ -178,6 +182,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
         scrollTrigger: {
           trigger: ".w4-section-c",
           start: "top 80%",
+          once: true,
         },
       });
     },
@@ -251,6 +256,9 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
           <p className="w4-label" aria-hidden="true">
             SR. SECURITY ENGINEER
           </p>
+
+          {/* Name — masthead; the person is the subject, not the slogan */}
+          <p className="w4-name" aria-hidden="true">Koushik Kotamraju</p>
 
           {/* Display headline — aria-hidden; sr-only h1 is the real title */}
           <div
