@@ -1,0 +1,666 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   W-Theme-03 — "Nexus Dark" layout variant: w3
+   Concept: STATS-AS-HERO — three oversized metric cards appear above the fold.
+   Name/title appear below the stats. GitHub Ink palette. Data-forward.
+
+   All rules scoped to .w3-* (html[data-layout="w3"] is set on <html> by ThemeApplier)
+   Color tokens hardcoded — no CSS custom properties used
+   Mobile-first, breakpoints at 480px, 768px, and 1024px
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Hide global nav for this self-contained layout ──────────────────────── */
+
+html[data-layout="w3"] nav:not(.w3-nav) {
+  display: none !important;
+}
+
+/* ── Root ─────────────────────────────────────────────────────────────────── */
+
+.w3-root {
+  background-color: #0d1117;
+  color: #e6edf3;
+  font-family: "Geist", "Geist Sans", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Skip link (accessibility) ────────────────────────────────────────────── */
+
+.w3-skip {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  background: #2f81f7;
+  color: #e6edf3;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.w3-skip:focus {
+  top: 16px;
+}
+
+/* ── Navigation ───────────────────────────────────────────────────────────── */
+
+.w3-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 64px;
+  background: rgba(13, 17, 23, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #30363d;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .w3-nav {
+    padding: 14px 24px;
+  }
+}
+
+.w3-nav-logo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e6edf3;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.w3-nav-logo:hover {
+  color: #2f81f7;
+  transition: color 0.2s ease;
+}
+
+.w3-nav-links {
+  display: none;
+  gap: 28px;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .w3-nav-links {
+    display: flex;
+  }
+}
+
+.w3-nav-link {
+  font-size: 13px;
+  font-weight: 400;
+  color: #8b949e;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+
+.w3-nav-link:hover {
+  color: #e6edf3;
+}
+
+.w3-nav-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .w3-nav-status {
+    display: none;
+  }
+}
+
+.w3-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3fb950;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(63, 185, 80, 0.6);
+}
+
+.w3-status-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #8b949e;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* ── Stats hero section (above fold) ─────────────────────────────────────── */
+
+.w3-stats-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 64px 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .w3-stats-hero {
+    padding: 100px 24px 0;
+  }
+}
+
+/* ── Stat cards grid ──────────────────────────────────────────────────────── */
+
+.w3-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .w3-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .w3-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Individual stat card ─────────────────────────────────────────────────── */
+
+.w3-stat-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 40px 32px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.w3-stat-card:hover {
+  border-color: rgba(47, 129, 247, 0.35);
+  background: #1c2128;
+}
+
+@media (max-width: 480px) {
+  .w3-stat-card {
+    padding: 28px 24px;
+  }
+}
+
+.w3-stat-num {
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 700;
+  color: #e6edf3;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  display: block;
+}
+
+.w3-stat-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8b949e;
+  margin-top: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.w3-stat-sub {
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 4px;
+  letter-spacing: 0.01em;
+}
+
+/* ── Hero identity block (below stat cards, still in hero) ───────────────── */
+
+.w3-hero-identity {
+  padding: 48px 0 80px;
+}
+
+@media (max-width: 768px) {
+  .w3-hero-identity {
+    padding: 40px 0 60px;
+  }
+}
+
+.w3-hero-name {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #e6edf3;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+@media (max-width: 768px) {
+  .w3-hero-name {
+    font-size: clamp(36px, 8vw, 56px);
+  }
+}
+
+.w3-hero-role {
+  font-size: 16px;
+  font-weight: 500;
+  color: #8b949e;
+  margin: 0 0 10px;
+  letter-spacing: 0.01em;
+}
+
+.w3-hero-brief {
+  font-size: 15px;
+  font-weight: 400;
+  color: #6e7681;
+  margin: 0 0 28px;
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.w3-hero-ctas {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.w3-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #e6edf3;
+  background: #2f81f7;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.w3-cta-primary:hover {
+  background: #4a95ff;
+  transform: translateY(-1px);
+}
+
+.w3-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 400;
+  color: #8b949e;
+  text-decoration: none;
+  border: 1px solid #30363d;
+  padding: 9px 16px;
+  border-radius: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+  letter-spacing: 0.01em;
+}
+
+.w3-cta-secondary:hover {
+  color: #e6edf3;
+  border-color: #8b949e;
+}
+
+/* ── Shared section styles ────────────────────────────────────────────────── */
+
+.w3-section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.w3-section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.w3-section-title {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #e6edf3;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.w3-section-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6e7681;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+}
+
+/* ── Expertise section ────────────────────────────────────────────────────── */
+
+.w3-expertise {
+  padding: 80px 64px;
+  background: #0d1117;
+  border-top: 1px solid #30363d;
+}
+
+@media (max-width: 768px) {
+  .w3-expertise {
+    padding: 60px 24px;
+  }
+}
+
+.w3-exp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #30363d;
+}
+
+.w3-exp-row {
+  display: grid;
+  grid-template-columns: 48px 200px 1fr;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid #1a1f26;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .w3-exp-row {
+    grid-template-columns: 40px 1fr;
+    gap: 12px 16px;
+  }
+
+  .w3-exp-desc {
+    grid-column: 1 / -1;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .w3-exp-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+.w3-exp-num {
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #2f81f7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.w3-exp-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e6edf3;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  padding-top: 1px;
+}
+
+.w3-exp-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6e7681;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Projects section ─────────────────────────────────────────────────────── */
+
+.w3-projects {
+  padding: 80px 64px;
+  background: #0d1117;
+  border-top: 1px solid #30363d;
+}
+
+@media (max-width: 768px) {
+  .w3-projects {
+    padding: 60px 24px;
+  }
+}
+
+.w3-project-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.w3-project-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 0 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #21262d;
+  align-items: center;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+  cursor: default;
+}
+
+.w3-project-row:hover {
+  background: #161b22;
+  margin: 0 -12px;
+  padding: 20px 12px;
+}
+
+@media (max-width: 768px) {
+  .w3-project-row {
+    grid-template-columns: 32px 1fr auto;
+    gap: 0 12px;
+  }
+
+  .w3-project-row:hover {
+    margin: 0 -8px;
+    padding: 20px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .w3-project-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .w3-project-row:hover {
+    margin: 0;
+    padding: 20px 0;
+  }
+}
+
+.w3-project-id {
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6e7681;
+  letter-spacing: 0.06em;
+  align-self: center;
+}
+
+.w3-project-body {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.w3-project-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e6edf3;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.w3-project-tag {
+  font-size: 10px;
+  font-weight: 500;
+  color: #8b949e;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #30363d;
+  border-radius: 4px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+}
+
+.w3-project-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6e7681;
+  line-height: 1.65;
+  margin: 4px 0 0;
+  grid-column: 2 / 3;
+}
+
+@media (max-width: 480px) {
+  .w3-project-desc {
+    grid-column: 1 / -1;
+  }
+}
+
+.w3-project-metric {
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f81f7;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  align-self: center;
+}
+
+@media (max-width: 480px) {
+  .w3-project-metric {
+    justify-self: start;
+  }
+}
+
+/* ── Contact section ──────────────────────────────────────────────────────── */
+
+.w3-contact {
+  padding: 100px 64px;
+  background: #161b22;
+  border-top: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .w3-contact {
+    padding: 72px 24px;
+  }
+}
+
+.w3-contact-inner {
+  max-width: 640px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.w3-contact-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #2f81f7;
+  margin: 0 0 16px;
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+}
+
+.w3-contact-heading {
+  font-size: clamp(28px, 4.5vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #e6edf3;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+.w3-contact-sub {
+  font-size: 14px;
+  font-weight: 400;
+  color: #8b949e;
+  line-height: 1.6;
+  margin: 0 0 36px;
+  max-width: 480px;
+}
+
+.w3-contact-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.w3-contact-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: #8b949e;
+  text-decoration: none;
+  border: 1px solid #30363d;
+  padding: 9px 20px;
+  border-radius: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.w3-contact-link:hover {
+  color: #e6edf3;
+  border-color: #8b949e;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.w3-contact-link--primary {
+  font-family: var(--font-geist-mono), "Geist Mono", "GeistMono", ui-monospace, monospace;
+  font-size: 12px;
+  color: #2f81f7;
+  border-color: rgba(47, 129, 247, 0.35);
+}
+
+.w3-contact-link--primary:hover {
+  color: #4a95ff;
+  border-color: #2f81f7;
+  background: rgba(47, 129, 247, 0.06);
+}
+
+/* ── Scroll margin for anchors (offset fixed nav) ─────────────────────────── */
+
+#w3-main,
+#w3-expertise,
+#w3-projects,
+#w3-contact {
+  scroll-margin-top: 56px;
+}

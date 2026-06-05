@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import type { Theme } from "@/lib/themes";
+import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 
 // ── Content ───────────────────────────────────────────────────────────────────
 
@@ -146,9 +147,42 @@ function VideoBackground() {
 
 export default function AetheraHero({ theme }: { theme: Theme }) {
   void theme;
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    // Both elements are aria-hidden — sr-only h1 handles accessibility
+    const splitHeadline = SplitText.create(".ath-headline", {
+      type: "words",
+      mask: "words",
+      aria: "hidden",
+    });
+    const splitTagline = SplitText.create(".ath-tagline", {
+      type: "words",
+      aria: "hidden",
+    });
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    // Headline: masked word reveal upward — premium editorial feel
+    tl.from(splitHeadline.words, {
+      yPercent: 110,
+      duration: 0.8,
+      stagger: 0.07,
+    })
+    // Tagline: soft fade + lift, starts while headline is still revealing
+    .from(splitTagline.words, {
+      autoAlpha: 0,
+      y: 14,
+      duration: 0.5,
+      stagger: 0.05,
+    }, "-=0.5");
+  }, { scope: rootRef });
 
   return (
-    <div className="ath-root">
+    <div className="ath-root" ref={rootRef}>
       {/* Skip to main content — WCAG 2.4.1 */}
       <a href="#ath-main" className="ath-skip">Skip to main content</a>
 

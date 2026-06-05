@@ -1,7 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "motion/react";
 import { useState } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import type { Theme } from "@/lib/themes";
 
 type ResultRow = {
@@ -43,12 +45,31 @@ Execution Time: 0.002 ms
 export default function OracleHero({ theme }: { theme: Theme }) {
   void theme;
   const [page, setPage] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    // Database client feel: window title scrambles in from terminal glyphs → final value
+    gsap.to(".orc-window-title", {
+      duration: 1.2,
+      ease: "none",
+      scrambleText: {
+        text: "psql (16.2) • koushik_portfolio",
+        chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 -.:()|",
+        revealDelay: 0.25,
+        speed: 0.45,
+      },
+      delay: 0.1,
+    });
+  }, { scope: containerRef });
 
   const start = (page - 1) * ROWS_PER_PAGE;
   const pageRows = ROWS.slice(start, start + ROWS_PER_PAGE);
 
   return (
-    <div className="orc-wrap">
+    <div className="orc-wrap" ref={containerRef}>
       {/* Nav hiding handled via CSS */}
 
       {/* Terminal window chrome */}
@@ -63,7 +84,7 @@ export default function OracleHero({ theme }: { theme: Theme }) {
           <span className="orc-dot orc-dot--yellow" />
           <span className="orc-dot orc-dot--green" />
         </div>
-        <span className="orc-window-title">psql (16.2) • koushik_portfolio</span>
+        <span className="orc-window-title" aria-hidden="true">psql (16.2) • koushik_portfolio</span>
       </motion.div>
 
       {/* Main body — split panel */}
