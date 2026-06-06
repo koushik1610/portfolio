@@ -13,6 +13,11 @@ import WTheme02Hero from "./layouts/w-theme-02/WTheme02Hero";
 import WTheme03Hero from "./layouts/w-theme-03/WTheme03Hero";
 import WTheme04Hero from "./layouts/w-theme-04/WTheme04Hero";
 import WTheme05Hero from "./layouts/w-theme-05/WTheme05Hero";
+import WTheme06Hero from "./layouts/w-theme-06/WTheme06Hero";
+import WTheme07Hero from "./layouts/w-theme-07/WTheme07Hero";
+import WTheme08Hero from "./layouts/w-theme-08/WTheme08Hero";
+import WTheme09Hero from "./layouts/w-theme-09/WTheme09Hero";
+import WTheme10Hero from "./layouts/w-theme-10/WTheme10Hero";
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -38,5 +43,10 @@ export default function Hero() {
     case "w3":       return <WTheme03Hero key={theme.id} theme={theme} />;
     case "w4":       return <WTheme04Hero key={theme.id} theme={theme} />;
     case "w5":       return <WTheme05Hero key={theme.id} theme={theme} />;
+    case "w6":       return <WTheme06Hero key={theme.id} theme={theme} />;
+    case "w7":       return <WTheme07Hero key={theme.id} theme={theme} />;
+    case "w8":       return <WTheme08Hero key={theme.id} theme={theme} />;
+    case "w9":       return <WTheme09Hero key={theme.id} theme={theme} />;
+    case "w10":      return <WTheme10Hero key={theme.id} theme={theme} />;
   }
 }
