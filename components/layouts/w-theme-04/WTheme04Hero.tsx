@@ -14,7 +14,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "222 active signatures across 1,500+ AWS accounts. 0% false-positive rate. MITRE ATT&CK gap analysis.",
+    desc: "200+ active signatures across AWS accounts. 0% false-positive rate. MITRE ATT&CK gap analysis.",
   },
   {
     num: "02",
@@ -24,12 +24,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "19 models from 5 providers. 1,767-node knowledge graph from 3,559 historical tickets.",
+    desc: "19 models from 5 providers. 1,700+-node knowledge graph from historical tickets.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "2,823 accounts (AWS + GCP). CNAPP-class attack path simulation. Zero Trust enforcement.",
+    desc: "2,800+ cloud accounts. CNAPP-class attack path simulation. Zero Trust enforcement.",
   },
   {
     num: "05",
@@ -43,7 +43,7 @@ const PROJECTS = [
     id: "01",
     name: "Artemis",
     desc: "Multi-cloud attack path simulation — GCP SCC + AWS Security Hub unified into AI-enriched graph layer.",
-    metric: "2,823+ accounts",
+    metric: "2,800+ accounts",
   },
   {
     id: "02",
@@ -60,8 +60,8 @@ const PROJECTS = [
   {
     id: "04",
     name: "Detection Engine",
-    desc: "222 active signatures via Terraform. MITRE ATT&CK coverage from real-world incident response.",
-    metric: "222 signatures",
+    desc: "200+ active signatures via Terraform. MITRE ATT&CK coverage from real-world incident response.",
+    metric: "200+ signatures",
   },
 ] as const;
 
@@ -274,7 +274,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
           </div>
 
           {/* Tagline */}
-          <p className="w4-tagline">Yahoo · 2,823 cloud accounts · 9 years</p>
+          <p className="w4-tagline">Yahoo · 2,800+ cloud accounts · 9 years</p>
 
           {/* CTAs */}
           <div className="w4-cta-group">
@@ -305,7 +305,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
             </h2>
             <p className="w4-section-body">
               Sr. Security Engineer at Yahoo Paranoids. I build detection systems,
-              IAM audit tooling, and AI-native security platforms across 2,823 cloud
+              IAM audit tooling, and AI-native security platforms across 2,800+ cloud
               accounts. Three organizations, zero unresolved incidents.
             </p>
             <p className="w4-section-body">
@@ -319,13 +319,13 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
           {/* Right: stats (40%) */}
           <div className="w4-stats-grid" aria-label="Key metrics">
             <div className="w4-stat-item">
-              <span className="w4-stat-num" aria-label="2823">
-                2,823
+              <span className="w4-stat-num" aria-label="2,800+">
+                2,800+
               </span>
               <span className="w4-stat-label">Cloud Accounts</span>
             </div>
             <div className="w4-stat-item">
-              <span className="w4-stat-num" aria-label="222">
+              <span className="w4-stat-num" aria-label="200+">
                 222
               </span>
               <span className="w4-stat-label">Active Signatures</span>

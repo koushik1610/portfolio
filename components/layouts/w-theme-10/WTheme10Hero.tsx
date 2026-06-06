@@ -20,8 +20,8 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Content ─────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { key: "accounts", target: 2823, duration: 1.8, initial: "0", numClass: "w10-n-accounts", label: "Cloud Accounts", sub: "AWS + GCP", ariaLabel: "2,823 cloud accounts" },
-  { key: "sigs", target: 222, duration: 1.4, initial: "0", numClass: "w10-n-sigs", label: "Detection Signatures", sub: "0% false positives", ariaLabel: "222 detection signatures" },
+  { key: "accounts", target: 2800, duration: 1.8, initial: "0", numClass: "w10-n-accounts", label: "Cloud Accounts", sub: "AWS + GCP", ariaLabel: "2,800+ cloud accounts" },
+  { key: "sigs", target: 200, duration: 1.4, initial: "0", numClass: "w10-n-sigs", label: "Detection Signatures", sub: "0% false positives", ariaLabel: "200+ detection signatures" },
   { key: "recall", target: 100, duration: 1.4, format: (v: number) => Math.round(v) + "%", initial: "0%", numClass: "w10-n-recall", label: "GOAT Recall", sub: "32 / 32 findings", ariaLabel: "100 percent GOAT recall" },
 ] as const;
 
@@ -34,18 +34,18 @@ const ICONS: Record<string, ReactNode> = {
 };
 
 const EXPERTISE = [
-  { icon: "shield", name: "Detection Engineering", brief: "222 signatures · 0% FP · 1,500+ AWS accounts" },
+  { icon: "shield", name: "Detection Engineering", brief: "200+ signatures · 0% FP · AWS accounts" },
   { icon: "lock", name: "IAM Privilege Analysis", brief: "65+ escalation paths · 100% GOAT recall" },
-  { icon: "cpu", name: "AI Security Tooling", brief: "19 models · 1,767-node knowledge graph" },
-  { icon: "cloud", name: "Cloud Security Architecture", brief: "2,823 accounts · CNAPP · Zero Trust" },
+  { icon: "cpu", name: "AI Security Tooling", brief: "19 models · 1,700+-node knowledge graph" },
+  { icon: "cloud", name: "Cloud Security Architecture", brief: "2,800+ accounts · CNAPP · Zero Trust" },
   { icon: "search", name: "Security Research", brief: "Artemis · Antitoxin · 62 toxic combos" },
 ] as const;
 
 const PROJECTS = [
-  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph.", metric: "2,823+", metricLabel: "accounts", tags: ["Python", "GCP SCC", "Vertex AI"] },
+  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph.", metric: "2,800+", metricLabel: "accounts", tags: ["Python", "GCP SCC", "Vertex AI"] },
   { id: "02", name: "IAM Audit Agent", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall.", metric: "100%", metricLabel: "recall", tags: ["IAM", "Python", "Boto3"] },
   { id: "03", name: "Autonomous Threat Intel", desc: "19 models, 5 providers, performance-weighted router. $1.40 per run — replaced a manual process.", metric: "$1.40", metricLabel: "per run", tags: ["Multi-Agent", "Claude"] },
-  { id: "04", name: "Detection Engine", desc: "222 active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives.", metric: "222", metricLabel: "signatures", tags: ["Python", "Lambda", "Terraform"] },
+  { id: "04", name: "Detection Engine", desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives.", metric: "200+", metricLabel: "signatures", tags: ["Python", "Lambda", "Terraform"] },
 ] as const;
 
 // ── Tilt card ───────────────────────────────────────────────────────────────

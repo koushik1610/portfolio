@@ -28,7 +28,7 @@ interface StatTile {
 const STAT_TILES: StatTile[] = [
   {
     key: "accounts",
-    target: 2823,
+    target: 2800,
     duration: 2.2,
     initial: "0",
     countClass: "w5-num-accounts",
@@ -37,11 +37,11 @@ const STAT_TILES: StatTile[] = [
     label: "Cloud Accounts",
     sub: "Yahoo · AWS + GCP",
     tileClass: "w5-tile-stat-a",
-    ariaLabel: "2,823 cloud accounts",
+    ariaLabel: "2,800+ cloud accounts",
   },
   {
     key: "sigs",
-    target: 222,
+    target: 200,
     duration: 1.6,
     initial: "0",
     countClass: "w5-num-sigs",
@@ -50,7 +50,7 @@ const STAT_TILES: StatTile[] = [
     label: "Active Signatures",
     sub: "0% false-positive rate",
     tileClass: "w5-tile-stat-b",
-    ariaLabel: "222 active signatures",
+    ariaLabel: "200+ active signatures",
   },
   {
     key: "cost",
@@ -94,10 +94,10 @@ const EXP_ICONS: Record<string, ReactNode> = {
 };
 
 const EXPERTISE_COMPACT = [
-  { icon: "shield", name: "Detection Engineering", brief: "222 sigs · 0% FP · 1,500+ accounts" },
+  { icon: "shield", name: "Detection Engineering", brief: "200+ sigs · 0% FP " },
   { icon: "lock", name: "IAM Privilege Analysis", brief: "65+ paths · 100% GOAT recall" },
-  { icon: "cpu", name: "AI Security Tooling", brief: "19 models · 1,767-node knowledge graph" },
-  { icon: "cloud", name: "Cloud Security Architecture", brief: "2,823 accounts · Zero Trust" },
+  { icon: "cpu", name: "AI Security Tooling", brief: "19 models · 1,700+-node knowledge graph" },
+  { icon: "cloud", name: "Cloud Security Architecture", brief: "2,800+ accounts · Zero Trust" },
   { icon: "search", name: "Security Research", brief: "Artemis · Antitoxin · 62 toxic combos" },
 ] as const;
 
@@ -106,7 +106,7 @@ const PROJECTS_BENTO = [
     id: "01",
     name: "Artemis",
     desc: "Multi-cloud attack path simulation. GCP SCC + AWS Security Hub unified graph.",
-    metric: "2,823+",
+    metric: "2,800+",
     metricLabel: "accounts",
     tags: ["Python", "GCP SCC", "Vertex AI"],
   },
@@ -129,8 +129,8 @@ const PROJECTS_BENTO = [
   {
     id: "04",
     name: "Detection Engine",
-    desc: "222 active signatures via Terraform. MITRE ATT&CK coverage. Zero false positives.",
-    metric: "222",
+    desc: "200+ active signatures via Terraform. MITRE ATT&CK coverage. Zero false positives.",
+    metric: "200+",
     metricLabel: "signatures",
     tags: ["Python", "Lambda", "AWS"],
   },
@@ -259,8 +259,8 @@ export default function WTheme05Hero({ theme }: { theme: Theme }) {
             <h1 className="w5-hero-name">Koushik<br />Kotamraju</h1>
             <p className="w5-hero-role">Sr. Security Engineer · Yahoo Paranoids</p>
             <p className="w5-hero-tagline">
-              AI-native platforms protecting 2,823 cloud accounts.<br />
-              4 engineers. Enterprise scale.
+              AI-native platforms protecting 2,800+ cloud accounts.<br />
+              A small team. Enterprise scale.
             </p>
           </div>
           <div className="w5-hero-cta-row">

@@ -17,30 +17,30 @@ const MARQUEE = [
 
 // Second band = outcomes, not disciplines — distinct content from band 1
 const MARQUEE_STATS = [
-  "2,823 accounts", "222 signatures", "100% GOAT recall", "$1.40 / run",
-  "0% false positives", "62 toxic combos", "1,767-node graph", "19 models",
+  "2,800+ accounts", "200+ signatures", "100% GOAT recall", "$1.40 / run",
+  "0% false positives", "62 toxic combos", "1,700+-node graph", "19 models",
 ];
 
 const STATS = [
-  { key: "accounts", target: 2823, duration: 1.8, initial: "0", numClass: "w9-n-accounts", label: "Cloud accounts", ariaLabel: "2,823 cloud accounts" },
-  { key: "sigs", target: 222, duration: 1.4, initial: "0", numClass: "w9-n-sigs", label: "Detection signatures", ariaLabel: "222 detection signatures" },
+  { key: "accounts", target: 2800, duration: 1.8, initial: "0", numClass: "w9-n-accounts", label: "Cloud accounts", ariaLabel: "2,800+ cloud accounts" },
+  { key: "sigs", target: 200, duration: 1.4, initial: "0", numClass: "w9-n-sigs", label: "Detection signatures", ariaLabel: "200+ detection signatures" },
   { key: "recall", target: 100, duration: 1.4, format: (v: number) => Math.round(v) + "%", initial: "0%", numClass: "w9-n-recall", label: "GOAT recall", ariaLabel: "100 percent GOAT recall" },
   { key: "cost", target: 1.4, duration: 1.2, format: (v: number) => "$" + v.toFixed(2), initial: "$0.00", numClass: "w9-n-cost", label: "Per research run", ariaLabel: "1 dollar 40 cents per research run" },
 ] as const;
 
 const EXPERTISE = [
-  { name: "Detection Engineering", desc: "222 active signatures across 1,500+ AWS accounts — 0% false positives. MITRE ATT&CK coverage, deployed via Terraform." },
+  { name: "Detection Engineering", desc: "200+ active signatures across AWS accounts — 0% false positives. MITRE ATT&CK coverage, deployed via Terraform." },
   { name: "IAM Privilege Analysis", desc: "AI-native IAM audit agent. 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall." },
-  { name: "AI Security Tooling", desc: "19 models, 5 providers. Agentic SOAR workstation on a 1,767-node knowledge graph from 3,559 tickets." },
-  { name: "Cloud Security Architecture", desc: "2,823 AWS + GCP accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, Zero Trust." },
+  { name: "AI Security Tooling", desc: "19 models, 5 providers. Agentic SOAR workstation on a 1,700+-node knowledge graph from historical tickets." },
+  { name: "Cloud Security Architecture", desc: "2,800+ cloud accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, Zero Trust." },
   { name: "Security Research", desc: "Artemis attack-path simulation. Antitoxin: 62 toxic IAM combinations with min-cut auto-remediation." },
 ] as const;
 
 const PROJECTS = [
-  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph.", metric: "2,823+ accounts", tags: ["Python", "GCP SCC", "Vertex AI"] },
+  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph.", metric: "2,800+ accounts", tags: ["Python", "GCP SCC", "Vertex AI"] },
   { id: "02", name: "IAM Audit Agent", desc: "Boto3 tool-calling agent. 65+ escalation paths, 10 vulnerability classes. 100% GOAT recall.", metric: "100% recall", tags: ["IAM", "Python", "Boto3"] },
   { id: "03", name: "Autonomous Threat Intel", desc: "19 models, 5 providers, performance-weighted router. $1.40 per run — replaced a manual process.", metric: "$1.40 / run", tags: ["Multi-Agent", "Claude"] },
-  { id: "04", name: "Detection Engine", desc: "222 active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.", metric: "222 signatures", tags: ["Python", "Lambda", "Terraform"] },
+  { id: "04", name: "Detection Engine", desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.", metric: "200+ signatures", tags: ["Python", "Lambda", "Terraform"] },
 ] as const;
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -195,7 +195,7 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
         {/* ── Statement (scrubbed) ─────────────────────────────────────── */}
         <section className="w9-statement-section" aria-label="Statement">
           <p className="w9-statement">
-            Four engineers. 2,823 cloud accounts. The math only works if you build the right systems.
+            A small team. 2,800+ cloud accounts. The math only works if you build the right systems.
           </p>
         </section>
 

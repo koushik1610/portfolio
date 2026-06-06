@@ -13,28 +13,28 @@ const SET_PRECISION: StatItem[] = [
   { value: "100%", label: "IAM Escalation Recall",  sub: "GOAT benchmark"     },
   { value: "0",    label: "False Positives",         sub: "On benchmark"       },
   { value: "32",   label: "Fixtures Caught",         sub: "Ground-truth"       },
-  { value: "2,500+",label: "Cloud Accounts",         sub: "AWS · GCP"          },
+  { value: "2,800+",label: "Cloud Accounts",         sub: "AWS · GCP"          },
 ];
 
 // Set 2 — Research Depth: IAM expertise at catalogue scale
 const SET_RESEARCH: StatItem[] = [
   { value: "65+",  label: "Escalation Paths",        sub: "Catalogued"         },
   { value: "62",   label: "IAM Toxic Combinations",  sub: "8 attack categories"},
-  { value: "2,500+",label: "Accounts in Scope",      sub: "AWS · GCP"          },
-  { value: "49",   label: "Baselines Shipped",       sub: "CIS · MITRE-mapped" },
+  { value: "2,800+",label: "Accounts in Scope",      sub: "AWS · GCP"          },
+  { value: "19",   label: "AI Models Orchestrated",  sub: "5 providers"        },
 ];
 
 // Set 3 — Force Multiplier: AI tooling as team leverage
 const SET_LEVERAGE: StatItem[] = [
-  { value: "1,400+",label: "Tickets Indexed",        sub: "→ knowledge graph"  },
-  { value: "123",  label: "Security Reviews",        sub: "4-person team"      },
+  { value: "1,700+",label: "Knowledge Nodes",        sub: "from review tickets"},
+  { value: "120+", label: "Security Reviews",        sub: "small team"         },
   { value: "$1.40",label: "Per Research Run",        sub: "vs $3.20 baseline"  },
   { value: "55%",  label: "Cost Reduction",          sub: "vs single model"    },
 ];
 
 // Set 4 — Scale + Signal: enterprise scope with precision proof
 const SET_SCALE: StatItem[] = [
-  { value: "2,500+",label: "Cloud Accounts",         sub: "AWS · GCP"          },
+  { value: "2,800+",label: "Cloud Accounts",         sub: "AWS · GCP"          },
   { value: "200+",  label: "Detection Signatures",    sub: "Python / Lambda"    },
   { value: "65+",  label: "Escalation Paths",        sub: "IAM research"       },
   { value: "100%", label: "Recall Rate",             sub: "Zero misses"        },

@@ -94,7 +94,7 @@ const LINES: CodeLine[] = [
   { num: 61, tokens: [tx("    "), l("artemis"), tx(":    "), cm("; Multi-cloud attack path simulation — production")]},
   { num: 62, tokens: [tx("    "), l("antitoxin"), tx(":  "), cm("; IAM toxic combination dissolution — deployed")]},
   { num: 63, tokens: [tx("    "), l("goat"), tx(":       "), cm("; 100% recall benchmark — verified")]},
-  { num: 64, tokens: [tx("    "), l("ai_pipeline"), tx(":"), cm("; Amazon Bedrock · 19 models · 123 reviews delivered")]},
+  { num: 64, tokens: [tx("    "), l("ai_pipeline"), tx(":"), cm("; Amazon Bedrock · 19 models · 120+ reviews delivered")]},
   { num: 65, tokens: [tx("")]},
   { num: 66, tokens: [h("; ─── _status: ─────────────────────────────────────────────────")]},
   { num: 67, tokens: [d("section"), tx(" "), d(".status")]},

@@ -36,7 +36,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "222 active detection signatures across 1,500+ AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
+    desc: "200+ active detection signatures across AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
   },
   {
     num: "02",
@@ -46,12 +46,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,767-node knowledge graph from 3,559 historical tickets, serving as the autonomous review agent for 123 security reviews across all business units.",
+    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from historical tickets, serving as the autonomous review agent for 120+ security reviews across all business units.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "Multi-cloud coverage across 2,823 AWS and GCP accounts. CNAPP-class attack path simulation unifying GCP SCC and AWS Security Hub into an AI-enriched graph layer with AI-augmented CSPM, crown-jewel exposure tracking, and toxic IAM combination trending. Zero Trust posture enforcement across the full cloud account estate.",
+    desc: "Multi-cloud coverage across 2,800+ cloud accounts. CNAPP-class attack path simulation unifying GCP SCC and AWS Security Hub into an AI-enriched graph layer with AI-augmented CSPM, crown-jewel exposure tracking, and toxic IAM combination trending. Zero Trust posture enforcement across the full cloud account estate.",
   },
   {
     num: "05",
@@ -66,7 +66,7 @@ const PROJECTS = [
     name: "Artemis",
     category: "ATTACK PATH SIM",
     desc: "CNAPP-class multi-cloud attack path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer via agentic pipeline. Crown-jewel exposure, toxic IAM combination trends, cross-cloud attack chains mapped to MITRE ATT&CK.",
-    metric: "2,823+",
+    metric: "2,800+",
     metricLabel: "accounts unified",
     tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI", "BigQuery"],
   },
@@ -92,8 +92,8 @@ const PROJECTS = [
     id: "04",
     name: "Detection Engine",
     category: "DETECTION ENG",
-    desc: "222 active detection signatures deployed via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis against 74 real-world techniques from cloud incident response data. Machine-speed detection and response — zero false positives at account scale.",
-    metric: "222",
+    desc: "200+ active detection signatures deployed via Terraform across AWS accounts. MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data. Machine-speed detection and response — zero false positives at account scale.",
+    metric: "200+",
     metricLabel: "active signatures",
     tags: ["Python", "Lambda", "AWS", "MITRE ATT&CK", "Terraform"],
   },

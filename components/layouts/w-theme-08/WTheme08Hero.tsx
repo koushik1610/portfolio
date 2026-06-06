@@ -11,25 +11,25 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Content ─────────────────────────────────────────────────────────────────
 
 const METRICS = [
-  { key: "accounts", target: 2823, duration: 1.8, initial: "0", numClass: "w8-m-accounts", label: "Cloud accounts secured", ariaLabel: "2,823 cloud accounts secured" },
-  { key: "sigs", target: 222, duration: 1.4, initial: "0", numClass: "w8-m-sigs", label: "Detection signatures, 0% FP", ariaLabel: "222 detection signatures, zero percent false positive" },
-  { key: "reviews", target: 123, duration: 1.4, initial: "0", numClass: "w8-m-reviews", label: "Security reviews conducted", ariaLabel: "123 security reviews conducted" },
+  { key: "accounts", target: 2800, duration: 1.8, initial: "0", numClass: "w8-m-accounts", label: "Cloud accounts secured", ariaLabel: "2,800+ cloud accounts secured" },
+  { key: "sigs", target: 200, duration: 1.4, initial: "0", numClass: "w8-m-sigs", label: "Detection signatures, 0% FP", ariaLabel: "200+ detection signatures, zero percent false positive" },
+  { key: "reviews", target: 120, duration: 1.4, initial: "0", numClass: "w8-m-reviews", label: "Security reviews conducted", ariaLabel: "120+ security reviews conducted" },
   { key: "recall", target: 100, duration: 1.4, format: (v: number) => Math.round(v) + "%", initial: "0%", numClass: "w8-m-recall", label: "GOAT recall · 32/32", ariaLabel: "100 percent GOAT recall, 32 of 32" },
 ] as const;
 
 const EXPERTISE = [
-  { num: "01", name: "Detection Engineering", desc: "222 active signatures across 1,500+ AWS accounts at a 0% false-positive rate. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.", meta: "0% FP" },
+  { num: "01", name: "Detection Engineering", desc: "200+ active signatures across AWS accounts at a 0% false-positive rate. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.", meta: "0% FP" },
   { num: "02", name: "IAM Privilege Analysis", desc: "AI-native IAM audit agent traversing 65+ escalation paths across 10 vulnerability classes, with LLM semantic interpretation of transitive chains.", meta: "100% GOAT" },
-  { num: "03", name: "AI Security Tooling", desc: "Multi-agent orchestration across 19 models from 5 providers. Agentic SOAR workstation on a 1,767-node knowledge graph mined from 3,559 tickets.", meta: "19 models" },
-  { num: "04", name: "Cloud Security Architecture", desc: "2,823 AWS and GCP accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.", meta: "2,823 acct" },
+  { num: "03", name: "AI Security Tooling", desc: "Multi-agent orchestration across 19 models from 5 providers. Agentic SOAR workstation on a 1,700+-node knowledge graph mined from historical tickets.", meta: "19 models" },
+  { num: "04", name: "Cloud Security Architecture", desc: "2,800+ cloud accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.", meta: "2,800+ acct" },
   { num: "05", name: "Security Research", desc: "Artemis multi-cloud attack-path simulation; Antitoxin graph-theoretic IAM analysis cataloguing 62 toxic combinations with minimum cut-set auto-remediation.", meta: "62 combos" },
 ] as const;
 
 const PROJECTS = [
-  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer.", metric: "2,823+ accounts", tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"] },
+  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer.", metric: "2,800+ accounts", tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"] },
   { id: "02", name: "IAM Audit Agent", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall.", metric: "100% recall", tags: ["IAM", "Python", "Boto3"] },
   { id: "03", name: "Autonomous Threat Intel", desc: "19 models, 5 providers, performance-weighted router. Analyst-ready proposals at $1.40 per run.", metric: "$1.40 / run", tags: ["Multi-Agent", "Claude", "GPT-4"] },
-  { id: "04", name: "Detection Engine", desc: "222 active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.", metric: "222 signatures", tags: ["Python", "Lambda", "Terraform"] },
+  { id: "04", name: "Detection Engine", desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.", metric: "200+ signatures", tags: ["Python", "Lambda", "Terraform"] },
 ] as const;
 
 // ── Component ───────────────────────────────────────────────────────────────

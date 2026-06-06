@@ -12,7 +12,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "222 active detection signatures across 1,500+ AWS accounts — 0% false-positive rate. MITRE ATT&CK gap analysis against 74 real-world techniques.",
+    desc: "200+ active detection signatures across AWS accounts — 0% false-positive rate. MITRE ATT&CK gap analysis against real-world techniques.",
   },
   {
     num: "02",
@@ -22,12 +22,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent pipeline across 19 models from 5 providers. Agentic SOAR workstation with 1,767-node knowledge graph from 3,559 historical tickets.",
+    desc: "Multi-agent pipeline across 19 models from 5 providers. Agentic SOAR workstation with 1,700+-node knowledge graph from historical tickets.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "2,823 accounts (AWS + GCP). CNAPP-class attack path simulation. AI-augmented CSPM. Zero Trust enforcement across the full cloud estate.",
+    desc: "2,800+ cloud accounts. CNAPP-class attack path simulation. AI-augmented CSPM. Zero Trust enforcement across the full cloud estate.",
   },
   {
     num: "05",
@@ -42,7 +42,7 @@ const PROJECTS = [
     name: "Artemis",
     tag: "ATTACK PATH SIM",
     desc: "GCP SCC + AWS Security Hub unified into AI-enriched graph layer. Crown-jewel exposure, toxic IAM combination trends, cross-cloud attack chains.",
-    metric: "2,823+",
+    metric: "2,800+",
   },
   {
     id: "02",
@@ -62,8 +62,8 @@ const PROJECTS = [
     id: "04",
     name: "Detection Engine",
     tag: "DETECTION ENG",
-    desc: "222 active signatures via Terraform across 1,500+ accounts. MITRE ATT&CK coverage from real-world incident response. Zero false positives.",
-    metric: "222",
+    desc: "200+ active signatures via Terraform across AWS accounts. MITRE ATT&CK coverage from real-world incident response. Zero false positives.",
+    metric: "200+",
   },
 ] as const;
 
@@ -90,7 +90,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
       // 2. Count up integer counters
       const accountsObj = { val: 0 };
       gsap.to(accountsObj, {
-        val: 2823,
+        val: 2800,
         duration: 2.2,
         ease: "power2.out",
         delay: 0.3,
@@ -102,7 +102,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
 
       const sigsObj = { val: 0 };
       gsap.to(sigsObj, {
-        val: 222,
+        val: 200,
         duration: 1.6,
         ease: "power2.out",
         delay: 0.3,
@@ -208,7 +208,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
       >
         <div className="w3-stats-grid">
           {/* Card 1: Cloud Accounts */}
-          <article className="w3-stat-card" aria-label="2,823 cloud accounts">
+          <article className="w3-stat-card" aria-label="2,800+ cloud accounts">
             <div
               className="w3-stat-num w3-stat-num-accounts"
               aria-hidden="true"
@@ -220,7 +220,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
           </article>
 
           {/* Card 2: Active Signatures */}
-          <article className="w3-stat-card" aria-label="222 active signatures">
+          <article className="w3-stat-card" aria-label="200+ active signatures">
             <div
               className="w3-stat-num w3-stat-num-sigs"
               aria-hidden="true"

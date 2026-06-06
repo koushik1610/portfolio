@@ -25,23 +25,23 @@ interface Stat {
 const STATS: Stat[] = [
   {
     key: "accounts",
-    target: 2823,
+    target: 2800,
     duration: 1.8,
     initial: "0",
     numClass: "w6-num-accounts",
     label: "Cloud Accounts",
     sub: "Yahoo · AWS + GCP",
-    ariaLabel: "2,823 cloud accounts",
+    ariaLabel: "2,800+ cloud accounts",
   },
   {
     key: "sigs",
-    target: 222,
+    target: 200,
     duration: 1.4,
     initial: "0",
     numClass: "w6-num-sigs",
     label: "Detection Signatures",
     sub: "0% false-positive rate",
-    ariaLabel: "222 active detection signatures",
+    ariaLabel: "200+ active detection signatures",
   },
   {
     key: "recall",
@@ -71,7 +71,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "222 active signatures across 1,500+ AWS accounts — 0% false positives. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.",
+    desc: "200+ active signatures across AWS accounts — 0% false positives. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.",
   },
   {
     num: "02",
@@ -81,12 +81,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 models from 5 providers. Agentic SOAR workstation on a 1,767-node knowledge graph mined from 3,559 historical tickets.",
+    desc: "Multi-agent orchestration across 19 models from 5 providers. Agentic SOAR workstation on a 1,700+-node knowledge graph mined from historical tickets.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "2,823 AWS and GCP accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.",
+    desc: "2,800+ cloud accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.",
   },
   {
     num: "05",
@@ -101,7 +101,7 @@ const PROJECTS = [
     name: "Artemis",
     cat: "Attack Path Simulation",
     desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer — crown-jewel exposure, toxic IAM chains, cross-cloud paths.",
-    metric: "2,823+",
+    metric: "2,800+",
     metricLabel: "accounts unified",
     tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"],
   },
@@ -127,8 +127,8 @@ const PROJECTS = [
     id: "04",
     name: "Detection Engine",
     cat: "Detection Engineering",
-    desc: "222 active signatures deployed via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis against 74 real-world techniques. Zero false positives at scale.",
-    metric: "222",
+    desc: "200+ active signatures deployed via Terraform across AWS accounts. MITRE ATT&CK gap analysis against real-world techniques. Zero false positives at scale.",
+    metric: "200+",
     metricLabel: "signatures",
     tags: ["Python", "Lambda", "Terraform"],
   },
@@ -364,7 +364,7 @@ export default function WTheme06Hero({ theme }: { theme: Theme }) {
                   platforms — production systems, not prototypes.
                 </p>
                 <p className="w6-hero-hook w6-reveal">
-                  4 engineers. 2,823 cloud accounts. The math only works if
+                  A small team. 2,800+ cloud accounts. The math only works if
                   you build the right systems.
                 </p>
                 <div className="w6-hero-ctas w6-reveal">

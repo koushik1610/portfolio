@@ -26,14 +26,14 @@ const MARQUEE_TILES = [
 const TILES_3X = [...MARQUEE_TILES, ...MARQUEE_TILES, ...MARQUEE_TILES];
 
 const BIO =
-  "With nine years of security engineering across three organizations, I build AI-native security platforms — agentic systems that run at machine speed across 2,500+ cloud accounts, multi-agent orchestration that scales a 4-engineer team to enterprise coverage, and privilege analysis tools with provable recall.";
+  "With nine years of security engineering across three organizations, I build AI-native security platforms — agentic systems that run at machine speed across 2,800+ cloud accounts, multi-agent orchestration that scales a 4-engineer team to enterprise coverage, and privilege analysis tools with provable recall.";
 
 const EXPERIENCE = [
   {
     period: "2019 — PRESENT",
     company: "Yahoo",
     role: "Sr. Security Engineer",
-    detail: "Agentic security workflows · AI-native security tooling · Detection Engineering · IAM Analysis · 2,500+ cloud accounts · 4-engineer team",
+    detail: "Agentic security workflows · AI-native security tooling · Detection Engineering · IAM Analysis · 2,800+ cloud accounts · 4-engineer team",
   },
   {
     period: "2016 — 2019",
@@ -76,7 +76,7 @@ const PROJECTS = [
     name: "Detection Engine",
     tag: "DETECTION ENG",
     detail:
-      "200+ active detection signatures. MITRE ATT&CK gap analysis against 74 real-world techniques. Zero false positives. Deployed across 1,500+ AWS accounts.",
+      "200+ active detection signatures. MITRE ATT&CK gap analysis against real-world techniques. Zero false positives. Deployed across AWS accounts.",
   },
 ] as const;
 

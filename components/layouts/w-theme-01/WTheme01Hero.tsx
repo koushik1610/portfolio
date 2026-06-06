@@ -13,8 +13,8 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Content ───────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { key: "accounts", num: "2,823",  label: "Cloud Accounts",    cssClass: "w1-stat-accounts", raw: 2823,  decimals: false },
-  { key: "sigs",     num: "222",    label: "Signatures",        cssClass: "w1-stat-sigs",     raw: 222,   decimals: false },
+  { key: "accounts", num: "2,800+",  label: "Cloud Accounts",    cssClass: "w1-stat-accounts", raw: 2800,  decimals: false },
+  { key: "sigs",     num: "200+",    label: "Signatures",        cssClass: "w1-stat-sigs",     raw: 200,   decimals: false },
   { key: "recall",   num: "100%",   label: "GOAT Recall",       cssClass: "w1-stat-recall",   raw: null,  decimals: false },
   { key: "cost",     num: "$1.40",  label: "Per Research Run",  cssClass: "w1-stat-cost",     raw: null,  decimals: false },
 ] as const;
@@ -23,7 +23,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "222 active detection signatures across 1,500+ AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data.",
+    desc: "200+ active detection signatures across AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data.",
   },
   {
     num: "02",
@@ -33,12 +33,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models from 5 providers. Agentic SOAR workstation backed by a 1,767-node knowledge graph from 3,559 historical tickets.",
+    desc: "Multi-agent orchestration across 19 foundation models from 5 providers. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from historical tickets.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "Multi-cloud coverage across 2,823 AWS and GCP accounts. CNAPP-class attack path simulation with AI-augmented CSPM, crown-jewel exposure tracking, and Zero Trust enforcement.",
+    desc: "Multi-cloud coverage across 2,800+ cloud accounts. CNAPP-class attack path simulation with AI-augmented CSPM, crown-jewel exposure tracking, and Zero Trust enforcement.",
   },
   {
     num: "05",
@@ -52,7 +52,7 @@ const PROJECTS = [
     id: "01",
     name: "Artemis",
     desc: "Multi-cloud attack path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer. Crown-jewel exposure, toxic IAM trends, cross-cloud chains mapped to MITRE ATT&CK.",
-    metric: "2,823+",
+    metric: "2,800+",
     metricLabel: "accounts unified",
     tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI"],
     span: "wide",
@@ -78,8 +78,8 @@ const PROJECTS = [
   {
     id: "04",
     name: "Detection Engine",
-    desc: "222 active signatures deployed via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis against 74 real-world techniques. Zero false positives at scale.",
-    metric: "222",
+    desc: "200+ active signatures deployed via Terraform across AWS accounts. MITRE ATT&CK gap analysis against real-world techniques. Zero false positives at scale.",
+    metric: "200+",
     metricLabel: "active signatures",
     tags: ["Python", "Lambda", "Terraform"],
     span: "wide",
@@ -127,8 +127,8 @@ export default function WTheme01Hero({ theme }: { theme: Theme }) {
 
       // 2. Stat counters with ScrollTrigger
       const animatedStats = [
-        { el: ".w1-stat-accounts", target: 2823, duration: 2,   decimals: false },
-        { el: ".w1-stat-sigs",     target: 222,  duration: 1.6, decimals: false },
+        { el: ".w1-stat-accounts", target: 2800, duration: 2,   decimals: false },
+        { el: ".w1-stat-sigs",     target: 200,  duration: 1.6, decimals: false },
         { el: ".w1-stat-cost",     target: 1.40, duration: 1.2, decimals: true  },
       ];
 
@@ -230,7 +230,7 @@ export default function WTheme01Hero({ theme }: { theme: Theme }) {
 
           {/* Sub-text */}
           <p className="w1-hero-sub">
-            AI-native platforms protecting 2,823 cloud accounts. Built for scale.
+            AI-native platforms protecting 2,800+ cloud accounts. Built for scale.
           </p>
 
           {/* CTAs */}

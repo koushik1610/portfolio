@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Content ────────────────────────────────────────────────────────────────────
 
 const STAT_CARDS = [
-  { value: "2,823", label: "Cloud Accounts" },
+  { value: "2,800+", label: "Cloud Accounts" },
   { value: "100%", label: "GOAT Recall" },
   { value: "$1.40", label: "Per Research Run" },
 ] as const;
@@ -21,7 +21,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "222 active detection signatures across 1,500+ AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK coverage from cloud incident response data.",
+    desc: "200+ active detection signatures across AWS accounts — 0% false-positive rate. CIS-benchmarked baselines grounded in MITRE ATT&CK coverage from cloud incident response data.",
   },
   {
     num: "02",
@@ -31,12 +31,12 @@ const EXPERTISE = [
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models. Agentic SOAR workstation backed by 1,767-node knowledge graph from 3,559 historical tickets.",
+    desc: "Multi-agent orchestration across 19 foundation models. Agentic SOAR workstation backed by 1,700+-node knowledge graph from historical tickets.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "2,823 AWS and GCP accounts. CNAPP-class attack path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.",
+    desc: "2,800+ cloud accounts. CNAPP-class attack path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.",
   },
   {
     num: "05",
@@ -50,7 +50,7 @@ const PROJECTS = [
     id: "01",
     name: "Artemis",
     desc: "Multi-cloud attack path simulation — GCP SCC + AWS Security Hub unified into AI-enriched graph layer. Crown-jewel exposure, toxic IAM combinations, cross-cloud chains.",
-    metric: "2,823+",
+    metric: "2,800+",
     metricLabel: "accounts",
     tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI"],
   },
@@ -73,8 +73,8 @@ const PROJECTS = [
   {
     id: "04",
     name: "Detection Engine",
-    desc: "222 active signatures via Terraform across 1,500+ AWS accounts. MITRE ATT&CK gap analysis — 74 real-world techniques. Zero false positives.",
-    metric: "222",
+    desc: "200+ active signatures via Terraform across AWS accounts. MITRE ATT&CK gap analysis — real-world techniques. Zero false positives.",
+    metric: "200+",
     metricLabel: "signatures",
     tags: ["Python", "Lambda", "Terraform"],
   },
@@ -212,7 +212,7 @@ export default function WTheme02Hero({ theme }: { theme: Theme }) {
           </div>
 
           <p className="w2-sub">
-            Building AI-native platforms across 2,823 cloud accounts. Detection, IAM, and
+            Building AI-native platforms across 2,800+ cloud accounts. Detection, IAM, and
             agentic security — production systems, not prototypes.
           </p>
 

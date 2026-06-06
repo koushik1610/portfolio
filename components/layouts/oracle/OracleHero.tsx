@@ -16,14 +16,14 @@ type ResultRow = {
 
 const ROWS: ResultRow[] = [
   { id: 1, achievement: "IAM Escalation Skill",         metric: "100% recall · 32/32 paths",          year: 2024, domain: "iam"       },
-  { id: 2, achievement: "Cloud Account Security",       metric: "2,500+ accounts · 0 breaches",        year: 2025, domain: "cloud"     },
+  { id: 2, achievement: "Cloud Account Security",       metric: "2,800+ accounts · 0 breaches",        year: 2025, domain: "cloud"     },
   { id: 3, achievement: "Detection Engineering",        metric: "200+ rules · 0 false positives",      year: 2024, domain: "detection" },
   { id: 4, achievement: "Autonomous Threat Intel Pipeline", metric: "$1.40/run · 55% cost reduction · 19 models", year: 2024, domain: "ai" },
-  { id: 5, achievement: "AI-Augmented CSPM Platform",   metric: "1,400+ tickets trained · 45 endpoints · autonomous triage", year: 2024, domain: "ai" },
+  { id: 5, achievement: "AI-Augmented CSPM Platform",   metric: "historical tickets trained · autonomous triage", year: 2024, domain: "ai" },
   { id: 6, achievement: "IAM Toxic Combination Solver", metric: "65+ escalation paths dissolved",     year: 2023, domain: "iam"       },
   { id: 7, achievement: "Attack Path Simulation",       metric: "Artemis — GCP+AWS unified graph",    year: 2023, domain: "detection" },
   { id: 8, achievement: "GOAT Benchmark",               metric: "32/32 verified · 100% recall",       year: 2024, domain: "iam"       },
-  { id: 9, achievement: "Agentic Security Reviews",    metric: "80% effort reduction · 123 reviews · backlog eliminated", year: 2024, domain: "ai" },
+  { id: 9, achievement: "Agentic Security Reviews",    metric: "80% effort reduction · 120+ reviews · backlog eliminated", year: 2024, domain: "ai" },
 ];
 
 const ROWS_PER_PAGE = 5;

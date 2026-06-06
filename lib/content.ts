@@ -36,7 +36,7 @@ const RESEARCH_PROJECTS: ResearchProject[] = [
     name: "Artemis",
     status: "In Research",
     tagline: "Multi-cloud attack path simulation at enterprise scale.",
-    body: "A CNAPP-class multi-cloud attack path simulation platform spanning 2,500+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched graph layer. Exports to BigQuery, applies Gemini enrichment, maps to business units via fuzzy crown-jewel matching, and tracks toxic combination persistence over time. The open engineering problem: turning simulation output into dissolution playbooks that actually execute — not just reports that sit in a dashboard.",
+    body: "A CNAPP-class multi-cloud attack path simulation platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched graph layer. Exports to BigQuery, applies Gemini enrichment, maps to business units via fuzzy crown-jewel matching, and tracks toxic combination persistence over time. The open engineering problem: turning simulation output into dissolution playbooks that actually execute — not just reports that sit in a dashboard.",
     hypothesis: "Most CNAPPs surface individual findings. Artemis surfaces the chain — and the minimum intervention that collapses it.",
     tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI", "Gemini", "BigQuery", "Databricks"],
   },
@@ -61,11 +61,11 @@ const V1: ContentVariation = {
     sections: [
       {
         heading: "Detection Engineering",
-        body: "Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — sustaining a 0% false-positive rate at account scale while continuously expanding coverage as the threat landscape evolves. Authored the v6 AWS security baseline release: 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each grounded in a MITRE ATT&CK gap analysis against 74 real-world attack techniques sourced from cloud incident response data. Detection fleet deployed via Terraform-controlled infrastructure, enabling machine-speed detection and response across the full cloud account estate.",
+        body: "Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across AWS accounts — sustaining a 0% false-positive rate at account scale while continuously expanding coverage as the threat landscape evolves. Authored the AWS security baseline release: CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each grounded in a MITRE ATT&CK gap analysis against real-world attack techniques sourced from cloud incident response data. Detection fleet deployed via Terraform-controlled infrastructure, enabling machine-speed detection and response across the full cloud account estate.",
       },
       {
         heading: "Agentic Security Reviews",
-        body: "Designed and shipped an agentic SOAR-style cloud security review platform that reduced per-review effort by 80% — scaling threat modeling and security architecture review throughput to 123 reviews across all business units with a 4-person team, eliminating a 6-week backlog. Built a cross-ticket intelligence layer from 1,400+ historical security review tickets — 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles — as the retrieval backbone for an autonomous review agent with 14 passive detection rules, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
+        body: "Designed and shipped an agentic SOAR-style cloud security review platform that sharply reduced per-review effort — scaling threat modeling and security architecture review throughput to 120+ reviews across all business units with a small team, eliminating a multi-week backlog. Built a cross-ticket intelligence layer from a large corpus of historical security review tickets — 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles — as the retrieval backbone for an autonomous review agent with passive detection rules, slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
       },
       {
         heading: "AI-Native IAM Audit Agent",
@@ -98,11 +98,11 @@ const V2: ContentVariation = {
     sections: [
       {
         heading: "Detection Fleet Ownership",
-        body: "Full ownership of 200+ active Python/Lambda detection signatures across 1,500+ AWS accounts — sustaining a 0% false-positive rate while continuously adding net-new controls. The v6 AWS security baseline release covered 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each mapped to a MITRE ATT&CK technique from cloud incident response data. Detection infrastructure managed via Terraform for reproducible deployment; the core engineering challenge is evaluation logic that achieves zero-false-positives at account scale while remaining expressive enough to cover per-service configuration nuance. Enables machine-speed detection and response across the full cloud estate.",
+        body: "Full ownership of 200+ active Python/Lambda detection signatures across AWS accounts — sustaining a 0% false-positive rate while continuously adding net-new controls. The the AWS security baseline release covered CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each mapped to a MITRE ATT&CK technique from cloud incident response data. Detection infrastructure managed via Terraform for reproducible deployment; the core engineering challenge is evaluation logic that achieves zero-false-positives at account scale while remaining expressive enough to cover per-service configuration nuance. Enables machine-speed detection and response across the full cloud estate.",
       },
       {
         heading: "Agentic Security Review Platform",
-        body: "Designed and shipped an agentic SOAR-style cloud security review platform that reduced per-review effort by 80% and scaled threat modeling coverage to 123 reviews across all business units with four engineers, eliminating a 6-week backlog. Architecture: 1,400+ historical security review tickets → 1,767 knowledge nodes across 11 security domains, 411 technology stacks, and 1,055 application profiles → autonomous review agent with 14 passive detection rules, 6 multi-step skills, 16 slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
+        body: "Designed and shipped an agentic SOAR-style cloud security review platform that sharply reduced per-review effort and scaled threat modeling coverage to 120+ reviews across all business units with a small team, eliminating a multi-week backlog. Architecture: historical security review tickets → 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles → autonomous review agent with passive detection rules, multi-step skills, slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
       },
       {
         heading: "AI-Native IAM Audit Agent",
@@ -114,7 +114,7 @@ const V2: ContentVariation = {
       },
       {
         heading: "Production AI Security Platforms",
-        body: "Two AI-augmented security platforms, both in daily operational use. Security Ops Platform: FastAPI + Databricks SQL, 45 endpoints — autonomous alert triage and LLM-driven change request validation against policy baseline, powered by a deterministic AI advisor trained on 2,171 historical cloud security tickets; 4-signal scoring (confidence clamped 5–95%), hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate. Autonomous Threat Intelligence Ingestion agent: 4-stage LLM-driven workflow across 21 feeds — Haiku handles high-volume triage, Sonnet+Opus draft CIS/NIST-aligned baseline documents in exact registry shape, programmatic verifier gates delivery. 330+ items/day, baseline discovery-to-draft under 30 minutes, under $0.05/run.",
+        body: "Two AI-augmented security platforms, both in daily operational use. Security Ops Platform: FastAPI + Databricks SQL, multi-endpoint coverage — autonomous alert triage and LLM-driven change request validation against policy baseline, powered by a deterministic AI advisor trained on 2,171 historical cloud security tickets; 4-signal scoring (confidence clamped 5–95%), hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate. Autonomous Threat Intelligence Ingestion agent: 4-stage LLM-driven workflow across 21 feeds — Haiku handles high-volume triage, Sonnet+Opus draft CIS/NIST-aligned baseline documents in exact registry shape, programmatic verifier gates delivery. 330+ items/day, baseline discovery-to-draft under 30 minutes, under $0.05/run.",
       },
     ],
   },
@@ -135,11 +135,11 @@ const V3: ContentVariation = {
     sections: [
       {
         heading: "Getting the Signal Right",
-        body: "200+ detection signatures across 1,500+ AWS accounts — each one a judgment call on whether a configuration pattern is genuinely risky, and at what threshold. The sustained 0% false-positive rate is deliberate: security engineers stop trusting tools that cry wolf. I authored the MITRE ATT&CK gap analysis for the v6 AWS security baseline program — 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — because the existing controls had coverage gaps I could map directly to real attack techniques from cloud incident response data. The forcing function: if we can't detect a known technique with machine-speed detection and response, that's a gap to close.",
+        body: "200+ detection signatures across AWS accounts — each one a judgment call on whether a configuration pattern is genuinely risky, and at what threshold. The sustained 0% false-positive rate is deliberate: security engineers stop trusting tools that cry wolf. I authored the MITRE ATT&CK gap analysis for the AWS security baseline program — CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — because the existing controls had coverage gaps I could map directly to real attack techniques from cloud incident response data. The forcing function: if we can't detect a known technique with machine-speed detection and response, that's a gap to close.",
       },
       {
         heading: "Scaling Reviews Without Scaling Headcount",
-        body: "Threat modeling and security architecture reviews were a bottleneck — one engineer per review, institutional knowledge not captured anywhere, inconsistent coverage across business units. I approached it as a retrieval problem: could I make what the best reviewer knows accessible to any reviewer? The solution was cross-ticket intelligence: 1,400+ historical tickets became 1,767 structured knowledge nodes powering an agentic SOAR-style review platform that reduced per-review effort by 80%. 123 reviews across all business units — eliminating a 6-week backlog. The coverage is better, not just faster. Security scales without additional headcount.",
+        body: "Threat modeling and security architecture reviews were a bottleneck — one engineer per review, institutional knowledge not captured anywhere, inconsistent coverage across business units. I approached it as a retrieval problem: could I make what the best reviewer knows accessible to any reviewer? The solution was cross-ticket intelligence: a large corpus of historical tickets became 1,700+ structured knowledge nodes powering an agentic SOAR-style review platform that sharply reduced per-review effort. 120+ reviews across all business units — eliminating a multi-week backlog. The coverage is better, not just faster. Security scales without additional headcount.",
       },
       {
         heading: "The IAM Problem",
@@ -172,11 +172,11 @@ const V4: ContentVariation = {
     sections: [
       {
         heading: "200+ Active Detection Signatures",
-        body: "Own end-to-end lifecycle of 200+ Python/Lambda detection signatures across 1,500+ AWS accounts — 0% false-positive rate sustained at account scale, enabling machine-speed detection and response. v6 baseline release: 49 CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC, grounded in a MITRE ATT&CK gap analysis from cloud incident response data. Fleet managed via Terraform.",
+        body: "Own end-to-end lifecycle of 200+ Python/Lambda detection signatures across AWS accounts — 0% false-positive rate sustained at account scale, enabling machine-speed detection and response. baseline release: CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC, grounded in a MITRE ATT&CK gap analysis from cloud incident response data. Fleet managed via Terraform.",
       },
       {
-        heading: "123 Security Reviews, 4-Person Team",
-        body: "Shipped an agentic SOAR-style review platform that cut per-review effort by 80% — cross-ticket intelligence from 1,400+ historical tickets → 1,767-node knowledge graph → autonomous review agent with 14 passive detection rules, 16 slash commands, and MCP integration with Jira and Confluence. 123 threat modeling and architecture reviews across all business units. 6-week backlog eliminated. Scales security without additional headcount.",
+        heading: "120+ Security Reviews, Small Team",
+        body: "Shipped an agentic SOAR-style review platform that sharply cut per-review effort — cross-ticket intelligence from a large corpus of historical tickets → 1,700+-node knowledge graph → autonomous review agent with passive detection rules, slash commands, and MCP integration with Jira and Confluence. 120+ threat modeling and architecture reviews across all business units. multi-week backlog eliminated. Scales security without additional headcount.",
       },
       {
         heading: "AI-Native IAM Audit Agent — 100% Recall, 0 False Positives",
@@ -188,7 +188,7 @@ const V4: ContentVariation = {
       },
       {
         heading: "AI Security Platforms — Production, Not Prototypes",
-        body: "AI-augmented CSPM operations platform: FastAPI + Databricks, 45 endpoints, autonomous alert triage and LLM-driven change request validation — deterministic AI advisor trained on 2,171 cloud security tickets, hard deny gate for 6 critical baseline categories. Autonomous threat intelligence ingestion agent: 21 feeds, 330+ items/day, 4-stage LLM-driven workflow — CIS/NIST baseline discovery-to-draft in under 30 minutes, under $0.05/run. Both shipped. Both in daily use.",
+        body: "AI-augmented CSPM operations platform: FastAPI + Databricks, multi-endpoint coverage, autonomous alert triage and LLM-driven change request validation — deterministic AI advisor trained on 2,171 cloud security tickets, hard deny gate for 6 critical baseline categories. Autonomous threat intelligence ingestion agent: 21 feeds, 330+ items/day, 4-stage LLM-driven workflow — CIS/NIST baseline discovery-to-draft in under 30 minutes, under $0.05/run. Both shipped. Both in daily use.",
       },
     ],
   },
