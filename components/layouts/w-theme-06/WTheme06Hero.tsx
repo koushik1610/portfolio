@@ -371,7 +371,7 @@ export default function WTheme06Hero({ theme }: { theme: Theme }) {
                   <a href="mailto:koushik.kotamraju1610@gmail.com" className="w6-hero-cta w6-hero-cta--primary">Get in touch</a>
                   <a href="https://github.com/koushik1610" className="w6-hero-cta" target="_blank" rel="noopener noreferrer">GitHub</a>
                   <span className="w6-hero-hint" aria-hidden="true">
-                    Scroll<span className="w6-hint-arrow">→</span>
+                    Scroll to advance<span className="w6-hint-arrow">→</span>
                   </span>
                 </div>
               </div>

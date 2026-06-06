@@ -120,6 +120,13 @@ main {
   margin: 0;
   width: 100%;
 }
+/* The masthead rule carries the brand color — one felt oxblood moment */
+.w8-rule--accent {
+  height: 3px;
+  background: var(--w8-accent);
+  width: 64px;
+  border-radius: 2px;
+}
 
 /* ── Masthead ─────────────────────────────────────────────────────────────── */
 

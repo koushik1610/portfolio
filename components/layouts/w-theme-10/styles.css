@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    W-Theme-10 — "Prism" · layout variant: w10
    Layered depth + 3D pointer-tilt stage.
-   Palette: #0b0b10 bg · cool aurora accents #60a5fa / #a78bfa (glows/borders only)
+   Palette: #0b0b10 bg · bespoke monochrome violet #9d7bff (glows/borders only)
    All rules scoped under .w10-root / html[data-layout="w10"]
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -13,8 +13,10 @@ html[data-layout="w10"] nav:not(.w10-nav) {
   --w10-bg: #0b0b10;
   --w10-text: #eef0f6;
   --w10-muted: #a0a4bd;
-  --w10-blue: #60a5fa;
-  --w10-violet: #a78bfa;
+  /* Bespoke monochrome violet — single owned accent (not the stock blue+violet aurora) */
+  --w10-blue: #9d7bff;
+  --w10-violet: #7c5cf0;
+  --w10-ink: #160a2e;
   --w10-card: rgba(255, 255, 255, 0.035);
   --w10-card-hi: rgba(255, 255, 255, 0.06);
   --w10-line: rgba(255, 255, 255, 0.09);
@@ -36,7 +38,7 @@ html[data-layout="w10"] nav:not(.w10-nav) {
 
 .w10-skip {
   position: absolute; left: -9999px; top: 0; z-index: 999;
-  background: var(--w10-blue); color: #08111f;
+  background: var(--w10-blue); color: #160a2e;
   padding: 10px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;
 }
 .w10-skip:focus { left: 16px; top: 16px; }
@@ -55,12 +57,12 @@ html[data-layout="w10"] nav:not(.w10-nav) {
 .w10-layer-a {
   top: -200px; right: -160px;
   width: 520px; height: 520px;
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.32), transparent 68%);
+  background: radial-gradient(circle, rgba(157, 123, 255, 0.30), transparent 68%);
 }
 .w10-layer-b {
   top: 48%; left: -200px;
   width: 440px; height: 440px;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.24), transparent 68%);
+  background: radial-gradient(circle, rgba(124, 92, 240, 0.22), transparent 68%);
 }
 .w10-grid-bg {
   position: fixed;
@@ -132,9 +134,9 @@ html[data-layout="w10"] nav:not(.w10-nav) {
 .w10-exp-card:hover,
 .w10-proj-card:hover,
 .w10-contact-card:hover {
-  border-color: rgba(96, 165, 250, 0.4);
+  border-color: rgba(157, 123, 255, 0.4);
   background: var(--w10-card-hi);
-  box-shadow: 0 20px 50px -30px rgba(96, 165, 250, 0.4);
+  box-shadow: 0 20px 50px -30px rgba(157, 123, 255, 0.4);
 }
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
@@ -164,10 +166,10 @@ html[data-layout="w10"] nav:not(.w10-nav) {
   background: var(--w10-blue); box-shadow: 0 0 12px var(--w10-blue);
 }
 .w10-hero-name {
-  font-size: clamp(3rem, 8.5vw, 6.5rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 0.94;
+  font-size: clamp(3.25rem, 9.5vw, 7.5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
   margin: 0 0 28px;
 }
 .w10-hero-tagline {
@@ -193,10 +195,10 @@ html[data-layout="w10"] nav:not(.w10-nav) {
 .w10-cta--primary {
   background: var(--w10-blue);
   border-color: var(--w10-blue);
-  color: #08111f;
+  color: #160a2e;
   font-weight: 600;
 }
-.w10-cta--primary:hover { background: #93c5fd; border-color: #93c5fd; color: #08111f; }
+.w10-cta--primary:hover { background: #c4b5fd; border-color: #c4b5fd; color: #160a2e; }
 
 @media (max-width: 639px) { .w10-hero-card { padding: 40px 26px; } }
 
@@ -273,8 +275,8 @@ html[data-layout="w10"] nav:not(.w10-nav) {
   width: 38px; height: 38px;
   border-radius: 10px;
   color: var(--w10-blue);
-  background: rgba(96, 165, 250, 0.1);
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  background: rgba(157, 123, 255, 0.1);
+  border: 1px solid rgba(157, 123, 255, 0.2);
   margin-bottom: 6px;
 }
 .w10-exp-name { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
@@ -321,9 +323,9 @@ html[data-layout="w10"] nav:not(.w10-nav) {
 .w10-tag {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
-  color: #c7d8ff;
-  background: rgba(96, 165, 250, 0.08);
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  color: #ddd4ff;
+  background: rgba(157, 123, 255, 0.08);
+  border: 1px solid rgba(157, 123, 255, 0.2);
   border-radius: 6px;
   padding: 3px 9px;
 }

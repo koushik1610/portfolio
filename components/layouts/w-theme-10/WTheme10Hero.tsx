@@ -163,7 +163,7 @@ export default function WTheme10Hero({ theme }: { theme: Theme }) {
                 <span className="w10-dot" aria-hidden="true" />
                 Sr. Security Engineer · Yahoo Paranoids
               </p>
-              <div className="w10-hero-name">Koushik<br />Kotamraju</div>
+              <div className="w10-hero-name" aria-hidden="true">Koushik<br />Kotamraju</div>
               <p className="w10-hero-tagline">
                 Cloud security engineer building AI-native security platforms —
                 production systems, not prototypes.

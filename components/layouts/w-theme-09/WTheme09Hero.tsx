@@ -15,6 +15,12 @@ const MARQUEE = [
   "MITRE ATT&CK", "AI Security Tooling", "CNAPP", "Zero Trust", "Threat Intelligence", "CIEM",
 ];
 
+// Second band = outcomes, not disciplines — distinct content from band 1
+const MARQUEE_STATS = [
+  "2,823 accounts", "222 signatures", "100% GOAT recall", "$1.40 / run",
+  "0% false positives", "62 toxic combos", "1,767-node graph", "19 models",
+];
+
 const STATS = [
   { key: "accounts", target: 2823, duration: 1.8, initial: "0", numClass: "w9-n-accounts", label: "Cloud accounts", ariaLabel: "2,823 cloud accounts" },
   { key: "sigs", target: 222, duration: 1.4, initial: "0", numClass: "w9-n-sigs", label: "Detection signatures", ariaLabel: "222 detection signatures" },
@@ -88,11 +94,11 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
         gsap.from(stmt.words, {
           opacity: 0.14,
           ease: "none",
-          stagger: 0.5,
+          stagger: 0.3,
           scrollTrigger: {
             trigger: ".w9-statement-section",
-            start: "top 75%",
-            end: "bottom 70%",
+            start: "top 80%",
+            end: "bottom 85%",
             scrub: true,
             invalidateOnRefresh: true,
           },
@@ -232,7 +238,7 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
         {/* ── Marquee band 2 ───────────────────────────────────────────── */}
         <div className="w9-marquee w9-marquee--rev" aria-hidden="true">
           <div className="w9-marquee-track">
-            {[...MARQUEE, ...MARQUEE].map((m, i) => (
+            {[...MARQUEE_STATS, ...MARQUEE_STATS].map((m, i) => (
               <span key={i} className="w9-marquee-item">
                 {m}<span className="w9-marquee-sep">✦</span>
               </span>

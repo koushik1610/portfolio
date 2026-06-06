@@ -145,7 +145,7 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
           </div>
         </header>
 
-        <div className="w8-rule" aria-hidden="true" />
+        <div className="w8-rule w8-rule--accent" aria-hidden="true" />
 
         {/* ── Metrics ──────────────────────────────────────────────────── */}
         <section className="w8-metrics" aria-label="Key metrics">
