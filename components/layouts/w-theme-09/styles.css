@@ -141,7 +141,18 @@ main { width: 100%; }
   will-change: transform;
   animation: w9-marquee 38s linear infinite;
 }
-.w9-marquee--rev .w9-marquee-track { animation-direction: reverse; }
+.w9-marquee--rev { padding: 16px 0; }
+.w9-marquee--rev .w9-marquee-track { animation-direction: reverse; animation-duration: 52s; }
+.w9-marquee--rev .w9-marquee-item {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--w9-muted);
+}
+@supports not (-webkit-text-stroke: 1px black) {
+  .w9-marquee--rev .w9-marquee-item { color: var(--w9-muted); }
+}
+.w9-marquee--rev .w9-marquee-sep { -webkit-text-stroke: 0; color: var(--w9-accent); }
 @keyframes w9-marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -374,10 +385,11 @@ main { width: 100%; }
 .w9-clink--primary {
   background: var(--w9-accent);
   border-color: var(--w9-accent);
-  color: #fff;
+  color: #1a0a06;
+  font-weight: 700;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
-.w9-clink--primary:hover { background: #ff6a4f; border-color: #ff6a4f; color: #fff; }
+.w9-clink--primary:hover { background: #ff6a4f; border-color: #ff6a4f; color: #1a0a06; }
 
 /* ── Keyboard focus ───────────────────────────────────────────────────────── */
 .w9-root a:focus-visible,

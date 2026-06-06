@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    W-Theme-07 — "Command" · layout variant: w7
    Command-palette / spotlight console. Raycast/Linear energy.
-   Palette: #0a0a0c bg · frosted glass panels · indigo accent #818cf8
+   Palette: #0a0a0c bg · frosted glass panels · terminal-amber accent #f0a830
    All rules scoped under .w7-root / html[data-layout="w7"]
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -14,12 +14,13 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   --w7-text: #f4f4f6;
   --w7-muted: #9a9aa3;
   --w7-faint: #87878f;
-  --w7-accent: #818cf8;
-  --w7-accent-hi: #a5b4fc;
+  /* Bespoke terminal-amber — owned accent (refined CRT amber, not garish) */
+  --w7-accent: #f0a830;
+  --w7-accent-hi: #ffce85;
   --w7-panel: rgba(255, 255, 255, 0.04);
   --w7-line: rgba(255, 255, 255, 0.08);
   background:
-    radial-gradient(60% 50% at 50% 0%, rgba(129, 140, 248, 0.07), transparent 70%),
+    radial-gradient(60% 50% at 50% 0%, rgba(240, 168, 48, 0.07), transparent 70%),
     var(--w7-bg);
   color: var(--w7-text);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
@@ -122,8 +123,8 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
   color: var(--w7-accent);
-  background: rgba(129, 140, 248, 0.1);
-  border: 1px solid rgba(129, 140, 248, 0.22);
+  background: rgba(240, 168, 48, 0.1);
+  border: 1px solid rgba(240, 168, 48, 0.22);
   border-radius: 6px;
   padding: 3px 9px;
   flex-shrink: 0;
@@ -311,8 +312,8 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   width: 36px; height: 36px;
   border-radius: 9px;
   color: var(--w7-accent);
-  background: rgba(129, 140, 248, 0.08);
-  border: 1px solid rgba(129, 140, 248, 0.18);
+  background: rgba(240, 168, 48, 0.08);
+  border: 1px solid rgba(240, 168, 48, 0.18);
 }
 .w7-row-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .w7-row-name {
@@ -356,8 +357,8 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
   color: var(--w7-accent-hi);
-  background: rgba(129, 140, 248, 0.08);
-  border: 1px solid rgba(129, 140, 248, 0.18);
+  background: rgba(240, 168, 48, 0.08);
+  border: 1px solid rgba(240, 168, 48, 0.18);
   border-radius: 6px;
   padding: 2px 8px;
 }
