@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "oracle" | "assembly" | "studio" | "avatar3d" | "aethera" | "orb" | "w1" | "w2" | "w3" | "w4" | "w5";
+export type LayoutVariant = "oracle" | "assembly" | "studio" | "avatar3d" | "aethera" | "orb" | "w1" | "w2" | "w3" | "w4" | "w5" | "w6" | "w7" | "w8" | "w9" | "w10";
 
 export interface ThemeContent {
   tagline: string;
@@ -130,6 +130,41 @@ export const themes: Theme[] = [
     vars: { "--background": "#0a0a0a", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#fafafa", "--text-muted": "#71717a", "--accent": "#3ecf8e", "--accent-dim": "#6366f1", "--border": "rgba(255,255,255,0.07)" },
     layout: "w5",
     content: { tagline: "Sr. Security Engineer · Yahoo · 2026", bio: "AI-native platforms protecting 2,823 cloud accounts.", cta: "View Work" },
+  },
+  {
+    name: "W-Horizon",
+    id: "w-theme-06",
+    vars: { "--background": "#070709", "--surface": "rgba(255,255,255,0.025)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f2f5f7", "--text-muted": "#9aa3ac", "--accent": "#22d3ee", "--accent-dim": "#0891b2", "--border": "rgba(255,255,255,0.1)" },
+    layout: "w6",
+    content: { tagline: "Cloud security engineer building AI-native security platforms.", bio: "4 engineers. 2,823 cloud accounts. The math only works if you build the right systems.", cta: "View Work" },
+  },
+  {
+    name: "W-Command",
+    id: "w-theme-07",
+    vars: { "--background": "#0a0a0c", "--surface": "rgba(255,255,255,0.04)", "--surface-2": "rgba(255,255,255,0.06)", "--text-primary": "#f4f4f6", "--text-muted": "#8b8b94", "--accent": "#818cf8", "--accent-dim": "#6366f1", "--border": "rgba(255,255,255,0.08)" },
+    layout: "w7",
+    content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "AI-native security platforms — production systems, not prototypes.", cta: "View Work" },
+  },
+  {
+    name: "W-Lumen",
+    id: "w-theme-08",
+    vars: { "--background": "#faf9f6", "--surface": "#ffffff", "--surface-2": "#f2f1ec", "--text-primary": "#111111", "--text-muted": "#525252", "--accent": "#2563eb", "--accent-dim": "#1d4ed8", "--border": "#e2e2dd" },
+    layout: "w8",
+    content: { tagline: "Cloud security, set like a technical document.", bio: "Detection at account scale. IAM analysis at depth. Nine years across three organizations.", cta: "View Work" },
+  },
+  {
+    name: "W-Monolith",
+    id: "w-theme-09",
+    vars: { "--background": "#060606", "--surface": "#101010", "--surface-2": "#181818", "--text-primary": "#f4f4f2", "--text-muted": "#8a8a86", "--accent": "#ff4d2e", "--accent-dim": "#e23a1e", "--border": "rgba(255,255,255,0.1)" },
+    layout: "w9",
+    content: { tagline: "Securing what the internet runs on.", bio: "Detection. IAM. AI security. Built at enterprise scale.", cta: "View Work" },
+  },
+  {
+    name: "W-Prism",
+    id: "w-theme-10",
+    vars: { "--background": "#0b0b10", "--surface": "rgba(255,255,255,0.04)", "--surface-2": "rgba(255,255,255,0.06)", "--text-primary": "#eef0f6", "--text-muted": "#a0a4bd", "--accent": "#60a5fa", "--accent-dim": "#a78bfa", "--border": "rgba(255,255,255,0.09)" },
+    layout: "w10",
+    content: { tagline: "Cloud security engineer building AI-native platforms.", bio: "Layered defense across 2,823 cloud accounts. Production systems, not prototypes.", cta: "View Work" },
   },
 ];
 

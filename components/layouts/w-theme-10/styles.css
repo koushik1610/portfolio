@@ -1,0 +1,363 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   W-Theme-10 — "Prism" · layout variant: w10
+   Layered depth + 3D pointer-tilt stage.
+   Palette: #0b0b10 bg · cool aurora accents #60a5fa / #a78bfa (glows/borders only)
+   All rules scoped under .w10-root / html[data-layout="w10"]
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="w10"] nav:not(.w10-nav) {
+  display: none !important;
+}
+
+.w10-root {
+  --w10-bg: #0b0b10;
+  --w10-text: #eef0f6;
+  --w10-muted: #a0a4bd;
+  --w10-blue: #60a5fa;
+  --w10-violet: #a78bfa;
+  --w10-card: rgba(255, 255, 255, 0.035);
+  --w10-card-hi: rgba(255, 255, 255, 0.06);
+  --w10-line: rgba(255, 255, 255, 0.09);
+  position: relative;
+  background: var(--w10-bg);
+  color: var(--w10-text);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.w10-sr-only {
+  position: absolute;
+  width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.w10-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--w10-blue); color: #08111f;
+  padding: 10px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;
+}
+.w10-skip:focus { left: 16px; top: 16px; }
+
+/* ── Depth layers ─────────────────────────────────────────────────────────── */
+
+.w10-layer {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.32;
+  will-change: transform;
+}
+.w10-layer-a {
+  top: -200px; right: -160px;
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.32), transparent 68%);
+}
+.w10-layer-b {
+  top: 48%; left: -200px;
+  width: 440px; height: 440px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.24), transparent 68%);
+}
+.w10-grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 80%);
+}
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+
+.w10-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 22px 40px;
+}
+.w10-nav-logo {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.12em;
+}
+.w10-nav-role { font-size: 12.5px; color: var(--w10-muted); }
+.w10-nav-cta {
+  font-size: 13px; font-weight: 500; color: var(--w10-text); text-decoration: none;
+  border: 1px solid var(--w10-line); padding: 7px 16px; border-radius: 999px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.w10-nav-cta:hover { border-color: var(--w10-blue); color: var(--w10-blue); }
+@media (max-width: 639px) { .w10-nav { padding: 16px 18px; } .w10-nav-role { display: none; } }
+
+/* ── Main ─────────────────────────────────────────────────────────────────── */
+
+.w10-main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px 100px;
+}
+@media (max-width: 639px) { .w10-root .w10-main { padding: 0 18px 72px; } }
+
+/* Shared card surface */
+.w10-hero-card,
+.w10-stat-card,
+.w10-exp-card,
+.w10-proj-card,
+.w10-contact-card {
+  position: relative;
+  background: var(--w10-card);
+  border: 1px solid var(--w10-line);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+}
+/* Tilt cards keep a 3D context + a light frosted surface */
+.w10-hero-card,
+.w10-stat-card,
+.w10-proj-card,
+.w10-contact-card {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.w10-hero-card:hover,
+.w10-stat-card:hover,
+.w10-exp-card:hover,
+.w10-proj-card:hover,
+.w10-contact-card:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  background: var(--w10-card-hi);
+  box-shadow: 0 20px 50px -30px rgba(96, 165, 250, 0.4);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+
+.w10-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 110px 0 60px;
+}
+.w10-hero-card {
+  width: 100%;
+  padding: 56px 52px;
+}
+.w10-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--w10-muted);
+  margin: 0 0 26px;
+}
+.w10-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--w10-blue); box-shadow: 0 0 12px var(--w10-blue);
+}
+.w10-hero-name {
+  font-size: clamp(3rem, 8.5vw, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+  margin: 0 0 28px;
+}
+.w10-hero-tagline {
+  font-size: clamp(1rem, 1.6vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--w10-muted);
+  max-width: 520px;
+  margin: 0 0 34px;
+}
+.w10-hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.w10-cta {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--w10-text);
+  text-decoration: none;
+  border: 1px solid var(--w10-line);
+  border-radius: 999px;
+  padding: 11px 22px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.w10-cta:hover { border-color: var(--w10-blue); color: var(--w10-blue); }
+.w10-cta--primary {
+  background: var(--w10-blue);
+  border-color: var(--w10-blue);
+  color: #08111f;
+  font-weight: 600;
+}
+.w10-cta--primary:hover { background: #93c5fd; border-color: #93c5fd; color: #08111f; }
+
+@media (max-width: 639px) { .w10-hero-card { padding: 40px 26px; } }
+
+/* ── Stats ────────────────────────────────────────────────────────────────── */
+
+.w10-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 90px;
+}
+.w10-stat-card {
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.w10-stat-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--w10-blue);
+  font-variant-numeric: tabular-nums;
+}
+.w10-stat-label { font-size: 14px; font-weight: 600; margin-top: 12px; }
+.w10-stat-sub { font-size: 12.5px; color: var(--w10-muted); }
+@media (max-width: 767px) {
+  .w10-stats { grid-template-columns: 1fr; }
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+
+.w10-section { margin-bottom: 90px; }
+.w10-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.w10-section-title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.w10-section-count {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--w10-muted);
+}
+
+/* Expertise */
+.w10-exp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.w10-exp-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+.w10-exp-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  color: var(--w10-blue);
+  background: rgba(96, 165, 250, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  margin-bottom: 6px;
+}
+.w10-exp-name { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.w10-exp-brief { font-size: 12.5px; color: var(--w10-muted); line-height: 1.5; }
+@media (max-width: 1023px) { .w10-exp-list { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 639px) { .w10-exp-list { grid-template-columns: 1fr; } }
+
+/* Work */
+.w10-work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.w10-proj-card {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+.w10-proj-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.w10-proj-id {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--w10-blue);
+}
+.w10-proj-metric { display: flex; flex-direction: column; align-items: flex-end; }
+.w10-proj-metric-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 20px; font-weight: 700; line-height: 1; letter-spacing: -0.02em;
+}
+.w10-proj-metric-label {
+  font-size: 10.5px; color: var(--w10-muted);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-top: 3px;
+}
+.w10-proj-name { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; }
+.w10-proj-desc { font-size: 13.5px; line-height: 1.6; color: var(--w10-muted); margin: 0; flex: 1; }
+.w10-proj-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.w10-tag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: #c7d8ff;
+  background: rgba(96, 165, 250, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 6px;
+  padding: 3px 9px;
+}
+@media (max-width: 767px) { .w10-work-grid { grid-template-columns: 1fr; } }
+
+/* ── Contact ──────────────────────────────────────────────────────────────── */
+
+.w10-contact { margin-bottom: 20px; }
+.w10-contact-card { padding: 52px; }
+.w10-contact-eyebrow {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--w10-blue); margin: 0 0 16px;
+}
+.w10-contact-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+  margin: 0 0 16px;
+  max-width: 540px;
+}
+.w10-contact-sub {
+  font-size: 1.0625rem; line-height: 1.6; color: var(--w10-muted);
+  margin: 0 0 32px; max-width: 460px;
+}
+.w10-contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+@media (max-width: 639px) { .w10-contact-card { padding: 36px 24px; } }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.w10-root a:focus-visible,
+.w10-root button:focus-visible {
+  outline: 2px solid var(--w10-blue);
+  outline-offset: 3px;
+  border-radius: 6px;
+}

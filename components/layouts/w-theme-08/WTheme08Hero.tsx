@@ -1,0 +1,236 @@
+"use client";
+
+import { useRef } from "react";
+import type { Theme } from "@/lib/themes";
+import { gsap, useGSAP, SplitText } from "@/lib/gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "./styles.css";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Content ─────────────────────────────────────────────────────────────────
+
+const METRICS = [
+  { key: "accounts", target: 2823, duration: 1.8, initial: "0", numClass: "w8-m-accounts", label: "Cloud accounts secured", ariaLabel: "2,823 cloud accounts secured" },
+  { key: "sigs", target: 222, duration: 1.4, initial: "0", numClass: "w8-m-sigs", label: "Detection signatures, 0% FP", ariaLabel: "222 detection signatures, zero percent false positive" },
+  { key: "reviews", target: 123, duration: 1.4, initial: "0", numClass: "w8-m-reviews", label: "Security reviews conducted", ariaLabel: "123 security reviews conducted" },
+  { key: "recall", target: 100, duration: 1.4, format: (v: number) => Math.round(v) + "%", initial: "0%", numClass: "w8-m-recall", label: "GOAT recall · 32/32", ariaLabel: "100 percent GOAT recall, 32 of 32" },
+] as const;
+
+const EXPERTISE = [
+  { num: "01", name: "Detection Engineering", desc: "222 active signatures across 1,500+ AWS accounts at a 0% false-positive rate. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.", meta: "0% FP" },
+  { num: "02", name: "IAM Privilege Analysis", desc: "AI-native IAM audit agent traversing 65+ escalation paths across 10 vulnerability classes, with LLM semantic interpretation of transitive chains.", meta: "100% GOAT" },
+  { num: "03", name: "AI Security Tooling", desc: "Multi-agent orchestration across 19 models from 5 providers. Agentic SOAR workstation on a 1,767-node knowledge graph mined from 3,559 tickets.", meta: "19 models" },
+  { num: "04", name: "Cloud Security Architecture", desc: "2,823 AWS and GCP accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.", meta: "2,823 acct" },
+  { num: "05", name: "Security Research", desc: "Artemis multi-cloud attack-path simulation; Antitoxin graph-theoretic IAM analysis cataloguing 62 toxic combinations with minimum cut-set auto-remediation.", meta: "62 combos" },
+] as const;
+
+const PROJECTS = [
+  { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer.", metric: "2,823+ accounts", tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"] },
+  { id: "02", name: "IAM Audit Agent", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall.", metric: "100% recall", tags: ["IAM", "Python", "Boto3"] },
+  { id: "03", name: "Autonomous Threat Intel", desc: "19 models, 5 providers, performance-weighted router. Analyst-ready proposals at $1.40 per run.", metric: "$1.40 / run", tags: ["Multi-Agent", "Claude", "GPT-4"] },
+  { id: "04", name: "Detection Engine", desc: "222 active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.", metric: "222 signatures", tags: ["Python", "Lambda", "Terraform"] },
+] as const;
+
+// ── Component ───────────────────────────────────────────────────────────────
+
+export default function WTheme08Hero({ theme }: { theme: Theme }) {
+  void theme;
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!prefersReduced) {
+        const split = SplitText.create(".w8-name", {
+          type: "words",
+          mask: "words",
+          aria: "none",
+        });
+        gsap.from(split.words, {
+          yPercent: 110,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power3.out",
+          delay: 0.1,
+        });
+        gsap.from(".w8-masthead-meta > *", {
+          autoAlpha: 0,
+          y: 14,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
+          delay: 0.45,
+        });
+
+        // Hairline rules draw in
+        gsap.utils.toArray<HTMLElement>(".w8-rule").forEach((rule) => {
+          gsap.from(rule, {
+            scaleX: 0,
+            transformOrigin: "left center",
+            duration: 0.9,
+            ease: "power3.inOut",
+            scrollTrigger: { trigger: rule, start: "top 92%", once: true },
+          });
+        });
+
+        // Rows fade up
+        gsap.utils.toArray<HTMLElement>(".w8-anim-list").forEach((list) => {
+          gsap.from(list.querySelectorAll(".w8-anim-row"), {
+            autoAlpha: 0,
+            y: 18,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: { trigger: list, start: "top 82%", once: true },
+          });
+        });
+      }
+
+      // Count-ups
+      METRICS.forEach((m) => {
+        const el = rootRef.current?.querySelector<HTMLElement>(`.${m.numClass}`);
+        if (!el) return;
+        const fmt = "format" in m ? (m.format as (v: number) => string) : undefined;
+        if (prefersReduced) {
+          el.textContent = fmt ? fmt(m.target) : m.target.toLocaleString();
+          return;
+        }
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: m.target,
+          duration: m.duration,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".w8-metrics", start: "top 88%", once: true },
+          onUpdate: () => {
+            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString();
+          },
+        });
+      });
+    },
+    { scope: rootRef }
+  );
+
+  return (
+    <div className="w8-root" ref={rootRef}>
+      <a href="#w8-main" className="w8-skip">Skip to main content</a>
+      <h1 className="w8-sr-only">Koushik Kotamraju — Sr. Security Engineer at Yahoo Paranoids</h1>
+
+      <nav className="w8-nav" aria-label="Primary navigation">
+        <span className="w8-nav-logo" aria-hidden="true">KK<span className="w8-nav-logo-dot">.</span></span>
+        <ul className="w8-nav-links" role="list">
+          <li><a href="#w8-work" className="w8-nav-link">Index</a></li>
+          <li><a href="#w8-projects" className="w8-nav-link">Work</a></li>
+          <li><a href="#w8-contact" className="w8-nav-link">Contact</a></li>
+        </ul>
+        <span className="w8-nav-status"><span className="w8-status-dot" aria-hidden="true" />Open to work</span>
+      </nav>
+
+      <main id="w8-main">
+        {/* ── Masthead ─────────────────────────────────────────────────── */}
+        <header className="w8-masthead">
+          <p className="w8-kicker"><span aria-hidden="true">§</span> Sr. Security Engineer · Yahoo Paranoids</p>
+          <div className="w8-name" aria-hidden="true">Koushik<br />Kotamraju</div>
+          <div className="w8-masthead-meta">
+            <p className="w8-lede">
+              Cloud security engineer building AI-native security platforms —
+              production systems, not prototypes. Nine years across three organizations.
+            </p>
+            <div className="w8-masthead-foot">
+              <span className="w8-fileref">koushik.io</span>
+              <span className="w8-fileref">AWS Solutions Architect · Security Specialty</span>
+              <span className="w8-fileref">2026</span>
+            </div>
+          </div>
+        </header>
+
+        <div className="w8-rule" aria-hidden="true" />
+
+        {/* ── Metrics ──────────────────────────────────────────────────── */}
+        <section className="w8-metrics" aria-label="Key metrics">
+          {METRICS.map((m) => (
+            <div key={m.key} className="w8-metric" aria-label={m.ariaLabel}>
+              <span className={`w8-metric-num ${m.numClass}`} aria-hidden="true">{m.initial}</span>
+              <span className="w8-metric-label">{m.label}</span>
+            </div>
+          ))}
+        </section>
+
+        <div className="w8-rule" aria-hidden="true" />
+
+        {/* ── Index / Expertise ────────────────────────────────────────── */}
+        <section id="w8-work" className="w8-block" aria-labelledby="w8-idx-head">
+          <div className="w8-block-head">
+            <h2 id="w8-idx-head" className="w8-block-title">Index — What I build</h2>
+            <span className="w8-block-num" aria-hidden="true">05 disciplines</span>
+          </div>
+          <ol className="w8-index w8-anim-list" role="list">
+            {EXPERTISE.map((item) => (
+              <li key={item.num} className="w8-index-row w8-anim-row">
+                <span className="w8-index-num" aria-hidden="true">{item.num}</span>
+                <div className="w8-index-body">
+                  <h3 className="w8-index-name">{item.name}</h3>
+                  <p className="w8-index-desc">{item.desc}</p>
+                </div>
+                <span className="w8-index-meta" aria-hidden="true">{item.meta}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <div className="w8-rule" aria-hidden="true" />
+
+        {/* ── Selected Work ────────────────────────────────────────────── */}
+        <section id="w8-projects" className="w8-block" aria-labelledby="w8-work-head">
+          <div className="w8-block-head">
+            <h2 id="w8-work-head" className="w8-block-title">Selected work</h2>
+            <span className="w8-block-num" aria-hidden="true">04 projects</span>
+          </div>
+          <ol className="w8-projects w8-anim-list" role="list">
+            {PROJECTS.map((proj) => (
+              <li key={proj.id} className="w8-proj-row w8-anim-row" aria-label={`Project: ${proj.name}`}>
+                <span className="w8-proj-id" aria-hidden="true">{proj.id}</span>
+                <div className="w8-proj-body">
+                  <h3 className="w8-proj-name">{proj.name}</h3>
+                  <p className="w8-proj-desc">{proj.desc}</p>
+                  <div className="w8-proj-tags" aria-label="Technologies">
+                    {proj.tags.map((t) => (<span key={t} className="w8-tag">{t}</span>))}
+                  </div>
+                </div>
+                <span className="w8-proj-metric" aria-hidden="true">{proj.metric}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <div className="w8-rule" aria-hidden="true" />
+
+        {/* ── Contact / Colophon ───────────────────────────────────────── */}
+        <section id="w8-contact" className="w8-colophon" aria-labelledby="w8-contact-head">
+          <div className="w8-colophon-left">
+            <p className="w8-kicker"><span aria-hidden="true">§</span> Contact</p>
+            <h2 id="w8-contact-head" className="w8-colophon-title">
+              Open to Staff &amp; Principal Security Engineer roles.
+            </h2>
+            <p className="w8-colophon-note">Still shipping. Still curious.</p>
+          </div>
+          <div className="w8-colophon-links">
+            <a href="mailto:koushik.kotamraju1610@gmail.com" className="w8-clink">
+              <span className="w8-clink-k">Email</span>
+              <span className="w8-clink-v">koushik.kotamraju1610@gmail.com</span>
+            </a>
+            <a href="https://www.linkedin.com/in/koushikkotamraju/" className="w8-clink" target="_blank" rel="noopener noreferrer">
+              <span className="w8-clink-k">LinkedIn</span>
+              <span className="w8-clink-v">in/koushikkotamraju</span>
+            </a>
+            <a href="https://github.com/koushik1610" className="w8-clink" target="_blank" rel="noopener noreferrer">
+              <span className="w8-clink-k">GitHub</span>
+              <span className="w8-clink-v">github.com/koushik1610</span>
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
