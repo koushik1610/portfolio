@@ -16,10 +16,10 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Koushik Kotamraju — Security Engineer & Builder",
   description:
-    "Senior Technical Security Engineer at Yahoo and co-founder. 100% recall on GOAT benchmark. 200+ detection signatures, 2,500+ cloud accounts, AI-powered security at enterprise scale.",
+    "Senior Technical Security Engineer at Yahoo and co-founder. 100% recall on GOAT benchmark. 200+ detection signatures, 2,800+ cloud accounts, AI-powered security at enterprise scale.",
   openGraph: {
     title: "Koushik Kotamraju — Security Engineer & Builder",
-    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 2,500+ cloud accounts. 100% GOAT recall. AI-powered security infrastructure.",
+    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 2,800+ cloud accounts. 100% GOAT recall. AI-powered security infrastructure.",
     url: "https://koushik.io",
     siteName: "koushik.io",
     locale: "en_US",
