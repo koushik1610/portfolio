@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "motion/react";
+import { useInView, useReducedMotion } from "motion/react";
 
 interface CountUpProps {
   value: string;
@@ -28,11 +28,13 @@ function formatNum(n: number, originalVal: string): string {
 
 export default function CountUp({ value, duration = 1400, style, className }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
+  const reduce = useReducedMotion();
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [display, setDisplay] = useState(value);
   const hasAnimated = useRef(false);
 
   useEffect(() => {
+    if (reduce) { setDisplay(value); return; }
     if (!inView || hasAnimated.current) return;
     const parsed = parseNumeric(value);
     if (!parsed) return;
@@ -52,11 +54,12 @@ export default function CountUp({ value, duration = 1400, style, className }: Co
     };
 
     requestAnimationFrame(tick);
-  }, [inView, value, duration]);
+  }, [inView, value, duration, reduce]);
 
+  // aria-label carries the final value so screen readers never read intermediate ticks
   return (
-    <span ref={ref} style={style} className={className}>
-      {display}
+    <span ref={ref} style={style} className={className} aria-label={value}>
+      <span aria-hidden="true">{display}</span>
     </span>
   );
 }

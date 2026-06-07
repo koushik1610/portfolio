@@ -18,7 +18,7 @@ const METRICS = [
 ] as const;
 
 const EXPERTISE = [
-  { num: "01", name: "Detection Engineering", desc: "200+ active signatures across AWS accounts at a 0% false-positive rate. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.", meta: "0% FP" },
+  { num: "01", name: "Detection Engineering", desc: "200+ active signatures across AWS accounts at a 0% false-positive rate. CIS-benchmarked baselines, MITRE ATT&CK coverage of real-world techniques, deployed via Terraform.", meta: "0% FP" },
   { num: "02", name: "IAM Privilege Analysis", desc: "AI-native IAM audit agent traversing 65+ escalation paths across 10 vulnerability classes, with LLM semantic interpretation of transitive chains.", meta: "100% GOAT" },
   { num: "03", name: "AI Security Tooling", desc: "Multi-agent orchestration across 19 models from 5 providers. Agentic SOAR workstation on a 1,700+-node knowledge graph mined from historical tickets.", meta: "19 models" },
   { num: "04", name: "Cloud Security Architecture", desc: "2,800+ cloud accounts. CNAPP-class attack-path simulation, AI-augmented CSPM, crown-jewel exposure tracking, Zero Trust enforcement.", meta: "2,800+ acct" },
@@ -94,7 +94,7 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
         if (!el) return;
         const fmt = "format" in m ? (m.format as (v: number) => string) : undefined;
         if (prefersReduced) {
-          el.textContent = fmt ? fmt(m.target) : m.target.toLocaleString();
+          el.textContent = fmt ? fmt(m.target) : m.target.toLocaleString() + "+";
           return;
         }
         const obj = { val: 0 };
@@ -104,7 +104,7 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
           ease: "power2.out",
           scrollTrigger: { trigger: ".w8-metrics", start: "top 88%", once: true },
           onUpdate: () => {
-            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString();
+            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString() + "+";
           },
         });
       });

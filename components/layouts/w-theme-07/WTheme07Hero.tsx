@@ -109,7 +109,7 @@ export default function WTheme07Hero({ theme }: { theme: Theme }) {
         const el = rootRef.current?.querySelector<HTMLElement>(`.${stat.numClass}`);
         if (!el) return;
         if (prefersReduced) {
-          el.textContent = stat.format ? stat.format(stat.target) : String(stat.target);
+          el.textContent = stat.format ? stat.format(stat.target) : stat.target.toLocaleString() + "+";
           return;
         }
         const obj = { val: 0 };
@@ -119,7 +119,7 @@ export default function WTheme07Hero({ theme }: { theme: Theme }) {
           ease: "power2.out",
           scrollTrigger: { trigger: ".w7-statbar", start: "top 90%", once: true },
           onUpdate: () => {
-            el.textContent = stat.format ? stat.format(obj.val) : Math.round(obj.val).toLocaleString();
+            el.textContent = stat.format ? stat.format(obj.val) : Math.round(obj.val).toLocaleString() + "+";
           },
         });
       });

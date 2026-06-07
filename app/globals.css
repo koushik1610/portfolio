@@ -1905,11 +1905,7 @@ html[data-layout="avatar3d"] .avt-card-metric {
   font-size: clamp(2rem, 5vw, 4.5rem);
   font-weight: 900;
   letter-spacing: -0.03em;
-  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #d7e2ea;
   line-height: 1;
   display: block;
   margin-bottom: 0.5rem;
@@ -1919,7 +1915,7 @@ html[data-layout="avatar3d"] .avt-card-metric-label {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(215, 226, 234, 0.5);
+  color: rgba(215,226,234,0.7);
 }
 
 /* ── Contact ─────────────────────────────────────────────────────────────── */
@@ -1936,7 +1932,7 @@ html[data-layout="avatar3d"] .avt-contact-label {
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(215, 226, 234, 0.5);
+  color: rgba(215,226,234,0.7);
   margin: 0 0 1rem;
 }
 
@@ -1945,11 +1941,7 @@ html[data-layout="avatar3d"] .avt-contact-heading {
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.05;
-  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: #d7e2ea;
   margin: 0 0 3rem;
 }
 
@@ -2764,4 +2756,19 @@ html:is([data-layout="aethera"], [data-layout="orb"]) .ath-mobile-nav {
     animation: none;
     opacity: 1;
   }
+}
+
+/* ── Audit fixes: sr-only + keyboard focus for oracle/assembly ─────────────── */
+.orc-sr-only,
+.asm-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+html[data-layout="oracle"] a:focus-visible,
+html[data-layout="oracle"] button:focus-visible {
+  outline: 2px solid #58a6ff; outline-offset: 2px; border-radius: 3px;
+}
+html[data-layout="assembly"] a:focus-visible,
+html[data-layout="assembly"] button:focus-visible {
+  outline: 2px solid #4ec9b0; outline-offset: 2px; border-radius: 3px;
 }

@@ -41,8 +41,8 @@ const LINES: CodeLine[] = [
   { num:  8, tokens: [tx("    role            "), ii("db"), tx(" "), c('"Sr. Security Engineer"'), tx(", "), n("0")]},
   { num:  9, tokens: [tx("    organization    "), ii("db"), tx(" "), c('"Yahoo"'), tx(", "), n("0")]},
   { num: 10, tokens: [tx("    years           "), ii("dq"), tx(" "), n("9"), tx("          "), cm("; years of experience")]},
-  { num: 11, tokens: [tx("    cloud_accounts  "), ii("dq"), tx(" "), n("2500"), tx("       "), cm("; accounts under management")]},
-  { num: 12, tokens: [tx("    team_size       "), ii("dq"), tx(" "), n("4"), tx("          "), cm("; engineers on team")]},
+  { num: 11, tokens: [tx("    cloud_accounts  "), ii("dq"), tx(" "), n("2800"), tx("       "), cm("; accounts under management")]},
+  { num: 12, tokens: [tx("    cloud_providers "), ii("dq"), tx(" "), n("2"), tx("          "), cm("; AWS + GCP")]},
   { num: 13, tokens: [tx("")]},
   { num: 14, tokens: [d("section"), tx(" "), d(".text")]},
   { num: 15, tokens: [tx("    "), ii("global"), tx(" _start")]},
@@ -65,13 +65,13 @@ const LINES: CodeLine[] = [
   { num: 32, tokens: [tx("    "), ii("mov"), tx("     "), r("rax"), tx(", PREDICTION_ENGINE")]},
   { num: 33, tokens: [tx("    "), ii("ret")]},
   { num: 34, tokens: [tx("")]},
-  { num: 35, tokens: [l("_yahoo_paranoids_2019"), tx(":           "), cm("; CURRENT — principal track")]},
+  { num: 35, tokens: [l("_yahoo_paranoids_2019"), tx(":           "), cm("; CURRENT")]},
   { num: 36, tokens: [tx("    "), ii("push"), tx("    "), r("rbp")]},
   { num: 37, tokens: [tx("    "), ii("mov"), tx("     "), r("rbp"), tx(", "), r("rsp")]},
   { num: 38, tokens: [tx("    ")]},
   { num: 39, tokens: [tx("    "), cm("; Load scope")]},
-  { num: 40, tokens: [tx("    "), ii("mov"), tx("     "), r("rdx"), tx(", "), n("2500"), tx("            "), cm("; cloud accounts")]},
-  { num: 41, tokens: [tx("    "), ii("mov"), tx("     "), r("rcx"), tx(", "), n("4"), tx("               "), cm("; team size")]},
+  { num: 40, tokens: [tx("    "), ii("mov"), tx("     "), r("rdx"), tx(", "), n("2800"), tx("            "), cm("; cloud accounts")]},
+  { num: 41, tokens: [tx("    "), ii("mov"), tx("     "), r("rcx"), tx(", "), n("19"), tx("              "), cm("; AI models orchestrated")]},
   { num: 42, tokens: [tx("    ")]},
   { num: 43, tokens: [tx("    "), cm("; Call detection engineering routine")]},
   { num: 44, tokens: [tx("    "), ii("call"), tx("    deploy_detection_rules   "), cm("; → 200+ rules, 0 false positives")]},
@@ -235,6 +235,7 @@ export default function AssemblyHero({ theme }: { theme: Theme }) {
 
   return (
     <section id="about" className="asm-wrap" ref={containerRef}>
+      <h1 className="asm-sr-only">Koushik Kotamraju — Sr. Security Engineer at Yahoo Paranoids</h1>
       {/* Window chrome */}
       <motion.div
         className="asm-window-chrome"
