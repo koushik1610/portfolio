@@ -937,11 +937,11 @@ html[data-layout="studio"] .stu-photo-inner {
 }
 
 html[data-layout="studio"] .stu-photo {
-  width: 280px;
-  height: 280px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 28%;
   display: block;
   border: 2px solid var(--border);
   filter: grayscale(10%);
@@ -1509,35 +1509,24 @@ html[data-layout="avatar3d"] .avt-hero-desc {
 
 /* Avatar — right column, bottom-anchored */
 html[data-layout="avatar3d"] .avt-avatar-wrap {
-  flex: 1;
+  flex: 0 0 46%;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  max-width: 50%;
+  max-width: 46%;
+  min-width: 380px;
   cursor: crosshair;
 }
 
 html[data-layout="avatar3d"] .avt-avatar-img {
   width: 100%;
-  max-width: clamp(220px, 38vw, 520px);
+  max-width: clamp(340px, 48vw, 760px);
   height: auto;
   object-fit: contain;
   object-position: bottom center;
   display: block;
-  mask-image: radial-gradient(
-    ellipse 80% 84% at 65% 54%,
-    black 22%,
-    rgba(0, 0, 0, 0.85) 42%,
-    rgba(0, 0, 0, 0.35) 63%,
-    transparent 80%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 80% 84% at 65% 54%,
-    black 22%,
-    rgba(0, 0, 0, 0.85) 42%,
-    rgba(0, 0, 0, 0.35) 63%,
-    transparent 80%
-  );
+  mask-image: radial-gradient(ellipse 98% 96% at 56% 48%, #000 72%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 98% 96% at 56% 48%, #000 72%, transparent 100%);
 }
 
 @media (max-width: 768px) {
@@ -2112,10 +2101,11 @@ html:is([data-layout="aethera"], [data-layout="orb"]) nav { display: none !impor
 /* ── Root ────────────────────────────────────────────────────────────────── */
 html:is([data-layout="aethera"], [data-layout="orb"]) .ath-root {
   min-height: 100vh;
+  width: 100%;
   background: #ffffff;
   color: #000000;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 html:is([data-layout="aethera"], [data-layout="orb"]) .ath-sr-only {
@@ -2211,6 +2201,8 @@ html:is([data-layout="aethera"], [data-layout="orb"]) .ath-nav-cta:hover {
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 html:is([data-layout="aethera"], [data-layout="orb"]) .ath-hero {
   position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   height: 100vh;
   min-height: 620px;
   display: flex;
@@ -2244,7 +2236,7 @@ html:is([data-layout="aethera"], [data-layout="orb"]) .ath-hero-content {
   position: relative;
   z-index: 10;
   text-align: center;
-  max-width: 880px;
+  max-width: 1180px;
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
