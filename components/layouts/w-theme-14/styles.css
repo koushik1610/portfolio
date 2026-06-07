@@ -150,13 +150,12 @@ html[data-layout="w14"] nav:not(.w14-nav) {
 .w14-name {
   font-weight: 800;
   font-variation-settings: "wght" 800;
-  font-size: clamp(3.6rem, 16vw, 12.5rem);
-  line-height: 0.86;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.75rem, 11vw, 8.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
   margin: 0;
   color: var(--w14-ink);
-  /* slight asymmetric pull off the left edge — broken grid */
-  margin-left: -0.04em;
+  max-width: 100%;
   will-change: font-variation-settings;
 }
 

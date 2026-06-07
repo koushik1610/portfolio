@@ -34,7 +34,7 @@ export const themes: Theme[] = [
     content: { tagline: "Security. At scale.", bio: "Sr. Security Engineer. 9 years. Building systems that hold.", cta: "See work" },
   },
   {
-    name: "I-Avatar3D",
+    name: "I-Minimal-BW",
     id: "i-theme-avatar3d",
     vars: {
       "--background": "#0c0c0c",
@@ -103,11 +103,11 @@ export const themes: Theme[] = [
     content: { tagline: "The whole attack graph converges on one name.", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
   },
   {
-    name: "W-Aperture",
+    name: "W-Avatar",
     id: "w-theme-12",
     vars: { "--background": "#060606", "--surface": "#101010", "--surface-2": "#181818", "--text-primary": "#f3f1ea", "--text-muted": "#9a978d", "--accent": "#e0a44d", "--accent-dim": "#c08a36", "--border": "rgba(255,255,255,0.1)" },
     layout: "w12",
-    content: { tagline: "Developed in the darkroom.", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
+    content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
   },
   {
     name: "W-Telemetry",

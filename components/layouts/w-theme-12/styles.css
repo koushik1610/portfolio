@@ -213,3 +213,15 @@ html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
 .w12-root button:focus-visible {
   outline: 2px solid var(--w12-amber); outline-offset: 3px; border-radius: 3px;
 }
+
+/* ── Clean avatar (dither canvas hidden; show the portrait clean) ──────────── */
+.w12-canvas { display: none !important; }
+.w12-portrait {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+}
