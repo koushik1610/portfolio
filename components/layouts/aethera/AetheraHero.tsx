@@ -192,7 +192,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
       {/* ── NAV ──────────────────────────────────────────────────────────────── */}
       <nav className="ath-nav" aria-label="Primary navigation">
         <a href="#about" className="ath-logo">
-          Aethera<span className="ath-reg">®</span>
+          Koushik<span className="ath-reg">®</span>
         </a>
         <div className="ath-nav-links">
           <a href="#about"     className="ath-nav-link">Home</a>

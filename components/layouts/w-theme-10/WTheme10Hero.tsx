@@ -113,7 +113,7 @@ export default function WTheme10Hero({ theme }: { theme: Theme }) {
         if (!el) return;
         const fmt = "format" in stat ? (stat.format as (v: number) => string) : undefined;
         if (prefersReduced) {
-          el.textContent = fmt ? fmt(stat.target) : stat.target.toLocaleString();
+          el.textContent = fmt ? fmt(stat.target) : stat.target.toLocaleString() + "+";
           return;
         }
         const obj = { val: 0 };
@@ -123,7 +123,7 @@ export default function WTheme10Hero({ theme }: { theme: Theme }) {
           ease: "power2.out",
           scrollTrigger: { trigger: ".w10-stats", start: "top 88%", once: true },
           onUpdate: () => {
-            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString();
+            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString() + "+";
           },
         });
       });

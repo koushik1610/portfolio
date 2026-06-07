@@ -76,7 +76,17 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
       const prefersReduced = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
-      if (prefersReduced) return;
+      if (prefersReduced) {
+        // Show final values statically — never freeze counters at "0"
+        const set = (sel: string, txt: string) => {
+          const el = document.querySelector(sel);
+          if (el) el.textContent = txt;
+        };
+        set(".w3-stat-num-accounts", "2,800+");
+        set(".w3-stat-num-sigs", "200+");
+        set(".w3-stat-num-cost", "$1.40");
+        return;
+      }
 
       // 1. Stat cards stagger in on load
       gsap.from(".w3-stat-card", {
@@ -96,7 +106,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
         delay: 0.3,
         onUpdate: () => {
           const el = document.querySelector(".w3-stat-num-accounts");
-          if (el) el.textContent = Math.round(accountsObj.val).toLocaleString();
+          if (el) el.textContent = Math.round(accountsObj.val).toLocaleString() + "+";
         },
       });
 
@@ -108,7 +118,7 @@ export default function WTheme03Hero({ theme }: { theme: Theme }) {
         delay: 0.3,
         onUpdate: () => {
           const el = document.querySelector(".w3-stat-num-sigs");
-          if (el) el.textContent = Math.round(sigsObj.val).toLocaleString();
+          if (el) el.textContent = Math.round(sigsObj.val).toLocaleString() + "+";
         },
       });
 

@@ -150,7 +150,7 @@ export default function WTheme01Hero({ theme }: { theme: Theme }) {
           onUpdate: function () {
             (node as HTMLElement).textContent = decimals
               ? "$" + counter.value.toFixed(2)
-              : String(Math.round(counter.value));
+              : Math.round(counter.value).toLocaleString() + "+";
           },
         });
       });

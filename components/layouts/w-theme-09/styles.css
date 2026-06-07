@@ -172,7 +172,8 @@ main { width: 100%; }
 .w9-marquee-sep {
   color: var(--w9-accent);
   margin: 0 28px;
-  font-size: 0.7em;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* ── Stats ────────────────────────────────────────────────────────────────── */

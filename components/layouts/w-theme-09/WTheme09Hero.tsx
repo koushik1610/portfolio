@@ -123,7 +123,7 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
         if (!el) return;
         const fmt = "format" in stat ? (stat.format as (v: number) => string) : undefined;
         if (prefersReduced) {
-          el.textContent = fmt ? fmt(stat.target) : stat.target.toLocaleString();
+          el.textContent = fmt ? fmt(stat.target) : stat.target.toLocaleString() + "+";
           return;
         }
         const obj = { val: 0 };
@@ -133,7 +133,7 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
           ease: "power2.out",
           scrollTrigger: { trigger: ".w9-stats", start: "top 85%", once: true },
           onUpdate: () => {
-            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString();
+            el.textContent = fmt ? fmt(obj.val) : Math.round(obj.val).toLocaleString() + "+";
           },
         });
       });
@@ -176,7 +176,7 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
           <div className="w9-marquee-track">
             {[...MARQUEE, ...MARQUEE].map((m, i) => (
               <span key={i} className="w9-marquee-item">
-                {m}<span className="w9-marquee-sep">✦</span>
+                {m}<span className="w9-marquee-sep"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg></span>
               </span>
             ))}
           </div>
@@ -240,7 +240,7 @@ export default function WTheme09Hero({ theme }: { theme: Theme }) {
           <div className="w9-marquee-track">
             {[...MARQUEE_STATS, ...MARQUEE_STATS].map((m, i) => (
               <span key={i} className="w9-marquee-item">
-                {m}<span className="w9-marquee-sep">✦</span>
+                {m}<span className="w9-marquee-sep"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" /></svg></span>
               </span>
             ))}
           </div>

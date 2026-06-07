@@ -145,7 +145,14 @@ export default function WTheme05Hero({ theme }: { theme: Theme }) {
   useGSAP(
     () => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (prefersReduced) return;
+      if (prefersReduced) {
+        // Show final stat values statically — never freeze counters at "0"
+        STAT_TILES.forEach((stat) => {
+          const el = rootRef.current?.querySelector<HTMLElement>(`.${stat.countClass}`);
+          if (el) el.textContent = stat.format ? stat.format(stat.target) : stat.target.toLocaleString() + "+";
+        });
+        return;
+      }
 
       // 1. Hero tile fade + scale on load
       gsap.from(".w5-tile-hero", {
@@ -194,7 +201,7 @@ export default function WTheme05Hero({ theme }: { theme: Theme }) {
           onUpdate: () => {
             el.textContent = format
               ? format(obj.val)
-              : Math.round(obj.val).toLocaleString();
+              : Math.round(obj.val).toLocaleString() + "+";
           },
         });
       };

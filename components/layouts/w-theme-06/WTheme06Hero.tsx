@@ -71,7 +71,7 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "200+ active signatures across AWS accounts — 0% false positives. CIS-benchmarked baselines, MITRE ATT&CK coverage of 74 techniques, deployed via Terraform.",
+    desc: "200+ active signatures across AWS accounts — 0% false positives. CIS-benchmarked baselines, MITRE ATT&CK coverage of real-world techniques, deployed via Terraform.",
   },
   {
     num: "02",
@@ -156,7 +156,7 @@ export default function WTheme06Hero({ theme }: { theme: Theme }) {
         const el = rootRef.current?.querySelector<HTMLElement>(`.${stat.numClass}`);
         if (!el) return;
         if (prefersReduced) {
-          el.textContent = stat.format ? stat.format(stat.target) : String(stat.target);
+          el.textContent = stat.format ? stat.format(stat.target) : stat.target.toLocaleString() + "+";
           return;
         }
         const obj = { val: 0 };
@@ -173,7 +173,7 @@ export default function WTheme06Hero({ theme }: { theme: Theme }) {
           onUpdate: () => {
             el.textContent = stat.format
               ? stat.format(obj.val)
-              : Math.round(obj.val).toLocaleString();
+              : Math.round(obj.val).toLocaleString() + "+";
           },
         });
       };

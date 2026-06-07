@@ -326,7 +326,7 @@ export default function WTheme04Hero({ theme }: { theme: Theme }) {
             </div>
             <div className="w4-stat-item">
               <span className="w4-stat-num" aria-label="200+">
-                222
+                200+
               </span>
               <span className="w4-stat-label">Active Signatures</span>
             </div>
