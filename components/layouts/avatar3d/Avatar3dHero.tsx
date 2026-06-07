@@ -5,12 +5,9 @@ import {
   motion,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import Image from "next/image";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 
@@ -101,43 +98,6 @@ const PROJECTS = [
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function MagneticAvatar({ parallaxY }: { parallaxY: MotionValue<number> }) {
-  const reduce = useReducedMotion();
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 120, damping: 18 });
-  const springY = useSpring(mouseY, { stiffness: 120, damping: 18 });
-
-  return (
-    <motion.div
-      className="avt-avatar-wrap"
-      style={{ y: reduce ? 0 : parallaxY }}
-      onMouseMove={(e) => {
-        if (reduce) return;
-        const rect = e.currentTarget.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        mouseX.set(((e.clientX - cx) / rect.width) * 30);
-        mouseY.set(((e.clientY - cy) / rect.height) * 30);
-      }}
-      onMouseLeave={() => {
-        mouseX.set(0);
-        mouseY.set(0);
-      }}
-    >
-      <motion.div style={{ x: reduce ? 0 : springX, y: reduce ? 0 : springY }}>
-        <Image
-          src="/my-3d-avatar.png"
-          alt="Koushik Kotamraju 3D avatar"
-          width={520}
-          height={520}
-          className="avt-avatar-img"
-          priority
-        />
-      </motion.div>
-    </motion.div>
-  );
-}
 
 function AnimatedWord({
   word,
@@ -329,7 +289,6 @@ export default function Avatar3dHero({ theme }: { theme: Theme }) {
   });
   const headingY = useTransform(heroScroll, [0, 1], [0, -80]);
   const headingOpacity = useTransform(heroScroll, [0, 0.55], [1, 0]);
-  const avatarY = useTransform(heroScroll, [0, 1], [0, -40]);
 
   return (
     <div className="avt-root" ref={rootRef}>
@@ -368,8 +327,6 @@ export default function Avatar3dHero({ theme }: { theme: Theme }) {
             </a>
           </motion.div>
 
-          {/* Right: avatar */}
-          <MagneticAvatar parallaxY={avatarY} />
         </div>
       </section>
 

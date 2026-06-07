@@ -591,7 +591,7 @@ export default function WTheme12Hero({ theme }: { theme: Theme }) {
         <span className="w12-nav-logo" aria-hidden="true">
           KK<span className="w12-nav-dot">·</span>
         </span>
-        <span className="w12-nav-mid" aria-hidden="true">APERTURE</span>
+        <span className="w12-nav-mid" aria-hidden="true">AVATAR</span>
         <span className="w12-nav-status">
           <span className="w12-status-dot" aria-hidden="true" />
           Open to work
@@ -607,7 +607,7 @@ export default function WTheme12Hero({ theme }: { theme: Theme }) {
             <img
               src={PORTRAIT_SRC}
               alt="Portrait of Koushik Kotamraju"
-              className="w12-sr-only"
+              className="w12-portrait"
             />
             <span className="w12-frame-tick w12-frame-tick--tl" aria-hidden="true" />
             <span className="w12-frame-tick w12-frame-tick--tr" aria-hidden="true" />

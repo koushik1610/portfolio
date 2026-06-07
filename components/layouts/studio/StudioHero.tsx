@@ -161,24 +161,17 @@ function ScrollRevealText({
 }
 
 function MarqueeSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
-
   return (
-    <div ref={ref} className="stu-marquee-outer" aria-hidden="true">
+    <div className="stu-marquee-outer" aria-hidden="true">
       <div className="stu-marquee-sticky">
-        <motion.div className="stu-marquee-strip" style={{ x }}>
+        <div className="stu-marquee-strip">
           {TILES_3X.map((tile, i) => (
             <div key={i} className="stu-marquee-tile">
               <span className="stu-tile-dot" />
               <span className="stu-tile-text">{tile}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );
