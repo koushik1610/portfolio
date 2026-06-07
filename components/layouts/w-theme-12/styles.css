@@ -1,0 +1,215 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   W-Theme-12 — "Aperture" · layout variant: w12
+   Lights-out darkroom editorial. Portrait develops out of a dithered canvas.
+   Palette: paper-black #060606 · bone #f3f1ea · 1-bit dither · amber #e0a44d
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
+
+.w12-root {
+  --w12-bg: #060606;
+  --w12-text: #f3f1ea;
+  --w12-muted: #9a978d;
+  --w12-faint: #6a6760;
+  --w12-amber: #e0a44d;
+  --w12-line: rgba(255, 255, 255, 0.1);
+  background: var(--w12-bg);
+  color: var(--w12-text);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.w12-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.w12-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--w12-amber); color: #1a1206; padding: 10px 18px;
+  border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;
+}
+.w12-skip:focus { left: 16px; top: 16px; }
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+.w12-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 22px 40px;
+}
+.w12-nav-logo {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.14em;
+}
+.w12-nav-dot { color: var(--w12-amber); }
+.w12-nav-mid {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.4em; color: var(--w12-faint);
+}
+.w12-nav-status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--w12-muted);
+}
+.w12-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--w12-amber); box-shadow: 0 0 8px var(--w12-amber);
+}
+@media (max-width: 639px) { .w12-nav { padding: 16px 18px; } .w12-nav-mid { display: none; } }
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.w12-root main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+@media (max-width: 639px) { .w12-root main { padding: 0 20px 72px; } }
+
+.w12-rule { height: 1px; background: var(--w12-line); margin: 0; }
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+.w12-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 64px;
+  padding: 120px 0 60px;
+}
+@media (max-width: 900px) {
+  .w12-hero { grid-template-columns: 1fr; gap: 36px; padding: 104px 0 48px; }
+}
+
+/* Portrait stage — the developing dither canvas */
+.w12-stage {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 4 / 5;
+  justify-self: center;
+  background: #000;
+  border: 1px solid var(--w12-line);
+  overflow: hidden;
+}
+.w12-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+/* Darkroom corner frame ticks */
+.w12-frame-tick {
+  position: absolute;
+  width: 16px; height: 16px;
+  border: 1px solid var(--w12-amber);
+  opacity: 0.7;
+  z-index: 2;
+}
+.w12-frame-tick--tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.w12-frame-tick--tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+.w12-frame-tick--bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+.w12-frame-tick--br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+
+/* Hero text */
+.w12-hero-text { display: flex; flex-direction: column; gap: 22px; }
+.w12-kicker {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.06em; color: var(--w12-amber); margin: 0;
+}
+.w12-name {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  margin: 0;
+}
+.w12-exposure {
+  display: flex; flex-wrap: wrap; gap: 8px 28px;
+  padding: 14px 0; border-top: 1px solid var(--w12-line); border-bottom: 1px solid var(--w12-line);
+  list-style: none; margin: 0;
+}
+.w12-exposure-item { display: flex; flex-direction: column; gap: 2px; }
+.w12-exposure-k {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--w12-faint);
+}
+.w12-exposure-v {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 14px; font-weight: 600; color: var(--w12-text);
+}
+.w12-lede {
+  font-size: 1.0625rem; line-height: 1.6; color: var(--w12-muted); margin: 0; max-width: 460px;
+}
+
+/* ── Contact sheet (projects as letterboxed frames) ───────────────────────── */
+.w12-sheet { padding: 72px 0; }
+.w12-sheet-top {
+  display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 40px;
+}
+.w12-sheet-title {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 700; letter-spacing: -0.02em; margin: 0;
+}
+.w12-sheet-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 12px; color: var(--w12-faint);
+}
+.w12-sheet-list { list-style: none; margin: 0; padding: 0; }
+.w12-sheet-row {
+  display: grid;
+  grid-template-columns: 64px 1fr 160px;
+  gap: 28px;
+  align-items: center;
+  padding: 30px 0;
+  border-top: 1px solid var(--w12-line);
+}
+.w12-sheet-row:last-child { border-bottom: 1px solid var(--w12-line); }
+.w12-sheet-num,
+.w12-sheet-frame {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; color: var(--w12-amber);
+}
+.w12-sheet-body { min-width: 0; }
+.w12-sheet-name {
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem); font-weight: 700; letter-spacing: -0.025em; margin: 0 0 8px;
+}
+.w12-sheet-desc { font-size: 14.5px; line-height: 1.6; color: var(--w12-muted); margin: 0; max-width: 560px; }
+.w12-sheet-stack { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.w12-sheet-metric {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px; color: var(--w12-text); text-align: right; white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .w12-sheet-row { grid-template-columns: 1fr; gap: 10px; }
+  .w12-sheet-metric { text-align: left; }
+}
+
+/* ── Contact ──────────────────────────────────────────────────────────────── */
+.w12-contact {
+  padding: 64px 0 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.w12-contact-title {
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem); font-weight: 700; letter-spacing: -0.025em;
+  line-height: 1.12; margin: 0; max-width: 440px;
+}
+.w12-contact-links { display: flex; flex-direction: column; }
+.w12-contact-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+  padding: 16px 0; border-top: 1px solid var(--w12-line); text-decoration: none; color: var(--w12-text);
+}
+.w12-contact-row:last-child { border-bottom: 1px solid var(--w12-line); }
+.w12-contact-k { font-size: 14px; font-weight: 600; }
+.w12-contact-v {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px; color: var(--w12-muted); transition: color 0.2s;
+}
+.w12-contact-row:hover .w12-contact-v { color: var(--w12-amber); }
+@media (max-width: 639px) { .w12-contact { grid-template-columns: 1fr; gap: 28px; } }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.w12-root a:focus-visible,
+.w12-root button:focus-visible {
+  outline: 2px solid var(--w12-amber); outline-offset: 3px; border-radius: 3px;
+}

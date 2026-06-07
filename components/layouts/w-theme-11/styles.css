@@ -1,0 +1,263 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   W-Theme-11 — "Axiom" · layout variant: w11
+   A live attack-graph; the name sits at the center as the two hub nodes.
+   Scroll re-clusters the same node system into each section.
+   Palette: #09090b bg · oxblood #9a3328 (critical/edges) · steel #6b7280 · #ededf0
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
+
+.w11-root {
+  --w11-bg: #09090b;
+  --w11-text: #ededf0;
+  --w11-muted: #9a9aa3;
+  --w11-faint: #6b6b73;
+  --w11-oxblood: #b8483a;
+  --w11-steel: #6b7280;
+  --w11-line: rgba(255, 255, 255, 0.08);
+  background: var(--w11-bg);
+  color: var(--w11-text);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.w11-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.w11-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--w11-oxblood); color: #fff; padding: 10px 18px;
+  border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none;
+}
+.w11-skip:focus { left: 16px; top: 16px; }
+
+/* ── Attack-graph layer (fixed, behind content) ───────────────────────────── */
+.w11-graph {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0; /* JS sets autoAlpha:1 after layout; visible by default if no JS */
+}
+@media (prefers-reduced-motion: reduce) { .w11-graph { opacity: 1; } }
+.w11-grid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 30%, transparent 85%);
+}
+.w11-edges {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  overflow: visible;
+}
+.w11-edge {
+  stroke: rgba(107, 114, 128, 0.32);
+  stroke-width: 1;
+}
+.w11-edge--toxic {
+  stroke: rgba(184, 72, 58, 0.5);
+  stroke-width: 1.4;
+}
+
+/* Nodes — JS sets transform (translate3d + center). CSS = base appearance. */
+.w11-node {
+  position: absolute;
+  top: 0; left: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  will-change: transform;
+}
+.w11-node-dot {
+  display: block;
+  border-radius: 50%;
+  background: var(--w11-steel);
+  flex-shrink: 0;
+}
+.w11-node-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--w11-muted);
+  white-space: nowrap;
+}
+.w11-node--leaf .w11-node-dot   { width: 5px;  height: 5px; opacity: 0.7; }
+.w11-node--node .w11-node-dot   { width: 8px;  height: 8px; }
+.w11-node--critical .w11-node-dot {
+  width: 10px; height: 10px;
+  background: var(--w11-oxblood);
+  box-shadow: 0 0 12px rgba(184, 72, 58, 0.6);
+}
+.w11-node--hub .w11-node-dot {
+  width: 14px; height: 14px;
+  background: var(--w11-oxblood);
+  box-shadow: 0 0 22px rgba(184, 72, 58, 0.7);
+}
+.w11-node--hub .w11-node-label {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: clamp(15px, 2vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--w11-text);
+}
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+.w11-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 22px 40px;
+}
+.w11-nav-logo {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.14em;
+}
+.w11-nav-logo-dot { color: var(--w11-oxblood); }
+.w11-nav-links { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.w11-nav-link {
+  font-size: 13.5px; color: var(--w11-muted); text-decoration: none; transition: color 0.2s;
+}
+.w11-nav-link:hover { color: var(--w11-text); }
+.w11-nav-status {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--w11-muted);
+}
+.w11-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #34d399; box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+}
+@media (max-width: 767px) { .w11-nav { padding: 16px 18px; } .w11-nav-links { display: none; } }
+
+/* ── Scenes (scroll over the graph) ───────────────────────────────────────── */
+.w11-main { position: relative; z-index: 1; }
+.w11-scene {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 110px 48px 80px;
+}
+.w11-scene-inner { width: 100%; max-width: 1100px; margin: 0 auto; }
+@media (max-width: 639px) { .w11-scene { padding: 100px 20px 64px; } }
+
+.w11-scene-head { margin-bottom: 36px; }
+.w11-scene-tag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; color: var(--w11-oxblood); letter-spacing: 0.08em;
+}
+.w11-scene-title {
+  font-size: clamp(1.75rem, 3.4vw, 2.75rem); font-weight: 600; letter-spacing: -0.025em; margin: 8px 0 0;
+}
+.w11-scene-note { font-size: 14px; color: var(--w11-muted); margin: 10px 0 0; max-width: 620px; }
+
+/* Hero scene */
+.w11-hero-inner { max-width: 880px; }
+.w11-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--w11-muted); margin: 0 0 24px;
+}
+.w11-eyebrow-tag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px; color: var(--w11-oxblood);
+  border: 1px solid rgba(184,72,58,0.3); border-radius: 5px; padding: 3px 8px;
+}
+.w11-hero-name {
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 0.96; margin: 0 0 28px;
+}
+.w11-hero-name-2 { color: var(--w11-text); }
+.w11-hero-lede {
+  font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.55; color: var(--w11-muted);
+  max-width: 620px; margin: 0;
+}
+.w11-hero-foot { margin-top: 36px; }
+.w11-scrollcue {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w11-faint);
+}
+
+/* Stats scene */
+.w11-metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.w11-metric {
+  border: 1px solid var(--w11-line); border-radius: 14px;
+  background: rgba(255,255,255,0.02); padding: 28px 24px;
+}
+.w11-metric > :first-child,
+.w11-metric [data-count] {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.03em;
+  color: var(--w11-oxblood); line-height: 1; font-variant-numeric: tabular-nums;
+  display: block;
+}
+.w11-metric-label { font-size: 13px; color: var(--w11-muted); margin-top: 12px; }
+@media (max-width: 767px) { .w11-metrics { grid-template-columns: repeat(2, 1fr); } }
+
+/* Expertise list */
+.w11-list { list-style: none; margin: 0; padding: 0; }
+.w11-list-row {
+  display: grid; grid-template-columns: 48px 1fr 120px; gap: 24px;
+  padding: 24px 0; border-top: 1px solid var(--w11-line); align-items: start;
+}
+.w11-list-row:last-child { border-bottom: 1px solid var(--w11-line); }
+.w11-list-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 13px; color: var(--w11-oxblood); padding-top: 4px;
+}
+.w11-list-name { font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+.w11-list-desc { font-size: 14px; line-height: 1.6; color: var(--w11-muted); margin: 0; max-width: 640px; }
+.w11-list-meta {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 12.5px; color: var(--w11-muted); text-align: right; padding-top: 4px;
+}
+@media (max-width: 767px) { .w11-list-row { grid-template-columns: 32px 1fr; } .w11-list-meta { display: none; } }
+
+/* Work / projects */
+.w11-projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.w11-proj {
+  border: 1px solid var(--w11-line); border-radius: 16px;
+  background: rgba(255,255,255,0.02); padding: 28px; display: flex; flex-direction: column; gap: 14px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.w11-proj:hover { border-color: rgba(184,72,58,0.4); transform: translateY(-3px); }
+.w11-proj-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.w11-proj-id {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px; color: var(--w11-oxblood);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.w11-proj-metric {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 15px; font-weight: 700; color: var(--w11-text); white-space: nowrap;
+}
+.w11-proj-name { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; }
+.w11-proj-desc { font-size: 13.5px; line-height: 1.6; color: var(--w11-muted); margin: 0; flex: 1; }
+.w11-proj-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.w11-chip {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px;
+  color: #e0a99f; background: rgba(184,72,58,0.1); border: 1px solid rgba(184,72,58,0.22);
+  border-radius: 6px; padding: 3px 9px;
+}
+@media (max-width: 767px) { .w11-projects { grid-template-columns: 1fr; } }
+
+/* Contact */
+.w11-contact-inner { max-width: 760px; }
+.w11-contact-note { font-size: 1.0625rem; line-height: 1.6; color: var(--w11-muted); margin: 0 0 32px; max-width: 520px; }
+.w11-links, .w11-colophon { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.w11-clink {
+  display: inline-flex; flex-direction: column; gap: 2px;
+  text-decoration: none; color: var(--w11-text);
+  border: 1px solid var(--w11-line); border-radius: 12px; padding: 14px 20px;
+  transition: border-color 0.2s;
+}
+.w11-clink:hover { border-color: rgba(184,72,58,0.4); }
+.w11-clink-k { font-size: 13px; font-weight: 600; }
+.w11-clink-v {
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 12.5px; color: var(--w11-muted);
+}
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.w11-root a:focus-visible,
+.w11-root button:focus-visible {
+  outline: 2px solid var(--w11-oxblood); outline-offset: 3px; border-radius: 4px;
+}
