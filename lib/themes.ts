@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "oracle" | "assembly" | "studio" | "avatar3d" | "aethera" | "orb" | "w1" | "w2" | "w3" | "w4" | "w5" | "w6" | "w7" | "w8" | "w9" | "w10";
+export type LayoutVariant = "oracle" | "assembly" | "studio" | "avatar3d" | "aethera" | "orb" | "w1" | "w2" | "w3" | "w4" | "w5" | "w6" | "w7" | "w8" | "w9" | "w10" | "w11" | "w12" | "w13" | "w14";
 
 export interface ThemeContent {
   tagline: string;
@@ -165,6 +165,34 @@ export const themes: Theme[] = [
     vars: { "--background": "#0b0b10", "--surface": "rgba(255,255,255,0.04)", "--surface-2": "rgba(255,255,255,0.06)", "--text-primary": "#eef0f6", "--text-muted": "#a0a4bd", "--accent": "#60a5fa", "--accent-dim": "#a78bfa", "--border": "rgba(255,255,255,0.09)" },
     layout: "w10",
     content: { tagline: "Cloud security engineer building AI-native platforms.", bio: "Layered defense across 2,800+ cloud accounts. Production systems, not prototypes.", cta: "View Work" },
+  },
+  {
+    name: "W-Axiom",
+    id: "w-theme-11",
+    vars: { "--background": "#09090b", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#ededf0", "--text-muted": "#9a9aa3", "--accent": "#9a3328", "--accent-dim": "#7d271e", "--border": "rgba(255,255,255,0.08)" },
+    layout: "w11",
+    content: { tagline: "The whole attack graph converges on one name.", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
+  },
+  {
+    name: "W-Aperture",
+    id: "w-theme-12",
+    vars: { "--background": "#060606", "--surface": "#101010", "--surface-2": "#181818", "--text-primary": "#f3f1ea", "--text-muted": "#9a978d", "--accent": "#e0a44d", "--accent-dim": "#c08a36", "--border": "rgba(255,255,255,0.1)" },
+    layout: "w12",
+    content: { tagline: "Developed in the darkroom.", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
+  },
+  {
+    name: "W-Telemetry",
+    id: "w-theme-13",
+    vars: { "--background": "#0d1117", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e6edf3", "--text-muted": "#9aa4af", "--accent": "#22d3ee", "--accent-dim": "#0891b2", "--border": "rgba(48,54,61,0.8)" },
+    layout: "w13",
+    content: { tagline: "An always-on operations console.", bio: "9 years uptime. 2,800+ cloud accounts monitored.", cta: "View Work" },
+  },
+  {
+    name: "W-Solstice",
+    id: "w-theme-14",
+    vars: { "--background": "#faf9f6", "--surface": "#ffffff", "--surface-2": "#f2f1ec", "--text-primary": "#1a1a18", "--text-muted": "#52524e", "--accent": "#5b4bd6", "--accent-dim": "#4636c0", "--border": "#e4e2da" },
+    layout: "w14",
+    content: { tagline: "Security, set like a broadsheet.", bio: "Detection. IAM analysis. AI security. Architecture.", cta: "View Work" },
   },
 ];
 

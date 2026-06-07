@@ -1,0 +1,537 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   W-Theme-14 — "Solstice" · layout variant: w14
+   A warm-white editorial broadsheet on a deliberately broken / asymmetric grid.
+   The OPPOSITE temperament of the rigid Swiss "Lumen" (w8): generous magazine
+   measure, no metrics row, no index rules — uneven columns, one giant pull-quote
+   the body text wraps around, monumental kinetic variable type on the masthead.
+   Palette: paper #faf9f6 · card #ffffff · ink #1a1a18 · body #52524e (AA)
+            accent editorial violet-ink #5b4bd6
+   All rules scoped under .w14-root / html[data-layout="w14"]
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="w14"] nav:not(.w14-nav) {
+  display: none !important;
+}
+
+.w14-root {
+  --w14-paper: #faf9f6;
+  --w14-card: #ffffff;
+  --w14-ink: #1a1a18;
+  --w14-body: #52524e;
+  --w14-muted: #6b6b64;
+  --w14-accent: #5b4bd6;
+  --w14-accent-soft: rgba(91, 75, 214, 0.08);
+  --w14-line: #e4e2da;
+  --w14-line-strong: #cdcbc1;
+
+  background: var(--w14-paper);
+  color: var(--w14-ink);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* faint warm paper grain via layered radial tints */
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(184, 84, 58, 0.035), transparent 42%),
+    radial-gradient(circle at 88% 78%, rgba(91, 75, 214, 0.035), transparent 46%);
+}
+
+.w14-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.w14-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  background: var(--w14-ink);
+  color: var(--w14-paper);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.w14-skip:focus {
+  left: 16px;
+  top: 16px;
+}
+
+.w14-root a:focus-visible,
+.w14-root button:focus-visible {
+  outline: 2px solid var(--w14-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+
+.w14-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(250, 249, 246, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--w14-line-strong);
+}
+.w14-nav-logo {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.w14-nav-edition {
+  display: none;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--w14-muted);
+}
+.w14-nav-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w14-body);
+}
+.w14-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--w14-accent);
+  box-shadow: 0 0 0 3px var(--w14-accent-soft);
+}
+
+/* ── Layout shell — generous editorial gutters ────────────────────────────── */
+
+#w14-main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* ── Masthead ─────────────────────────────────────────────────────────────── */
+
+.w14-masthead {
+  padding: 48px 0 36px;
+}
+.w14-kicker {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--w14-muted);
+  margin: 0 0 22px;
+}
+.w14-kicker span {
+  color: var(--w14-accent);
+  margin-right: 8px;
+}
+
+.w14-name {
+  font-weight: 800;
+  font-variation-settings: "wght" 800;
+  font-size: clamp(3.6rem, 16vw, 12.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: var(--w14-ink);
+  /* slight asymmetric pull off the left edge — broken grid */
+  margin-left: -0.04em;
+  will-change: font-variation-settings;
+}
+
+.w14-masthead-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+/* Variable-weight word rotator */
+.w14-rotator {
+  margin: 0;
+  font-size: clamp(1.9rem, 6vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--w14-ink);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.w14-rotator-static {
+  font-weight: 500;
+  color: var(--w14-muted);
+}
+.w14-rotator-word {
+  color: var(--w14-accent);
+  font-weight: 800;
+  font-variation-settings: "wght" 820, "wdth" 105;
+  white-space: nowrap;
+  will-change: font-variation-settings, opacity;
+}
+
+.w14-lede {
+  margin: 0;
+  max-width: 56ch;
+  font-size: clamp(1.02rem, 1.5vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--w14-body);
+}
+
+.w14-masthead-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--w14-muted);
+}
+.w14-masthead-foot .w14-fileref::before {
+  content: "·";
+  margin-right: 12px;
+  color: var(--w14-line-strong);
+}
+.w14-masthead-foot .w14-fileref:first-child::before {
+  content: none;
+}
+
+/* ── Rules ────────────────────────────────────────────────────────────────── */
+
+.w14-rule {
+  height: 1px;
+  background: var(--w14-line-strong);
+  margin: 0;
+  border: 0;
+}
+.w14-rule--accent {
+  height: 2px;
+  background: var(--w14-ink);
+}
+
+/* ── Feature head (shared) ────────────────────────────────────────────────── */
+
+.w14-feature-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 0 28px;
+}
+.w14-feature-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--w14-ink);
+}
+.w14-feature-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--w14-muted);
+  white-space: nowrap;
+}
+
+/* ── Feature body — text wraps around the pull-quote (broken grid) ─────────── */
+
+.w14-feature-body {
+  position: relative;
+}
+
+/* The pull-quote stat: floated so the index columns flow around it. */
+.w14-pull {
+  background: var(--w14-card);
+  border: 1px solid var(--w14-line);
+  border-left: 3px solid var(--w14-accent);
+  border-radius: 4px;
+  padding: 28px 30px 30px;
+  margin: 0 0 24px;
+  box-shadow: 0 12px 40px -28px rgba(26, 26, 24, 0.45);
+}
+.w14-pull-value {
+  display: block;
+  font-size: clamp(3.4rem, 9vw, 6.4rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--w14-accent);
+}
+.w14-pull-unit {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--w14-ink);
+}
+.w14-pull-context {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--w14-body);
+}
+
+/* ── Index list — asymmetric measure, uneven baseline ─────────────────────── */
+
+.w14-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.w14-index-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px 0;
+  padding: 22px 0;
+  border-top: 1px solid var(--w14-line);
+}
+.w14-index-row:first-child {
+  border-top: 0;
+}
+.w14-index-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--w14-accent);
+}
+.w14-index-name {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--w14-ink);
+}
+.w14-index-desc {
+  margin: 6px 0 0;
+  max-width: 62ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--w14-body);
+}
+.w14-index-meta {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--w14-muted);
+}
+
+/* ── Selected work ────────────────────────────────────────────────────────── */
+
+.w14-block {
+  padding: 0;
+}
+.w14-projects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.w14-proj-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px 0;
+  padding: 26px 0;
+  border-top: 1px solid var(--w14-line);
+}
+.w14-proj-id {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--w14-accent);
+}
+.w14-proj-name {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--w14-ink);
+}
+.w14-proj-desc {
+  margin: 8px 0 0;
+  max-width: 64ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--w14-body);
+}
+.w14-proj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.w14-tag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--w14-body);
+  padding: 4px 10px;
+  border: 1px solid var(--w14-line-strong);
+  border-radius: 100px;
+  background: var(--w14-card);
+}
+.w14-proj-metric {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--w14-accent);
+}
+
+/* ── Colophon / Contact ───────────────────────────────────────────────────── */
+
+.w14-colophon {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding-top: 56px;
+}
+.w14-colophon-title {
+  margin: 14px 0 0;
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--w14-ink);
+  max-width: 18ch;
+}
+.w14-colophon-note {
+  margin: 18px 0 0;
+  font-size: 1rem;
+  color: var(--w14-body);
+}
+.w14-colophon-links {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+.w14-clink {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--w14-line);
+  text-decoration: none;
+  color: var(--w14-ink);
+  transition: color 0.2s ease;
+}
+.w14-clink:hover {
+  color: var(--w14-accent);
+}
+.w14-clink-k {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--w14-muted);
+}
+.w14-clink-v {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 500;
+  text-align: right;
+}
+
+/* ── Tablet ───────────────────────────────────────────────────────────────── */
+
+@media (min-width: 640px) {
+  .w14-nav {
+    padding: 18px 40px;
+  }
+  .w14-nav-edition {
+    display: inline;
+  }
+  #w14-main {
+    padding: 0 40px 120px;
+  }
+  .w14-index-row,
+  .w14-proj-row {
+    grid-template-columns: 64px 1fr auto;
+    column-gap: 28px;
+    align-items: baseline;
+  }
+  .w14-index-num,
+  .w14-proj-id {
+    grid-row: span 2;
+  }
+}
+
+/* ── Desktop — the broken broadsheet grid + text wrap ─────────────────────── */
+
+@media (min-width: 1024px) {
+  #w14-main {
+    padding: 0 56px 140px;
+  }
+  .w14-masthead {
+    padding: 72px 0 48px;
+  }
+  /* Asymmetric meta: rotator sits left, lede offset right — uneven measure. */
+  .w14-masthead-meta {
+    grid-template-columns: 1.15fr 0.85fr;
+    column-gap: 64px;
+    row-gap: 30px;
+    align-items: start;
+  }
+  .w14-rotator {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .w14-lede {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: end;
+    /* nudge the measure off-baseline — magazine feel */
+    margin-top: 12px;
+  }
+  .w14-masthead-foot {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* Pull-quote floats; index text wraps around it (the signature broken grid) */
+  .w14-pull {
+    float: right;
+    width: 360px;
+    margin: 4px 0 28px 44px;
+    shape-outside: inset(0 round 4px);
+  }
+  .w14-feature-body::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .w14-name,
+  .w14-rotator-word,
+  .w14-pull-value {
+    will-change: auto;
+  }
+  .w14-clink {
+    transition: none;
+  }
+}
