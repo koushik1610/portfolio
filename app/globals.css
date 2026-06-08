@@ -2805,10 +2805,11 @@ html:is([data-layout="aethera"], [data-layout="orb"]) .ath-contact {
   backdrop-filter: blur(3px);
 }
 
-/* Aethera/Orb are self-contained (own contact); hide the redundant global
-   sections that otherwise extend the page behind the fixed video. */
-html:is([data-layout="aethera"], [data-layout="orb"]) section#resume,
-html:is([data-layout="aethera"], [data-layout="orb"]) section#contact,
-html:is([data-layout="aethera"], [data-layout="orb"]) section#ask-ai {
+/* Every theme is a self-contained page with its own contact; hide the global
+   #resume / #contact / #ask-ai sections that otherwise render below the theme.
+   (The floating Ask-AI button is separate and stays.) */
+html[data-layout] section#resume,
+html[data-layout] section#contact,
+html[data-layout] section#ask-ai {
   display: none !important;
 }
