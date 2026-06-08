@@ -120,7 +120,8 @@ html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
   font-size: 12px; letter-spacing: 0.06em; color: var(--w12-amber); margin: 0;
 }
 .w12-name {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+  overflow-wrap: break-word;
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.92;
