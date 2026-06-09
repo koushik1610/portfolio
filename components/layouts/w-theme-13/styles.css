@@ -239,6 +239,7 @@ html[data-layout="w13"] nav:not(.w13-nav) {
 .w13-center {
   position: relative;
   z-index: 2;
+  min-width: 0; /* grid item: allow shrink below min-content so it never bleeds under the rails */
   padding: 40px clamp(28px, 4vw, 64px) 96px;
   min-height: 100vh;
 }

@@ -104,8 +104,10 @@ html[data-layout="w8"] nav:not(.w8-nav) {
 }
 
 /* ── Layout container ─────────────────────────────────────────────────────── */
-
-main {
+/* Scope to .w8-root main — co-located theme CSS is bundled globally, so a bare
+   `main {}` selector leaks onto the outer <main> of EVERY theme (it boxed the
+   full-bleed w13 console into 1080px). Must stay scoped. */
+.w8-root main {
   max-width: 1080px;
   margin: 0 auto;
   padding: 0 48px 100px;
