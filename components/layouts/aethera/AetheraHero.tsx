@@ -1,9 +1,12 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import type { Theme } from "@/lib/themes";
+// Animation ownership: GSAP (SplitText) owns the hero headline/tagline;
+// motion/react owns the whileInView reveals on expertise cards + project rows.
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
+import "./styles.css";
 
 // ── Content ───────────────────────────────────────────────────────────────────
 
@@ -148,6 +151,7 @@ function VideoBackground() {
 export default function AetheraHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useGSAP(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -157,11 +161,11 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
     const splitHeadline = SplitText.create(".ath-headline", {
       type: "words",
       mask: "words",
-      aria: "hidden",
+      aria: "none", // target is aria-hidden (§3.4b)
     });
     const splitTagline = SplitText.create(".ath-tagline", {
       type: "words",
-      aria: "hidden",
+      aria: "none", // target is aria-hidden (§3.4b)
     });
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -220,22 +224,27 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
             {" "}security was missing.
           </p>
           <p className="ath-hero-desc">{BIO}</p>
-          <a href="#work" className="ath-hero-cta">
-            View Work
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
+          <div className="ath-cta-row">
+            <a href="mailto:koushik.kotamraju1610@gmail.com" className="ath-hero-cta">
+              Email me
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="/resume" className="ath-hero-cta ath-hero-cta--ghost">
+              Résumé
+            </a>
+          </div>
         </div>
       </section>
 
@@ -293,7 +302,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
               <motion.div
                 key={item.num}
                 className="ath-exp-card"
-                initial={{ opacity: 0, y: 20 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
@@ -317,7 +326,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
             <motion.div
               key={proj.id}
               className="ath-project-row"
-              initial={{ opacity: 0, x: -16 }}
+              initial={reduceMotion ? false : { opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }}

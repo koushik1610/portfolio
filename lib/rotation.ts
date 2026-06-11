@@ -7,7 +7,9 @@ function weekNumber(): number {
 
 export function getOffset(): number {
   if (typeof window === "undefined") return 0;
-  return parseInt(localStorage.getItem(STORAGE_KEY) || "0", 10);
+  const n = parseInt(localStorage.getItem(STORAGE_KEY) || "0", 10);
+  // Corrupt localStorage must not yield NaN → themes[NaN] → blank page.
+  return Number.isFinite(n) ? n : 0;
 }
 
 export function incrementOffset(): void {

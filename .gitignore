@@ -54,3 +54,6 @@ COUNCIL.md
 
 # raw source videos (large files, not for git)
 /videos/
+
+# Fable redesign brief — local working doc, never commit
+_FABLE_REDESIGN_BRIEF.md

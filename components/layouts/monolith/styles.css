@@ -1,0 +1,223 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   MONOLITH · layout variant: monolith · class prefix: mn-
+   Ink-dark poster. Heavy Geist name as nearly the whole hero, one hairline,
+   one accent, one motion beat. Restraint is the concept — add nothing.
+   Palette: ink #0a0a0a · bone #eceae4 · muted #9d9a92 (7:1)
+   Owned accent: vermilion #ff3b1f — MUST equal --accent in lib/themes.ts.
+   Used only as punctuation: hairline, primary button fill, section marks,
+   the email underline, skip link, and focus rings. Never body text.
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="monolith"] nav:not(.mn-nav) { display: none !important; }
+
+.mn-root {
+  --mn-ink: #0a0a0a;
+  --mn-bone: #eceae4;
+  --mn-muted: #9d9a92;
+  --mn-verm: #ff3b1f;   /* MUST equal --accent in lib/themes.ts */
+  --mn-line: rgba(236, 234, 228, 0.12);
+  background: var(--mn-ink);
+  color: var(--mn-bone);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.mn-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.mn-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--mn-verm); color: #140503; padding: 10px 18px;
+  border-radius: 4px; font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.mn-skip:focus { left: 16px; top: 16px; }
+
+/* ── Nav — two words, nothing else ───────────────────────────────────────── */
+.mn-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: flex-start; gap: 28px;
+  padding: 26px 40px;
+}
+.mn-nav-mark {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.14em;
+}
+.mn-nav-status {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mn-muted);
+}
+
+/* ── Poster ───────────────────────────────────────────────────────────────── */
+.mn-poster {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 80px;
+  max-width: 1320px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.mn-kicker {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mn-muted);
+  margin: 0 0 28px;
+}
+/* Pre-hide the name only when scripting is available; the GSAP hook reveals
+   it (and the reduced-motion path restores it immediately). No-JS stays visible. */
+@media (scripting: enabled) {
+  .mn-name, .mn-after-name { opacity: 0; }
+}
+.mn-name {
+  font-size: clamp(3rem, 14.5vw, 12rem); /* 3rem floor — no clip at 320px */
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  margin: 0;
+  color: var(--mn-bone);
+}
+.mn-after-name { margin-top: 44px; max-width: 560px; }
+.mn-hairline {
+  width: 88px; height: 2px;
+  background: var(--mn-verm);
+  margin-bottom: 26px;
+}
+.mn-line {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--mn-muted);
+  margin: 0 0 34px;
+}
+.mn-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.mn-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 11px 26px; border-radius: 4px;
+  font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.25s cubic-bezier(0.32, 0.72, 0, 1), border-color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.mn-btn--primary {
+  background: var(--mn-verm); color: #140503; /* 5.5:1 */
+  border: 1px solid transparent;
+}
+.mn-btn--primary:hover { background: #ff5942; }
+.mn-btn--ghost {
+  background: transparent; color: var(--mn-bone);
+  border: 1px solid var(--mn-line);
+}
+.mn-btn--ghost:hover { border-color: var(--mn-bone); }
+
+/* ── Sections — one column, generous air ─────────────────────────────────── */
+.mn-section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 96px 40px;
+  border-top: 1px solid var(--mn-line);
+}
+.mn-section-mark {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mn-verm);
+  margin: 0 0 34px;
+}
+
+/* Numbers — one breathing line of fact */
+.mn-numbers {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  line-height: 1.9;
+  letter-spacing: -0.01em;
+  color: var(--mn-bone);
+  margin: 0;
+  max-width: 30em;
+  font-variant-numeric: tabular-nums;
+}
+.mn-sep { color: var(--mn-muted); }
+
+/* Work — a bare index */
+.mn-work { list-style: none; margin: 0; padding: 0; }
+.mn-work-row {
+  display: grid;
+  grid-template-columns: 64px 320px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--mn-line);
+}
+.mn-work-row:last-child { border-bottom: none; }
+.mn-work-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12.5px; color: var(--mn-muted);
+}
+.mn-work-name {
+  font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+  font-weight: 700; letter-spacing: -0.025em;
+}
+.mn-work-note { font-size: 14px; color: var(--mn-muted); }
+
+/* Contact — the closing statement */
+.mn-section--contact { padding-bottom: 140px; }
+.mn-email {
+  display: inline-block;
+  font-size: clamp(1.3rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--mn-bone);
+  text-decoration: none;
+  border-bottom: 2px solid var(--mn-verm);
+  padding: 4px 0 8px;
+  word-break: break-word;
+  transition: color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.mn-email:hover { color: #ffffff; }
+.mn-links {
+  list-style: none; margin: 36px 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 26px;
+}
+.mn-link {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--mn-muted); text-decoration: none;
+  transition: color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.mn-link:hover { color: var(--mn-bone); }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.mn-root a:focus-visible,
+.mn-root button:focus-visible {
+  outline: 2px solid var(--mn-verm);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .mn-work-row { grid-template-columns: 48px 1fr; }
+  .mn-work-note { grid-column: 2; }
+}
+@media (min-width: 640px) {
+  /* right padding reserves the fixed WidgetStack's corner */
+  .mn-nav { padding-right: 270px; }
+}
+@media (max-width: 639px) {
+  .mn-nav { padding: 18px 18px; }
+  .mn-nav-status { display: none; } /* sits under the fixed WidgetStack on phones */
+  .mn-poster { padding: 96px 18px 64px; }
+  .mn-after-name { margin-top: 32px; }
+  .mn-section { padding: 64px 18px; }
+  .mn-work-row { grid-template-columns: 1fr; gap: 4px; }
+  .mn-work-num { display: none; }
+}

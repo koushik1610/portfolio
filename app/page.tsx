@@ -3,29 +3,15 @@ import Hero from "@/components/Hero";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import ResumeSection from "@/components/ResumeSection";
-import AskAI, { AskAIFloat } from "@/components/AskAI";
+import AskAI from "@/components/AskAI";
 import Contact from "@/components/Contact";
-import ThemeBadge from "@/components/ThemeBadge";
+import WidgetStack from "@/components/WidgetStack";
 
 export default function Home() {
   return (
     <>
       <Nav />
-      {/* Top-right fixed stack: theme badge above, Ask AI below */}
-      <div style={{
-        position: "fixed",
-        top: "1rem",
-        right: "1rem",
-        zIndex: 10000,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        gap: "0.4rem",
-        pointerEvents: "none",
-      }}>
-        <ThemeBadge />
-        <AskAIFloat />
-      </div>
+      <WidgetStack />
       <main>
         <Hero />
         <Experience />

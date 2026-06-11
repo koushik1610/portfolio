@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { getCurrentTheme, type Theme } from "@/lib/themes";
-import StudioHero from "./layouts/studio/StudioHero";
-import Avatar3dHero from "./layouts/avatar3d/Avatar3dHero";
 import AetheraHero from "./layouts/aethera/AetheraHero";
-import OrbHero from "./layouts/orb/OrbHero";
-import WTheme07Hero from "./layouts/w-theme-07/WTheme07Hero";
-import WTheme08Hero from "./layouts/w-theme-08/WTheme08Hero";
-import WTheme11Hero from "./layouts/w-theme-11/WTheme11Hero";
-import WTheme12Hero from "./layouts/w-theme-12/WTheme12Hero";
-import WTheme13Hero from "./layouts/w-theme-13/WTheme13Hero";
-import WTheme14Hero from "./layouts/w-theme-14/WTheme14Hero";
+import CommandHero from "./layouts/command/CommandHero";
+import LumenHero from "./layouts/lumen/LumenHero";
+import AxiomHero from "./layouts/axiom/AxiomHero";
+import AvatarHero from "./layouts/avatar/AvatarHero";
+import TelemetryHero from "./layouts/telemetry/TelemetryHero";
+import SolsticeHero from "./layouts/solstice/SolsticeHero";
+import CasefileHero from "./layouts/casefile/CasefileHero";
+import BriefingHero from "./layouts/briefing/BriefingHero";
+import MonolithHero from "./layouts/monolith/MonolithHero";
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -26,15 +26,21 @@ export default function Hero() {
   if (!theme) return <section id="about" style={{ minHeight: "100vh" }} />;
 
   switch (theme.layout) {
-    case "studio":   return <StudioHero   key={theme.id} theme={theme} />;
-    case "avatar3d": return <Avatar3dHero key={theme.id} theme={theme} />;
     case "aethera":  return <AetheraHero  key={theme.id} theme={theme} />;
-    case "orb":      return <OrbHero      key={theme.id} theme={theme} />;
-    case "w7":       return <WTheme07Hero key={theme.id} theme={theme} />;
-    case "w8":       return <WTheme08Hero key={theme.id} theme={theme} />;
-    case "w11":      return <WTheme11Hero key={theme.id} theme={theme} />;
-    case "w12":      return <WTheme12Hero key={theme.id} theme={theme} />;
-    case "w13":      return <WTheme13Hero key={theme.id} theme={theme} />;
-    case "w14":      return <WTheme14Hero key={theme.id} theme={theme} />;
+    case "command":   return <CommandHero   key={theme.id} theme={theme} />;
+    case "lumen":     return <LumenHero     key={theme.id} theme={theme} />;
+    case "axiom":     return <AxiomHero     key={theme.id} theme={theme} />;
+    case "avatar":    return <AvatarHero    key={theme.id} theme={theme} />;
+    case "telemetry": return <TelemetryHero key={theme.id} theme={theme} />;
+    case "solstice":  return <SolsticeHero  key={theme.id} theme={theme} />;
+    case "casefile":  return <CasefileHero  key={theme.id} theme={theme} />;
+    case "briefing":  return <BriefingHero  key={theme.id} theme={theme} />;
+    case "monolith":  return <MonolithHero  key={theme.id} theme={theme} />;
+    default: {
+      // Exhaustiveness guard: adding a LayoutVariant without a case above is a
+      // compile error here instead of a silent undefined render.
+      const exhausted: never = theme.layout;
+      return exhausted;
+    }
   }
 }

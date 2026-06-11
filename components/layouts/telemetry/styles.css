@@ -3,10 +3,10 @@
    Always-on 3-pane SOC operations console. The career is a running process.
    Left rail = identity/nav · Center = streaming log content · Right = live telemetry.
    Palette: GitHub-dark base #0d1117 · accent cyan #22d3ee · steel chrome.
-   All rules scoped under .w13-root / html[data-layout="w13"]
+   All rules scoped under .w13-root / html[data-layout="telemetry"]
 ───────────────────────────────────────────────────────────────────────────── */
 
-html[data-layout="w13"] nav:not(.w13-nav) {
+html[data-layout="telemetry"] nav:not(.w13-nav) {
   display: none !important;
 }
 
@@ -632,3 +632,23 @@ html[data-layout="w13"] nav:not(.w13-nav) {
   /* Sparklines freeze at their static waveform (path "a" as authored);
      gauge offsets are set to final by JS. Ticker stays at its rest position. */
 }
+
+/* ── Above-fold CTA row (left rail) ───────────────────────────────────────── */
+
+.w13-cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.w13-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 9px 18px; border-radius: 8px;
+  font-size: 13.5px; font-weight: 600; letter-spacing: -0.01em;
+  text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.w13-btn--primary {
+  background: var(--w13-accent); color: #04141a; /* 10.4:1 dark-on-cyan */
+  border: 1px solid transparent;
+}
+.w13-btn--primary:hover { background: #67e8f9; }
+.w13-btn--ghost {
+  background: transparent; color: var(--w13-text, #e6edf3);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.w13-btn--ghost:hover { border-color: var(--w13-accent); }

@@ -7,7 +7,7 @@ import Projects from "@/components/Projects";
 import ResumeSection from "@/components/ResumeSection";
 import AskAI from "@/components/AskAI";
 import Contact from "@/components/Contact";
-import ThemeBadge from "@/components/ThemeBadge";
+import WidgetStack from "@/components/WidgetStack";
 
 // Generate a static page for every theme layout name and ID
 export function generateStaticParams() {
@@ -34,7 +34,7 @@ export default async function ThemeDevPage({
   return (
     <>
       <Nav />
-      <ThemeBadge />
+      <WidgetStack />
       <main>
         <Hero />
         <Experience />

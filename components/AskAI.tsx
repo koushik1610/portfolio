@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { GlassWidget, glassSurface, glassPrimaryText, glassSecondaryText } from "./GlassWidget";
 
 const LLMS_URL = "https://koushik.io/llms.txt";
 
@@ -81,78 +82,87 @@ const TOOLS = [
 // ── Floating button ────────────────────────────────────────────────────────────
 
 export function AskAIFloat() {
-  const [show, setShow] = useState(true);
-
-  useEffect(() => {
-    const el = document.querySelector("#ask-ai");
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setShow(!entry.isIntersecting),
-      { threshold: 0.15 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+  // Themed pages hide the #ask-ai section, so the float owns the interaction:
+  // clicking it expands the four AI-tool links in place. Disclosure pattern
+  // (trigger + aria-expanded + Escape), deliberately NOT role="menu" — plain
+  // links don't need the full menu keyboard contract.
+  const [open, setOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.88 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.88 }}
-          transition={{ duration: 0.2 }}
-        >
+    <div
+      ref={wrapRef}
+      style={{ display: "flex", flexDirection: "column", gap: "0.4rem", alignItems: "stretch" }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && open) {
+          setOpen(false);
+          // Return focus to the trigger so it isn't stranded on a removed link.
+          wrapRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+        }
+      }}
+    >
+      <GlassWidget
+        onClick={() => setOpen((v) => !v)}
+        ariaLabel="Ask AI about Koushik"
+        ariaExpanded={open}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ display: "flex", gap: "3px", alignItems: "center" }} aria-hidden="true">
+            <ClaudeIcon size={15} />
+            <ChatGPTIcon size={15} />
+            <GeminiIcon size={15} />
+            <PerplexityIcon size={15} />
+          </span>
+          <span style={glassPrimaryText}>ASK AI ABOUT ME</span>
+        </div>
+        <span style={{ ...glassSecondaryText, paddingLeft: "0.1rem" }}>
+          {open ? "click to close" : "click to choose an AI"}
+        </span>
+      </GlassWidget>
+
+      <AnimatePresence>
+        {open && (
           <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.97 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.97 }}
+            transition={{ duration: 0.18 }}
+            style={{ ...glassSurface, cursor: "default", gap: "0.15rem", padding: "0.5rem" }}
+            role="group"
+            aria-label="Ask an AI about Koushik"
           >
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() =>
-                document.querySelector("#ask-ai")?.scrollIntoView({ behavior: "smooth" })
-              }
-              aria-label="Ask AI about Koushik"
-              className="widget-shine"
-              style={{
-                background: "linear-gradient(155deg, rgba(48,44,66,0.99) 0%, rgba(22,20,36,0.99) 25%, rgba(10,8,18,1) 55%, rgba(20,18,32,0.99) 80%, rgba(36,32,52,0.99) 100%)",
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                border: "1px solid rgba(255,255,255,0.13)",
-                borderRadius: "14px",
-                padding: "0.65rem 1.1rem",
-                fontFamily: "var(--font-geist-mono), monospace",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "0.3rem",
-                whiteSpace: "nowrap",
-                boxShadow: "0 16px 48px rgba(0,0,0,0.8), 0 4px 16px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.5)",
-                cursor: "pointer",
-                pointerEvents: "auto",
-                userSelect: "none",
-                textAlign: "left",
-                width: "100%",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <span style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                  <ClaudeIcon size={15} />
-                  <ChatGPTIcon size={15} />
-                  <GeminiIcon size={15} />
-                  <PerplexityIcon size={15} />
-                </span>
-                <span style={{ fontSize: "0.82rem", letterSpacing: "0.09em", color: "rgba(255,255,255,0.93)", fontWeight: 600 }}>ASK AI ABOUT ME</span>
-              </div>
-              <span style={{ fontSize: "0.67rem", letterSpacing: "0.07em", color: "rgba(255,255,255,0.38)", paddingLeft: "0.1rem" }}>
-                click to scroll down
-              </span>
-            </motion.button>
+            {TOOLS.map((tool) => (
+              <a
+                key={tool.name}
+                href={tool.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-widget"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.55rem",
+                  padding: "0.55rem 0.65rem",
+                  minHeight: "44px",
+                  width: "100%",
+                  borderRadius: "9px",
+                  textDecoration: "none",
+                  color: "var(--text-primary)",
+                  fontSize: "0.78rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                <tool.Icon size={16} />
+                <span>{tool.name}</span>
+                <span aria-hidden="true" style={{ marginLeft: "auto", color: "var(--text-muted)", fontSize: "0.7rem" }}>↗</span>
+              </a>
+            ))}
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 

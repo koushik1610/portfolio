@@ -3,10 +3,7 @@
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
@@ -34,7 +31,7 @@ const PROJECTS = [
 
 // ── Component ───────────────────────────────────────────────────────────────
 
-export default function WTheme08Hero({ theme }: { theme: Theme }) {
+export default function LumenHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -128,6 +125,14 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
       </nav>
 
       <main id="w8-main">
+        {/* ── Document-control strip — the spec-sheet identity ─────────── */}
+        <div className="w8-docbar" aria-hidden="true">
+          <span className="w8-docbar-cell">DOC&nbsp;&nbsp;KK-SPEC-08</span>
+          <span className="w8-docbar-cell">REV&nbsp;&nbsp;2026-06</span>
+          <span className="w8-docbar-cell">CLASS&nbsp;&nbsp;PUBLIC</span>
+          <span className="w8-docbar-cell w8-docbar-cell--end">SHEET&nbsp;&nbsp;1 / 1</span>
+        </div>
+
         {/* ── Masthead ─────────────────────────────────────────────────── */}
         <header className="w8-masthead">
           <p className="w8-kicker"><span aria-hidden="true">§</span> Sr. Security Engineer · Yahoo Paranoids</p>
@@ -137,6 +142,10 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
               Cloud security engineer building AI-native security platforms —
               production systems, not prototypes. Nine years across three organizations.
             </p>
+            <div className="w8-cta-row">
+              <a href="mailto:koushik.kotamraju1610@gmail.com" className="w8-btn w8-btn--primary">Email me</a>
+              <a href="/resume" className="w8-btn w8-btn--ghost">Résumé</a>
+            </div>
             <div className="w8-masthead-foot">
               <span className="w8-fileref">koushik.io</span>
               <span className="w8-fileref">AWS Solutions Architect · Security Specialty</span>
@@ -148,9 +157,9 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
         <div className="w8-rule w8-rule--accent" aria-hidden="true" />
 
         {/* ── Metrics ──────────────────────────────────────────────────── */}
-        <section className="w8-metrics" aria-label="Key metrics">
+        <section className="w8-metrics" aria-label="1.0 — Key metrics">
           {METRICS.map((m) => (
-            <div key={m.key} className="w8-metric" aria-label={m.ariaLabel}>
+            <div key={m.key} className="w8-metric" role="group" aria-label={m.ariaLabel}>
               <span className={`w8-metric-num ${m.numClass}`} aria-hidden="true">{m.initial}</span>
               <span className="w8-metric-label">{m.label}</span>
             </div>
@@ -162,7 +171,7 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
         {/* ── Index / Expertise ────────────────────────────────────────── */}
         <section id="w8-work" className="w8-block" aria-labelledby="w8-idx-head">
           <div className="w8-block-head">
-            <h2 id="w8-idx-head" className="w8-block-title">Index — What I build</h2>
+            <h2 id="w8-idx-head" className="w8-block-title">2.0 — Capability matrix</h2>
             <span className="w8-block-num" aria-hidden="true">05 disciplines</span>
           </div>
           <ol className="w8-index w8-anim-list" role="list">
@@ -184,7 +193,7 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
         {/* ── Selected Work ────────────────────────────────────────────── */}
         <section id="w8-projects" className="w8-block" aria-labelledby="w8-work-head">
           <div className="w8-block-head">
-            <h2 id="w8-work-head" className="w8-block-title">Selected work</h2>
+            <h2 id="w8-work-head" className="w8-block-title">3.0 — Reference implementations</h2>
             <span className="w8-block-num" aria-hidden="true">04 projects</span>
           </div>
           <ol className="w8-projects w8-anim-list" role="list">
@@ -209,11 +218,11 @@ export default function WTheme08Hero({ theme }: { theme: Theme }) {
         {/* ── Contact / Colophon ───────────────────────────────────────── */}
         <section id="w8-contact" className="w8-colophon" aria-labelledby="w8-contact-head">
           <div className="w8-colophon-left">
-            <p className="w8-kicker"><span aria-hidden="true">§</span> Contact</p>
+            <p className="w8-kicker"><span aria-hidden="true">§</span> 4.0 — Contact</p>
             <h2 id="w8-contact-head" className="w8-colophon-title">
               Open to Staff &amp; Principal Security Engineer roles.
             </h2>
-            <p className="w8-colophon-note">Still shipping. Still curious.</p>
+            <p className="w8-colophon-note">Rev 2026-06 · Set in Geist · Maintained like production.</p>
           </div>
           <div className="w8-colophon-links">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="w8-clink">

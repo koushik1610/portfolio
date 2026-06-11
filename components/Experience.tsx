@@ -1,8 +1,8 @@
 "use client";
 
-// All active layouts (oracle, assembly, studio, avatar3d, aethera, orb) are
-// self-contained — they render bio/expertise/projects/contact within their
-// own Hero component. This file is kept as a mount point but renders nothing.
+// All active layouts are self-contained — they render bio/expertise/projects/
+// contact within their own Hero component. This file is kept as a mount point
+// but renders nothing.
 export default function Experience() {
   return null;
 }
