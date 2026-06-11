@@ -7,8 +7,8 @@ import "./styles.css";
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
-// The real photograph — the darkroom "develop" beat is built around it.
-const PORTRAIT_SRC = "/profile.jpeg";
+// The 3D avatar is this theme's identity — the real photo lives in aethera/briefing.
+const PORTRAIT_SRC = "/my-3d-avatar.png";
 
 const EXPOSURE = [
   { k: "ISO", v: "100% GOAT · 32/32" },
