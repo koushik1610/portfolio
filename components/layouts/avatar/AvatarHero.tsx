@@ -7,7 +7,8 @@ import "./styles.css";
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
-const PORTRAIT_SRC = "/my-3d-avatar.png";
+// The real photograph — the darkroom "develop" beat is built around it.
+const PORTRAIT_SRC = "/profile.jpeg";
 
 const EXPOSURE = [
   { k: "ISO", v: "100% GOAT · 32/32" },

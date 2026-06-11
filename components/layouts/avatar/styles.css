@@ -216,7 +216,7 @@ html[data-layout="avatar"] nav:not(.w12-nav) { display: none !important; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 18%;
+  object-position: center 24%; /* tuned for the real photo crop */
   display: block;
 }
 

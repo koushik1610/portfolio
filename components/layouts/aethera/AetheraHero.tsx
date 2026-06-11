@@ -253,10 +253,17 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
         <div className="ath-bio-left">
           <p className="ath-bio-label">About</p>
           <p className="ath-bio-quote">
-            Security systems that{" "}
+            Building security systems that{" "}
             <em>find what others miss</em>
             {" "}and hold under pressure.
           </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/profile.jpeg"
+            alt="Portrait of Koushik Kotamraju"
+            className="ath-portrait"
+            loading="lazy"
+          />
         </div>
         <div className="ath-bio-right">
           <p className="ath-bio-text">

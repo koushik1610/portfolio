@@ -163,7 +163,18 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
             </dl>
           </section>
 
-          {/* ── 4 · Attack path (decorative narrative) ───────────────── */}
+          {/* ── 4 · Portrait ──────────────────────────────────────────── */}
+          <section className="bf-tile bf-tile--portrait" aria-label="Portrait">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/profile.jpeg"
+              alt="Portrait of Koushik Kotamraju"
+              className="bf-portrait"
+              loading="lazy"
+            />
+          </section>
+
+          {/* ── 5 · Attack path (decorative narrative) ───────────────── */}
           <section
             className="bf-tile bf-tile--path"
             aria-label="62 toxic IAM combinations catalogued; 65+ privilege-escalation paths cut across 10 vulnerability classes"
@@ -182,7 +193,7 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
             </p>
           </section>
 
-          {/* ── 5 · AI platform ───────────────────────────────────────── */}
+          {/* ── 6 · AI platform ───────────────────────────────────────── */}
           <section className="bf-tile bf-tile--ai" aria-label="AI platform">
             <p className="bf-tile-label">AI platform</p>
             <div className="bf-ai-row">
@@ -196,7 +207,7 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
             <p className="bf-ai-note">Performance-weighted routing · 55% cost cut vs baseline</p>
           </section>
 
-          {/* ── 6 · Credentials / now ─────────────────────────────────── */}
+          {/* ── 7 · Credentials / now ─────────────────────────────────── */}
           <section className="bf-tile bf-tile--now" aria-label="Credentials">
             <p className="bf-tile-label">Now</p>
             <ul className="bf-now-list" role="list">
