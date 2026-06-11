@@ -726,3 +726,18 @@ html[data-layout="aethera"] .ath-hero-cta--ghost:hover {
 @media (prefers-reduced-motion: reduce) {
   html[data-layout="aethera"] .ath-cta-row { animation: none; opacity: 1; }
 }
+
+/* ── About portrait ───────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-portrait {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin-top: 2.5rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 22%;
+  filter: grayscale(12%);
+}
+@media (max-width: 900px) {
+  html[data-layout="aethera"] .ath-portrait { max-width: 280px; }
+}
