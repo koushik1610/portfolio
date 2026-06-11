@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    W-Theme-07 — "Command" · layout variant: w7
    Command-palette / spotlight console. Raycast/Linear energy.
-   Palette: #0a0a0c bg · frosted glass panels · terminal-amber accent #f0a830
-   All rules scoped under .w7-root / html[data-layout="w7"]
+   Palette: #0a0a0c bg · frosted glass panels · indigo accent #818cf8 (matches lib/themes.ts)
+   All rules scoped under .w7-root / html[data-layout="command"]
 ───────────────────────────────────────────────────────────────────────────── */
 
-html[data-layout="w7"] nav:not(.w7-nav) {
+html[data-layout="command"] nav:not(.w7-nav) {
   display: none !important;
 }
 
@@ -14,13 +14,13 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   --w7-text: #f4f4f6;
   --w7-muted: #9a9aa3;
   --w7-faint: #87878f;
-  /* Bespoke terminal-amber — owned accent (refined CRT amber, not garish) */
-  --w7-accent: #f0a830;
-  --w7-accent-hi: #ffce85;
+  /* Owned accent: indigo — single source of truth is lib/themes.ts */
+  --w7-accent: #818cf8; /* MUST equal --accent in lib/themes.ts (command) */
+  --w7-accent-hi: #a5b4fc;
   --w7-panel: rgba(255, 255, 255, 0.04);
   --w7-line: rgba(255, 255, 255, 0.08);
   background:
-    radial-gradient(60% 50% at 50% 0%, rgba(240, 168, 48, 0.07), transparent 70%),
+    radial-gradient(60% 50% at 50% 0%, rgba(129, 140, 248, 0.07), transparent 70%),
     var(--w7-bg);
   color: var(--w7-text);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
@@ -123,8 +123,8 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
   color: var(--w7-accent);
-  background: rgba(240, 168, 48, 0.1);
-  border: 1px solid rgba(240, 168, 48, 0.22);
+  background: rgba(129, 140, 248, 0.1);
+  border: 1px solid rgba(129, 140, 248, 0.22);
   border-radius: 6px;
   padding: 3px 9px;
   flex-shrink: 0;
@@ -312,8 +312,8 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   width: 36px; height: 36px;
   border-radius: 9px;
   color: var(--w7-accent);
-  background: rgba(240, 168, 48, 0.08);
-  border: 1px solid rgba(240, 168, 48, 0.18);
+  background: rgba(129, 140, 248, 0.08);
+  border: 1px solid rgba(129, 140, 248, 0.18);
 }
 .w7-row-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .w7-row-name {
@@ -357,8 +357,8 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
   color: var(--w7-accent-hi);
-  background: rgba(240, 168, 48, 0.08);
-  border: 1px solid rgba(240, 168, 48, 0.18);
+  background: rgba(129, 140, 248, 0.08);
+  border: 1px solid rgba(129, 140, 248, 0.18);
   border-radius: 6px;
   padding: 2px 8px;
 }
@@ -427,3 +427,23 @@ html[data-layout="w7"] nav:not(.w7-nav) {
   outline-offset: 2px;
   border-radius: 8px;
 }
+
+/* ── Above-fold CTA row (inside the console) ──────────────────────────────── */
+
+.w7-cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.w7-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 10px 20px; border-radius: 9px;
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+  text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.w7-btn--primary {
+  background: var(--w7-accent); color: #0a0a0c; /* 6.5:1 dark-on-indigo */
+  border: 1px solid transparent;
+}
+.w7-btn--primary:hover { background: var(--w7-accent-hi); }
+.w7-btn--ghost {
+  background: transparent; color: var(--w7-text, #f4f4f6);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.w7-btn--ghost:hover { border-color: var(--w7-accent); }

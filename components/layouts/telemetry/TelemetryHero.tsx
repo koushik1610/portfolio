@@ -3,10 +3,7 @@
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
@@ -179,7 +176,7 @@ const PROJECTS = [
 
 // ── Component ───────────────────────────────────────────────────────────────
 
-export default function WTheme13Hero({ theme }: { theme: Theme }) {
+export default function TelemetryHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -334,7 +331,7 @@ export default function WTheme13Hero({ theme }: { theme: Theme }) {
 
       // Per-line mono reveal of the longer descriptive bodies.
       gsap.utils.toArray<HTMLElement>(".w13-split-lines").forEach((el) => {
-        const s = SplitText.create(el, { type: "lines", mask: "lines", aria: "none" });
+        const s = SplitText.create(el, { type: "lines", mask: "lines", aria: "auto" }); // visible text (§3.4b)
         gsap.from(s.lines, {
           yPercent: 110,
           duration: 0.6,
@@ -365,9 +362,6 @@ export default function WTheme13Hero({ theme }: { theme: Theme }) {
         Koushik Kotamraju — Sr. Security Engineer at Yahoo Paranoids
       </h1>
 
-      {/* Suppress global nav; this layout owns its own nav inside the left rail. */}
-      <nav className="w13-nav" aria-label="Primary navigation" />
-
       <div className="w13-shell">
         {/* ── LEFT RAIL · identity / nav / status ─────────────────────────── */}
         <aside className="w13-rail w13-rail-left" aria-label="Identity and navigation">
@@ -395,6 +389,11 @@ export default function WTheme13Hero({ theme }: { theme: Theme }) {
                 Cloud security engineer building AI-native security platforms —
                 production systems, not prototypes.
               </p>
+            </div>
+
+            <div className="w13-cta-row">
+              <a href="mailto:koushik.kotamraju1610@gmail.com" className="w13-btn w13-btn--primary">Email me</a>
+              <a href="/resume" className="w13-btn w13-btn--ghost">Résumé</a>
             </div>
           </div>
 
@@ -531,7 +530,7 @@ export default function WTheme13Hero({ theme }: { theme: Theme }) {
           {/* Gauges */}
           <div className="w13-tele-card w13-gauges">
             {GAUGES.map((g) => (
-              <div key={g.key} className="w13-gauge" aria-label={g.ariaLabel}>
+              <div key={g.key} className="w13-gauge" role="group" aria-label={g.ariaLabel}>
                 <svg className="w13-gauge-svg" viewBox="0 0 80 80" aria-hidden="true">
                   <circle className="w13-ring-track" cx="40" cy="40" r="32" />
                   <circle

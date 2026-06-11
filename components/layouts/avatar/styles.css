@@ -1,16 +1,18 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    W-Theme-12 — "Aperture" · layout variant: w12
-   Lights-out darkroom editorial. Portrait develops out of a dithered canvas.
-   Palette: paper-black #060606 · bone #f3f1ea · 1-bit dither · amber #e0a44d
+   Lights-out darkroom editorial. Clean portrait with a one-shot GSAP
+   "develop" filter beat on entry (the earlier WebGL dither engine was removed
+   per design feedback — keep it removed).
+   Palette: paper-black #060606 · bone #f3f1ea · amber #e0a44d
 ───────────────────────────────────────────────────────────────────────────── */
 
-html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
+html[data-layout="avatar"] nav:not(.w12-nav) { display: none !important; }
 
 .w12-root {
   --w12-bg: #060606;
   --w12-text: #f3f1ea;
   --w12-muted: #9a978d;
-  --w12-faint: #6a6760;
+  --w12-faint: #8a8780; /* 5.6:1 on #060606 — small-label safe */
   --w12-amber: #e0a44d;
   --w12-line: rgba(255, 255, 255, 0.1);
   background: var(--w12-bg);
@@ -81,7 +83,7 @@ html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
   .w12-hero { grid-template-columns: 1fr; gap: 36px; padding: 104px 0 48px; }
 }
 
-/* Portrait stage — the developing dither canvas */
+/* Portrait stage */
 .w12-stage {
   position: relative;
   width: 100%;
@@ -91,14 +93,6 @@ html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
   background: #000;
   border: 1px solid var(--w12-line);
   overflow: hidden;
-}
-.w12-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  image-rendering: pixelated;
 }
 /* Darkroom corner frame ticks */
 .w12-frame-tick {
@@ -215,8 +209,7 @@ html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
   outline: 2px solid var(--w12-amber); outline-offset: 3px; border-radius: 3px;
 }
 
-/* ── Clean avatar (dither canvas hidden; show the portrait clean) ──────────── */
-.w12-canvas { display: none !important; }
+/* ── Clean portrait fill ──────────────────────────────────────────────────── */
 .w12-portrait {
   position: absolute;
   inset: 0;
@@ -226,3 +219,23 @@ html[data-layout="w12"] nav:not(.w12-nav) { display: none !important; }
   object-position: center 18%;
   display: block;
 }
+
+/* ── Above-fold CTA row ───────────────────────────────────────────────────── */
+
+.w12-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.w12-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 10px 22px; border-radius: 9px;
+  font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;
+  text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.w12-btn--primary {
+  background: var(--w12-amber); color: #1a1206; /* 9.2:1 dark-on-amber */
+  border: 1px solid transparent;
+}
+.w12-btn--primary:hover { background: #ecb968; }
+.w12-btn--ghost {
+  background: transparent; color: var(--w12-text, #f3f1ea);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.w12-btn--ghost:hover { border-color: var(--w12-amber); }

@@ -2,11 +2,8 @@
 
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
-import { gsap, useGSAP } from "@/lib/gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, useGSAP, ScrollTrigger } from "@/lib/gsap";
 import "./styles.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* ─────────────────────────────────────────────────────────────────────────────
    W-Theme-11 — "AXIOM"
@@ -177,7 +174,7 @@ const SCENE_CAPTIONS: Record<Scene, { tag: string; title: string }> = {
 
 /* ── Component ──────────────────────────────────────────────────────────────── */
 
-export default function WTheme11Hero({ theme }: { theme: Theme }) {
+export default function AxiomHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -476,6 +473,14 @@ export default function WTheme11Hero({ theme }: { theme: Theme }) {
               project below is a node in one graph that resolves around the person at
               its center.
             </p>
+            <div className="w11-cta-row">
+              <a href="mailto:koushik.kotamraju1610@gmail.com" className="w11-btn w11-btn--primary">
+                Email me
+              </a>
+              <a href="/resume" className="w11-btn w11-btn--ghost">
+                Résumé
+              </a>
+            </div>
             <div className="w11-hero-foot">
               <span className="w11-chip">9 years</span>
               <span className="w11-chip">AWS Solutions Architect</span>
@@ -499,7 +504,7 @@ export default function WTheme11Hero({ theme }: { theme: Theme }) {
             </header>
             <div className="w11-metrics">
               {METRICS.map((m) => (
-                <div key={m.key} className="w11-metric" aria-label={m.ariaLabel}>
+                <div key={m.key} className="w11-metric" role="group" aria-label={m.ariaLabel}>
                   <span className={`w11-metric-num ${m.numClass}`} aria-hidden="true">
                     0{m.suffix}
                   </span>
@@ -562,7 +567,7 @@ export default function WTheme11Hero({ theme }: { theme: Theme }) {
                   <p className="w11-proj-desc">{p.desc}</p>
                   <div className="w11-proj-tags" aria-label="Technologies">
                     {p.tags.map((t) => (
-                      <span key={t} className="w11-tag">{t}</span>
+                      <span key={t} className="w11-chip">{t}</span>
                     ))}
                   </div>
                 </article>

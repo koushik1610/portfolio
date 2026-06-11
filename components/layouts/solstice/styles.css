@@ -6,10 +6,10 @@
    the body text wraps around, monumental kinetic variable type on the masthead.
    Palette: paper #faf9f6 · card #ffffff · ink #1a1a18 · body #52524e (AA)
             accent editorial violet-ink #5b4bd6
-   All rules scoped under .w14-root / html[data-layout="w14"]
+   All rules scoped under .w14-root / html[data-layout="solstice"]
 ───────────────────────────────────────────────────────────────────────────── */
 
-html[data-layout="w14"] nav:not(.w14-nav) {
+html[data-layout="solstice"] nav:not(.w14-nav) {
   display: none !important;
 }
 
@@ -123,11 +123,31 @@ html[data-layout="w14"] nav:not(.w14-nav) {
 
 /* ── Layout shell — generous editorial gutters ────────────────────────────── */
 
-#w14-main {
+html[data-layout="solstice"] #w14-main {
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 24px 100px;
 }
+
+/* ── Above-fold CTA row ───────────────────────────────────────────────────── */
+
+.w14-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.w14-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 10px 22px; border-radius: 999px; /* editorial pill */
+  font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;
+  text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.w14-btn--primary {
+  background: var(--w14-accent); color: #ffffff; /* 6.1:1 on violet */
+  border: 1px solid transparent;
+}
+.w14-btn--primary:hover { background: #4636c0; }
+.w14-btn--ghost {
+  background: transparent; color: var(--w14-ink);
+  border: 1px solid var(--w14-line-strong);
+}
+.w14-btn--ghost:hover { border-color: var(--w14-ink); }
 
 /* ── Masthead ─────────────────────────────────────────────────────────────── */
 
@@ -184,7 +204,7 @@ html[data-layout="w14"] nav:not(.w14-nav) {
 .w14-rotator-word {
   color: var(--w14-accent);
   font-weight: 800;
-  font-variation-settings: "wght" 820, "wdth" 105;
+  font-variation-settings: "wght" 820;
   white-space: nowrap;
   will-change: font-variation-settings, opacity;
 }
@@ -461,7 +481,7 @@ html[data-layout="w14"] nav:not(.w14-nav) {
   .w14-nav-edition {
     display: inline;
   }
-  #w14-main {
+  html[data-layout="solstice"] #w14-main {
     padding: 0 40px 120px;
   }
   .w14-index-row,
@@ -479,7 +499,7 @@ html[data-layout="w14"] nav:not(.w14-nav) {
 /* ── Desktop — the broken broadsheet grid + text wrap ─────────────────────── */
 
 @media (min-width: 1024px) {
-  #w14-main {
+  html[data-layout="solstice"] #w14-main {
     padding: 0 56px 140px;
   }
   .w14-masthead {
@@ -498,14 +518,18 @@ html[data-layout="w14"] nav:not(.w14-nav) {
   }
   .w14-lede {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
     align-self: end;
     /* nudge the measure off-baseline — magazine feel */
     margin-top: 12px;
   }
-  .w14-masthead-foot {
+  .w14-cta-row {
     grid-column: 1;
     grid-row: 2;
+  }
+  .w14-masthead-foot {
+    grid-column: 1;
+    grid-row: 3;
   }
 
   /* Pull-quote floats; index text wraps around it (the signature broken grid) */

@@ -1,0 +1,301 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   BRIEFING · layout variant: briefing · class prefix: bf-
+   Dark operations-brief bento. One dominant identity tile, one accent-filled
+   CTA tile, strict hierarchy — never equal-weight card soup.
+   Palette: near-black #0c0a09 (warm) · bone #efece8 · muted #a39d94 (7:1)
+   Owned accent: signal coral #ff7a5c — MUST equal --accent in lib/themes.ts.
+   (Shifted from #ff5c3d so it cannot be read as a sibling of Monolith's
+   vermilion #ff3b1f — the two warm accents stay clearly distinct.)
+   Tiles are layered translucency (no backdrop-filter on scrolling content).
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
+
+.bf-root {
+  --bf-bg: #0c0a09;
+  --bf-text: #efece8;
+  --bf-muted: #a39d94;
+  --bf-coral: #ff7a5c;     /* MUST equal --accent in lib/themes.ts */
+  --bf-coral-dim: #d05a3e;
+  --bf-tile: rgba(255, 255, 255, 0.035);
+  --bf-tile-2: rgba(255, 255, 255, 0.055);
+  --bf-line: rgba(255, 255, 255, 0.09);
+  background: var(--bf-bg);
+  color: var(--bf-text);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* one quiet coral bloom anchors the brief, fixed cost */
+  background-image: radial-gradient(52% 38% at 82% -4%, rgba(255, 122, 92, 0.07), transparent 70%);
+}
+
+.bf-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.bf-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--bf-coral); color: #190c08; padding: 10px 18px;
+  border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.bf-skip:focus { left: 16px; top: 16px; }
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+.bf-nav {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 32px;
+  background: rgba(12, 10, 9, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bf-line);
+}
+.bf-nav-logo {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.12em;
+}
+.bf-nav-dot { color: var(--bf-coral); }
+.bf-nav-tag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.14em; color: var(--bf-muted);
+}
+.bf-nav-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12.5px; color: var(--bf-muted); white-space: nowrap;
+}
+.bf-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bf-coral); }
+@media (min-width: 640px) {
+  /* right padding reserves the fixed WidgetStack's corner (see WidgetStack.tsx) */
+  .bf-nav { padding-right: 270px; }
+}
+@media (max-width: 639px) {
+  .bf-nav { padding: 14px 16px; }
+  .bf-nav-tag { display: none; }
+  .bf-nav-status { display: none; } /* sits under the fixed WidgetStack on phones */
+}
+
+/* ── Shell ────────────────────────────────────────────────────────────────── */
+.bf-main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 24px 120px;
+}
+
+/* ── Bento grid ───────────────────────────────────────────────────────────── */
+.bf-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+.bf-tile {
+  background: var(--bf-tile);
+  border: 1px solid var(--bf-line);
+  border-radius: 18px;
+  padding: 26px 28px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* GSAP owns tile transforms (entrance tween) — CSS transitions border only (§3.3) */
+  transition: border-color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+/* Tiles are not clickable — no lift; a quiet border response only. */
+.bf-tile:hover { border-color: rgba(255, 255, 255, 0.16); }
+
+.bf-tile--identity { grid-column: span 8; grid-row: span 2; display: flex; flex-direction: column; justify-content: center; padding: 44px 44px 40px; }
+.bf-tile--cta { grid-column: span 4; }
+.bf-tile--stats { grid-column: span 4; }
+.bf-tile--path { grid-column: span 7; }
+.bf-tile--ai { grid-column: span 5; }
+.bf-tile--now { grid-column: span 12; display: flex; align-items: baseline; gap: 28px; }
+
+.bf-tile-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bf-muted); margin: 0 0 16px;
+}
+
+/* ── Identity tile ────────────────────────────────────────────────────────── */
+.bf-kicker {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.08em; color: var(--bf-coral);
+  margin: 0 0 18px;
+}
+.bf-name {
+  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  margin: 0 0 22px;
+}
+.bf-lede { font-size: 1.05rem; line-height: 1.55; color: var(--bf-text); max-width: 52ch; margin: 0 0 10px; }
+.bf-lede strong { font-weight: 700; }
+.bf-hook { font-size: 0.9rem; line-height: 1.6; color: var(--bf-muted); max-width: 52ch; margin: 0; }
+
+/* ── CTA tile — the one loud surface in the brief ─────────────────────────── */
+.bf-tile--cta {
+  background: var(--bf-coral);
+  border-color: transparent;
+  color: #190c08; /* 7.46:1 on coral #ff7a5c */
+  display: flex; flex-direction: column; gap: 6px;
+}
+.bf-tile--cta:hover { border-color: transparent; }
+.bf-cta-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.bf-cta-sub { font-size: 0.82rem; font-weight: 500; margin: 0 0 16px; color: #2c150d; /* 6.71:1 on coral */ }
+.bf-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+.bf-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 10px 20px; border-radius: 11px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: background 0.25s cubic-bezier(0.32, 0.72, 0, 1), border-color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.bf-btn--onaccent {
+  background: #190c08; color: #ffe9e2; /* 12+:1 */
+  border: 1px solid transparent;
+}
+.bf-btn--onaccent:hover { background: #2c150d; }
+.bf-btn--outline {
+  background: transparent; color: #190c08;
+  border: 1.5px solid rgba(25, 12, 8, 0.55);
+}
+.bf-btn--outline:hover { border-color: #190c08; }
+
+/* ── Stats tile ───────────────────────────────────────────────────────────── */
+.bf-stats { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
+.bf-stat { display: flex; flex-direction: column-reverse; gap: 3px; }
+.bf-stat-val { margin: 0; }
+.bf-stat-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 700; letter-spacing: -0.02em;
+  color: var(--bf-text); font-variant-numeric: tabular-nums;
+}
+.bf-stat-label { font-size: 11.5px; color: var(--bf-muted); }
+
+/* ── Attack-path tile ─────────────────────────────────────────────────────── */
+.bf-path { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 4px 0 14px; }
+.bf-path-seg { display: inline-flex; align-items: center; }
+.bf-path-node {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12.5px; padding: 7px 12px; border-radius: 8px;
+  border: 1px solid var(--bf-line); color: var(--bf-muted);
+  background: var(--bf-tile-2);
+  white-space: nowrap;
+}
+.bf-path-node--toxic { color: var(--bf-coral); border-color: rgba(255, 122, 92, 0.35); }
+.bf-path-node--cut {
+  color: var(--bf-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--bf-coral);
+  text-decoration-thickness: 2px;
+}
+.bf-path-edge {
+  display: inline-block; width: 22px; height: 1px;
+  background: var(--bf-line); margin: 0 2px;
+}
+.bf-path-edge--cut {
+  background: repeating-linear-gradient(90deg, var(--bf-coral) 0 4px, transparent 4px 8px);
+  height: 2px;
+}
+.bf-path-note { font-size: 12px; color: var(--bf-muted); margin: 0; }
+
+/* ── AI tile ──────────────────────────────────────────────────────────────── */
+.bf-ai-row { display: flex; gap: 26px; flex-wrap: wrap; margin-bottom: 12px; }
+.bf-ai-fact { display: flex; flex-direction: column; gap: 2px; }
+.bf-ai-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em;
+  color: var(--bf-coral); font-variant-numeric: tabular-nums;
+}
+.bf-ai-label { font-size: 11.5px; color: var(--bf-muted); }
+.bf-ai-note { font-size: 12px; color: var(--bf-muted); margin: 0; }
+
+/* ── Now tile ─────────────────────────────────────────────────────────────── */
+.bf-tile--now .bf-tile-label { margin: 0; flex-shrink: 0; }
+.bf-now-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 8px 26px;
+  font-size: 13.5px; color: var(--bf-text);
+}
+.bf-now-list li { display: inline-flex; align-items: center; gap: 8px; }
+.bf-now-list li::before {
+  content: ""; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--bf-coral); flex-shrink: 0;
+}
+
+/* ── Selected work ────────────────────────────────────────────────────────── */
+.bf-work { margin-top: 72px; }
+.bf-work-head, .bf-contact { display: flex; align-items: baseline; gap: 16px; }
+.bf-h2 {
+  font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px;
+}
+.bf-work-count {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; color: var(--bf-muted);
+}
+.bf-work-list { list-style: none; margin: 12px 0 0; padding: 0; }
+.bf-work-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 18px 4px;
+  border-top: 1px solid var(--bf-line);
+}
+.bf-work-row:last-child { border-bottom: 1px solid var(--bf-line); }
+.bf-work-name { font-weight: 700; font-size: 15px; }
+.bf-work-desc { font-size: 13.5px; color: var(--bf-muted); }
+.bf-work-metric {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12.5px; color: var(--bf-coral); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Contact ──────────────────────────────────────────────────────────────── */
+.bf-contact { margin-top: 64px; flex-direction: column; align-items: flex-start; }
+.bf-contact-list {
+  list-style: none; margin: 8px 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 12px;
+}
+.bf-contact-link {
+  display: inline-flex; flex-direction: column; gap: 2px;
+  min-height: 44px; justify-content: center;
+  text-decoration: none; color: var(--bf-text);
+  border: 1px solid var(--bf-line); border-radius: 12px; padding: 12px 18px;
+  transition: border-color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.bf-contact-link:hover { border-color: rgba(255, 122, 92, 0.45); }
+.bf-contact-k { font-size: 13px; font-weight: 700; }
+.bf-contact-v {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; color: var(--bf-muted);
+}
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.bf-root a:focus-visible,
+.bf-root button:focus-visible {
+  outline: 2px solid var(--bf-coral);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+/* On the coral tile the coral ring is invisible — use ink instead. */
+.bf-tile--cta a:focus-visible { outline-color: #190c08; }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .bf-tile--identity { grid-column: span 12; }
+  .bf-tile--cta { grid-column: span 6; }
+  .bf-tile--stats { grid-column: span 6; }
+  .bf-tile--path { grid-column: span 12; }
+  .bf-tile--ai { grid-column: span 12; }
+}
+@media (max-width: 639px) {
+  .bf-main { padding: 20px 14px 90px; }
+  .bf-grid { gap: 10px; }
+  .bf-tile { padding: 20px; border-radius: 14px; }
+  .bf-tile--identity { padding: 24px 20px; }
+  .bf-name { margin-bottom: 16px; }
+  .bf-kicker { margin-bottom: 12px; }
+  .bf-tile--cta, .bf-tile--stats { grid-column: span 12; }
+  .bf-tile--now { flex-direction: column; gap: 12px; }
+  .bf-work-row { grid-template-columns: 1fr; gap: 4px; }
+  .bf-work-metric { justify-self: start; }
+}

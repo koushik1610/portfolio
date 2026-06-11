@@ -3,19 +3,17 @@
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
-// Rotating subhead words — morph weight/width in place (kinetic variable type).
+// Rotating subhead words — morph weight in place (kinetic variable type).
+// Geist exposes only the wght axis; width is not animatable here.
 const ROTATOR = [
-  { word: "Detection.", wght: 820, wdth: 105 },
-  { word: "IAM.", wght: 560, wdth: 88 },
-  { word: "AI Security.", wght: 720, wdth: 112 },
-  { word: "Architecture.", wght: 480, wdth: 96 },
+  { word: "Detection.", wght: 820 },
+  { word: "IAM.", wght: 560 },
+  { word: "AI Security.", wght: 720 },
+  { word: "Architecture.", wght: 480 },
 ] as const;
 
 const ROTATOR_PHRASE =
@@ -94,7 +92,7 @@ const PROJECTS = [
 
 // ── Component ───────────────────────────────────────────────────────────────
 
-export default function WTheme14Hero({ theme }: { theme: Theme }) {
+export default function SolsticeHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -111,7 +109,7 @@ export default function WTheme14Hero({ theme }: { theme: Theme }) {
       if (prefersReduced) {
         if (rotEl) {
           rotEl.textContent = ROTATOR[0].word;
-          rotEl.style.fontVariationSettings = `"wght" ${ROTATOR[0].wght}, "wdth" 100`;
+          rotEl.style.fontVariationSettings = `"wght" ${ROTATOR[0].wght}`;
         }
         if (nameEl) {
           nameEl.style.fontVariationSettings = `"wght" 760`;
@@ -145,14 +143,12 @@ export default function WTheme14Hero({ theme }: { theme: Theme }) {
 
       // ── SIGNATURE 1: variable-weight word rotator (morph IN PLACE) ─────────
       if (rotEl) {
-        const state = { wght: ROTATOR[0].wght, wdth: ROTATOR[0].wdth };
+        const state = { wght: ROTATOR[0].wght };
         rotEl.textContent = ROTATOR[0].word;
-        rotEl.style.fontVariationSettings = `"wght" ${state.wght}, "wdth" ${state.wdth}`;
+        rotEl.style.fontVariationSettings = `"wght" ${state.wght}`;
 
         const applyVar = () => {
-          rotEl.style.fontVariationSettings = `"wght" ${Math.round(
-            state.wght
-          )}, "wdth" ${state.wdth.toFixed(1)}`;
+          rotEl.style.fontVariationSettings = `"wght" ${Math.round(state.wght)}`;
         };
 
         const tl = gsap.timeline({ repeat: -1, delay: 1.1 });
@@ -161,7 +157,6 @@ export default function WTheme14Hero({ theme }: { theme: Theme }) {
           // breathe down (thin/compress) as the word leaves
           tl.to(state, {
             wght: 320,
-            wdth: 80,
             duration: 0.42,
             ease: "power2.in",
             onUpdate: applyVar,
@@ -174,7 +169,6 @@ export default function WTheme14Hero({ theme }: { theme: Theme }) {
             // breathe up into the new word's target weight/width
             .to(state, {
               wght: next.wght,
-              wdth: next.wdth,
               duration: 0.62,
               ease: "power3.out",
               onUpdate: applyVar,
@@ -292,12 +286,14 @@ export default function WTheme14Hero({ theme }: { theme: Theme }) {
               production systems, not prototypes. Nine years across three
               organizations, holding a 2,800+-account estate together.
             </p>
+            <div className="w14-cta-row">
+              <a href="mailto:koushik.kotamraju1610@gmail.com" className="w14-btn w14-btn--primary">Email me</a>
+              <a href="/resume" className="w14-btn w14-btn--ghost">Résumé</a>
+            </div>
             <div className="w14-masthead-foot">
+              <span className="w14-fileref">Vol. IX — nine years in security</span>
+              <span className="w14-fileref">Sunday edition</span>
               <span className="w14-fileref">koushik.io</span>
-              <span className="w14-fileref">
-                AWS Solutions Architect · Security Specialty
-              </span>
-              <span className="w14-fileref">2026</span>
             </div>
           </div>
         </header>
@@ -407,12 +403,12 @@ export default function WTheme14Hero({ theme }: { theme: Theme }) {
         >
           <div className="w14-colophon-left">
             <p className="w14-kicker">
-              <span aria-hidden="true">—</span> Contact
+              <span aria-hidden="true">—</span> Letters
             </p>
             <h2 id="w14-contact-head" className="w14-colophon-title">
-              Open to Staff &amp; Principal Security Engineer roles.
+              The next edition: Staff &amp; Principal Security Engineer roles.
             </h2>
-            <p className="w14-colophon-note">Still shipping. Still curious.</p>
+            <p className="w14-colophon-note">Corrections, tips, and offers — by wire below.</p>
           </div>
           <div className="w14-colophon-links">
             <a

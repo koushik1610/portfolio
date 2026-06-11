@@ -3,11 +3,8 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
 import type { Theme } from "@/lib/themes";
-import { gsap, useGSAP, ScrambleTextPlugin } from "@/lib/gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, useGSAP } from "@/lib/gsap";
 import "./styles.css";
-
-gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
@@ -62,7 +59,7 @@ const FULL_NAME = "Koushik Kotamraju";
 
 // ── Component ───────────────────────────────────────────────────────────────
 
-export default function WTheme07Hero({ theme }: { theme: Theme }) {
+export default function CommandHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -198,6 +195,11 @@ export default function WTheme07Hero({ theme }: { theme: Theme }) {
                 A small team. 2,800+ cloud accounts. The math only works if you build the right systems.
               </p>
             </div>
+
+            <div className="w7-cta-row w7-console-row">
+              <a href="mailto:koushik.kotamraju1610@gmail.com" className="w7-btn w7-btn--primary">Email me</a>
+              <a href="/resume" className="w7-btn w7-btn--ghost">Résumé</a>
+            </div>
           </div>
 
           <div className="w7-console-foot">
@@ -211,7 +213,7 @@ export default function WTheme07Hero({ theme }: { theme: Theme }) {
         {/* ── Stat bar ─────────────────────────────────────────────────── */}
         <section className="w7-statbar" aria-label="Key metrics">
           {STATS.map((stat) => (
-            <div key={stat.key} className="w7-stat" aria-label={stat.ariaLabel}>
+            <div key={stat.key} className="w7-stat" role="group" aria-label={stat.ariaLabel}>
               <span className={`w7-stat-num ${stat.numClass}`} aria-hidden="true">{stat.initial}</span>
               <span className="w7-stat-label" aria-hidden="true">{stat.label}</span>
             </div>
@@ -261,7 +263,7 @@ export default function WTheme07Hero({ theme }: { theme: Theme }) {
                     {proj.tags.map((t) => (<span key={t} className="w7-tag">{t}</span>))}
                   </span>
                 </span>
-                <span className="w7-proj-metric" aria-label={`${proj.metric} ${proj.metricLabel}`}>
+                <span className="w7-proj-metric" role="group" aria-label={`${proj.metric} ${proj.metricLabel}`}>
                   <span className="w7-proj-metric-num">{proj.metric}</span>
                   <span className="w7-proj-metric-label">{proj.metricLabel}</span>
                 </span>

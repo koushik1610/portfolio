@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "studio" | "avatar3d" | "aethera" | "orb" | "w7" | "w8" | "w11" | "w12" | "w13" | "w14";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith";
 
 export interface ThemeContent {
   tagline: string;
@@ -18,40 +18,8 @@ export interface Theme {
 
 export const themes: Theme[] = [
   {
-    name: "I-Studio",
-    id: "i-theme-studio",
-    vars: {
-      "--background": "#0c0c0c",
-      "--surface": "#161616",
-      "--surface-2": "#222222",
-      "--text-primary": "#e8e8e8",
-      "--text-muted": "#888888",
-      "--accent": "#B8CDD9",
-      "--accent-dim": "#8aaabb",
-      "--border": "#2a2a2a",
-    },
-    layout: "studio",
-    content: { tagline: "Security. At scale.", bio: "Sr. Security Engineer. 9 years. Building systems that hold.", cta: "See work" },
-  },
-  {
-    name: "I-Minimal-BW",
-    id: "i-theme-avatar3d",
-    vars: {
-      "--background": "#0c0c0c",
-      "--surface": "#161616",
-      "--surface-2": "#222222",
-      "--text-primary": "#d7e2ea",
-      "--text-muted": "#888888",
-      "--accent": "#bbccd7",
-      "--accent-dim": "#8aaabb",
-      "--border": "#1e1e1e",
-    },
-    layout: "avatar3d",
-    content: { tagline: "Hi, I'm Koushik", bio: "Sr. Security Engineer. Detection at scale.", cta: "View Work" },
-  },
-  {
-    name: "I-Aethera",
-    id: "i-theme-aethera",
+    name: "Aethera",
+    id: "aethera",
     vars: {
       "--background": "#ffffff",
       "--surface": "#f8f8f6",
@@ -66,62 +34,67 @@ export const themes: Theme[] = [
     content: { tagline: "Cloud security. Built to hold.", bio: "Detection engineering at account scale. IAM analysis at depth. Nine years across three organizations.", cta: "View Work" },
   },
   {
-    name: "I-Orb",
-    id: "i-theme-orb",
-    vars: {
-      "--background": "#ffffff",
-      "--surface": "#f8f8f6",
-      "--surface-2": "#f0f0ee",
-      "--text-primary": "#000000",
-      "--text-muted": "#6f6f6f",
-      "--accent": "#4a7c59",
-      "--accent-dim": "#3a6347",
-      "--border": "#e5e5e3",
-    },
-    layout: "orb",
-    content: { tagline: "Beyond noise, I build what holds.", bio: "Detection at scale. IAM analysis at depth. AI tooling that compounds.", cta: "View Work" },
-  },
-  {
-    name: "W-Command",
-    id: "w-theme-07",
+    name: "Command",
+    id: "command",
     vars: { "--background": "#0a0a0c", "--surface": "rgba(255,255,255,0.04)", "--surface-2": "rgba(255,255,255,0.06)", "--text-primary": "#f4f4f6", "--text-muted": "#8b8b94", "--accent": "#818cf8", "--accent-dim": "#6366f1", "--border": "rgba(255,255,255,0.08)" },
-    layout: "w7",
+    layout: "command",
     content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "AI-native security platforms — production systems, not prototypes.", cta: "View Work" },
   },
   {
-    name: "W-Lumen",
-    id: "w-theme-08",
+    name: "Lumen",
+    id: "lumen",
     vars: { "--background": "#faf9f6", "--surface": "#ffffff", "--surface-2": "#f2f1ec", "--text-primary": "#111111", "--text-muted": "#525252", "--accent": "#2563eb", "--accent-dim": "#1d4ed8", "--border": "#e2e2dd" },
-    layout: "w8",
+    layout: "lumen",
     content: { tagline: "Cloud security, set like a technical document.", bio: "Detection at account scale. IAM analysis at depth. Nine years across three organizations.", cta: "View Work" },
   },
   {
-    name: "W-Axiom",
-    id: "w-theme-11",
-    vars: { "--background": "#09090b", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#ededf0", "--text-muted": "#9a9aa3", "--accent": "#9a3328", "--accent-dim": "#7d271e", "--border": "rgba(255,255,255,0.08)" },
-    layout: "w11",
+    name: "Axiom",
+    id: "axiom",
+    vars: { "--background": "#09090b", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#ededf0", "--text-muted": "#9a9aa3", "--accent": "#b8483a", "--accent-dim": "#9a3328", "--border": "rgba(255,255,255,0.08)" },
+    layout: "axiom",
     content: { tagline: "The whole attack graph converges on one name.", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
   },
   {
-    name: "W-Avatar",
-    id: "w-theme-12",
+    name: "Avatar",
+    id: "avatar",
     vars: { "--background": "#060606", "--surface": "#101010", "--surface-2": "#181818", "--text-primary": "#f3f1ea", "--text-muted": "#9a978d", "--accent": "#e0a44d", "--accent-dim": "#c08a36", "--border": "rgba(255,255,255,0.1)" },
-    layout: "w12",
+    layout: "avatar",
     content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
   },
   {
-    name: "W-Telemetry",
-    id: "w-theme-13",
-    vars: { "--background": "#0d1117", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e6edf3", "--text-muted": "#9aa4af", "--accent": "#22d3ee", "--accent-dim": "#0891b2", "--border": "rgba(48,54,61,0.8)" },
-    layout: "w13",
+    name: "Telemetry",
+    id: "telemetry",
+    vars: { "--background": "#0d1117", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e6edf3", "--text-muted": "#9aa4af", "--accent": "#22d3ee", "--accent-dim": "#0e7490", "--border": "rgba(48,54,61,0.8)" },
+    layout: "telemetry",
     content: { tagline: "An always-on operations console.", bio: "9 years uptime. 2,800+ cloud accounts monitored.", cta: "View Work" },
   },
   {
-    name: "W-Solstice",
-    id: "w-theme-14",
+    name: "Solstice",
+    id: "solstice",
     vars: { "--background": "#faf9f6", "--surface": "#ffffff", "--surface-2": "#f2f1ec", "--text-primary": "#1a1a18", "--text-muted": "#52524e", "--accent": "#5b4bd6", "--accent-dim": "#4636c0", "--border": "#e4e2da" },
-    layout: "w14",
+    layout: "solstice",
     content: { tagline: "Security, set like a broadsheet.", bio: "Detection. IAM analysis. AI security. Architecture.", cta: "View Work" },
+  },
+  {
+    name: "Casefile",
+    id: "casefile",
+    vars: { "--background": "#0b0c0b", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e7ece8", "--text-muted": "#98a39b", "--accent": "#82c79b", "--accent-dim": "#4f8f68", "--border": "rgba(231,236,232,0.09)" },
+    layout: "casefile",
+    content: { tagline: "A quiet incident-response session.", bio: "The hero is the artifact: a terminal transcript that resolves to one name.", cta: "Email me" },
+  },
+  {
+    name: "Briefing",
+    id: "briefing",
+    vars: { "--background": "#0c0a09", "--surface": "rgba(255,255,255,0.035)", "--surface-2": "rgba(255,255,255,0.055)", "--text-primary": "#efece8", "--text-muted": "#a39d94", "--accent": "#ff7a5c", "--accent-dim": "#d05a3e", "--border": "rgba(255,255,255,0.09)" },
+    layout: "briefing",
+    content: { tagline: "An operations brief in bento form.", bio: "One dominant tile, one hire signal, the numbers around them.", cta: "Email me" },
+  },
+  {
+    name: "Monolith",
+    id: "monolith",
+    vars: { "--background": "#0a0a0a", "--surface": "#131311", "--surface-2": "#1b1b18", "--text-primary": "#eceae4", "--text-muted": "#9d9a92", "--accent": "#ff3b1f", "--accent-dim": "#c52d12", "--border": "rgba(236,234,228,0.12)" },
+    layout: "monolith",
+    content: { tagline: "One name. One hairline. Nothing else.", bio: "The rotation's moment of restraint.", cta: "Email me" },
   },
 ];
 

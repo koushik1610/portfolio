@@ -1,0 +1,728 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   AETHERA layout  (html[data-layout="aethera"])
+   Light-mode, video hero, Instrument Serif display, editorial feel.
+   CSS class prefix: ath-
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+html[data-layout="aethera"] nav { display: none !important; }
+
+/* ── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes ath-fade-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Root ────────────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-root {
+  min-height: 100vh;
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+html[data-layout="aethera"] .ath-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip-to-content — visually hidden until focused (WCAG 2.4.1 Level A) */
+html[data-layout="aethera"] .ath-skip {
+  position: absolute;
+  left: -9999px;
+  top: 1rem;
+  z-index: 200;
+  background: #000000;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+html[data-layout="aethera"] .ath-skip:focus {
+  left: 1rem;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 3rem;
+}
+
+html[data-layout="aethera"] .ath-logo {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #000000;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+html[data-layout="aethera"] .ath-reg {
+  font-size: 0.55em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+html[data-layout="aethera"] .ath-nav-links {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+html[data-layout="aethera"] .ath-nav-link {
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-decoration: none;
+  color: #5c5c5c; /* #5c5c5c on white = 6.5:1 contrast, clears WCAG AA 4.5:1 */
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+
+html[data-layout="aethera"] .ath-nav-link:hover {
+  color: #000000;
+}
+
+html[data-layout="aethera"] .ath-nav-cta {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #ffffff;
+  background: #000000;
+  padding: 0.6rem 1.5rem;
+  letter-spacing: 0.05em;
+  transition: background 0.2s ease;
+}
+
+html[data-layout="aethera"] .ath-nav-cta:hover {
+  background: #333333;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #c8dfc4;
+}
+
+html[data-layout="aethera"] .ath-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+html[data-layout="aethera"] .ath-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+html[data-layout="aethera"] .ath-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+html[data-layout="aethera"] .ath-hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1180px;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+html[data-layout="aethera"] .ath-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4a4a4a; /* over-video text: keep ≥7:1 against the lightened overlay */
+  animation: ath-fade-rise 0.8s ease-out both;
+}
+
+html[data-layout="aethera"] .ath-headline {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #000000;
+  animation: ath-fade-rise 0.8s ease-out 0.15s both;
+}
+
+html[data-layout="aethera"] .ath-headline em {
+  color: #4a4a4a; /* over-video: darker than section-muted #6f6f6f */
+  font-style: italic;
+}
+
+html[data-layout="aethera"] .ath-tagline {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #3a3a3a;
+  margin: 0;
+  animation: ath-fade-rise 0.8s ease-out 0.3s both;
+}
+
+html[data-layout="aethera"] .ath-tagline em {
+  color: #4a4a4a; /* over-video: darker than section-muted #6f6f6f */
+  font-style: italic;
+}
+
+html[data-layout="aethera"] .ath-hero-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #3a3a3a;
+  max-width: 580px;
+  animation: ath-fade-rise 0.8s ease-out 0.45s both;
+}
+
+html[data-layout="aethera"] .ath-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ffffff;
+  background: #000000;
+  padding: 0.875rem 2.25rem;
+  animation: ath-fade-rise 0.8s ease-out 0.45s both;
+  transition: background 0.25s ease;
+}
+
+html[data-layout="aethera"] .ath-hero-cta:hover {
+  background: #2a2a2a;
+}
+
+/* ── Bio / About ─────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-bio-section {
+  background: #ffffff;
+  padding: 8rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7rem;
+  align-items: start;
+}
+
+html[data-layout="aethera"] .ath-bio-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6f6f6f;
+  margin-bottom: 1.5rem;
+}
+
+html[data-layout="aethera"] .ath-bio-quote {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(1.875rem, 3vw, 2.625rem);
+  line-height: 1.25;
+  color: #000000;
+  font-weight: 400;
+}
+
+html[data-layout="aethera"] .ath-bio-quote em {
+  color: #6f6f6f;
+  font-style: italic;
+}
+
+html[data-layout="aethera"] .ath-bio-text {
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: #3a3a3a;
+  margin-bottom: 1.5rem;
+}
+
+html[data-layout="aethera"] .ath-bio-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+html[data-layout="aethera"] .ath-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+html[data-layout="aethera"] .ath-stat-num {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1;
+}
+
+html[data-layout="aethera"] .ath-stat-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f6f6f;
+}
+
+/* ── Expertise ───────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-expertise-section {
+  background: #f8f8f6;
+  padding: 8rem 3rem;
+}
+
+html[data-layout="aethera"] .ath-expertise-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+html[data-layout="aethera"] .ath-expertise-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e3;
+  padding-bottom: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+html[data-layout="aethera"] .ath-expertise-title {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+}
+
+html[data-layout="aethera"] .ath-expertise-count {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #6f6f6f;
+}
+
+html[data-layout="aethera"] .ath-expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 3.5rem;
+}
+
+html[data-layout="aethera"] .ath-exp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+html[data-layout="aethera"] .ath-exp-num {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #6f6f6f;
+}
+
+html[data-layout="aethera"] .ath-exp-name {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: 1.3125rem;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.25;
+}
+
+html[data-layout="aethera"] .ath-exp-desc {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #6f6f6f;
+  margin: 0;
+}
+
+/* ── Projects ────────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-projects-section {
+  background: #ffffff;
+  padding: 8rem 3rem;
+}
+
+html[data-layout="aethera"] .ath-projects-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+html[data-layout="aethera"] .ath-projects-header {
+  border-bottom: 1px solid #e5e5e3;
+  padding-bottom: 1.5rem;
+  margin-bottom: 0;
+}
+
+html[data-layout="aethera"] .ath-projects-title {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 400;
+  color: #000000;
+  margin: 0;
+}
+
+html[data-layout="aethera"] .ath-project-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto auto;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.25rem 1rem;
+  margin: 0 -1rem;
+  border-bottom: 1px solid #e5e5e3;
+  transition: background 0.2s ease;
+}
+
+html[data-layout="aethera"] .ath-project-row:hover {
+  background: #f8f8f6;
+}
+
+html[data-layout="aethera"] .ath-proj-num {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #6f6f6f;
+  align-self: start;
+  padding-top: 0.3rem;
+}
+
+html[data-layout="aethera"] .ath-proj-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+html[data-layout="aethera"] .ath-proj-name {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.2;
+}
+
+html[data-layout="aethera"] .ath-proj-desc {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: #6f6f6f;
+  margin: 0;
+  max-width: 480px;
+}
+
+html[data-layout="aethera"] .ath-proj-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 200px;
+}
+
+html[data-layout="aethera"] .ath-proj-tag {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f6f6f;
+  border: 1px solid #e5e5e3;
+  padding: 0.25rem 0.5rem;
+}
+
+html[data-layout="aethera"] .ath-proj-metric {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 90px;
+}
+
+html[data-layout="aethera"] .ath-proj-metric-num {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: 1.875rem;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1;
+}
+
+html[data-layout="aethera"] .ath-proj-metric-label {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f6f6f;
+}
+
+/* ── Contact ─────────────────────────────────────────────────────────────── */
+html[data-layout="aethera"] .ath-contact {
+  background: #f8f8f6;
+  padding: 10rem 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+html[data-layout="aethera"] .ath-contact-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6f6f6f;
+}
+
+html[data-layout="aethera"] .ath-contact-heading {
+  font-family: var(--font-instrument-serif), serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.1;
+  max-width: 700px;
+  margin: 0;
+}
+
+html[data-layout="aethera"] .ath-contact-heading em {
+  color: #6f6f6f;
+  font-style: italic;
+}
+
+html[data-layout="aethera"] .ath-contact-links {
+  display: flex;
+  gap: 3rem;
+  margin-top: 1rem;
+}
+
+html[data-layout="aethera"] .ath-contact-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000000;
+  text-decoration: none;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 0.15rem;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+html[data-layout="aethera"] .ath-contact-link:hover {
+  color: #6f6f6f;
+  border-color: #6f6f6f;
+}
+
+/* ── Focus-visible — all interactive elements ────────────────────────────── */
+html[data-layout="aethera"] .ath-skip:focus-visible,
+html[data-layout="aethera"] .ath-logo:focus-visible,
+html[data-layout="aethera"] .ath-nav-link:focus-visible,
+html[data-layout="aethera"] .ath-nav-cta:focus-visible,
+html[data-layout="aethera"] .ath-hero-cta:focus-visible,
+html[data-layout="aethera"] .ath-contact-link:focus-visible,
+html[data-layout="aethera"] .ath-mobile-nav-link:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 3px;
+}
+
+/* ── Mobile bottom nav (hidden above 640px) ──────────────────────────────── */
+html[data-layout="aethera"] .ath-mobile-nav {
+  display: none;
+}
+
+/* ── Responsive: ≤ 900px ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  html[data-layout="aethera"] .ath-bio-section {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    padding: 5rem 2rem;
+  }
+
+  html[data-layout="aethera"] .ath-expertise-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  html[data-layout="aethera"] .ath-expertise-section {
+    padding: 5rem 2rem;
+  }
+
+  html[data-layout="aethera"] .ath-projects-section {
+    padding: 5rem 2rem;
+  }
+}
+
+/* ── Responsive: ≤ 640px ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  html[data-layout="aethera"] .ath-nav {
+    padding: 1.5rem;
+  }
+
+  html[data-layout="aethera"] .ath-nav-links {
+    display: none;
+  }
+
+  html[data-layout="aethera"] .ath-expertise-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  html[data-layout="aethera"] .ath-expertise-section {
+    padding: 4rem 1.5rem;
+  }
+
+  html[data-layout="aethera"] .ath-projects-section {
+    padding: 4rem 1.5rem;
+  }
+
+  html[data-layout="aethera"] .ath-project-row {
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  html[data-layout="aethera"] .ath-proj-tags,
+  html[data-layout="aethera"] .ath-proj-metric {
+    display: none;
+  }
+
+  html[data-layout="aethera"] .ath-bio-section {
+    padding: 4rem 1.5rem;
+  }
+
+  html[data-layout="aethera"] .ath-contact {
+    padding: 6rem 1.5rem 10rem; /* extra bottom for fixed mobile nav */
+  }
+
+  html[data-layout="aethera"] .ath-contact-links {
+    gap: 1.5rem;
+  }
+
+  html[data-layout="aethera"] .ath-mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid #e5e5e3;
+    justify-content: space-around;
+    padding: 0.875rem 0;
+    padding-bottom: calc(0.875rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  html[data-layout="aethera"] .ath-mobile-nav-link {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6f6f6f;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* touch target */
+    padding: 0 0.75rem;
+  }
+
+  html[data-layout="aethera"] .ath-mobile-nav-link:hover {
+    color: #000000;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html[data-layout="aethera"] .ath-eyebrow,
+  html[data-layout="aethera"] .ath-headline,
+  html[data-layout="aethera"] .ath-tagline,
+  html[data-layout="aethera"] .ath-hero-desc,
+  html[data-layout="aethera"] .ath-hero-cta {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ── Fixed full-page video background (persists on scroll) ───────────────── */
+html[data-layout="aethera"] .ath-video-wrap,
+html[data-layout="aethera"] .ath-video-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+html[data-layout="aethera"] .ath-root,
+html[data-layout="aethera"] .ath-hero {
+  background: transparent;
+}
+html[data-layout="aethera"] .ath-nav,
+html[data-layout="aethera"] .ath-hero-content,
+html[data-layout="aethera"] .ath-root > section,
+html[data-layout="aethera"] .ath-bio-section,
+html[data-layout="aethera"] .ath-expertise-section {
+  position: relative;
+  z-index: 1;
+}
+html[data-layout="aethera"] .ath-bio-section {
+  background: rgba(255, 255, 255, 0.66);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+html[data-layout="aethera"] .ath-expertise-section {
+  background: rgba(248, 248, 246, 0.62);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+html[data-layout="aethera"] .ath-projects-section,
+html[data-layout="aethera"] .ath-contact {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+
+/* ── Above-fold CTA row ───────────────────────────────────────────────────── */
+
+html[data-layout="aethera"] .ath-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  justify-content: center;
+  animation: ath-fade-rise 0.8s ease-out 0.45s both;
+}
+html[data-layout="aethera"] .ath-cta-row .ath-hero-cta { animation: none; min-height: 44px; }
+html[data-layout="aethera"] .ath-hero-cta--ghost {
+  background: transparent;
+  color: #000000;
+  border: 1px solid #000000;
+}
+html[data-layout="aethera"] .ath-hero-cta--ghost:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-layout="aethera"] .ath-cta-row { animation: none; opacity: 1; }
+}

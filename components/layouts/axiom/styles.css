@@ -5,14 +5,19 @@
    Palette: #09090b bg · oxblood #9a3328 (critical/edges) · steel #6b7280 · #ededf0
 ───────────────────────────────────────────────────────────────────────────── */
 
-html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
+html[data-layout="axiom"] nav:not(.w11-nav) { display: none !important; }
 
 .w11-root {
   --w11-bg: #09090b;
   --w11-text: #ededf0;
   --w11-muted: #9a9aa3;
   --w11-faint: #6b6b73;
+  /* Accent single source of truth: --w11-oxblood MUST equal --accent in
+     lib/themes.ts (axiom entry). Oxblood is 3.82:1 on this bg — legal
+     only for edges, fills, glows and ≥24px text. Small label text uses
+     --w11-ember (5.5:1). */
   --w11-oxblood: #b8483a;
+  --w11-ember: #cf6a55;
   --w11-steel: #6b7280;
   --w11-line: rgba(255, 255, 255, 0.08);
   background: var(--w11-bg);
@@ -146,7 +151,7 @@ html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
 .w11-scene-head { margin-bottom: 36px; }
 .w11-scene-tag {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 12px; color: var(--w11-oxblood); letter-spacing: 0.08em;
+  font-size: 12px; color: var(--w11-ember); letter-spacing: 0.08em;
 }
 .w11-scene-title {
   font-size: clamp(1.75rem, 3.4vw, 2.75rem); font-weight: 600; letter-spacing: -0.025em; margin: 8px 0 0;
@@ -161,7 +166,7 @@ html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
 }
 .w11-eyebrow-tag {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 11px; color: var(--w11-oxblood);
+  font-size: 11px; color: var(--w11-ember);
   border: 1px solid rgba(184,72,58,0.3); border-radius: 5px; padding: 3px 8px;
 }
 .w11-hero-name {
@@ -173,10 +178,29 @@ html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
   font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.55; color: var(--w11-muted);
   max-width: 620px; margin: 0;
 }
-.w11-hero-foot { margin-top: 36px; }
+/* Above-fold CTA row — primary action visible in the first viewport */
+.w11-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.w11-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 10px 22px; border-radius: 10px;
+  font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;
+  text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.w11-btn--primary {
+  background: var(--w11-oxblood); color: #ffffff; /* 5.2:1 on oxblood */
+  border: 1px solid transparent;
+}
+.w11-btn--primary:hover { background: #c75545; }
+.w11-btn--ghost {
+  background: transparent; color: var(--w11-text);
+  border: 1px solid var(--w11-line);
+}
+.w11-btn--ghost:hover { border-color: rgba(184,72,58,0.5); }
+
+.w11-hero-foot { margin-top: 24px; }
 .w11-scrollcue {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w11-faint);
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w11-muted); /* faint failed 4.5:1 */
 }
 
 /* Stats scene */
@@ -190,6 +214,7 @@ html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
 .w11-metric > :first-child,
 .w11-metric [data-count] {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
+  /* Oxblood at ≥2rem bold = WCAG large text; 3.82:1 clears the 3:1 bar. */
   font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.03em;
   color: var(--w11-oxblood); line-height: 1; font-variant-numeric: tabular-nums;
   display: block;
@@ -205,7 +230,7 @@ html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
 }
 .w11-list-row:last-child { border-bottom: 1px solid var(--w11-line); }
 .w11-list-num {
-  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 13px; color: var(--w11-oxblood); padding-top: 4px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 13px; color: var(--w11-ember); padding-top: 4px;
 }
 .w11-list-name { font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
 .w11-list-desc { font-size: 14px; line-height: 1.6; color: var(--w11-muted); margin: 0; max-width: 640px; }
@@ -224,7 +249,7 @@ html[data-layout="w11"] nav:not(.w11-nav) { display: none !important; }
 .w11-proj:hover { border-color: rgba(184,72,58,0.4); transform: translateY(-3px); }
 .w11-proj-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .w11-proj-id {
-  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px; color: var(--w11-oxblood);
+  font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px; color: var(--w11-ember);
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 .w11-proj-metric {
