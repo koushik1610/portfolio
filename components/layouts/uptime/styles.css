@@ -1,0 +1,307 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   UPTIME · layout variant: uptime · class prefix: up-
+   A status page for a career: all systems operational, nine years of uptime,
+   an incident history that always resolves. Statuspage grammar, made premium.
+   Palette: green-black #070b09 · bone #e8ede9 · muted #97a39b (≈6.5:1)
+   Owned accent: emerald #34d399 (status-operational green) — MUST equal
+   --accent in lib/themes.ts. Punctuation only: status dots, OPERATIONAL
+   badges, uptime cells, primary CTA, email underline, focus rings. Never body.
+   Type scale — four steps: micro 11.5 / mono 13 / body 14.5 / emphasis 15.
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="uptime"] nav:not(.up-nav) { display: none !important; }
+
+.up-root {
+  --up-bg: #070b09;
+  --up-ink: #e8ede9;
+  --up-muted: #97a39b;
+  --up-accent: #34d399;          /* MUST equal --accent in lib/themes.ts */
+  --up-accent-bright: #6ee7b7;   /* hover state of the primary CTA */
+  --up-deg: #c79a3a;             /* resolved-incident cell (amber, muted) */
+  --up-line: rgba(232, 237, 233, 0.1);
+  --up-line-strong: rgba(232, 237, 233, 0.48); /* ≈3.7:1 over bg — non-text borders */
+  --up-surface: rgba(255, 255, 255, 0.03);
+  --up-cell-idle: rgba(232, 237, 233, 0.08);
+  --up-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --up-fs-micro: 11.5px;
+  --up-fs-mono: 13px;
+  --up-fs-body: 14.5px;
+  --up-fs-em: 15px;
+  background: var(--up-bg);
+  color: var(--up-ink);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.up-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--up-accent); color: #04130c; padding: 10px 18px;
+  border-radius: 4px; font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.up-skip:focus { left: 16px; top: 16px; }
+
+/* ── Top bar ──────────────────────────────────────────────────────────────── */
+.up-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 24px 40px;
+}
+.up-nav-meta {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--up-muted);
+}
+.up-nav-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--up-muted);
+}
+.up-nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--up-accent); }
+
+/* ── Pre-hide animated elements only when scripting is available.
+      GSAP reveals them; the reduced-motion path restores instantly.
+      No-JS visitors see everything. ─────────────────────────────────────── */
+@media (scripting: enabled) {
+  .up-anim { opacity: 0; transform: translateY(14px); }
+  .up-reveal { opacity: 0; transform: translateY(18px); }
+  .up-cell { opacity: 0; transform: scaleY(0.4); }
+}
+
+/* ── Masthead ─────────────────────────────────────────────────────────────── */
+.up-main { max-width: 1080px; margin: 0 auto; padding: 0 40px; box-sizing: border-box; }
+.up-head { padding: 124px 0 96px; }
+.up-eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--up-muted);
+  margin: 0 0 22px;
+}
+.up-title {
+  font-size: clamp(2.6rem, 8vw, 6rem);
+  font-weight: 800; letter-spacing: -0.045em; line-height: 0.98;
+  margin: 0 0 28px; color: var(--up-ink);
+}
+
+/* Status banner */
+.up-banner {
+  display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 12px 20px; border-radius: 10px;
+  background: rgba(52, 211, 153, 0.07);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  margin: 0 0 32px;
+}
+.up-banner-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--up-accent);
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+  animation: up-pulse 2.4s var(--up-ease) 2; /* settles after two beats */
+}
+@keyframes up-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+}
+.up-banner-text { font-size: var(--up-fs-em); font-weight: 700; color: var(--up-accent); letter-spacing: -0.01em; }
+.up-banner-since {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--up-muted);
+  padding-left: 12px; border-left: 1px solid var(--up-line-strong);
+}
+
+.up-summary {
+  font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.6;
+  color: var(--up-muted); max-width: 620px; margin: 0 0 34px;
+}
+.up-em { color: var(--up-ink); font-weight: 600; }
+
+.up-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 52px; }
+.up-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 11px 26px; border-radius: 6px;
+  font-size: var(--up-fs-body); font-weight: 700; letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.25s var(--up-ease), border-color 0.25s var(--up-ease);
+}
+.up-btn--primary {
+  background: var(--up-accent); color: #04130c; /* ≈9:1 on emerald */
+  border: 1px solid transparent;
+}
+.up-btn--primary:hover { background: var(--up-accent-bright); }
+.up-btn--ghost {
+  background: rgba(255, 255, 255, 0.04); color: var(--up-ink);
+  border: 1px solid var(--up-line-strong);
+}
+.up-btn--ghost:hover { border-color: var(--up-ink); background: rgba(255, 255, 255, 0.06); }
+
+/* KPI strip */
+.up-kpis {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px; margin: 0;
+  background: var(--up-line); border: 1px solid var(--up-line);
+  border-radius: 10px; overflow: hidden;
+}
+.up-kpi {
+  display: flex; flex-direction: column-reverse; gap: 8px;
+  padding: 22px 20px; background: var(--up-bg);
+}
+.up-kpi-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); color: var(--up-muted); letter-spacing: 0.04em;
+}
+.up-kpi-val { margin: 0; }
+.up-kpi-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  color: var(--up-ink);
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+.up-section { padding: 80px 0; border-top: 1px solid var(--up-line); }
+.up-h2 {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--up-accent); margin: 0 0 36px;
+}
+
+/* System components */
+.up-components { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.up-component {
+  padding: 22px 24px;
+  background: var(--up-surface);
+  border: 1px solid var(--up-line);
+  border-radius: 10px;
+}
+.up-comp-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin: 0 0 16px;
+}
+.up-comp-name { font-size: var(--up-fs-em); font-weight: 600; letter-spacing: -0.01em; color: var(--up-ink); }
+.up-comp-state {
+  display: inline-flex; align-items: center; gap: 7px; flex: none;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--up-accent);
+}
+.up-comp-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--up-accent); }
+
+/* uptime history strip */
+.up-strip {
+  display: flex; gap: 3px; height: 30px; align-items: stretch;
+  margin: 0 0 12px;
+}
+.up-cell {
+  flex: 1 1 0; min-width: 0; border-radius: 2px;
+  background: var(--up-cell-idle);
+  transform-origin: bottom center;
+}
+.up-cell--op { background: var(--up-accent); opacity: 0.85; }
+.up-cell--deg { background: var(--up-deg); opacity: 0.85; }
+.up-comp-metric {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-mono); color: var(--up-muted); margin: 0;
+}
+
+/* Incident history */
+.up-incidents { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+.up-incident {
+  padding: 24px;
+  border: 1px solid var(--up-line);
+  border-left: 2px solid var(--up-accent);
+  border-radius: 8px;
+  background: var(--up-surface);
+}
+.up-inc-top { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin: 0 0 12px; }
+.up-inc-date {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-mono); font-weight: 700; color: var(--up-ink);
+  font-variant-numeric: tabular-nums;
+}
+.up-inc-affected {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.04em;
+  color: var(--up-muted);
+  padding-left: 14px; border-left: 1px solid var(--up-line-strong);
+  margin-right: auto; /* pushes the Resolved pill to the right edge */
+}
+.up-inc-resolved {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-micro); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--up-accent);
+  padding: 3px 10px; border-radius: 999px;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.07);
+}
+.up-inc-title { font-size: var(--up-fs-em); font-weight: 600; color: var(--up-ink); margin: 0 0 8px; letter-spacing: -0.01em; }
+.up-inc-resolution { font-size: var(--up-fs-body); line-height: 1.6; color: var(--up-muted); margin: 0; max-width: 720px; }
+
+/* Subscribe — contact */
+.up-section--subscribe { padding-bottom: 140px; }
+.up-subscribe-note { font-size: var(--up-fs-em); color: var(--up-muted); margin: 0 0 28px; }
+.up-email {
+  display: inline-block;
+  font-size: clamp(1.1rem, 3vw, 2rem); font-weight: 700;
+  letter-spacing: -0.025em; line-height: 1.2;
+  color: var(--up-ink); text-decoration: none;
+  border-bottom: 2px solid var(--up-accent);
+  padding: 4px 0 8px; word-break: break-word;
+  transition: color 0.25s var(--up-ease);
+}
+.up-email:hover { color: #ffffff; }
+.up-links {
+  list-style: none; margin: 34px 0 0; padding: 0;
+  display: flex; flex-direction: column; gap: 4px; max-width: 560px;
+}
+.up-link {
+  display: flex; align-items: center; gap: 18px;
+  min-height: 44px; padding: 6px 2px; text-decoration: none;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--up-fs-mono);
+  transition: background 0.2s var(--up-ease); border-radius: 4px;
+}
+.up-link:hover { background: var(--up-surface); }
+.up-link-k {
+  color: var(--up-muted); text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: var(--up-fs-micro); width: 84px; flex: none;
+}
+.up-link-v { color: var(--up-ink); }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.up-root a:focus-visible,
+.up-root button:focus-visible {
+  outline: 2px solid var(--up-accent);
+  outline-offset: 3px; border-radius: 4px;
+}
+
+/* ── Reduced motion — kill the banner pulse ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .up-banner-dot { animation: none; }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  /* right padding reserves the fixed WidgetStack's corner */
+  .up-nav { padding-right: 270px; }
+}
+@media (max-width: 1023px) {
+  .up-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  .up-nav { padding: 18px 18px; justify-content: flex-start; }
+  .up-nav-meta { display: none; } /* status chip survives; meta sits under WidgetStack */
+  .up-main { padding: 0 18px; }
+  .up-head { padding: 84px 0 56px; }
+  .up-title { margin-bottom: 20px; }
+  .up-banner { margin-bottom: 24px; }
+  .up-summary { margin-bottom: 28px; }
+  .up-cta-row { margin-bottom: 40px; }
+  .up-section { padding: 60px 0; }
+  .up-kpis { grid-template-columns: 1fr 1fr; }
+  .up-comp-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .up-strip { height: 26px; }
+}
