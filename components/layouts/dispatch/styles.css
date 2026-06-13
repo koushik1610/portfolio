@@ -1,0 +1,301 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   DISPATCH · layout variant: dispatch · class prefix: dp-
+   A split-flap operations board (Solari departure board). The name flips into
+   place; the work is a board where everything reads SHIPPED / ON TIME. True
+   monochrome — ivory on graphite, NO chromatic accent. Hierarchy is value +
+   weight + the inverted live tile + the flap seam. This is the rotation's
+   monochrome-industrial slot.
+   Palette: graphite #0c0c0c · tile #161613 · ivory #f2efe6 · muted #8f8d85 (≈6:1)
+   "Accent" = ivory #f2efe6 — MUST equal --accent in lib/themes.ts. Used as the
+   inverted-tile face, the flap glyphs, primary CTA, focus rings.
+   Type scale — four steps: micro 11.5 / mono 13 / body 14.5 / emphasis 15.
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="dispatch"] nav:not(.dp-nav) { display: none !important; }
+
+.dp-root {
+  --dp-bg: #0c0c0c;
+  --dp-tile: #161613;
+  --dp-tile-2: #1e1e1a;
+  --dp-ivory: #f2efe6;          /* MUST equal --accent in lib/themes.ts */
+  --dp-muted: #8f8d85;
+  --dp-seam: rgba(0, 0, 0, 0.55);
+  --dp-line: rgba(242, 239, 230, 0.1);
+  --dp-line-strong: rgba(242, 239, 230, 0.58); /* ≈4.6:1 over bg — outline-tile boundary stays legible */
+  --dp-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --dp-fs-micro: 11.5px;
+  --dp-fs-mono: 13px;
+  --dp-fs-body: 14.5px;
+  --dp-fs-em: 15px;
+  background: var(--dp-bg);
+  color: var(--dp-ivory);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.dp-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--dp-ivory); color: #0c0c0c; padding: 10px 18px;
+  border-radius: 4px; font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.dp-skip:focus { left: 16px; top: 16px; }
+
+/* ── Top bar ──────────────────────────────────────────────────────────────── */
+.dp-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 24px 40px;
+}
+.dp-nav-meta {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--dp-muted);
+}
+.dp-nav-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--dp-muted);
+}
+.dp-nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dp-ivory); }
+
+/* ── Pre-hide animated elements only when scripting is available.
+      GSAP reveals them; the reduced-motion path restores instantly.
+      No-JS visitors see everything. ─────────────────────────────────────── */
+@media (scripting: enabled) {
+  .dp-name-glyph { opacity: 0; transform: rotateX(-92deg); }
+  .dp-status-glyph { opacity: 0; transform: rotateX(-92deg); }
+  .dp-anim { opacity: 0; transform: translateY(14px); }
+  .dp-reveal { opacity: 0; transform: translateY(18px); }
+  .dp-row { opacity: 0; transform: translateY(14px); }
+}
+
+/* ── The board header ─────────────────────────────────────────────────────── */
+.dp-main { max-width: 1140px; margin: 0 auto; padding: 0 40px; box-sizing: border-box; }
+.dp-head { padding: 122px 0 92px; }
+.dp-eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--dp-muted); margin: 0 0 26px;
+}
+
+/* Split-flap name */
+.dp-name {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 6px 5px;
+  margin: 0 0 30px;
+  perspective: 600px;
+}
+.dp-name-space { width: clamp(14px, 2.5vw, 32px); }
+.dp-name-tile {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: clamp(34px, 6.3vw, 78px);
+  height: clamp(46px, 8.6vw, 104px);
+  background: linear-gradient(180deg, var(--dp-tile-2) 0%, var(--dp-tile-2) 49.6%, var(--dp-tile) 50.4%, var(--dp-tile) 100%);
+  border: 1px solid var(--dp-line);
+  border-radius: 5px;
+}
+/* the split-flap seam */
+.dp-name-tile::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 1px; background: var(--dp-seam);
+  transform: translateY(-0.5px);
+}
+.dp-name-glyph {
+  display: block;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1.4rem, 4.4vw, 3.4rem);
+  font-weight: 700; letter-spacing: -0.01em;
+  color: var(--dp-ivory);
+  transform-origin: center center;
+  backface-visibility: hidden;
+}
+
+.dp-summary {
+  font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.6;
+  color: var(--dp-muted); max-width: 620px; margin: 0 0 34px;
+}
+.dp-em { color: var(--dp-ivory); font-weight: 600; }
+
+.dp-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.dp-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 11px 26px; border-radius: 6px;
+  font-size: var(--dp-fs-body); font-weight: 700; letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.25s var(--dp-ease), border-color 0.25s var(--dp-ease), color 0.25s var(--dp-ease);
+}
+.dp-btn--primary {
+  background: var(--dp-ivory); color: #0c0c0c; /* ≈16:1 */
+  border: 1px solid transparent;
+}
+.dp-btn--primary:hover { background: #ffffff; }
+.dp-btn--ghost {
+  background: rgba(242, 239, 230, 0.04); color: var(--dp-ivory);
+  border: 1px solid var(--dp-line-strong);
+}
+.dp-btn--ghost:hover { border-color: var(--dp-ivory); background: rgba(242, 239, 230, 0.07); }
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+.dp-section { padding: 80px 0; border-top: 1px solid var(--dp-line); }
+.dp-h2 {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dp-ivory); margin: 0;
+}
+
+/* Departures board */
+.dp-board-top { margin: 0 0 22px; }
+.dp-board-cols {
+  display: none;
+  grid-template-columns: 72px 220px 1fr 132px;
+  gap: 20px; margin-top: 18px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dp-muted);
+}
+.dp-board { list-style: none; margin: 0; padding: 0; }
+.dp-row {
+  display: grid;
+  grid-template-columns: 72px 220px 1fr 132px;
+  gap: 20px; align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dp-line);
+}
+.dp-row:last-child { border-bottom: none; }
+.dp-cell { font-size: var(--dp-fs-body); }
+.dp-cell--time {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-mono); color: var(--dp-muted);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
+}
+.dp-cell--system {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-weight: 600; color: var(--dp-ivory); letter-spacing: 0.02em;
+}
+.dp-cell--detail { color: var(--dp-muted); overflow-wrap: anywhere; }
+.dp-cell--status {
+  justify-self: end;
+  perspective: 400px;
+}
+.dp-status-glyph {
+  display: inline-block;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 6px 12px; border-radius: 4px;
+  transform-origin: center center; backface-visibility: hidden;
+  white-space: nowrap;
+}
+/* Monochrome status gradient — three distinct values, one bright peak:
+   ON TIME (live, the peak) = inverted ivory highlight · SHIPPED (settled
+   accomplishments) = solid filled tile with a strong border · BOARDING
+   (tentative, in progress) = faint outline. The eye lands on what's live;
+   the achievements read solid, never faintest. */
+.dp-status--ontime .dp-status-glyph {
+  background: var(--dp-ivory); color: #0c0c0c;
+}
+.dp-status--shipped .dp-status-glyph {
+  background: var(--dp-tile); color: var(--dp-ivory);
+  border: 1px solid var(--dp-line-strong);
+  padding: 5px 11px;
+}
+.dp-status--boarding .dp-status-glyph {
+  background: transparent; color: var(--dp-ivory);
+  border: 1px solid var(--dp-line-strong);
+  padding: 5px 11px;
+}
+
+/* Service record — board tiles */
+.dp-stats {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px; margin: 36px 0 0;
+  background: var(--dp-line); border: 1px solid var(--dp-line);
+  border-radius: 10px; overflow: hidden;
+}
+.dp-stat {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 24px 20px; background: var(--dp-bg);
+}
+.dp-stat-val {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  color: var(--dp-ivory); margin: 0; order: -1;
+}
+.dp-stat-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-micro); color: var(--dp-muted); letter-spacing: 0.04em;
+}
+.dp-stat-unit { color: var(--dp-ivory); font-weight: 700; }
+
+/* Boarding gate — contact */
+.dp-section--gate { padding-bottom: 140px; }
+.dp-h2 + .dp-gate-note { margin-top: 30px; }
+.dp-gate-note { font-size: var(--dp-fs-em); color: var(--dp-muted); margin: 0 0 28px; }
+.dp-email {
+  display: inline-block;
+  font-size: clamp(1.1rem, 3vw, 2rem); font-weight: 700;
+  letter-spacing: -0.025em; line-height: 1.2;
+  color: var(--dp-ivory); text-decoration: none;
+  border-bottom: 2px solid var(--dp-ivory);
+  padding: 4px 0 8px; word-break: break-word;
+  transition: color 0.25s var(--dp-ease);
+}
+.dp-email:hover { color: #ffffff; }
+.dp-gates {
+  list-style: none; margin: 34px 0 0; padding: 0;
+  display: flex; flex-direction: column; gap: 4px; max-width: 560px;
+}
+.dp-gate {
+  display: flex; align-items: center; gap: 18px;
+  min-height: 44px; padding: 6px 2px; text-decoration: none;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--dp-fs-mono);
+  transition: background 0.2s var(--dp-ease); border-radius: 4px;
+}
+.dp-gate:hover { background: var(--dp-tile); }
+.dp-gate-k {
+  color: var(--dp-muted); letter-spacing: 0.1em;
+  font-size: var(--dp-fs-micro); width: 96px; flex: none;
+}
+.dp-gate-v { color: var(--dp-ivory); }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.dp-root a:focus-visible,
+.dp-root button:focus-visible {
+  outline: 2px solid var(--dp-ivory);
+  outline-offset: 3px; border-radius: 4px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  /* right padding reserves the fixed WidgetStack's corner */
+  .dp-nav { padding-right: 270px; }
+  .dp-board-cols { display: grid; }
+}
+@media (max-width: 1023px) {
+  .dp-row { grid-template-columns: 64px 1fr 116px; }
+  .dp-cell--detail { grid-column: 2 / 4; grid-row: 2; padding-top: 4px; }
+  .dp-cell--status { grid-column: 3; grid-row: 1; }
+  .dp-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  .dp-nav { padding: 18px 18px; justify-content: flex-start; }
+  .dp-nav-meta { display: none; } /* status chip survives; meta sits under WidgetStack */
+  .dp-main { padding: 0 18px; }
+  .dp-head { padding: 96px 0 60px; }
+  .dp-name { gap: 5px 4px; }
+  .dp-section { padding: 56px 0; }
+  .dp-row { grid-template-columns: 56px 1fr; gap: 6px 14px; padding: 18px 0; }
+  .dp-cell--time { grid-column: 1; grid-row: 1; }
+  .dp-cell--system { grid-column: 2; grid-row: 1; }
+  .dp-cell--detail { grid-column: 2; grid-row: 2; }
+  .dp-cell--status { grid-column: 2; grid-row: 3; justify-self: start; padding-top: 4px; }
+  .dp-stats { grid-template-columns: 1fr 1fr; }
+}

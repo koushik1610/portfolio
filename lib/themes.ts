@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform";
 
 export interface ThemeContent {
   tagline: string;
@@ -95,6 +95,41 @@ export const themes: Theme[] = [
     vars: { "--background": "#0a0a0a", "--surface": "#131311", "--surface-2": "#1b1b18", "--text-primary": "#eceae4", "--text-muted": "#9d9a92", "--accent": "#ff3b1f", "--accent-dim": "#c52d12", "--border": "rgba(236,234,228,0.12)" },
     layout: "monolith",
     content: { tagline: "One name. One hairline. Nothing else.", bio: "The rotation's moment of restraint.", cta: "Email me" },
+  },
+  {
+    name: "Advisory",
+    id: "advisory",
+    vars: { "--background": "#0b0a0d", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#eeeaf2", "--text-muted": "#a8a2b3", "--accent": "#d946ef", "--accent-dim": "#a21caf", "--border": "rgba(238,234,242,0.1)" },
+    layout: "advisory",
+    content: { tagline: "Severity: critical. No patch available.", bio: "A security advisory whose vulnerability is the engineer.", cta: "Email me" },
+  },
+  {
+    name: "Intercept",
+    id: "intercept",
+    vars: { "--background": "#0b0a06", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#edeae0", "--text-muted": "#a6a190", "--accent": "#eab308", "--accent-dim": "#a16207", "--border": "rgba(237,234,224,0.1)" },
+    layout: "intercept",
+    content: { tagline: "Nine years on the wire, decoded.", bio: "A packet capture that dissects to one name.", cta: "Email me" },
+  },
+  {
+    name: "Uptime",
+    id: "uptime",
+    vars: { "--background": "#070b09", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e8ede9", "--text-muted": "#97a39b", "--accent": "#34d399", "--accent-dim": "#0f9d6b", "--border": "rgba(232,237,233,0.1)" },
+    layout: "uptime",
+    content: { tagline: "All systems operational. Nine years uptime.", bio: "A career as a status page — every incident resolved.", cta: "Email me" },
+  },
+  {
+    name: "Dispatch",
+    id: "dispatch",
+    vars: { "--background": "#0c0c0c", "--surface": "#161613", "--surface-2": "#1e1e1a", "--text-primary": "#f2efe6", "--text-muted": "#8f8d85", "--accent": "#f2efe6", "--accent-dim": "#c9c6bd", "--border": "rgba(242,239,230,0.1)" },
+    layout: "dispatch",
+    content: { tagline: "Every system shipped. On time.", bio: "A split-flap operations board that flips to one name.", cta: "Email me" },
+  },
+  {
+    name: "Waveform",
+    id: "waveform",
+    vars: { "--background": "#070708", "--surface": "rgba(255,255,255,0.025)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#ecebe8", "--text-muted": "#93928c", "--accent": "#fb4d6d", "--accent-dim": "#c93350", "--border": "rgba(236,235,232,0.1)" },
+    layout: "waveform",
+    content: { tagline: "Reading the signals others miss.", bio: "An oscilloscope trace that resolves to one name.", cta: "Email me" },
   },
 ];
 

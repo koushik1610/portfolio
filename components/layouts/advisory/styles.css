@@ -1,0 +1,432 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   ADVISORY · layout variant: advisory · class prefix: ad-
+   A dark security advisory (GHSA grammar). Severity CRITICAL 10.0; the page
+   reads like a bulletin and resolves to a hire. Wit stays dry; type does the
+   work. Palette: void #0b0a0d · parchment #eeeaf2 · muted #a8a2b3 (≥6:1)
+   Owned accent: fuchsia #d946ef (GitHub critical purple) — MUST equal
+   --accent in lib/themes.ts. Used only as punctuation: severity fill, chips,
+   section marks, primary CTA, the email underline, focus rings. Never body.
+───────────────────────────────────────────────────────────────────────────── */
+
+html[data-layout="advisory"] nav:not(.ad-nav) { display: none !important; }
+
+.ad-root {
+  --ad-bg: #0b0a0d;
+  --ad-ink: #eeeaf2;
+  --ad-muted: #a8a2b3;
+  --ad-accent: #d946ef;          /* MUST equal --accent in lib/themes.ts */
+  --ad-accent-bright: #e879f9;   /* hover state of the primary CTA */
+  --ad-line: rgba(238, 234, 242, 0.1);
+  --ad-line-strong: rgba(238, 234, 242, 0.42); /* ≈3.3:1 over bg — clears 3:1 non-text */
+  --ad-surface: rgba(255, 255, 255, 0.03);
+  --ad-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Type scale — four steps only: micro labels / mono data / body / emphasis */
+  --ad-fs-micro: 11.5px;
+  --ad-fs-mono: 13px;
+  --ad-fs-body: 14.5px;
+  --ad-fs-em: 15px;
+  background: var(--ad-bg);
+  color: var(--ad-ink);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.ad-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.ad-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--ad-accent); color: #16041a; padding: 10px 18px;
+  border-radius: 4px; font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.ad-skip:focus { left: 16px; top: 16px; }
+
+/* ── Nav — advisory id + status ──────────────────────────────────────────── */
+.ad-nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 24px 40px;
+}
+.ad-nav-id {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ad-muted);
+}
+.ad-nav-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ad-muted);
+}
+.ad-nav-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ad-accent);
+}
+
+/* ── Pre-hide animated elements only when scripting is available.
+      GSAP reveals them; the reduced-motion path restores instantly.
+      No-JS visitors see everything. ─────────────────────────────────────── */
+@media (scripting: enabled) {
+  .ad-anim { opacity: 0; transform: translateY(14px); }
+  .ad-sev-fill { opacity: 0; }
+  .ad-sev-score { opacity: 0; }
+  .ad-reveal { opacity: 0; transform: translateY(18px); }
+}
+
+/* ── Masthead ─────────────────────────────────────────────────────────────── */
+.ad-main { max-width: 1100px; margin: 0 auto; padding: 0 40px; box-sizing: border-box; }
+.ad-head {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 130px 0 72px;
+}
+.ad-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+  margin: 0 0 30px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+.ad-chip {
+  display: inline-flex; align-items: center;
+  padding: 5px 12px; border-radius: 999px;
+  font-size: var(--ad-fs-micro); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.ad-chip--sev {
+  border: 1px solid rgba(217, 70, 239, 0.45);
+  color: var(--ad-accent);
+  background: rgba(217, 70, 239, 0.08);
+  font-weight: 700;
+}
+.ad-meta-item { color: var(--ad-muted); text-transform: uppercase; letter-spacing: 0.1em; font-size: var(--ad-fs-micro); }
+
+.ad-title {
+  font-size: clamp(2.6rem, 8.5vw, 6.6rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin: 0 0 18px;
+  color: var(--ad-ink);
+}
+.ad-role {
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--ad-muted);
+  max-width: 560px;
+  margin: 0 0 36px;
+}
+
+/* Severity meter */
+.ad-severity {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 0 36px;
+}
+.ad-sev-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ad-muted);
+  white-space: nowrap;
+}
+.ad-sev-track {
+  display: block; height: 8px; border-radius: 999px;
+  background: var(--ad-surface);
+  border: 1px solid var(--ad-line);
+  overflow: hidden;
+}
+.ad-sev-fill {
+  display: block; height: 100%; width: 100%;
+  background: var(--ad-accent);
+  transform-origin: left center;
+  /* no own radius — the clipping track rounds the ends, so the scaleX
+     draw can't distort a corner radius */
+}
+.ad-sev-score {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-em); font-weight: 700; color: var(--ad-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ad-sev-score em {
+  font-style: normal; font-weight: 400; font-size: var(--ad-fs-micro);
+  color: var(--ad-muted); text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+.ad-desc { margin: 0 0 36px; }
+.ad-desc-label {
+  display: block;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ad-muted);
+  margin: 0 0 10px;
+}
+.ad-summary {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--ad-muted);
+  max-width: 620px;
+  margin: 0;
+}
+.ad-em { color: var(--ad-ink); font-weight: 600; }
+
+.ad-cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.ad-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 11px 26px; border-radius: 6px;
+  font-size: var(--ad-fs-body); font-weight: 700; letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.25s var(--ad-ease), border-color 0.25s var(--ad-ease), color 0.25s var(--ad-ease);
+}
+.ad-btn--primary {
+  background: var(--ad-accent); color: #16041a; /* ≈5.7:1 — AA at 14.5px/700 */
+  border: 1px solid transparent;
+}
+.ad-btn--primary:hover { background: var(--ad-accent-bright); }
+.ad-btn--ghost {
+  background: transparent; color: var(--ad-ink);
+  border: 1px solid var(--ad-line-strong); /* ≥3:1 non-text contrast */
+}
+.ad-btn--ghost:hover { border-color: var(--ad-ink); }
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+.ad-section { padding: 84px 0; border-top: 1px solid var(--ad-line); }
+.ad-h2 {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ad-accent);
+  margin: 0 0 36px;
+}
+
+/* Vector analysis — chips grid */
+.ad-vector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+.ad-vec {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 20px;
+  background: var(--ad-surface);
+  border: 1px solid var(--ad-line);
+  border-radius: 8px;
+}
+.ad-vec-code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-mono); font-weight: 700;
+  color: var(--ad-accent);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  padding-top: 2px;
+  margin: 0;
+}
+.ad-vec-body { display: flex; flex-direction: column; gap: 3px; margin: 0; }
+.ad-vec-term {
+  font-size: var(--ad-fs-body); font-weight: 600; color: var(--ad-ink);
+  letter-spacing: -0.01em;
+}
+.ad-vec-reading { font-size: var(--ad-fs-body); line-height: 1.5; color: var(--ad-muted); }
+
+/* Affected systems — table */
+.ad-table-wrap { overflow-x: auto; }
+.ad-table-wrap:focus-visible {
+  outline: 2px solid var(--ad-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.ad-table {
+  width: 100%; border-collapse: collapse;
+  font-size: var(--ad-fs-body); line-height: 1.5;
+  min-width: 640px;
+}
+.ad-table th {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ad-muted);
+  text-align: left;
+  padding: 0 18px 12px 0;
+  border-bottom: 1px solid var(--ad-line);
+}
+.ad-table td {
+  padding: 16px 18px 16px 0;
+  border-bottom: 1px solid var(--ad-line);
+  vertical-align: top;
+}
+.ad-table tr:last-child td { border-bottom: none; }
+.ad-td-system { font-weight: 600; color: var(--ad-ink); white-space: nowrap; }
+/* bulletin-style severity marker per affected system */
+.ad-td-system::before {
+  content: ""; display: inline-block;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ad-accent);
+  margin-right: 10px; vertical-align: 1px;
+}
+.ad-td-versions {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-mono); color: var(--ad-muted); white-space: nowrap;
+}
+.ad-td-impact { color: var(--ad-muted); }
+/* the running gag, kept dry: every system, patched: none */
+.ad-td-patched {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-mono); font-weight: 700;
+  color: var(--ad-accent); white-space: nowrap;
+}
+
+/* Evidence — named systems with right-aligned metrics */
+.ad-evidence { list-style: none; margin: 0; padding: 0; }
+.ad-proof {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--ad-line);
+}
+/* accent tick on hover — transform-only, no layout shift; purely additive */
+.ad-proof::before {
+  content: ""; position: absolute;
+  left: -14px; top: 20px; bottom: 20px; width: 2px;
+  background: var(--ad-accent);
+  transform: scaleY(0); transform-origin: top center;
+  transition: transform 0.25s var(--ad-ease);
+}
+.ad-proof:hover::before { transform: scaleY(1); }
+.ad-proof:last-child { border-bottom: none; }
+.ad-proof-main { display: flex; flex-direction: column; gap: 4px; }
+.ad-proof-name {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700; letter-spacing: -0.02em;
+}
+.ad-proof-note { font-size: var(--ad-fs-body); color: var(--ad-muted); }
+.ad-proof-metric { text-align: right; display: flex; flex-direction: column; gap: 2px; }
+.ad-proof-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ad-ink);
+}
+.ad-proof-mnote {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-micro); color: var(--ad-muted); letter-spacing: 0.04em;
+}
+
+/* Disclosure timeline — rows hang off a vertical spine with dot markers */
+.ad-timeline {
+  list-style: none; margin: 0; padding: 0 0 0 28px;
+  position: relative;
+}
+.ad-timeline::before {
+  content: ""; position: absolute;
+  /* rail starts/ends at the first/last dot centers — no loose tails */
+  left: 5px; top: 26px; bottom: 26px; width: 1px;
+  background: var(--ad-line);
+}
+.ad-tl-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--ad-line);
+  align-items: baseline;
+}
+.ad-tl-row::before {
+  content: ""; position: absolute;
+  left: -28px; top: 21px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--ad-bg);
+  border: 2px solid var(--ad-accent);
+  box-sizing: border-box;
+}
+.ad-tl-row:last-child { border-bottom: none; }
+/* cover the rail below the last dot — keeps the spine exact even when the
+   last event wraps to multiple lines on phones */
+.ad-tl-row:last-child::after {
+  content: ""; position: absolute;
+  left: -25px; top: 32px; bottom: 0; width: 5px;
+  background: var(--ad-bg);
+}
+.ad-tl-date {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-mono); font-weight: 700; color: var(--ad-accent);
+  font-variant-numeric: tabular-nums;
+}
+.ad-tl-event { font-size: var(--ad-fs-em); line-height: 1.55; color: var(--ad-muted); }
+
+/* Remediation — closing statement */
+.ad-section--remediation { padding-bottom: 140px; }
+.ad-remediation {
+  font-size: clamp(1.4rem, 3.4vw, 2.4rem);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.25;
+  color: var(--ad-muted);
+  margin: 0 0 28px; max-width: 700px;
+}
+.ad-remediation-strong { color: var(--ad-ink); font-weight: 800; }
+.ad-email {
+  display: inline-block;
+  font-size: clamp(1.1rem, 3vw, 2rem);
+  font-weight: 700; letter-spacing: -0.025em; line-height: 1.2;
+  color: var(--ad-ink); text-decoration: none;
+  border-bottom: 2px solid var(--ad-accent);
+  padding: 4px 0 8px;
+  word-break: break-word;
+  transition: color 0.25s var(--ad-ease);
+}
+.ad-email:hover { color: #ffffff; }
+.ad-refs {
+  list-style: none; margin: 34px 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 24px;
+}
+.ad-ref {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--ad-fs-mono); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ad-muted); text-decoration: none;
+  transition: color 0.25s var(--ad-ease);
+}
+.ad-ref:hover { color: var(--ad-ink); }
+
+/* ── Keyboard focus ───────────────────────────────────────────────────────── */
+.ad-root a:focus-visible,
+.ad-root button:focus-visible {
+  outline: 2px solid var(--ad-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  /* right padding reserves the fixed WidgetStack's corner */
+  .ad-nav { padding-right: 270px; }
+}
+@media (max-width: 1023px) {
+  .ad-vector { grid-template-columns: 1fr; }
+}
+@media (max-width: 639px) {
+  .ad-nav { padding: 18px 18px; }
+  .ad-nav-status { display: none; } /* sits under the fixed WidgetStack on phones */
+  .ad-main { padding: 0 18px; }
+  .ad-head { padding: 104px 0 56px; }
+  .ad-severity {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "label score" "track track";
+    row-gap: 10px;
+  }
+  .ad-sev-label { grid-area: label; }
+  .ad-sev-track { grid-area: track; }
+  .ad-sev-score { grid-area: score; }
+  .ad-section { padding: 60px 0; }
+  .ad-proof { grid-template-columns: 1fr; gap: 10px; }
+  .ad-proof-metric { text-align: left; }
+  .ad-tl-row { grid-template-columns: 64px 1fr; gap: 14px; }
+}

@@ -12,6 +12,11 @@ import SolsticeHero from "./layouts/solstice/SolsticeHero";
 import CasefileHero from "./layouts/casefile/CasefileHero";
 import BriefingHero from "./layouts/briefing/BriefingHero";
 import MonolithHero from "./layouts/monolith/MonolithHero";
+import AdvisoryHero from "./layouts/advisory/AdvisoryHero";
+import InterceptHero from "./layouts/intercept/InterceptHero";
+import UptimeHero from "./layouts/uptime/UptimeHero";
+import DispatchHero from "./layouts/dispatch/DispatchHero";
+import WaveformHero from "./layouts/waveform/WaveformHero";
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -36,6 +41,11 @@ export default function Hero() {
     case "casefile":  return <CasefileHero  key={theme.id} theme={theme} />;
     case "briefing":  return <BriefingHero  key={theme.id} theme={theme} />;
     case "monolith":  return <MonolithHero  key={theme.id} theme={theme} />;
+    case "advisory":  return <AdvisoryHero  key={theme.id} theme={theme} />;
+    case "intercept": return <InterceptHero key={theme.id} theme={theme} />;
+    case "uptime":    return <UptimeHero    key={theme.id} theme={theme} />;
+    case "dispatch":  return <DispatchHero  key={theme.id} theme={theme} />;
+    case "waveform":  return <WaveformHero  key={theme.id} theme={theme} />;
     default: {
       // Exhaustiveness guard: adding a LayoutVariant without a case above is a
       // compile error here instead of a silent undefined render.
