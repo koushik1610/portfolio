@@ -8,12 +8,12 @@ export interface StatItem {
   sub?: string;
 }
 
-// Set 1 — Precision Proof: benchmark validation as credibility signal
+// Set 1 — Benchmark Discipline: built the evaluation before trusting the tool
 const SET_PRECISION: StatItem[] = [
-  { value: "100%", label: "IAM Escalation Recall",  sub: "GOAT benchmark"     },
-  { value: "0",    label: "False Positives",         sub: "On benchmark"       },
-  { value: "32",   label: "Fixtures Caught",         sub: "Ground-truth"       },
-  { value: "2,800+",label: "Cloud Accounts",         sub: "AWS · GCP"          },
+  { value: "32",   label: "GOAT Benchmarks",         sub: "Ground-truth findings" },
+  { value: "65+",  label: "Escalation Paths",        sub: "10 vulnerability classes" },
+  { value: "200+", label: "Detection Signatures",    sub: "Python / Lambda"    },
+  { value: "1,400+",label: "AWS Accounts",           sub: "CSPM detection scope" },
 ];
 
 // Set 2 — Research Depth: IAM expertise at catalogue scale
@@ -27,17 +27,17 @@ const SET_RESEARCH: StatItem[] = [
 // Set 3 — Force Multiplier: AI tooling as team leverage
 const SET_LEVERAGE: StatItem[] = [
   { value: "1,700+",label: "Knowledge Nodes",        sub: "from review tickets"},
-  { value: "120+", label: "Security Reviews",        sub: "small team"         },
+  { value: "150+", label: "Security Reviews",        sub: "small team"         },
   { value: "$1.40",label: "Per Research Run",        sub: "vs $3.20 baseline"  },
   { value: "55%",  label: "Cost Reduction",          sub: "vs single model"    },
 ];
 
-// Set 4 — Scale + Signal: enterprise scope with precision proof
+// Set 4 — Scale + Signal: enterprise scope with program ownership
 const SET_SCALE: StatItem[] = [
   { value: "2,800+",label: "Cloud Accounts",         sub: "AWS · GCP"          },
   { value: "200+",  label: "Detection Signatures",    sub: "Python / Lambda"    },
-  { value: "65+",  label: "Escalation Paths",        sub: "IAM research"       },
-  { value: "100%", label: "Recall Rate",             sub: "Zero misses"        },
+  { value: "50+",  label: "New Baselines",           sub: "v6.0, largest release" },
+  { value: "150+", label: "Security Reviews",        sub: "every business unit" },
 ];
 
 export const statSets: StatItem[][] = [

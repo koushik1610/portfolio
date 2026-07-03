@@ -35,7 +35,7 @@ OUTPUT:
 - If reviewing multiple themes, one scorecard per theme plus a portfolio-level note on
   whether the set feels like distinct design systems or variations.
 
-Write the result to koushik-dump/COUNCIL-REVIEW-[date].md and summarize in your reply.
+Write the result to ../koushik-docs/COUNCIL-REVIEW-[date].md and summarize in your reply.
 Do not change code in this prompt — review only.
 ```
 

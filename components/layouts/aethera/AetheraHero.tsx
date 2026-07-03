@@ -17,17 +17,17 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "200+ active Python/Lambda detection signatures across AWS accounts — sustaining a 0% false-positive rate while continuously expanding coverage. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
+    desc: "200+ active Python/Lambda detection signatures evaluating resource configurations across 1,400+ AWS accounts — producing per-resource findings and the security-posture scores the company is measured against. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
   },
   {
     num: "02",
     name: "IAM Privilege Analysis",
-    desc: "AI-native IAM audit agent using Boto3 tool-calling to enumerate live AWS IAM configurations — traversing 65+ privilege escalation paths across 10 vulnerability classes with LLM semantic interpretation to surface transitive chains that rule-based tools miss. 100% recall on GOAT benchmark — 32/32 findings, zero false positives.",
+    desc: "AI-native IAM audit agent using Boto3 tool-calling to enumerate live AWS IAM configurations — traversing 65+ privilege escalation paths across 10 vulnerability classes with LLM semantic interpretation to surface transitive chains that rule-based tools miss. Built the GOAT benchmark first — 32 ground-truth findings — and evaluated the agent against all of them.",
   },
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from a large corpus of historical tickets, serving as the autonomous review agent for 120+ security reviews across all business units.",
+    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from a large corpus of historical tickets, serving as the autonomous review agent for 150+ security reviews across all business units.",
   },
   {
     num: "04",
@@ -53,9 +53,9 @@ const PROJECTS = [
   {
     id: "02",
     name: "IAM Audit Agent",
-    desc: "AI-native IAM audit agent — Boto3 tool-calling to enumerate live AWS IAM configurations. 65+ escalation paths across 10 vulnerability classes. LLM semantic interpretation surfaces transitive chains. 100% recall on GOAT benchmark.",
-    metric: "100%",
-    metricLabel: "GOAT recall",
+    desc: "AI-native IAM audit agent — Boto3 tool-calling to enumerate live AWS IAM configurations. 65+ escalation paths across 10 vulnerability classes. LLM semantic interpretation surfaces transitive chains. Evaluated against 32 GOAT benchmarks.",
+    metric: "32",
+    metricLabel: "GOAT benchmarks",
     tags: ["IAM Analysis", "Graph Theory", "Python", "Boto3"],
   },
   {
@@ -69,7 +69,7 @@ const PROJECTS = [
   {
     id: "04",
     name: "Detection Engine",
-    desc: "200+ active detection signatures deployed via Terraform across AWS accounts. MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data. Machine-speed detection and response — zero false positives at account scale.",
+    desc: "200+ active detection signatures deployed via Terraform, evaluating 1,400+ AWS accounts. MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data. Machine-speed detection and response at account scale.",
     metric: "200+",
     metricLabel: "active signatures",
     tags: ["Python", "Lambda", "AWS", "MITRE ATT&CK", "Terraform"],

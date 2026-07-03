@@ -28,8 +28,8 @@ function strip(degAt: number[] = []): ("op" | "deg")[] {
 /* deg cells live ONLY on components that have a matching INCIDENTS entry —
    every dip is a logged, resolved incident; most systems never dipped. */
 const COMPONENTS = [
-  { name: "Detection engineering", state: "Operational", metric: "200+ signatures · 0% FP", cells: strip([23]) },
-  { name: "IAM privilege analysis", state: "Operational", metric: "65+ paths · 100% GOAT recall", cells: strip() },
+  { name: "Detection engineering", state: "Operational", metric: "200+ signatures · 1,400+ accounts", cells: strip([23]) },
+  { name: "IAM privilege analysis", state: "Operational", metric: "65+ paths · 32 GOAT benchmarks", cells: strip() },
   { name: "CIEM — toxic combinations", state: "Operational", metric: "62 catalogued · ATT&CK-mapped", cells: strip() },
   { name: "Multi-cloud attack-path simulation", state: "Operational", metric: "2,800+ accounts · AWS + GCP", cells: strip() },
   { name: "AI-native security platforms", state: "Operational", metric: "19 models · 5 providers · $1.40/run", cells: strip([14, 19]) },
@@ -38,8 +38,8 @@ const COMPONENTS = [
 const KPIS = [
   { value: "9", label: "years uptime" },
   { value: "2,800+", label: "accounts monitored" },
-  { value: "100%", label: "GOAT recall · 0 FP" },
-  { value: "0%", label: "false-positive rate" },
+  { value: "32", label: "GOAT benchmarks" },
+  { value: "150+", label: "security reviews" },
 ] as const;
 
 /* Each incident names the system component it maps to — the same components

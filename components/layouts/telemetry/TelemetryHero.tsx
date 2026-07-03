@@ -18,26 +18,26 @@ const NAV_LINKS = [
 const GAUGES = [
   {
     key: "recall",
-    target: 100,
-    format: (v: number) => Math.round(v) + "%",
-    initial: "0%",
+    target: 32,
+    format: (v: number) => String(Math.round(v)),
+    initial: "0",
     numClass: "w13-g-recall",
-    label: "GOAT recall",
-    sub: "32 / 32 · 0 FP",
-    ariaLabel: "100 percent GOAT recall, 32 of 32 findings, zero false positives",
+    label: "GOAT benchmarks",
+    sub: "ground-truth findings",
+    ariaLabel: "Evaluated against 32 GOAT benchmarks with ground-truth findings",
     // gauge ring fill fraction (0–1) at final state
     fill: 1,
   },
   {
     key: "fp",
-    target: 0,
-    format: () => "0%",
-    initial: "—",
+    target: 150,
+    format: (v: number) => Math.round(v) + "+",
+    initial: "0",
     numClass: "w13-g-fp",
-    label: "False positives",
-    sub: "200+ signatures",
-    ariaLabel: "Zero percent false positive rate across 200 plus detection signatures",
-    fill: 0.02,
+    label: "Security reviews",
+    sub: "every business unit",
+    ariaLabel: "150 plus security reviews across every business unit",
+    fill: 0.85,
   },
 ] as const;
 
@@ -113,15 +113,15 @@ const EXPERTISE = [
   {
     proc: "detection.d",
     name: "Detection Engineering",
-    desc: "200+ active signatures across AWS accounts at a 0% false-positive rate. CIS-benchmarked baselines, MITRE ATT&CK coverage of real-world techniques, shipped via Terraform.",
-    meta: "0% FP",
+    desc: "200+ active signatures evaluating 1,400+ AWS accounts. CIS-benchmarked baselines, MITRE ATT&CK coverage of real-world techniques, shipped via Terraform.",
+    meta: "1,400+ acct",
     status: "RUNNING",
   },
   {
     proc: "iam-audit.d",
     name: "IAM Privilege Analysis",
     desc: "AI-native audit agent traversing 65+ escalation paths across 10 vulnerability classes, with LLM semantic interpretation of transitive privilege chains.",
-    meta: "100% GOAT",
+    meta: "32 GOAT",
     status: "RUNNING",
   },
   {
@@ -156,8 +156,8 @@ const PROJECTS = [
   },
   {
     id: "IAM-AUDIT-AGENT",
-    desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall.",
-    metric: "100% recall",
+    desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. Evaluated against 32 GOAT benchmarks.",
+    metric: "32 GOAT benchmarks",
     tags: ["IAM", "Python", "Boto3"],
   },
   {
@@ -168,7 +168,7 @@ const PROJECTS = [
   },
   {
     id: "DETECTION-ENGINE",
-    desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.",
+    desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis across 1,400+ AWS accounts.",
     metric: "200+ signatures",
     tags: ["Python", "Lambda", "Terraform"],
   },

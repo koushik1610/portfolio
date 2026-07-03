@@ -15,8 +15,8 @@ import "./styles.css";
 
 const NUMBERS = [
   "2,800+ cloud accounts",
-  "200+ signatures · 0% FP",
-  "100% GOAT · 32/32",
+  "200+ detection signatures",
+  "150+ security reviews",
   "62 toxic combinations",
   "19 models · 5 providers",
   "$1.40 / research run",

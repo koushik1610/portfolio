@@ -40,7 +40,7 @@ Engineering 3/4/11, UX+Systems 5/7/8/9/10). Each theme gets re-scored through th
 portfolio-level lens above. Then add a 13th axis I care about most:
   MARKETING FIT (0–100): how well this theme sells me for a Staff/Principal role.
 
-OUTPUT a single markdown file at koushik-dump/THEME-CULL-DECISION.md containing:
+OUTPUT a single markdown file at ../koushik-docs/THEME-CULL-DECISION.md containing:
 1. A table of all 25 active themes: name | layout concept | composite | marketing-fit |
    verdict (KEEP / CUT / BORDERLINE) | one-line reason.
 2. The recommended KEEP-8 with the rationale for the set as a whole (why these 8 cover
