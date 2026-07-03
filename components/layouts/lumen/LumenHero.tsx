@@ -11,7 +11,7 @@ const METRICS = [
   { key: "accounts", target: 2800, duration: 1.8, initial: "0", numClass: "w8-m-accounts", label: "Cloud accounts secured", ariaLabel: "2,800+ cloud accounts secured" },
   { key: "sigs", target: 200, duration: 1.4, initial: "0", numClass: "w8-m-sigs", label: "Detection signatures", ariaLabel: "200+ detection signatures" },
   { key: "reviews", target: 150, duration: 1.4, initial: "0", numClass: "w8-m-reviews", label: "Security reviews conducted", ariaLabel: "150+ security reviews conducted" },
-  { key: "recall", target: 32, duration: 1.4, initial: "0", numClass: "w8-m-recall", label: "GOAT benchmarks evaluated", ariaLabel: "Evaluated against 32 GOAT benchmarks" },
+  { key: "recall", target: 32, duration: 1.4, format: (v: number) => String(Math.round(v)), initial: "0", numClass: "w8-m-recall", label: "GOAT benchmarks evaluated", ariaLabel: "Evaluated against 32 GOAT benchmarks" },
 ] as const;
 
 const EXPERTISE = [
