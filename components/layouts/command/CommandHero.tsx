@@ -22,7 +22,7 @@ interface Stat {
 const STATS: Stat[] = [
   { key: "accounts", target: 2800, duration: 1.6, initial: "0", numClass: "w7-n-accounts", label: "cloud accounts", ariaLabel: "2,800+ cloud accounts" },
   { key: "sigs", target: 200, duration: 1.4, initial: "0", numClass: "w7-n-sigs", label: "detection signatures", ariaLabel: "200+ detection signatures" },
-  { key: "recall", target: 100, duration: 1.4, format: (v) => Math.round(v) + "%", initial: "0%", numClass: "w7-n-recall", label: "GOAT recall", ariaLabel: "100 percent GOAT recall" },
+  { key: "recall", target: 32, duration: 1.4, format: (v) => String(Math.round(v)), initial: "0", numClass: "w7-n-recall", label: "GOAT benchmarks", ariaLabel: "Evaluated against 32 GOAT benchmarks" },
   { key: "cost", target: 1.4, duration: 1.2, format: (v) => "$" + v.toFixed(2), initial: "$0.00", numClass: "w7-n-cost", label: "per research run", ariaLabel: "1 dollar 40 cents per research run" },
 ];
 

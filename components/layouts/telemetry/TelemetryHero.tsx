@@ -584,19 +584,19 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
             <div className="w13-ticker-head">events/sec</div>
             <div className="w13-ticker-window">
               <div className="w13-ticker-track">
-                <span className="w13-ev"><i className="w13-ev-ok" />signature.match resolved · 0 FP</span>
+                <span className="w13-ev"><i className="w13-ev-ok" />signature.match resolved · clean</span>
                 <span className="w13-ev"><i className="w13-ev-ok" />iam.path traversed · class 7</span>
                 <span className="w13-ev"><i className="w13-ev-info" />graph.enrich · +12 nodes</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />goat.bench recall 100%</span>
+                <span className="w13-ev"><i className="w13-ev-ok" />goat.bench · 32 cases evaluated</span>
                 <span className="w13-ev"><i className="w13-ev-info" />router.dispatch · 19 models</span>
                 <span className="w13-ev"><i className="w13-ev-ok" />antitoxin.scan · 62 combos</span>
                 <span className="w13-ev"><i className="w13-ev-info" />run.cost settled · $1.40</span>
                 <span className="w13-ev"><i className="w13-ev-ok" />cnapp.sweep · 2,800+ acct</span>
                 {/* duplicate set for seamless loop */}
-                <span className="w13-ev"><i className="w13-ev-ok" />signature.match resolved · 0 FP</span>
+                <span className="w13-ev"><i className="w13-ev-ok" />signature.match resolved · clean</span>
                 <span className="w13-ev"><i className="w13-ev-ok" />iam.path traversed · class 7</span>
                 <span className="w13-ev"><i className="w13-ev-info" />graph.enrich · +12 nodes</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />goat.bench recall 100%</span>
+                <span className="w13-ev"><i className="w13-ev-ok" />goat.bench · 32 cases evaluated</span>
                 <span className="w13-ev"><i className="w13-ev-info" />router.dispatch · 19 models</span>
                 <span className="w13-ev"><i className="w13-ev-ok" />antitoxin.scan · 62 combos</span>
                 <span className="w13-ev"><i className="w13-ev-info" />run.cost settled · $1.40</span>

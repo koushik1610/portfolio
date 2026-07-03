@@ -286,8 +286,8 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
               <span className="ath-stat-label">Cloud Accounts</span>
             </div>
             <div className="ath-stat">
-              <span className="ath-stat-num">100%</span>
-              <span className="ath-stat-label">Escalation Recall</span>
+              <span className="ath-stat-num">150+</span>
+              <span className="ath-stat-label">Security Reviews</span>
             </div>
             <div className="ath-stat">
               <span className="ath-stat-num">9yr</span>
