@@ -19,8 +19,8 @@ const SESSION_META = "incident-response · session 2026-06 · case KK-09 · UTC"
 
 const STATS = [
   { cmd: "accounts", value: "2,800+", label: "cloud accounts secured · AWS + GCP" },
-  { cmd: "signatures", value: "200+", label: "detection signatures · 0% false positives" },
-  { cmd: "goat_recall", value: "100%", label: "GOAT benchmark · 32/32 findings · 0 FP" },
+  { cmd: "signatures", value: "200+", label: "detection signatures · 1,400+ AWS accounts" },
+  { cmd: "psr_reviews", value: "150+", label: "security reviews · every business unit" },
   { cmd: "cost_per_run", value: "$1.40", label: "per research run · vs $3.20 baseline" },
 ] as const;
 
@@ -34,9 +34,9 @@ const CAPABILITIES = [
 
 const LOG_ENTRIES = [
   { tag: "ARTEMIS", desc: "Multi-cloud attack-path simulation — GCP SCC + AWS Security Hub unified into an AI-enriched graph layer.", metric: "2,800+ accounts" },
-  { tag: "IAM-AUDIT", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes.", metric: "100% GOAT recall" },
+  { tag: "IAM-AUDIT", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes.", metric: "32 GOAT benchmarks" },
   { tag: "THREAT-INTEL", desc: "19 models, 5 providers, performance-weighted router. Replaced a manual weekly process.", metric: "$1.40 / run" },
-  { tag: "DETECTION", desc: "200+ active signatures via Terraform. ATT&CK gap analysis, zero false positives at scale.", metric: "0% FP" },
+  { tag: "DETECTION", desc: "200+ active signatures via Terraform. ATT&CK gap analysis across 1,400+ AWS accounts.", metric: "1,400+ accounts" },
 ] as const;
 
 const CONTACT = [

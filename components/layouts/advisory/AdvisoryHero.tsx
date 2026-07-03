@@ -30,12 +30,12 @@ const VECTOR = [
 const AFFECTED = [
   { system: "Cloud estates", versions: "AWS · GCP", impact: "2,800+ accounts under guardrails", patched: "none" },
   { system: "IAM configurations", versions: "all", impact: "65+ escalation paths · 10 vulnerability classes", patched: "none" },
-  { system: "Detection fleets", versions: "production", impact: "200+ signatures · 0% false positives", patched: "none" },
+  { system: "Detection fleets", versions: "production", impact: "200+ signatures · 1,400+ AWS accounts", patched: "none" },
   { system: "GenAI platforms", versions: "Bedrock · SageMaker · Vertex AI", impact: "guardrails and detection from zero prior art", patched: "none" },
 ] as const;
 
 const EVIDENCE = [
-  { name: "IAM Audit Agent", note: "agentic AWS IAM review, benchmarked before trusted", metric: "100%", metricNote: "GOAT recall · 32/32 · 0 FP" },
+  { name: "IAM Audit Agent", note: "agentic AWS IAM review, benchmarked before trusted", metric: "32", metricNote: "GOAT benchmarks · ground-truth" },
   { name: "Artemis", note: "multi-cloud attack-path simulation, AI-enriched graph", metric: "2,800+", metricNote: "accounts unified" },
   { name: "Antitoxin", note: "CIEM research — minimum cut-set dissolution", metric: "62", metricNote: "toxic combinations" },
   { name: "Threat-Intel Pipeline", note: "self-learning router across 5 providers", metric: "$1.40", metricNote: "per run · 19 models" },

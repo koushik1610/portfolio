@@ -23,15 +23,15 @@ const ROWS = [
   { time: "2022", system: "ARTEMIS", detail: "Multi-cloud attack-path simulation", status: "SHIPPED" },
   { time: "2023", system: "GENAI GUARDRAILS", detail: "Bedrock + SageMaker, from zero prior art", status: "SHIPPED" },
   { time: "2024", system: "AGENTIC REVIEW", detail: "1,700+-node knowledge graph platform", status: "SHIPPED" },
-  { time: "2025", system: "IAM AUDIT AGENT", detail: "100% GOAT recall · 32/32 · 0 FP", status: "SHIPPED" },
-  { time: "LIVE", system: "DETECTION FLEET", detail: "200+ signatures · 0% false positives", status: "ON TIME" },
+  { time: "2025", system: "IAM AUDIT AGENT", detail: "65+ escalation paths · 32 GOAT benchmarks", status: "SHIPPED" },
+  { time: "LIVE", system: "DETECTION FLEET", detail: "200+ signatures · 1,400+ AWS accounts", status: "ON TIME" },
   { time: "LIVE", system: "ANTITOXIN", detail: "62 toxic combinations · CIEM dissolution", status: "BOARDING" },
 ] as const;
 
 const STATS = [
   { value: "9", unit: "YRS", label: "in service" },
   { value: "2,800+", unit: "ACCT", label: "accounts secured" },
-  { value: "0%", unit: "FP", label: "false positives" },
+  { value: "150+", unit: "PSR", label: "security reviews" },
   { value: "$1.40", unit: "RUN", label: "per research run" },
 ] as const;
 

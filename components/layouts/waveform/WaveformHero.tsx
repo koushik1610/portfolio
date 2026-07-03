@@ -51,13 +51,13 @@ const GRID_ROWS = Array.from({ length: 5 }, (_, i) => ((i + 1) * WAVE_VIEW.h) / 
 
 /* Measurement cursors that land on kept-exact numbers. */
 const CURSORS = [
-  { x: 0.28, label: "RECALL", value: "100%" },
-  { x: 0.55, label: "FALSE-POS", value: "0%" },
+  { x: 0.28, label: "GOAT", value: "32" },
+  { x: 0.55, label: "REVIEWS", value: "150+" },
   { x: 0.8, label: "COST", value: "$1.40" },
 ] as const;
 
 const READOUTS = [
-  { label: "GOAT recall", value: "100%", sub: "32/32 · 0 FP" },
+  { label: "GOAT benchmarks", value: "32", sub: "ground-truth findings" },
   { label: "Accounts", value: "2,800+", sub: "AWS + GCP" },
   { label: "Models routed", value: "19", sub: "5 providers" },
   { label: "Cost / run", value: "$1.40", sub: "vs $3.20" },
@@ -67,7 +67,7 @@ const CHANNELS = [
   { ch: "CH1", name: "ARTEMIS", detail: "Multi-cloud attack-path simulation, AI-enriched graph" },
   { ch: "CH2", name: "IAM AUDIT AGENT", detail: "65+ escalation paths · 10 vulnerability classes" },
   { ch: "CH3", name: "ANTITOXIN", detail: "62 toxic combinations · CIEM minimum cut-set" },
-  { ch: "CH4", name: "DETECTION FLEET", detail: "200+ signatures · Terraform · 0% false positives" },
+  { ch: "CH4", name: "DETECTION FLEET", detail: "200+ signatures · Terraform · 1,400+ AWS accounts" },
 ] as const;
 
 const OUTPUTS = [

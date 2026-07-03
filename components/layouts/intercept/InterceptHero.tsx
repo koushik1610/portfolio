@@ -22,8 +22,8 @@ const PACKETS = [
   { no: 1, time: "2015", src: "infosys", dst: "enterprise", proto: "SYS", info: "Cloud integration — EDI pipelines, iPaaS", selected: false },
   { no: 2, time: "2017", src: "cyr3con", dst: "aws", proto: "SEC", info: "Security architect — ML workloads, −90% external attack surface", selected: false },
   { no: 3, time: "2022", src: "yahoo", dst: "estate", proto: "GUARD", info: "2,800+ accounts under secure-by-default guardrails", selected: true },
-  { no: 4, time: "live", src: "detection-fleet", dst: "estate", proto: "DETECT", info: "200+ signatures · 0% false positives", selected: false },
-  { no: 5, time: "live", src: "iam-agent", dst: "goat-bench", proto: "IAM", info: "100% recall · 32/32 findings · 0 FP", selected: false },
+  { no: 4, time: "live", src: "detection-fleet", dst: "estate", proto: "DETECT", info: "200+ signatures · 1,400+ AWS accounts", selected: false },
+  { no: 5, time: "live", src: "iam-agent", dst: "goat-bench", proto: "IAM", info: "65+ escalation paths · 32 GOAT benchmarks", selected: false },
   { no: 6, time: "live", src: "antitoxin", dst: "ciem", proto: "CIEM", info: "62 toxic combinations · minimum cut-set dissolution", selected: false },
   { no: 7, time: "live", src: "artemis", dst: "multi-cloud", proto: "APS", info: "GCP SCC + AWS Security Hub, one AI-enriched graph", selected: false },
   { no: 8, time: "live", src: "research-pipe", dst: "intel", proto: "INTEL", info: "19 models · 5 providers · $1.40 per run", selected: false },
@@ -34,7 +34,7 @@ const PACKETS = [
 const SELECTED = PACKETS.find((p) => p.selected) ?? PACKETS[0];
 
 const HIERARCHY = [
-  { proto: "DETECT — detection engineering", share: 92, value: "200+ signatures · 0% FP" },
+  { proto: "DETECT — detection engineering", share: 92, value: "200+ signatures · 1,400+ accounts" },
   { proto: "IAM — privilege analysis", share: 78, value: "65+ escalation paths · 10 classes" },
   { proto: "CIEM — toxic combinations", share: 64, value: "62 catalogued · ATT&CK-mapped" },
   { proto: "APS — attack-path simulation", share: 55, value: "2,800+ accounts unified" },
@@ -43,8 +43,8 @@ const HIERARCHY = [
 
 const STATS = [
   { value: "2,800+", label: "cloud accounts · AWS + GCP" },
-  { value: "200+", label: "signatures · 0% false positives" },
-  { value: "100%", label: "GOAT recall · 32/32 · 0 FP" },
+  { value: "200+", label: "signatures · 1,400+ AWS accounts" },
+  { value: "150+", label: "security reviews · every business unit" },
   { value: "$1.40", label: "per research run · 19 models" },
 ] as const;
 

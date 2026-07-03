@@ -4,39 +4,38 @@ export const certs = [
 ];
 
 export const stack = [
-  "AWS", "GCP", "CNAPP", "CSPM", "AI-SPM", "Zero Trust", "DevSecOps",
-  "Python", "FastAPI", "Databricks", "Terraform",
-  "Amazon Bedrock", "Multi-Agent Orchestration", "LLM Security", "Semgrep",
-  "Splunk", "ElasticStack", "MITRE ATT&CK",
-  "Checkov", "Docker", "Kubernetes",
+  "AWS", "Azure", "GCP", "IAM & CIEM", "Detection Engineering", "CSPM", "CNAPP",
+  "AI/ML Security", "Threat Modeling", "MITRE ATT&CK", "DevSecOps",
+  "Terraform", "Checkov", "Kubernetes", "EKS",
+  "Python", "Go", "FastAPI", "Databricks",
+  "Amazon Bedrock", "Vertex AI", "MCP", "Multi-Agent Orchestration",
 ];
 
+// Bullets are lifted verbatim from the master resume (locked 2026-07-01).
+// Per-surface edits select and reorder; they do not reword.
 export const jobs = [
   {
-    company: "Yahoo!",
+    company: "Yahoo Inc. · Paranoids (Cloud Security)",
     title: "Senior Technical Security Engineer",
     period: "Feb 2022 – Present",
     current: true,
     bullets: [
-      "Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across AWS accounts — sustaining a 0% false-positive rate at account scale while continuously expanding coverage as the threat landscape evolves. Authored the AWS security baseline release: CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each grounded in a MITRE ATT&CK gap analysis against real-world attack techniques sourced from cloud incident response data. Detection fleet deployed via Terraform-controlled infrastructure for reproducible, auditable rollout — enabling machine-speed detection and response across the full cloud account estate.",
-      "Architected an AI-native IAM audit agent — a production tool-calling skill that uses Boto3 to enumerate live AWS IAM configurations, traverses the privilege graph across 65+ escalation paths and 10 vulnerability classes, and applies LLM semantic reasoning to surface transitive permission chains and policy conditions that rule-based tools cannot evaluate. Generates risk-ranked remediation reports. Benchmarked against GOAT (open-source AWS IAM privilege escalation benchmark): 100% recall (32/32 findings), 0% false positives — eliminating the manual IAM review cycle.",
-      "Designed and shipped an agentic SOAR-style cloud security review platform that sharply reduced per-review effort — scaling threat modeling and security architecture review throughput to 120+ reviews across all business units with a small team, eliminating a multi-week backlog. Engineered a cross-ticket intelligence layer from a large corpus of historical security review tickets — 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles — as the retrieval backbone for an autonomous review agent with passive detection rules, slash commands, and bidirectional MCP integration with Jira and Confluence. Established as the team's standard review methodology; scales security coverage without additional headcount.",
-      "Architected an autonomous threat intelligence pipeline using multi-agent orchestration across 19 foundation models and 5 providers — a performance-weighted model router dynamically assigns each stage (triage → analyze → decompose → peer review → synthesize) to the highest-performing model for that task, updating allocation weights after every run. Replaced a fully manual research process: 59 vetted security initiative proposals generated at $1.40/run — 55% cheaper than single-model approaches — with multi-persona peer review built into the evaluation chain.",
-      "Shipped a full-stack AI-augmented CSPM operations platform (FastAPI + Databricks SQL, 45 API endpoints) enabling autonomous alert triage and LLM-driven change request validation against policy baseline — adopted as the team's primary operational workflow. A deterministic AI advisor trained on 2,171 historical cloud security tickets powers a 4-signal scoring model (confidence clamped 5–95%) with a hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate; auto-validates security configuration changes and eliminates manual review cycles at scale.",
-      "Pioneered a graph-theoretic framework for AI-driven IAM toxic combination dissolution — cataloguing 62 toxic combinations across 8 attack categories with MITRE ATT&CK mappings, and developing the minimum cut-set method that identifies the keystone permission whose removal collapses an entire privilege escalation chain without disrupting legitimate access. Enables deterministic security controls for AI agents operating on IAM configurations, providing a policy-as-code enforcement foundation for auto-remediation workflows.",
-      "Designed and shipped Artemis — a CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched attack path graph. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk trends across business units; maps findings to MITRE ATT&CK techniques and generates prioritized AI-driven remediation backlogs consumed by 4 engineering teams — delivering AI-powered posture management at enterprise scale.",
+      "Define and operate Yahoo's company-wide cloud security baselines, authoring and maintaining the Paranoids AWS Cloud Alerts Detection system of 200+ Python detection signatures on AWS Lambda that evaluate resource configurations across 1,400+ AWS accounts, producing per-resource findings and account/BU/org security-posture scores (CSPM) the company is measured against, each with CIS-style audit and remediation guidance.",
+      "Conducted 150+ cloud security reviews under Yahoo's Paranoid Security Review (PSR), partnering with the Product Security, Network, and Identity teams and submitting developers, leads, and managers to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech.",
+      "Primary point of contact for Yahoo's AWS security baselines, coordinating the v6.0 release (the program's largest control expansion, 50+ new baselines) by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix.",
+      "Built security Claude Code skills to harden AI-assisted development: a package-hallucination detector flagging AI-invented dependency names before slopsquatting supply-chain exploitation, and a live AWS IAM audit skill (AWS CLI + IAM Access Analyzer) returning findings with severity, source attribution, and escalation-path IDs.",
+      "Built a toxic-combination correlation engine over CIS-based alert data, chaining findings into privilege-escalation paths across three classes: misconfig+misconfig (public SSH/RDP without IMDSv2), misconfig+IAM (public Lambda with a privileged role, or an exposed host with an over-permissioned profile), and IAM+IAM (cross-account assume-role into a privileged role, or self-escalation via attach/put-policy), catching chains single-finding scanners miss.",
     ],
   },
   {
-    company: "Cyber Reconnaissance Inc",
+    company: "CYR3CON (Cyber Reconnaissance, Inc.)",
     title: "Cyber Security Architect",
     period: "May 2019 – Jan 2022",
     current: false,
     bullets: [
-      "Designed multi-account cloud infrastructure using AWS Transit Gateway, VPC Peering, and AWS SSO for API, ML, and data-crawling applications.",
-      "Built secure CI/CD pipelines with AWS Step Functions, GitLab, and CodeCommit across accounts using robust IAM roles.",
-      "Managed GuardDuty, Security Hub, and Inspector for SecOps while aligning hybrid cloud infrastructure with compliance standards.",
-      "Built cloud-based honeypots (Cowrie, ssh-honeypot, MongoDB) feeding threat intelligence data for client security programs.",
+      "Designed and built the company's multi-account AWS foundation as code (reusable Prod, Dev, Staging, and Security account templates on a Transit Gateway hub-and-spoke with segmented IP ranges and centralized SSO), and hardened it to baseline hygiene with least-privilege IAM using reusable IAM role templates, VPN-gated cloud access, and AWS Systems Manager host access that removed public SSH and bastion hosts.",
+      "Owned and secured the startup's self-hosted infrastructure, administering on-premise GitLab, Mattermost, and Taiga behind a data-center firewall, provisioning isolated VMs for dark-web research, and running the company's security-awareness program with internal CTFs and phishing simulations.",
+      "Deployed a honeypot network (T-Pot, Cowrie, and others) that collected live attacker telemetry for the company's threat-intelligence product, and partnered with the data team to build the pipelines clients used to prioritize the vulnerabilities being actively exploited against their own assets.",
     ],
   },
   {
@@ -45,8 +44,7 @@ export const jobs = [
     period: "Dec 2017 – May 2019",
     current: false,
     bullets: [
-      "Led cloud infrastructure and security teams through cloud migration, security training, and product development.",
-      "Configured complex network routing for physical data center environments using CISCO Firewalls, Unifi routers, and CISCO switches.",
+      "Progressed from intern to team lead within the infrastructure and security function, leading the cloud migration, running security training, and configuring data-center network security (firewall policies, segmentation, and routing across Cisco and UniFi hardware).",
     ],
   },
   {
@@ -55,15 +53,15 @@ export const jobs = [
     period: "Dec 2015 – May 2017",
     current: false,
     bullets: [
-      "Developed Dell Boomi cloud integration workflows for EDI-JSON mapping for a US logistics client.",
-      "Optimized integration workflows to run 80% faster through automated ingestion of transactional EDI data.",
+      "Automated a US logistics client's B2B partner data exchange on Dell Boomi (iPaaS), re-architecting the EDI integration processes and tuning connector and runtime configuration to raise processing throughput about 80%.",
+      "Built reusable, fault-tolerant integration patterns (connectors, maps, and sub-processes) for partner onboarding, with retries, alerting, and health monitoring that caught and recovered failed transactions to meet enterprise SLAs.",
     ],
   },
 ];
 
 export const education = [
   { degree: "M.S. Software Engineering", school: "Arizona State University", period: "2017 – 2019" },
-  { degree: "B.Tech Computer Science", school: "Birla Institute of Technology, MESRA", period: "2011 – 2015" },
+  { degree: "B.E. Computer Science", school: "Birla Institute of Technology, Mesra", period: "2011 – 2015" },
 ];
 
 export const projects = [
@@ -86,7 +84,7 @@ export const projects = [
   {
     name: "Security Ops Platform",
     description:
-      "AI-augmented CSPM operations platform (FastAPI + Databricks SQL, 45 API endpoints) enabling autonomous alert triage and LLM-driven change request validation against policy baseline. Deterministic AI advisor trained on 2,171 historical cloud security tickets — 4-signal scoring, confidence clamped 5–95%, hard deny gate for 6 critical baselines where auto-remediation is never appropriate.",
+      "AI-augmented CSPM operations platform (FastAPI + Databricks SQL, dozens of API endpoints) enabling autonomous alert triage and LLM-driven change request validation against policy baseline. Deterministic AI advisor trained on a large corpus of historical cloud security tickets — 4-signal scoring, confidence clamped 5–95%, hard deny gate for 6 critical baselines where auto-remediation is never appropriate.",
     tags: ["Python", "FastAPI", "Databricks", "Jira API", "Deterministic AI"],
     wip: false,
     link: null,
@@ -102,8 +100,16 @@ export const projects = [
   {
     name: "review-aws-iam-policies",
     description:
-      "AI-native IAM audit agent — a production tool-calling skill using Boto3 to enumerate live AWS IAM configurations, traverse the privilege graph across 65+ escalation paths and 10 vulnerability classes, and apply LLM semantic reasoning to surface transitive chains rule-based tools miss. Generates risk-ranked remediation reports. Benchmarked on GOAT: 100% recall (32/32 findings), 0% false positives.",
+      "AI-native IAM audit agent — a production tool-calling skill using Boto3 to enumerate live AWS IAM configurations, traverse the privilege graph across 65+ escalation paths and 10 vulnerability classes, and apply LLM semantic reasoning to surface transitive chains rule-based tools miss. Generates risk-ranked remediation reports. Built the GOAT benchmark first — 11 synthetic Terraform fixtures, 32 ground-truth findings — and evaluated the agent against all 32 before trusting it.",
     tags: ["Bash", "AWS CLI", "IAMOK", "LLM Semantic Analysis", "GOAT Benchmarking"],
+    wip: false,
+    link: null,
+  },
+  {
+    name: "Package Hallucination Detector",
+    description:
+      "Supply-chain defense skill targeting slopsquatting — the attack where adversaries register package names AI coding assistants hallucinate. Detects AI-invented dependency names across 6 package ecosystems (npm, PyPI, Go, Rust, Ruby, Maven) through registry verification and name-similarity analysis, flagging them before exploitation — an attack surface documented in USENIX Security research.",
+    tags: ["Python", "Supply Chain Security", "Claude Code", "Registry Analysis"],
     wip: false,
     link: null,
   },
@@ -118,7 +124,7 @@ export const projects = [
   {
     name: "Security Review Workspace",
     description:
-      "Agentic SOAR-style cloud security review platform — turns Claude Code into a purpose-built autonomous review agent with passive detection rules, multi-step skills, slash commands, and MCP integration with Jira and Confluence. Backed by a 1,700+-node knowledge graph from a large corpus of historical security review tickets across many security domains and technology stacks. 120+ reviews conducted across all business units; scales security coverage without additional headcount.",
+      "Agentic SOAR-style cloud security review platform — turns Claude Code into a purpose-built autonomous review agent with passive detection rules, multi-step skills, slash commands, and MCP integration with Jira and Confluence. Backed by a 1,700+-node knowledge graph from a large corpus of historical security review tickets across many security domains and technology stacks. 150+ reviews conducted across all business units; scales security coverage without additional headcount.",
     tags: ["Claude Code", "MCP", "Jira", "Obsidian", "Knowledge Graph", "Python"],
     wip: false,
     link: null,
@@ -148,17 +154,17 @@ export const projects = [
     link: null,
   },
   {
-    name: "AWS Baselines v6",
+    name: "AWS Security Baselines",
     description:
-      "Authored the AWS security baselines program release — CIS-benchmarked controls spanning Lambda, ECS, S3, KMS, IAM, and VPC, the largest single release in program history — including a full MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data, a machine-readable CSV registry, and a human-readable summary.",
-    tags: ["AWS", "CIS Baselines", "MITRE ATT&CK", "Compliance", "Markdown"],
+      "Primary point of contact for Yahoo's AWS security baselines program — coordinated the v6.0 release, the largest control expansion in program history (50+ new baselines), by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix. Includes a full MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data and a machine-readable control registry.",
+    tags: ["AWS", "CIS Baselines", "MITRE ATT&CK", "Checkov", "Compliance"],
     wip: false,
     link: null,
   },
   {
     name: "ECS Signatures",
     description:
-      "Maintained and extended a detection signature fleet of 200+ active Python/Lambda signatures evaluating AWS accounts against security baselines at scale. Fixed runtime errors, rewrote KMS alias evaluation logic to eliminate false positives, refactored S3 policy analysis for transitional account handling, and reactivated two disabled signatures across 237 commits.",
+      "Maintained and extended a detection signature fleet of 200+ active Python/Lambda signatures evaluating AWS accounts against security baselines at scale. Fixed runtime errors, rewrote KMS alias evaluation logic to eliminate false positives, refactored S3 policy analysis for transitional account handling, and reactivated two long-disabled signatures.",
     tags: ["Python", "AWS Lambda", "boto3", "Elasticsearch", "Detection Engineering"],
     wip: false,
     link: null,

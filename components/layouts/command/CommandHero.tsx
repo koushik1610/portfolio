@@ -35,8 +35,8 @@ const ICONS: Record<string, ReactNode> = {
 };
 
 const EXPERTISE = [
-  { icon: "shield", name: "Detection Engineering", brief: "200+ signatures · 0% FP · AWS accounts", hint: "MITRE ATT&CK" },
-  { icon: "lock", name: "IAM Privilege Analysis", brief: "65+ escalation paths · 10 vuln classes · 100% GOAT recall", hint: "Boto3" },
+  { icon: "shield", name: "Detection Engineering", brief: "200+ signatures · 1,400+ AWS accounts", hint: "MITRE ATT&CK" },
+  { icon: "lock", name: "IAM Privilege Analysis", brief: "65+ escalation paths · 10 vuln classes · 32 GOAT benchmarks", hint: "Boto3" },
   { icon: "cpu", name: "AI Security Tooling", brief: "19 models · 5 providers · 1,700+-node knowledge graph", hint: "Multi-Agent" },
   { icon: "cloud", name: "Cloud Security Architecture", brief: "2,800+ cloud accounts · CNAPP · Zero Trust", hint: "CSPM" },
   { icon: "search", name: "Security Research", brief: "Artemis · Antitoxin · 62 toxic IAM combinations", hint: "Graph Theory" },
@@ -44,9 +44,9 @@ const EXPERTISE = [
 
 const PROJECTS = [
   { id: "01", name: "Artemis", desc: "Multi-cloud attack-path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer.", metric: "2,800+", metricLabel: "accounts", tags: ["Python", "GCP SCC", "Vertex AI"] },
-  { id: "02", name: "IAM Audit Agent", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall.", metric: "100%", metricLabel: "recall", tags: ["IAM", "Python", "Boto3"] },
+  { id: "02", name: "IAM Audit Agent", desc: "Boto3 tool-calling agent. 65+ escalation paths across 10 vulnerability classes. Evaluated against 32 GOAT benchmarks.", metric: "32", metricLabel: "GOAT benchmarks", tags: ["IAM", "Python", "Boto3"] },
   { id: "03", name: "Autonomous Threat Intel", desc: "19 models, 5 providers, performance-weighted router. $1.40 per run — replaced a manual weekly process.", metric: "$1.40", metricLabel: "per run", tags: ["Multi-Agent", "Claude"] },
-  { id: "04", name: "Detection Engine", desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis. Zero false positives at scale.", metric: "200+", metricLabel: "signatures", tags: ["Python", "Lambda", "Terraform"] },
+  { id: "04", name: "Detection Engine", desc: "200+ active signatures via Terraform. MITRE ATT&CK gap analysis across 1,400+ AWS accounts.", metric: "200+", metricLabel: "signatures", tags: ["Python", "Lambda", "Terraform"] },
 ] as const;
 
 const ACTIONS = [

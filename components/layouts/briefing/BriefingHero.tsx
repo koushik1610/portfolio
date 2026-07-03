@@ -18,7 +18,7 @@ import "./styles.css";
 const STATS = [
   { value: "2,800+", label: "cloud accounts" },
   { value: "200+", label: "detection signatures" },
-  { value: "120+", label: "security reviews" },
+  { value: "150+", label: "security reviews" },
   { value: "1,700+", label: "knowledge-graph nodes" },
 ] as const;
 
@@ -38,9 +38,9 @@ const ATTACK_PATH = [
 
 const WORK = [
   { name: "Artemis", desc: "Multi-cloud attack-path simulation across the estate.", metric: "2,800+ accounts" },
-  { name: "IAM Audit Agent", desc: "65+ escalation paths · 10 vulnerability classes.", metric: "100% GOAT · 32/32" },
+  { name: "IAM Audit Agent", desc: "65+ escalation paths · 10 vulnerability classes.", metric: "32 GOAT benchmarks" },
   { name: "Autonomous Threat Intel", desc: "19 models, 5 providers, weighted routing.", metric: "$1.40 / run" },
-  { name: "Detection Engine", desc: "Terraform-deployed signature fleet, ATT&CK-mapped.", metric: "0% FP" },
+  { name: "Detection Engine", desc: "Terraform-deployed signature fleet, ATT&CK-mapped.", metric: "1,400+ accounts" },
 ] as const;
 
 const CONTACT = [

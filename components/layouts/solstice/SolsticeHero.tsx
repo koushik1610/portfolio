@@ -30,14 +30,14 @@ const EXPERTISE = [
   {
     num: "01",
     name: "Detection Engineering",
-    desc: "200+ active signatures at a 0% false-positive rate. CIS-benchmarked baselines and MITRE ATT&CK coverage of real-world techniques, deployed via Terraform.",
-    meta: "0% FP",
+    desc: "200+ active signatures evaluating 1,400+ AWS accounts. CIS-benchmarked baselines and MITRE ATT&CK coverage of real-world techniques, deployed via Terraform.",
+    meta: "1,400+ acct",
   },
   {
     num: "02",
     name: "IAM Privilege Analysis",
-    desc: "An AI-native audit agent traversing 65+ escalation paths across 10 vulnerability classes, with semantic interpretation of transitive privilege chains. 100% GOAT recall.",
-    meta: "100% GOAT",
+    desc: "An AI-native audit agent traversing 65+ escalation paths across 10 vulnerability classes, with semantic interpretation of transitive privilege chains. Evaluated against 32 GOAT benchmarks.",
+    meta: "32 GOAT",
   },
   {
     num: "03",
@@ -70,8 +70,8 @@ const PROJECTS = [
   {
     id: "02",
     name: "IAM Audit Agent",
-    desc: "A Boto3 tool-calling agent mapping 65+ escalation paths across 10 vulnerability classes. 100% GOAT recall, 32 of 32.",
-    metric: "100% recall",
+    desc: "A Boto3 tool-calling agent mapping 65+ escalation paths across 10 vulnerability classes. Evaluated against 32 GOAT benchmarks.",
+    metric: "32 GOAT benchmarks",
     tags: ["IAM", "Python", "Boto3"],
   },
   {
@@ -84,7 +84,7 @@ const PROJECTS = [
   {
     id: "04",
     name: "Detection Engine",
-    desc: "200+ active signatures shipped via Terraform. MITRE ATT&CK gap analysis with zero false positives at scale.",
+    desc: "200+ active signatures shipped via Terraform. MITRE ATT&CK gap analysis across 1,400+ AWS accounts.",
     metric: "200+ signatures",
     tags: ["Python", "Lambda", "Terraform"],
   },

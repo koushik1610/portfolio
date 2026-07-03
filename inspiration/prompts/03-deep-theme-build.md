@@ -10,7 +10,7 @@ per theme. Do not run it for two themes in the same session.
 ```
 You are working in my portfolio repo (Next.js 15 App Router, static export to GitHub
 Pages, koushik.io). Read CLAUDE.md, COUNCIL.md, and inspiration/DESIGN-IDEAS-DISTILLED.md
-in full before writing any code. Also read koushik-dump/THEME-CULL-DECISION.md so you
+in full before writing any code. Also read ../koushik-docs/THEME-CULL-DECISION.md so you
 know the final kept set and where this theme fits.
 
 THEME TO BUILD THIS SESSION:

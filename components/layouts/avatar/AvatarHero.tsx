@@ -11,8 +11,8 @@ import "./styles.css";
 const PORTRAIT_SRC = "/my-3d-avatar.png";
 
 const EXPOSURE = [
-  { k: "ISO", v: "100% GOAT · 32/32" },
-  { k: "f/", v: "0% false positives" },
+  { k: "ISO", v: "32 GOAT benchmarks" },
+  { k: "f/", v: "150+ security reviews" },
   { k: "exp", v: "9 years · 5 providers" },
 ] as const;
 
@@ -36,7 +36,7 @@ const PROJECTS: ProjectFrame[] = [
     frame: "02",
     name: "IAM Audit Agent",
     desc: "Boto3 tool-calling agent traversing 65+ escalation paths across 10 vulnerability classes with semantic interpretation of transitive chains.",
-    metric: "100% GOAT recall",
+    metric: "32 GOAT benchmarks",
     stack: "IAM · Python · Boto3 · LLM tool-use",
   },
   {
@@ -49,7 +49,7 @@ const PROJECTS: ProjectFrame[] = [
   {
     frame: "04",
     name: "Detection Engine",
-    desc: "200+ active signatures deployed via Terraform. MITRE ATT&CK gap analysis. Zero false positives at account scale.",
+    desc: "200+ active signatures deployed via Terraform, evaluating 1,400+ AWS accounts. MITRE ATT&CK gap analysis from incident response data.",
     metric: "200+ signatures",
     stack: "Python · Lambda · Terraform · MITRE ATT&CK",
   },

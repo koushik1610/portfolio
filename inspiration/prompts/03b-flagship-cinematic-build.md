@@ -6,7 +6,7 @@ Fill the [BRACKETS], paste into Claude Code from the repo root.
 ```
 You are working in my portfolio repo (Next.js 15 App Router, static export to GitHub
 Pages, koushik.io). Read CLAUDE.md, COUNCIL.md, inspiration/DESIGN-IDEAS-DISTILLED.md,
-and koushik-dump/THEME-CULL-DECISION.md in full before writing any code.
+and ../koushik-docs/THEME-CULL-DECISION.md in full before writing any code.
 
 THIS IS THE CINEMATIC FLAGSHIP. It is the ONE theme permitted to break specific house
 rules, and the goal is deliberate drama — a standalone showpiece that proves range.

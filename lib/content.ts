@@ -1,6 +1,10 @@
 // Central content source — all themes and sections read from here.
 // Update this file only; components pick up changes automatically.
 // Content rotates every 24h (independent of the 12h theme rotation).
+// Facts trace to the master resume (locked 2026-07-01): GOAT is stated as a
+// count (32 benchmarks), reviews are 150+, CSPM detection scope is 1,400+ AWS
+// accounts. Variations reframe the same bullets per audience; they never add
+// new claims.
 
 export interface WorkSection {
   heading: string;
@@ -44,7 +48,7 @@ const RESEARCH_PROJECTS: ResearchProject[] = [
     name: "Antitoxin",
     status: "In Research",
     tagline: "Graph-theoretic IAM toxic combination dissolution.",
-    body: "A research framework cataloguing 62 IAM toxic combinations across 8 attack categories, each mapped to MITRE ATT&CK techniques with a minimum cut-set dissolution action. The cut-set method finds keystone permissions — the nodes whose removal collapses entire privilege escalation chains without disrupting legitimate access. Currently working on automated remediation path generation.",
+    body: "A CIEM (Cloud Infrastructure Entitlement Management) research framework cataloguing 62 IAM toxic combinations across 8 attack categories, each mapped to MITRE ATT&CK techniques with a minimum cut-set dissolution action. Instead of enumerating toxic combinations one at a time, the cut-set method finds keystone permissions — the nodes whose removal collapses entire privilege escalation chains without disrupting legitimate access. Currently working on automated remediation path generation.",
     hypothesis: "Toxic combinations aren't fixed by removing one permission at random. The privilege graph has a keystone. Find it.",
     tags: ["IAM Analysis", "Graph Theory", "MITRE ATT&CK", "CloudTrail", "Python"],
   },
@@ -61,15 +65,15 @@ const V1: ContentVariation = {
     sections: [
       {
         heading: "Detection Engineering",
-        body: "Own end-to-end lifecycle of 200+ active Python/Lambda detection signatures across AWS accounts — sustaining a 0% false-positive rate at account scale while continuously expanding coverage as the threat landscape evolves. Authored the AWS security baseline release: CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each grounded in a MITRE ATT&CK gap analysis against real-world attack techniques sourced from cloud incident response data. Detection fleet deployed via Terraform-controlled infrastructure, enabling machine-speed detection and response across the full cloud account estate.",
+        body: "Define and operate Yahoo's company-wide cloud security baselines — authoring and maintaining a detection system of 200+ Python/Lambda signatures that evaluates resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account, business-unit, and org-level security-posture scores the company is measured against, each with CIS-style audit and remediation guidance. Coordinated the program's largest control expansion (the v6.0 release, 50+ new baselines): researched new AWS services, ran Checkov parity analysis to close policy gaps, and re-scored every control's severity on a risk × likelihood × impact matrix. Also built the organization's first GenAI security guardrails and detection (Amazon Bedrock, SageMaker) from zero prior art.",
       },
       {
-        heading: "Agentic Security Reviews",
-        body: "Designed and shipped an agentic SOAR-style cloud security review platform that sharply reduced per-review effort — scaling threat modeling and security architecture review throughput to 120+ reviews across all business units with a small team, eliminating a multi-week backlog. Built a cross-ticket intelligence layer from a large corpus of historical security review tickets — 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles — as the retrieval backbone for an autonomous review agent with passive detection rules, slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
+        heading: "Security Reviews at Scale",
+        body: "Conducted 150+ cloud security reviews under Yahoo's Paranoid Security Review program — partnering with the Product Security, Network, and Identity teams to threat-model and approve new cloud services and architectures before launch, across business units from Mail and Sports to Finance and Central Tech. Behind the throughput: an agentic SOAR-style review platform with a 1,700+-node cross-ticket intelligence layer mined from a large corpus of historical reviews, passive detection rules, and bidirectional MCP integration with Jira and Confluence. Multi-week backlog eliminated; now the team's standard review methodology.",
       },
       {
-        heading: "AI-Native IAM Audit Agent",
-        body: "An AI-native tool-calling agent using Boto3 to enumerate live AWS IAM configurations, traverse the privilege graph across 65+ escalation paths and 10 vulnerability classes, and apply LLM semantic reasoning to surface transitive permission chains and policy conditions that rule-based tools cannot evaluate. Generates risk-ranked remediation reports. Benchmarked against GOAT (open-source AWS IAM privilege escalation benchmark): 100% recall (32/32 findings), 0% false positives — eliminating the manual IAM review cycle.",
+        heading: "AI-Native IAM Auditing",
+        body: "An AI-native tool-calling agent that enumerates live AWS IAM configurations, traverses the privilege graph across 65+ escalation paths and 10 vulnerability classes, and applies LLM semantic reasoning to surface transitive permission chains and policy conditions that rule-based tools cannot evaluate. Generates risk-ranked remediation reports with severity, source attribution, and escalation-path IDs. Built the benchmark before trusting the tool: GOAT, 11 synthetic Terraform fixtures with 32 ground-truth findings, evaluated against all 32 — then distributed org-wide through the internal security marketplace.",
       },
       {
         heading: "Autonomous Threat Intelligence Pipeline",
@@ -77,7 +81,7 @@ const V1: ContentVariation = {
       },
       {
         heading: "AI Security Operations Tooling",
-        body: "Two AI-augmented platforms in daily operational use. The Security Ops Platform (FastAPI + Databricks SQL, 45 API endpoints) delivers autonomous alert triage and LLM-driven change request validation against policy baseline — a deterministic AI advisor trained on 2,171 historical cloud security tickets, 4-signal scoring model (confidence clamped 5–95%), hard deny gate for 6 critical baseline categories — adopted as the team's primary operational workflow, eliminating manual review cycles at scale. The Autonomous Threat Intelligence Ingestion agent processes 21 security intelligence feeds daily through a 4-stage LLM-driven workflow (triage → analyze → draft → verify), reducing CIS/NIST baseline discovery-to-draft from days to under 30 minutes at under $0.05/run.",
+        body: "Two AI-augmented platforms in daily operational use. The Security Ops Platform (FastAPI + Databricks SQL, dozens of API endpoints) delivers autonomous alert triage and LLM-driven change request validation against policy baseline — a deterministic AI advisor trained on a large corpus of historical cloud security tickets, 4-signal scoring model (confidence clamped 5–95%), hard deny gate for 6 critical baseline categories — adopted as the team's primary operational workflow, eliminating manual review cycles at scale. The Autonomous Threat Intelligence Ingestion agent processes 21 security intelligence feeds daily through a 4-stage LLM-driven workflow (triage → analyze → draft → verify), reducing CIS/NIST baseline discovery-to-draft from days to under 30 minutes at under $0.05/run.",
       },
     ],
   },
@@ -98,23 +102,23 @@ const V2: ContentVariation = {
     sections: [
       {
         heading: "Detection Fleet Ownership",
-        body: "Full ownership of 200+ active Python/Lambda detection signatures across AWS accounts — sustaining a 0% false-positive rate while continuously adding net-new controls. The the AWS security baseline release covered CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — the largest single coverage expansion in program history — each mapped to a MITRE ATT&CK technique from cloud incident response data. Detection infrastructure managed via Terraform for reproducible deployment; the core engineering challenge is evaluation logic that achieves zero-false-positives at account scale while remaining expressive enough to cover per-service configuration nuance. Enables machine-speed detection and response across the full cloud estate.",
+        body: "Full ownership of the detection system: 200+ active Python/Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account/BU/org posture scores (CSPM) the company is measured against — each signature shipping with CIS-style audit and remediation guidance, deployed via Terraform for reproducible rollout. Primary point of contact for the AWS security baselines program: coordinated the v6.0 release (largest control expansion in program history, 50+ new baselines), ran Checkov parity analysis to close policy gaps, and re-scored every control on a risk × likelihood × impact matrix. The core engineering challenge is evaluation logic precise enough to hold signal quality at account scale while covering per-service configuration nuance.",
       },
       {
         heading: "Agentic Security Review Platform",
-        body: "Designed and shipped an agentic SOAR-style cloud security review platform that sharply reduced per-review effort and scaled threat modeling coverage to 120+ reviews across all business units with a small team, eliminating a multi-week backlog. Architecture: historical security review tickets → 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles → autonomous review agent with passive detection rules, multi-step skills, slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
+        body: "150+ threat-model reviews delivered under the Paranoid Security Review program across AWS, GCP, and Azure — cross-account IAM, third-party vendor integrations, and AI/ML platforms — partnering with Product Security, Network, and Identity teams, with sign-off required before launch. Architecture behind the throughput: a large corpus of historical review tickets → 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles → autonomous review agent with passive detection rules, multi-step skills, slash commands, and bidirectional MCP integration with Jira and Confluence. Scales security coverage without additional headcount.",
       },
       {
         heading: "AI-Native IAM Audit Agent",
-        body: "Production tool-calling agent covering 65+ privilege escalation paths across 10 vulnerability classes: policy injection, role chaining, service role abuse, SCP bypass patterns, and others. Uses Boto3 to enumerate live AWS IAM configurations; layers static policy graph traversal with LLM semantic interpretation to catch transitive chains and policy conditions that rule-based tools cannot evaluate. Generates risk-ranked remediation reports. Validated on GOAT benchmark: 32 findings, 100% recall, 0 false positives — eliminating the manual IAM review cycle.",
+        body: "Production tool-calling agent covering 65+ privilege escalation paths across 10 vulnerability classes: pass-role abuse, role-assumption chains, compute-to-data escalation, confused deputy, OIDC trust misconfiguration, persistence, and others. Enumerates live AWS IAM configurations; layers static policy graph traversal with LLM semantic interpretation to catch transitive chains and policy conditions rule-based tools cannot evaluate. Benchmark discipline built in: authored GOAT — 11 synthetic Terraform fixtures, 32 ground-truth findings — and evaluated the agent against all 32 before shipping. Distributed org-wide via the internal security marketplace.",
       },
       {
-        heading: "Autonomous Threat Intelligence Pipeline",
-        body: "Multi-agent orchestration pipeline across 19 models from 5 providers — a performance-weighted router assigns each stage (triage → analyze → decompose → peer review → synthesize) to the model with the highest historical performance on that task type, with allocation weights updated after each run. Replaced a fully manual research process. Operational at $1.40/run (55% savings over single-model) with multi-persona peer review built into the evaluation chain.",
+        heading: "Toxic-Combination Correlation Engine",
+        body: "A correlation engine over CIS-based alert data that chains individual findings into privilege-escalation paths across three classes: misconfig+misconfig (public SSH/RDP without IMDSv2), misconfig+IAM (a public Lambda holding a privileged role, an exposed host with an over-permissioned instance profile), and IAM+IAM (cross-account assume-role into a privileged role, self-escalation via attach/put-policy). Catches the chains single-finding scanners miss — the difference between a list of findings and an attack path.",
       },
       {
         heading: "Production AI Security Platforms",
-        body: "Two AI-augmented security platforms, both in daily operational use. Security Ops Platform: FastAPI + Databricks SQL, multi-endpoint coverage — autonomous alert triage and LLM-driven change request validation against policy baseline, powered by a deterministic AI advisor trained on 2,171 historical cloud security tickets; 4-signal scoring (confidence clamped 5–95%), hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate. Autonomous Threat Intelligence Ingestion agent: 4-stage LLM-driven workflow across 21 feeds — Haiku handles high-volume triage, Sonnet+Opus draft CIS/NIST-aligned baseline documents in exact registry shape, programmatic verifier gates delivery. 330+ items/day, baseline discovery-to-draft under 30 minutes, under $0.05/run.",
+        body: "Two AI-augmented security platforms, both in daily operational use. Security Ops Platform: FastAPI + Databricks SQL, dozens of endpoints — autonomous alert triage and LLM-driven change request validation against policy baseline, powered by a deterministic AI advisor trained on a large corpus of historical cloud security tickets; 4-signal scoring (confidence clamped 5–95%), hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate. Autonomous Threat Intelligence Ingestion agent: 4-stage LLM-driven workflow across 21 feeds — Haiku handles high-volume triage, Sonnet+Opus draft CIS/NIST-aligned baseline documents in exact registry shape, programmatic verifier gates delivery. 330+ items/day, baseline discovery-to-draft under 30 minutes, under $0.05/run.",
       },
     ],
   },
@@ -135,15 +139,15 @@ const V3: ContentVariation = {
     sections: [
       {
         heading: "Getting the Signal Right",
-        body: "200+ detection signatures across AWS accounts — each one a judgment call on whether a configuration pattern is genuinely risky, and at what threshold. The sustained 0% false-positive rate is deliberate: security engineers stop trusting tools that cry wolf. I authored the MITRE ATT&CK gap analysis for the AWS security baseline program — CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC — because the existing controls had coverage gaps I could map directly to real attack techniques from cloud incident response data. The forcing function: if we can't detect a known technique with machine-speed detection and response, that's a gap to close.",
+        body: "200+ detection signatures evaluating 1,400+ AWS accounts — each one a judgment call on whether a configuration pattern is genuinely risky, and at what threshold. The output isn't just alerts: it's the per-resource findings and posture scores the whole company is measured against, so signal quality is the product. When a false-positive storm hits, I root-cause it to the upstream AWS change — runtime deprecations, KMS evaluation changes, S3 policy format shifts — and rewrite the evaluation logic rather than suppress the noise. I coordinated the baseline program's largest control expansion (v6.0, 50+ new baselines) because the existing controls had coverage gaps I could map directly to real attack techniques from cloud incident response data. The forcing function: if we can't detect a known technique, that's a gap to close.",
       },
       {
         heading: "Scaling Reviews Without Scaling Headcount",
-        body: "Threat modeling and security architecture reviews were a bottleneck — one engineer per review, institutional knowledge not captured anywhere, inconsistent coverage across business units. I approached it as a retrieval problem: could I make what the best reviewer knows accessible to any reviewer? The solution was cross-ticket intelligence: a large corpus of historical tickets became 1,700+ structured knowledge nodes powering an agentic SOAR-style review platform that sharply reduced per-review effort. 120+ reviews across all business units — eliminating a multi-week backlog. The coverage is better, not just faster. Security scales without additional headcount.",
+        body: "Threat modeling and security architecture reviews were a bottleneck — one engineer per review, institutional knowledge not captured anywhere, inconsistent coverage across business units. I approached it as a retrieval problem: could I make what the best reviewer knows accessible to any reviewer? The solution was cross-ticket intelligence: a large corpus of historical tickets became 1,700+ structured knowledge nodes powering an agentic SOAR-style review platform that sharply reduced per-review effort. 150+ reviews across every business unit — Mail, Sports, Finance, Central Tech — partnering with Product Security, Network, and Identity teams, with the multi-week backlog eliminated. The coverage is better, not just faster.",
       },
       {
         heading: "The IAM Problem",
-        body: "IAM privilege escalation is a problem where the attack surface grows faster than detection capability. I built an AI-native tool-calling agent that uses Boto3 to enumerate live AWS IAM configurations and combines static policy graph traversal with LLM semantic reasoning to catch what rule-based tools miss — transitive chains, policy conditions, cross-service trust relationships. I benchmarked it against GOAT fixtures before shipping: 100% recall, 0 false positives. The benchmark discipline matters — if you don't know where the boundaries are, you can't trust the tool.",
+        body: "IAM privilege escalation is a problem where the attack surface grows faster than detection capability. I built an AI-native tool-calling agent that enumerates live AWS IAM configurations and combines static policy graph traversal with LLM semantic reasoning to catch what rule-based tools miss — transitive chains, policy conditions, cross-service trust relationships. And I built the benchmark before trusting the tool: GOAT, 11 synthetic Terraform fixtures with 32 ground-truth findings, evaluated end to end before the agent shipped. The benchmark discipline matters — if you don't know where the boundaries are, you can't trust the tool.",
       },
       {
         heading: "Agentic Pipelines as Infrastructure",
@@ -151,7 +155,7 @@ const V3: ContentVariation = {
       },
       {
         heading: "Building the Tools We Actually Need",
-        body: "Two recurring bottlenecks in cloud security operations: too many CSPM alerts to manually triage, and too many security intelligence sources to track for baseline research. I built AI-augmented platforms for both. For autonomous alert triage, the interesting design choice was not using an LLM for the scoring itself — a deterministic heuristic advisor trained on 2,171 historical cloud security tickets is more trustworthy, more auditable, and harder to manipulate than a live model call; LLM-driven change request validation handles the policy reasoning layer separately. For CIS/NIST baseline research, the cheapest model (Haiku) handles high-volume feed triage; the best model (Sonnet/Opus) does the drafting. Baseline discovery-to-draft: days to under 30 minutes. Both in daily operational use.",
+        body: "Two recurring bottlenecks in cloud security operations: too many CSPM alerts to manually triage, and too many security intelligence sources to track for baseline research. I built AI-augmented platforms for both. For autonomous alert triage, the interesting design choice was not using an LLM for the scoring itself — a deterministic heuristic advisor trained on a large corpus of historical cloud security tickets is more trustworthy, more auditable, and harder to manipulate than a live model call; LLM-driven change request validation handles the policy reasoning layer separately. For CIS/NIST baseline research, the cheapest model (Haiku) handles high-volume feed triage; the best model (Sonnet/Opus) does the drafting. Baseline discovery-to-draft: days to under 30 minutes. Both in daily operational use.",
       },
     ],
   },
@@ -171,16 +175,16 @@ const V4: ContentVariation = {
     intro: "Cloud detection. IAM analysis. AI security tooling. The work:",
     sections: [
       {
-        heading: "200+ Active Detection Signatures",
-        body: "Own end-to-end lifecycle of 200+ Python/Lambda detection signatures across AWS accounts — 0% false-positive rate sustained at account scale, enabling machine-speed detection and response. baseline release: CIS-benchmarked controls across Lambda, ECS, S3, KMS, IAM, and VPC, grounded in a MITRE ATT&CK gap analysis from cloud incident response data. Fleet managed via Terraform.",
+        heading: "200+ Signatures, 1,400+ AWS Accounts",
+        body: "Own Yahoo's company-wide cloud security baselines and the detection system enforcing them: 200+ Python/Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, producing the per-resource findings and posture scores (CSPM) the company is measured against. Coordinated the program's largest control expansion — the v6.0 release, 50+ new baselines — with Checkov parity analysis and severity re-scoring on a risk × likelihood × impact matrix. First GenAI security guardrails (Bedrock, SageMaker) built from zero prior art. Fleet managed via Terraform.",
       },
       {
-        heading: "120+ Security Reviews, Small Team",
-        body: "Shipped an agentic SOAR-style review platform that sharply cut per-review effort — cross-ticket intelligence from a large corpus of historical tickets → 1,700+-node knowledge graph → autonomous review agent with passive detection rules, slash commands, and MCP integration with Jira and Confluence. 120+ threat modeling and architecture reviews across all business units. multi-week backlog eliminated. Scales security without additional headcount.",
+        heading: "150+ Security Reviews, Small Team",
+        body: "150+ threat-model reviews under the Paranoid Security Review program, partnering with Product Security, Network, and Identity — new cloud services and architectures approved before launch, across Mail, Sports, Finance, and Central Tech. Behind it: an agentic SOAR-style review platform — cross-ticket intelligence from a large corpus of historical tickets → 1,700+-node knowledge graph → autonomous review agent with passive detection rules, slash commands, and MCP integration with Jira and Confluence. Multi-week backlog eliminated. Scales security without additional headcount.",
       },
       {
-        heading: "AI-Native IAM Audit Agent — 100% Recall, 0 False Positives",
-        body: "Production tool-calling agent: Boto3 enumerates live AWS IAM configurations, privilege graph traversal covers 65+ escalation paths across 10 vulnerability classes, LLM semantic reasoning catches transitive chains rule-based tools miss. Generates risk-ranked remediation reports. Validated on GOAT benchmark: 32 findings, every one found, none fabricated. Eliminates manual IAM review cycle.",
+        heading: "IAM Audit Agent — Benchmarked Before Trusted",
+        body: "Production tool-calling agent: enumerates live AWS IAM configurations, privilege graph traversal covers 65+ escalation paths across 10 vulnerability classes, LLM semantic reasoning catches transitive chains rule-based tools miss. Generates risk-ranked remediation reports with severity, source attribution, and escalation-path IDs. Built the GOAT benchmark first — 11 synthetic Terraform fixtures, 32 ground-truth findings — and evaluated the agent against all 32 before shipping it org-wide.",
       },
       {
         heading: "Autonomous Threat Intelligence Pipeline — $1.40/Run",
@@ -188,7 +192,7 @@ const V4: ContentVariation = {
       },
       {
         heading: "AI Security Platforms — Production, Not Prototypes",
-        body: "AI-augmented CSPM operations platform: FastAPI + Databricks, multi-endpoint coverage, autonomous alert triage and LLM-driven change request validation — deterministic AI advisor trained on 2,171 cloud security tickets, hard deny gate for 6 critical baseline categories. Autonomous threat intelligence ingestion agent: 21 feeds, 330+ items/day, 4-stage LLM-driven workflow — CIS/NIST baseline discovery-to-draft in under 30 minutes, under $0.05/run. Both shipped. Both in daily use.",
+        body: "AI-augmented CSPM operations platform: FastAPI + Databricks, dozens of endpoints, autonomous alert triage and LLM-driven change request validation — deterministic AI advisor trained on a large corpus of cloud security tickets, hard deny gate for 6 critical baseline categories. Autonomous threat intelligence ingestion agent: 21 feeds, 330+ items/day, 4-stage LLM-driven workflow — CIS/NIST baseline discovery-to-draft in under 30 minutes, under $0.05/run. Both shipped. Both in daily use.",
       },
     ],
   },

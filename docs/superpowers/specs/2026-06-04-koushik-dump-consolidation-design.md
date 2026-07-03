@@ -4,7 +4,7 @@
 
 ## Goal
 
-Move personal research/planning files from portfolio root into `koushik-dump/`, then consolidate all koushik-dump files from ~29 scattered files into 9 organized domain files. Zero data loss.
+Move personal research/planning files from portfolio root into `../koushik-docs/`, then consolidate all koushik-dump files from ~29 scattered files into 9 organized domain files. Zero data loss.
 
 ## Files Moving FROM Portfolio Root → koushik-dump
 
@@ -27,7 +27,7 @@ Move personal research/planning files from portfolio root into `koushik-dump/`, 
 - `README.md` — public repo readme
 - `REFERENCES.md` — design references for theme work
 
-## Output Structure: koushik-dump/ (9 files)
+## Output Structure: ../koushik-docs/ (9 files)
 
 ### 1. `resume.md`
 All resume versions + council feedback + tips reference.

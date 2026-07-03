@@ -16,10 +16,10 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Koushik Kotamraju — Security Engineer & Builder",
   description:
-    "Senior Technical Security Engineer at Yahoo and co-founder. 100% recall on GOAT benchmark. 200+ detection signatures, 2,800+ cloud accounts, AI-powered security at enterprise scale.",
+    "Senior Technical Security Engineer at Yahoo Paranoids. 200+ detection signatures across 1,400+ AWS accounts, 2,800+ cloud accounts secured, AI-native security platforms at enterprise scale.",
   openGraph: {
     title: "Koushik Kotamraju — Security Engineer & Builder",
-    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 2,800+ cloud accounts. 100% GOAT recall. AI-powered security infrastructure.",
+    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 1,400+ AWS accounts. 150+ security reviews. AI-native security infrastructure.",
     url: "https://koushik.io",
     siteName: "koushik.io",
     locale: "en_US",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Koushik Kotamraju — Security Engineer & Builder",
-    description: "Sr. Technical Security Engineer at Yahoo. 100% GOAT recall. Cloud security at enterprise scale.",
+    description: "Sr. Technical Security Engineer at Yahoo. Cloud security and AI-native security platforms at enterprise scale.",
     images: ["https://koushik.io/profile.jpeg"],
   },
   robots: { index: true, follow: true },
