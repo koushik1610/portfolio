@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc" | "reference";
 
 export interface ThemeContent {
   tagline: string;
@@ -151,6 +151,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#fcfbf8", "--surface": "#ffffff", "--surface-2": "#f3f1ea", "--text-primary": "#191817", "--text-muted": "#5d5b55", "--accent": "#0f766e", "--accent-dim": "#115e59", "--border": "rgba(25,24,23,0.14)" },
     layout: "rfc",
     content: { tagline: "RFC 9161: the Kotamraju protocol.", bio: "A standards-track document for one engineer.", cta: "Email me" },
+  },
+  {
+    name: "Reference",
+    id: "reference",
+    vars: { "--background": "#fbfaf7", "--surface": "#ffffff", "--surface-2": "#f2f0ea", "--text-primary": "#151417", "--text-muted": "#5c5a63", "--accent": "#635bff", "--accent-dim": "#4f46e5", "--border": "rgba(21,20,23,0.10)" },
+    layout: "reference",
+    content: { tagline: "GET /koushik — 200 OK.", bio: "An API reference with one resource: the engineer.", cta: "Email me" },
   },
 ];
 
