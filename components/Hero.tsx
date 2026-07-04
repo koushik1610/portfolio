@@ -19,6 +19,7 @@ import DispatchHero from "./layouts/dispatch/DispatchHero";
 import WaveformHero from "./layouts/waveform/WaveformHero";
 import PolicyHero from "./layouts/policy/PolicyHero";
 import CoverageHero from "./layouts/coverage/CoverageHero";
+import RfcHero from "./layouts/rfc/RfcHero";
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -50,6 +51,7 @@ export default function Hero() {
     case "waveform":  return <WaveformHero  key={theme.id} theme={theme} />;
     case "policy":    return <PolicyHero    key={theme.id} theme={theme} />;
     case "coverage":  return <CoverageHero  key={theme.id} theme={theme} />;
+    case "rfc":       return <RfcHero       key={theme.id} theme={theme} />;
     default: {
       // Exhaustiveness guard: adding a LayoutVariant without a case above is a
       // compile error here instead of a silent undefined render.

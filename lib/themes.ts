@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc";
 
 export interface ThemeContent {
   tagline: string;
@@ -144,6 +144,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#07090d", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e9edf3", "--text-muted": "#97a1ae", "--accent": "#7cb8f7", "--accent-dim": "#3a7dd6", "--border": "rgba(233,237,243,0.09)" },
     layout: "coverage",
     content: { tagline: "Detection coverage, mapped.", bio: "An ATT&CK matrix heat-mapped by nine years of detection depth.", cta: "Email me" },
+  },
+  {
+    name: "RFC",
+    id: "rfc",
+    vars: { "--background": "#fcfbf8", "--surface": "#ffffff", "--surface-2": "#f3f1ea", "--text-primary": "#191817", "--text-muted": "#5d5b55", "--accent": "#0f766e", "--accent-dim": "#115e59", "--border": "rgba(25,24,23,0.14)" },
+    layout: "rfc",
+    content: { tagline: "RFC 9161: the Kotamraju protocol.", bio: "A standards-track document for one engineer.", cta: "Email me" },
   },
 ];
 
