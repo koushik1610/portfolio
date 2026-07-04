@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy";
 
 export interface ThemeContent {
   tagline: string;
@@ -130,6 +130,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#070708", "--surface": "rgba(255,255,255,0.025)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#ecebe8", "--text-muted": "#93928c", "--accent": "#fb4d6d", "--accent-dim": "#c93350", "--border": "rgba(236,235,232,0.1)" },
     layout: "waveform",
     content: { tagline: "Reading the signals others miss.", bio: "An oscilloscope trace that resolves to one name.", cta: "Email me" },
+  },
+  {
+    name: "Policy",
+    id: "policy",
+    vars: { "--background": "#0a0908", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f0ede6", "--text-muted": "#a49d8f", "--accent": "#ff9900", "--accent-dim": "#c77700", "--border": "rgba(240,237,230,0.09)" },
+    layout: "policy",
+    content: { tagline: "Effect: Allow. Principal: one name.", bio: "An IAM policy document whose principal is the engineer.", cta: "Email me" },
   },
 ];
 
