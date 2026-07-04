@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage";
 
 export interface ThemeContent {
   tagline: string;
@@ -137,6 +137,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#0a0908", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f0ede6", "--text-muted": "#a49d8f", "--accent": "#ff9900", "--accent-dim": "#c77700", "--border": "rgba(240,237,230,0.09)" },
     layout: "policy",
     content: { tagline: "Effect: Allow. Principal: one name.", bio: "An IAM policy document whose principal is the engineer.", cta: "Email me" },
+  },
+  {
+    name: "Coverage",
+    id: "coverage",
+    vars: { "--background": "#07090d", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e9edf3", "--text-muted": "#97a1ae", "--accent": "#7cb8f7", "--accent-dim": "#3a7dd6", "--border": "rgba(233,237,243,0.09)" },
+    layout: "coverage",
+    content: { tagline: "Detection coverage, mapped.", bio: "An ATT&CK matrix heat-mapped by nine years of detection depth.", cta: "Email me" },
   },
 ];
 
