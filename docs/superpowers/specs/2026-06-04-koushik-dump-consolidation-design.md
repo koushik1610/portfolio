@@ -1,4 +1,4 @@
-# koushik-dump Consolidation — Design Spec
+# koushik-dump Consolidation: Design Spec
 **Date:** 2026-06-04  
 **Status:** Approved
 
@@ -6,7 +6,7 @@
 
 Move personal research/planning files from portfolio root into `../koushik-docs/`, then consolidate all koushik-dump files from ~29 scattered files into 9 organized domain files. Zero data loss.
 
-## Files Moving FROM Portfolio Root → koushik-dump
+## Files Moving FROM Portfolio Root to koushik-dump
 
 | File | Destination domain |
 |---|---|
@@ -21,11 +21,11 @@ Move personal research/planning files from portfolio root into `../koushik-docs/
 
 ## Files Staying in Portfolio Root (not personal research)
 
-- `CLAUDE.md` — project instructions
-- `content.md` — live site content source of truth
-- `COUNCIL.md` — live design council definitions
-- `README.md` — public repo readme
-- `REFERENCES.md` — design references for theme work
+- `CLAUDE.md`: project instructions
+- `content.md`: live site content source of truth
+- `COUNCIL.md`: live design council definitions
+- `README.md`: public repo readme
+- `REFERENCES.md`: design references for theme work
 
 ## Output Structure: ../koushik-docs/ (9 files)
 
@@ -42,7 +42,7 @@ LinkedIn posts drafts + full profile review/rewrite.
 Sources: linkedin-posts, linkedin-review
 
 ### 4. `projects.md`
-Deep dive on all 12 projects — deduplicated merge of both my-projects.md copies.
+Deep dive on all 12 projects, deduplicated merge of both my-projects.md copies.
 Sources: my-projects.md (root), my-projects.md (dump)
 
 ### 5. `yahoo-career.md`
@@ -58,14 +58,14 @@ GitHub, Jira, Slack integration research and checkpoints.
 Sources: github, jira, slack, research-checkpoint-slack
 
 ### 8. `THEME-CULL-DECISION.md`
-Keep as-is — standalone design decision record.
+Keep as-is: standalone design decision record.
 
 ### 9. `INDEX.md`
 Updated master index pointing to all 7 consolidated files + THEME-CULL-DECISION.
 
 ## Constraints
 
-- No data loss — every line from every source file preserved under its domain
+- No data loss: every line from every source file preserved under its domain
 - `koushik-portfolio-content.md` (dump): verify for unique content vs portfolio/content.md before dropping
 - `linkedin-data/` folder: untouched
 - Sections within consolidated files are clearly headed with source file name as provenance

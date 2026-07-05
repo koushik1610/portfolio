@@ -31,6 +31,7 @@ next-env.d.ts
 
 # claude context — local only, never commit
 CLAUDE.md
+CLAUDE.md.*
 
 # private content — never commit
 content.md
@@ -60,3 +61,7 @@ _FABLE_REDESIGN_BRIEF.md
 
 # theme execution plans — local planning docs, never commit
 theme-plans/
+
+# planning/exploration artifacts, not part of the shipped site
+inspiration/
+photos/
