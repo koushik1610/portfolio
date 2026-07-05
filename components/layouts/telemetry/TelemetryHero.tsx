@@ -186,6 +186,18 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
       const root = rootRef.current;
       if (!root) return;
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave an on-mount tween stuck mid-flight — force-complete it by
+      // wall clock. Timers are cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // ── Gauge rings: set the geometry, then either animate the sweep or snap. ──
       // stroke-dasharray = circumference; we animate stroke-dashoffset from full→target.
       GAUGES.forEach((g) => {
@@ -198,7 +210,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         if (prefersReduced) {
           ring.style.strokeDashoffset = String(targetOffset);
         } else {
-          gsap.fromTo(
+          const ringTw = gsap.fromTo(
             ring,
             { strokeDashoffset: circ },
             {
@@ -208,6 +220,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
               delay: 0.5,
             }
           );
+          settle(ringTw, 3000);
         }
       });
 
@@ -221,7 +234,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
           return;
         }
         const obj = { val: 0 };
-        gsap.to(obj, {
+        const countTw = gsap.to(obj, {
           val: m.target,
           duration: 1.7,
           ease: "power2.out",
@@ -233,6 +246,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
             el.textContent = fmt(m.target);
           },
         });
+        settle(countTw, 3000);
       });
 
       if (prefersReduced) return; // static, complete page below this line.
@@ -243,14 +257,15 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         mask: "words",
         aria: "none",
       });
-      gsap.from(split.words, {
+      const nameIn = gsap.from(split.words, {
         yPercent: 115,
         duration: 0.85,
         stagger: 0.08,
         ease: "power3.out",
         delay: 0.1,
       });
-      gsap.from(".w13-rail-meta > *", {
+      settle(nameIn, 3000);
+      const railMetaIn = gsap.from(".w13-rail-meta > *", {
         autoAlpha: 0,
         y: 12,
         duration: 0.55,
@@ -258,7 +273,8 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         delay: 0.4,
       });
-      gsap.from(".w13-rail-nav li", {
+      settle(railMetaIn, 3000);
+      const railNavIn = gsap.from(".w13-rail-nav li", {
         autoAlpha: 0,
         x: -10,
         duration: 0.5,
@@ -266,9 +282,10 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         delay: 0.55,
       });
+      settle(railNavIn, 3000);
 
       // ── Right rail panels fade/slide in. ──
-      gsap.from(".w13-tele-card", {
+      const teleCardIn = gsap.from(".w13-tele-card", {
         autoAlpha: 0,
         y: 16,
         duration: 0.6,
@@ -276,6 +293,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         delay: 0.55,
       });
+      settle(teleCardIn, 3000);
 
       // ── Sparklines: morph the path "d" on a slow yoyo loop ("live" feel). ──
       SPARKS.forEach((s, i) => {
@@ -351,6 +369,10 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: rule, start: "top 92%", once: true },
         });
       });
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );

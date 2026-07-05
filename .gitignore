@@ -65,3 +65,6 @@ theme-plans/
 # planning/exploration artifacts, not part of the shipped site
 inspiration/
 photos/
+
+# Claude Code local settings and agent worktrees, never commit
+.claude/

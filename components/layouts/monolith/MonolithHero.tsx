@@ -63,6 +63,17 @@ export default function MonolithHero({ theme }: { theme: Theme }) {
         { autoAlpha: 0, duration: 0.7, ease: "power2.out" },
         "-=0.45"
       );
+
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the one-beat entrance stuck mid-flight — force-complete
+      // it by wall clock.
+      const settle = window.setTimeout(() => {
+        if (tl.progress() < 1) tl.progress(1);
+      }, 3000);
+
+      return () => {
+        window.clearTimeout(settle);
+      };
     },
     { scope: rootRef }
   );

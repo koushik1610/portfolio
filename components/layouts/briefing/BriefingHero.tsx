@@ -58,17 +58,30 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (prefersReduced) return;
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the on-mount name reveal stuck mid-flight — force-
+      // complete it by wall clock. Timer is cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // Name reveals first (the identity tile itself stays visible), then the
       // supporting tiles assemble — each on its own once-only scroll trigger so
       // below-fold tiles never animate unseen.
       const split = SplitText.create(".bf-name", { type: "words", mask: "words", aria: "none" });
-      gsap.from(split.words, {
+      const nameIn = gsap.from(split.words, {
         yPercent: 115,
         duration: 0.85,
         stagger: 0.08,
         ease: "power3.out",
         delay: 0.1,
       });
+      settle(nameIn, 3000);
       gsap.utils.toArray<HTMLElement>(".bf-tile:not(.bf-tile--identity)").forEach((tile, i) => {
         gsap.from(tile, {
           autoAlpha: 0,
@@ -102,6 +115,10 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         scrollTrigger: { trigger: ".bf-work", start: "top 84%", once: true },
       });
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );

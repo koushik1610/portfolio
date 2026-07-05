@@ -39,20 +39,33 @@ export default function LumenHero({ theme }: { theme: Theme }) {
     () => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave an on-mount entrance tween stuck mid-flight — force-
+      // complete it by wall clock. Timers are cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       if (!prefersReduced) {
         const split = SplitText.create(".w8-name", {
           type: "words",
           mask: "words",
           aria: "none",
         });
-        gsap.from(split.words, {
+        const nameIn = gsap.from(split.words, {
           yPercent: 110,
           duration: 0.9,
           stagger: 0.08,
           ease: "power3.out",
           delay: 0.1,
         });
-        gsap.from(".w8-masthead-meta > *", {
+        settle(nameIn, 3000);
+        const metaIn = gsap.from(".w8-masthead-meta > *", {
           autoAlpha: 0,
           y: 14,
           duration: 0.6,
@@ -60,6 +73,7 @@ export default function LumenHero({ theme }: { theme: Theme }) {
           ease: "power2.out",
           delay: 0.45,
         });
+        settle(metaIn, 3000);
 
         // Hairline rules draw in
         gsap.utils.toArray<HTMLElement>(".w8-rule").forEach((rule) => {
@@ -105,6 +119,10 @@ export default function LumenHero({ theme }: { theme: Theme }) {
           },
         });
       });
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );

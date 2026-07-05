@@ -118,13 +118,25 @@ export default function SolsticeHero({ theme }: { theme: Theme }) {
         return;
       }
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave an on-mount entrance tween stuck mid-flight — force-
+      // complete it by wall clock. Timers are cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // ── Masthead entrance ─────────────────────────────────────────────────
       const split = SplitText.create(".w14-name", {
         type: "lines,words",
         mask: "lines",
         aria: "none",
       });
-      gsap.from(split.words, {
+      const nameIn = gsap.from(split.words, {
         yPercent: 120,
         rotate: 1.5,
         duration: 1.05,
@@ -132,7 +144,8 @@ export default function SolsticeHero({ theme }: { theme: Theme }) {
         ease: "power4.out",
         delay: 0.08,
       });
-      gsap.from(".w14-masthead-meta > *", {
+      settle(nameIn, 3000);
+      const mastheadMetaIn = gsap.from(".w14-masthead-meta > *", {
         autoAlpha: 0,
         y: 16,
         duration: 0.7,
@@ -140,6 +153,7 @@ export default function SolsticeHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         delay: 0.5,
       });
+      settle(mastheadMetaIn, 3000);
 
       // ── SIGNATURE 1: variable-weight word rotator (morph IN PLACE) ─────────
       if (rotEl) {
@@ -231,6 +245,10 @@ export default function SolsticeHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: list, start: "top 84%", once: true },
         });
       });
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );

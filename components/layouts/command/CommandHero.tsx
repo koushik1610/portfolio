@@ -67,9 +67,21 @@ export default function CommandHero({ theme }: { theme: Theme }) {
     () => {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave an on-mount entrance tween stuck mid-flight — force-
+      // complete it by wall clock. Timers are cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // Console panel entrance
       if (!prefersReduced) {
-        gsap.from(".w7-console", {
+        const consoleIn = gsap.from(".w7-console", {
           autoAlpha: 0,
           y: 24,
           scale: 0.985,
@@ -77,7 +89,8 @@ export default function CommandHero({ theme }: { theme: Theme }) {
           duration: 0.8,
           ease: "power3.out",
         });
-        gsap.from(".w7-console-row, .w7-console-foot", {
+        settle(consoleIn, 3000);
+        const rowsIn = gsap.from(".w7-console-row, .w7-console-foot", {
           autoAlpha: 0,
           y: 12,
           duration: 0.5,
@@ -85,11 +98,12 @@ export default function CommandHero({ theme }: { theme: Theme }) {
           ease: "power2.out",
           delay: 0.35,
         });
+        settle(rowsIn, 3000);
 
         // Scramble the display name
         const nameEl = rootRef.current?.querySelector<HTMLElement>(".w7-console-name");
         if (nameEl) {
-          gsap.to(nameEl, {
+          const scramble = gsap.to(nameEl, {
             duration: 1.5,
             delay: 0.3,
             scrambleText: {
@@ -98,6 +112,7 @@ export default function CommandHero({ theme }: { theme: Theme }) {
               speed: 0.6,
             },
           });
+          settle(scramble, 3000);
         }
       }
 
@@ -134,6 +149,10 @@ export default function CommandHero({ theme }: { theme: Theme }) {
           });
         });
       }
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );

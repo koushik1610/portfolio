@@ -97,6 +97,13 @@ export default function InterceptHero({ theme }: { theme: Theme }) {
           ease: "power3.out",
         }, "+=0.1");
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the packet-print/decode sequence stuck mid-flight —
+      // force-complete it by wall clock.
+      const settle = window.setTimeout(() => {
+        if (tl.progress() < 1) tl.progress(1);
+      }, 3000);
+
       // Below-fold sections reveal once on scroll.
       gsap.utils.toArray<HTMLElement>(".ic-reveal").forEach((el) => {
         gsap.to(el, {
@@ -118,6 +125,10 @@ export default function InterceptHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: el, start: "top 88%", once: true },
         });
       });
+
+      return () => {
+        window.clearTimeout(settle);
+      };
     },
     { scope: rootRef }
   );

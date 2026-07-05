@@ -75,8 +75,20 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (prefersReduced) return;
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave an on-mount entrance tween stuck mid-flight — force-
+      // complete it by wall clock. Timers are cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // Portrait "develops": one-shot filter ramp, no loop.
-      gsap.from(".w12-portrait", {
+      const portraitIn = gsap.from(".w12-portrait", {
         autoAlpha: 0,
         filter: "grayscale(1) brightness(0.55) contrast(1.2)",
         duration: 1.4,
@@ -84,16 +96,18 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
         delay: 0.1,
         clearProps: "filter",
       });
-      gsap.from(".w12-frame-tick", {
+      settle(portraitIn, 3000);
+      const ticksIn = gsap.from(".w12-frame-tick", {
         autoAlpha: 0,
         duration: 0.6,
         stagger: 0.06,
         ease: "power1.out",
         delay: 0.9,
       });
+      settle(ticksIn, 3000);
 
       const split = SplitText.create(".w12-name", { type: "chars", mask: "chars", aria: "none" });
-      gsap.from(split.chars, {
+      const nameIn = gsap.from(split.chars, {
         yPercent: 120,
         opacity: 0,
         duration: 1.0,
@@ -101,8 +115,9 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
         ease: "power4.out",
         delay: 0.35,
       });
+      settle(nameIn, 3000);
 
-      gsap.from(".w12-exposure > *", {
+      const exposureIn = gsap.from(".w12-exposure > *", {
         autoAlpha: 0,
         y: 10,
         duration: 0.7,
@@ -110,7 +125,9 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         delay: 1.05,
       });
-      gsap.from(".w12-lede", { autoAlpha: 0, y: 14, duration: 0.8, ease: "power2.out", delay: 1.2 });
+      settle(exposureIn, 3000);
+      const ledeIn = gsap.from(".w12-lede", { autoAlpha: 0, y: 14, duration: 0.8, ease: "power2.out", delay: 1.2 });
+      settle(ledeIn, 3000);
 
       gsap.utils.toArray<HTMLElement>(".w12-rule").forEach((rule) => {
         gsap.from(rule, {
@@ -140,6 +157,10 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
         ease: "power2.out",
         scrollTrigger: { trigger: ".w12-contact", start: "top 86%", once: true },
       });
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );
