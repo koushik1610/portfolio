@@ -93,7 +93,7 @@ export default function RfcHero({ theme }: { theme: Theme }) {
 
       // Sections reveal on scroll, once, autoAlpha only.
       gsap.utils.toArray<HTMLElement>(".rc-reveal").forEach((el) => {
-        const tw = gsap.from(el, {
+        gsap.from(el, {
           autoAlpha: 0,
           duration: 0.5,
           ease: "power2.out",
@@ -101,7 +101,7 @@ export default function RfcHero({ theme }: { theme: Theme }) {
             trigger: el,
             start: "top 88%",
             once: true,
-            onEnter: () => settle(tw, 2500),
+            onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
           },
         });
       });

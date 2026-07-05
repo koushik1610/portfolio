@@ -105,7 +105,7 @@ export default function PolicyHero({ theme }: { theme: Theme }) {
       // same wall-clock settle once its trigger fires (see failsafe above).
       const settleTimers: number[] = [];
       gsap.utils.toArray<HTMLElement>(".pol-doc--scroll").forEach((block) => {
-        const tw = gsap.from(block.querySelectorAll(".pol-line"), {
+        gsap.from(block.querySelectorAll(".pol-line"), {
           autoAlpha: 0,
           duration: 0.14,
           stagger: 0.04,
@@ -114,7 +114,13 @@ export default function PolicyHero({ theme }: { theme: Theme }) {
             trigger: block,
             start: "top 82%",
             once: true,
-            onEnter: () => {
+            // onEnter can fire synchronously during ScrollTrigger's own
+            // construction (trigger already past its start point when this
+            // mounts, e.g. after a theme switch at a scrolled position) —
+            // before an outer `const tw` would finish assigning, so read the
+            // tween off `self` instead of closing over that name.
+            onEnter: (self) => {
+              const tw = self.animation as gsap.core.Tween;
               settleTimers.push(
                 window.setTimeout(() => {
                   if (tw.progress() < 1) tw.progress(1);

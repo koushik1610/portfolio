@@ -176,7 +176,7 @@ export default function ReferenceHero({ theme }: { theme: Theme }) {
       settle(intro, 3000);
 
       gsap.utils.toArray<HTMLElement>(".rf-reveal").forEach((el) => {
-        const tw = gsap.from(el, {
+        gsap.from(el, {
           autoAlpha: 0,
           y: 14,
           duration: 0.5,
@@ -185,7 +185,7 @@ export default function ReferenceHero({ theme }: { theme: Theme }) {
             trigger: el,
             start: "top 88%",
             once: true,
-            onEnter: () => settle(tw, 2500),
+            onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
           },
         });
       });

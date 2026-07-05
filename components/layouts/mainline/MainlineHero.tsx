@@ -149,7 +149,12 @@ export default function MainlineHero({ theme }: { theme: Theme }) {
       });
       settle(intro, 3000);
 
-      const line = gsap.from(".ml-mainline-line", {
+      // onEnter can fire synchronously during ScrollTrigger's own
+      // construction (trigger already past its start point when this mounts,
+      // e.g. after a theme switch at a scrolled position) — before the outer
+      // `const` below finishes assigning, so read the tween off `self`
+      // instead of closing over that name (TDZ crash otherwise).
+      gsap.from(".ml-mainline-line", {
         scaleY: 0,
         transformOrigin: "top center",
         duration: 0.9,
@@ -158,11 +163,11 @@ export default function MainlineHero({ theme }: { theme: Theme }) {
           trigger: ".ml-graph-wrap",
           start: "top 85%",
           once: true,
-          onEnter: () => settle(line, 3000),
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 3000),
         },
       });
 
-      const rows = gsap.from(".ml-row", {
+      gsap.from(".ml-row", {
         autoAlpha: 0,
         x: -10,
         duration: 0.45,
@@ -172,7 +177,7 @@ export default function MainlineHero({ theme }: { theme: Theme }) {
           trigger: ".ml-graph-wrap",
           start: "top 82%",
           once: true,
-          onEnter: () => settle(rows, 3500),
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 3500),
         },
       });
 
@@ -188,7 +193,7 @@ export default function MainlineHero({ theme }: { theme: Theme }) {
       settle(head, 4000);
 
       gsap.utils.toArray<HTMLElement>(".ml-reveal").forEach((el) => {
-        const tw = gsap.from(el, {
+        gsap.from(el, {
           autoAlpha: 0,
           y: 14,
           duration: 0.5,
@@ -197,7 +202,7 @@ export default function MainlineHero({ theme }: { theme: Theme }) {
             trigger: el,
             start: "top 88%",
             once: true,
-            onEnter: () => settle(tw, 2500),
+            onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
           },
         });
       });

@@ -114,7 +114,12 @@ export default function OncallHero({ theme }: { theme: Theme }) {
       });
       settle(intro, 3000);
 
-      const rows = gsap.from(".oc-row", {
+      // onEnter can fire synchronously during ScrollTrigger's own
+      // construction (trigger already past its start point when this mounts,
+      // e.g. after a theme switch at a scrolled position) — before an outer
+      // `const rows` would finish assigning, so read the tween off `self`
+      // instead of closing over that name (TDZ crash otherwise).
+      gsap.from(".oc-row", {
         autoAlpha: 0,
         x: -8,
         duration: 0.45,
@@ -124,7 +129,7 @@ export default function OncallHero({ theme }: { theme: Theme }) {
           trigger: ".oc-ledger",
           start: "top 85%",
           once: true,
-          onEnter: () => settle(rows, 2500),
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
         },
       });
 
@@ -144,7 +149,7 @@ export default function OncallHero({ theme }: { theme: Theme }) {
       });
 
       gsap.utils.toArray<HTMLElement>(".oc-reveal").forEach((el) => {
-        const tw = gsap.from(el, {
+        gsap.from(el, {
           autoAlpha: 0,
           y: 14,
           duration: 0.5,
@@ -153,7 +158,7 @@ export default function OncallHero({ theme }: { theme: Theme }) {
             trigger: el,
             start: "top 88%",
             once: true,
-            onEnter: () => settle(tw, 2500),
+            onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
           },
         });
       });
