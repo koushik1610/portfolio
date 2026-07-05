@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc" | "reference";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc" | "reference" | "mainline";
 
 export interface ThemeContent {
   tagline: string;
@@ -158,6 +158,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#fbfaf7", "--surface": "#ffffff", "--surface-2": "#f2f0ea", "--text-primary": "#151417", "--text-muted": "#5c5a63", "--accent": "#635bff", "--accent-dim": "#4f46e5", "--border": "rgba(21,20,23,0.10)" },
     layout: "reference",
     content: { tagline: "GET /koushik — 200 OK.", bio: "An API reference with one resource: the engineer.", cta: "Email me" },
+  },
+  {
+    name: "Mainline",
+    id: "mainline",
+    vars: { "--background": "#0b0d0a", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#eaf0e8", "--text-muted": "#9aa896", "--accent": "#3fb950", "--accent-dim": "#2b8a3e", "--border": "rgba(234,240,232,0.09)" },
+    layout: "mainline",
+    content: { tagline: "git log — merged to mainline.", bio: "A career graph: three branches, one HEAD.", cta: "Email me" },
   },
 ];
 
