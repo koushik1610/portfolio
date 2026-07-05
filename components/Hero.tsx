@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getCurrentTheme, type Theme } from "@/lib/themes";
+import { ScrollTrigger } from "@/lib/gsap";
 import AetheraHero from "./layouts/aethera/AetheraHero";
 import CommandHero from "./layouts/command/CommandHero";
 import LumenHero from "./layouts/lumen/LumenHero";
@@ -29,8 +30,21 @@ export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
-    const refresh = () => setTheme(getCurrentTheme());
-    refresh();
+    // Every theme swap fully unmounts one Hero and mounts another, each
+    // creating its own batch of ScrollTriggers. GSAP batches its internal
+    // position refresh to the next animation frame for performance; that
+    // batched refresh runs independently of React's own commit/cleanup
+    // ordering. After enough swaps in succession, a still-pending batched
+    // refresh belonging to the theme about to be unmounted can end up
+    // interleaved with the next theme's trigger construction, throwing deep
+    // inside ScrollTrigger's own internals. Flushing it synchronously here,
+    // while the outgoing theme's triggers are still intact, keeps that
+    // internal bookkeeping consistent before the swap begins.
+    const refresh = () => {
+      ScrollTrigger.refresh();
+      setTheme(getCurrentTheme());
+    };
+    setTheme(getCurrentTheme());
     window.addEventListener("themechange", refresh);
     return () => window.removeEventListener("themechange", refresh);
   }, []);
