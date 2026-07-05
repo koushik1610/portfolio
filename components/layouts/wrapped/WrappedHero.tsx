@@ -107,7 +107,7 @@ export default function WrappedHero({ theme }: { theme: Theme }) {
       // Each slab's content block rises once — CountUp owns the number's
       // own count animation; this wrapper only owns opacity/position.
       gsap.utils.toArray<HTMLElement>(".wr-slab-content, .wr-outro > *").forEach((el) => {
-        const tw = gsap.from(el, {
+        gsap.from(el, {
           autoAlpha: 0,
           y: 24,
           duration: 0.6,
@@ -116,7 +116,7 @@ export default function WrappedHero({ theme }: { theme: Theme }) {
             trigger: el,
             start: "top 85%",
             once: true,
-            onEnter: () => settle(tw, 2500),
+            onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
           },
         });
       });

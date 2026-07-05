@@ -192,8 +192,13 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
       });
       settle(intro, 3000);
 
-      // The matrix lights up — cells sweep in row by row, once.
-      const cells = gsap.from(".cv-cell", {
+      // The matrix lights up — cells sweep in row by row, once. onEnter can
+      // fire synchronously during ScrollTrigger's own construction (if the
+      // trigger is already past its start point when this mounts, e.g. after
+      // switching themes at a scrolled position) — that's before the `const`
+      // assignment below finishes, so it must read the tween off `self`,
+      // never close over the outer variable name (TDZ crash otherwise).
+      gsap.from(".cv-cell", {
         autoAlpha: 0,
         duration: 0.4,
         ease: "power1.out",
@@ -202,7 +207,7 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
           trigger: ".cv-matrix",
           start: "top 85%",
           once: true,
-          onEnter: () => settle(cells, 2500),
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
         },
       });
 
