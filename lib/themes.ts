@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc" | "reference" | "mainline" | "oncall";
+export type LayoutVariant = "aethera" | "command" | "lumen" | "axiom" | "avatar" | "telemetry" | "solstice" | "casefile" | "briefing" | "monolith" | "advisory" | "intercept" | "uptime" | "dispatch" | "waveform" | "policy" | "coverage" | "rfc" | "reference" | "mainline" | "oncall" | "wrapped";
 
 export interface ThemeContent {
   tagline: string;
@@ -172,6 +172,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#0c0d10", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#eceef2", "--text-muted": "#9a9ea8", "--accent": "#a8e02e", "--accent-dim": "#6fa30f", "--border": "rgba(236,238,242,0.09)" },
     layout: "oncall",
     content: { tagline: "On-call: nine years, zero regrets.", bio: "Six incidents in nine years. None left open.", cta: "Email me" },
+  },
+  {
+    name: "Wrapped",
+    id: "wrapped",
+    vars: { "--background": "#0a0b12", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f4f1e8", "--text-muted": "#b9b5a8", "--accent": "#2743e0", "--accent-dim": "#1c31a8", "--border": "rgba(244,241,232,0.12)" },
+    layout: "wrapped",
+    content: { tagline: "Nine years, wrapped.", bio: "Five numbers you'll repeat in the debrief.", cta: "Email me" },
   },
 ];
 
