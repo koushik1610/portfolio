@@ -22,6 +22,7 @@ import CoverageHero from "./layouts/coverage/CoverageHero";
 import RfcHero from "./layouts/rfc/RfcHero";
 import ReferenceHero from "./layouts/reference/ReferenceHero";
 import MainlineHero from "./layouts/mainline/MainlineHero";
+import OncallHero from "./layouts/oncall/OncallHero";
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -56,6 +57,7 @@ export default function Hero() {
     case "rfc":       return <RfcHero       key={theme.id} theme={theme} />;
     case "reference": return <ReferenceHero key={theme.id} theme={theme} />;
     case "mainline":  return <MainlineHero  key={theme.id} theme={theme} />;
+    case "oncall":    return <OncallHero    key={theme.id} theme={theme} />;
     default: {
       // Exhaustiveness guard: adding a LayoutVariant without a case above is a
       // compile error here instead of a silent undefined render.
