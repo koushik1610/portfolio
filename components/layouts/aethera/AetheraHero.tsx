@@ -157,6 +157,21 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
+    // Failsafe: if the rAF ticker stalls during this entrance window (video
+    // decode + font load + initial layout all competing for frames right at
+    // mount), the mask-clipped SplitText reveal can freeze mid-flight with
+    // no natural way to recover — unlike a plain fade, a stuck mask leaves
+    // the name genuinely unreadable. Wall-clock setTimeout still fires when
+    // rAF does not, so force-complete the timeline if it hasn't finished.
+    const settleTimers: number[] = [];
+    const settle = (tw: gsap.core.Timeline, ms: number) => {
+      settleTimers.push(
+        window.setTimeout(() => {
+          if (tw.progress() < 1) tw.progress(1);
+        }, ms)
+      );
+    };
+
     // Both elements are aria-hidden — sr-only h1 handles accessibility
     const splitHeadline = SplitText.create(".ath-headline", {
       type: "words",
@@ -183,6 +198,9 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
       duration: 0.5,
       stagger: 0.05,
     }, "-=0.5");
+    settle(tl, 3000);
+
+    return () => settleTimers.forEach((t) => window.clearTimeout(t));
   }, { scope: rootRef });
 
   return (
