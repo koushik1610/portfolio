@@ -276,15 +276,29 @@ export default function AxiomHero({ theme }: { theme: Theme }) {
         return;
       }
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the on-mount graph-assembly tweens stuck mid-flight —
+      // force-complete them by wall clock. Cleared in the cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // Intro: nodes assemble from a slight scatter, edges fade in.
-      gsap.from(".w11-edges", { autoAlpha: 0, duration: 1.2, ease: "power2.out", delay: 0.3 });
-      gsap.from(Array.from(nodeEls.values()), {
+      const edgesIn = gsap.from(".w11-edges", { autoAlpha: 0, duration: 1.2, ease: "power2.out", delay: 0.3 });
+      settle(edgesIn, 3000);
+      const nodesIn = gsap.from(Array.from(nodeEls.values()), {
         autoAlpha: 0,
         scale: 0.4,
         duration: 0.7,
         ease: "back.out(1.6)",
         stagger: { each: 0.018, from: "center" },
       });
+      settle(nodesIn, 3000);
 
       // ── Idle drift: subtle sine wobble per node, layered on top of layout ──
       const drift = new Map<string, { x: number; y: number }>();
@@ -396,6 +410,7 @@ export default function AxiomHero({ theme }: { theme: Theme }) {
         window.removeEventListener("pointermove", onMove);
         window.removeEventListener("pointerleave", onLeave);
         window.removeEventListener("resize", onResize);
+        settleTimers.forEach((t) => window.clearTimeout(t));
       };
     },
     { scope: rootRef }

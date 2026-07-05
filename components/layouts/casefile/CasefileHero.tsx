@@ -63,15 +63,28 @@ export default function CasefileHero({ theme }: { theme: Theme }) {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (prefersReduced) return;
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the on-mount print stuck mid-flight — force-complete it
+      // by wall clock. Timer is cleared on cleanup below.
+      const settleTimers: number[] = [];
+      const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
+        settleTimers.push(
+          window.setTimeout(() => {
+            if (tw.progress() < 1) tw.progress(1);
+          }, ms)
+        );
+      };
+
       // The opening transcript "prints" — terminal-honest line stagger, no
       // per-character typing theater. Runs once.
-      gsap.from(".cf-block--intro .cf-line", {
+      const introIn = gsap.from(".cf-block--intro .cf-line", {
         autoAlpha: 0,
         duration: 0.18,
         stagger: 0.07,
         ease: "none",
         delay: 0.2,
       });
+      settle(introIn, 3000);
 
       // Subsequent command blocks print as they scroll in, once each.
       gsap.utils.toArray<HTMLElement>(".cf-block--scroll").forEach((block) => {
@@ -83,6 +96,10 @@ export default function CasefileHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: block, start: "top 82%", once: true },
         });
       });
+
+      return () => {
+        settleTimers.forEach((t) => window.clearTimeout(t));
+      };
     },
     { scope: rootRef }
   );

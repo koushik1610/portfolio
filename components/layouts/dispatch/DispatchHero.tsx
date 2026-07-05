@@ -89,6 +89,13 @@ export default function DispatchHero({ theme }: { theme: Theme }) {
         "-=0.3"
       );
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the name-flap beat stuck mid-flight — force-complete it
+      // by wall clock.
+      const settle = window.setTimeout(() => {
+        if (tl.progress() < 1) tl.progress(1);
+      }, 3000);
+
       // Board rows settle in once; each row's status tile flaps over.
       gsap.utils.toArray<HTMLElement>(".dp-row").forEach((row) => {
         const glyph = row.querySelector(".dp-status-glyph");
@@ -107,6 +114,10 @@ export default function DispatchHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: el, start: "top 86%", once: true },
         });
       });
+
+      return () => {
+        window.clearTimeout(settle);
+      };
     },
     { scope: rootRef }
   );

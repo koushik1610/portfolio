@@ -88,8 +88,15 @@ export default function UptimeHero({ theme }: { theme: Theme }) {
       }
 
       // Masthead settles in.
-      gsap.timeline({ defaults: { ease: "power3.out" } })
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
         .to(".up-head .up-anim", { opacity: 1, y: 0, duration: 0.55, stagger: 0.08, delay: 0.1 });
+
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the masthead entrance stuck mid-flight — force-complete
+      // it by wall clock.
+      const settle = window.setTimeout(() => {
+        if (tl.progress() < 1) tl.progress(1);
+      }, 3000);
 
       // Each component's uptime strip fills cell-by-cell when it scrolls in.
       gsap.utils.toArray<HTMLElement>(".up-strip").forEach((stripEl) => {
@@ -113,6 +120,10 @@ export default function UptimeHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: el, start: "top 84%", once: true },
         });
       });
+
+      return () => {
+        window.clearTimeout(settle);
+      };
     },
     { scope: rootRef }
   );

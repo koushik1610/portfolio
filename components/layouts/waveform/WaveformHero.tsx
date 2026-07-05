@@ -102,6 +102,13 @@ export default function WaveformHero({ theme }: { theme: Theme }) {
         // cursors lock on at the end of the sweep — the "measure" beat
         .to(".wf-cursor", { opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }, "-=0.25");
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the three-beat sweep stuck mid-flight — force-complete
+      // it by wall clock.
+      const settle = window.setTimeout(() => {
+        if (tl.progress() < 1) tl.progress(1);
+      }, 3000);
+
       // Below-fold blocks reveal once.
       gsap.utils.toArray<HTMLElement>(".wf-reveal").forEach((el) => {
         gsap.to(el, {
@@ -112,6 +119,10 @@ export default function WaveformHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: el, start: "top 86%", once: true },
         });
       });
+
+      return () => {
+        window.clearTimeout(settle);
+      };
     },
     { scope: rootRef }
   );

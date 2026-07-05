@@ -81,6 +81,13 @@ export default function AdvisoryHero({ theme }: { theme: Theme }) {
         )
         .to(".ad-sev-score", { opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.35");
 
+      // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
+      // never leave the masthead beat stuck mid-flight — force-complete it
+      // by wall clock.
+      const settle = window.setTimeout(() => {
+        if (tl.progress() < 1) tl.progress(1);
+      }, 3000);
+
       // Lower sections reveal once on scroll.
       gsap.utils.toArray<HTMLElement>(".ad-reveal").forEach((el) => {
         gsap.to(el, {
@@ -91,6 +98,10 @@ export default function AdvisoryHero({ theme }: { theme: Theme }) {
           scrollTrigger: { trigger: el, start: "top 84%", once: true },
         });
       });
+
+      return () => {
+        window.clearTimeout(settle);
+      };
     },
     { scope: rootRef }
   );
