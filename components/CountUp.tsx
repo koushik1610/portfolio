@@ -42,6 +42,16 @@ export default function CountUp({ value, duration = 1400, style, className }: Co
 
     const { prefix, num, suffix } = parsed;
     const start = performance.now();
+    const finalDisplay = prefix + formatNum(num, value) + suffix;
+
+    // Failsafe: this drives itself off rAF directly, not GSAP, so it has no
+    // ScrollTrigger-settle equivalent. If rAF stalls after the first tick
+    // (backgrounded tab, low-power mode), `hasAnimated` is already true and
+    // the effect never re-enters — the stat would freeze at a wrong
+    // intermediate number forever instead of its real value. Wall-clock
+    // setTimeout still fires when rAF does not, so force the final value
+    // once duration has clearly elapsed.
+    const settleTimer = window.setTimeout(() => setDisplay(finalDisplay), duration + 1500);
 
     const tick = (now: number) => {
       const elapsed = now - start;
@@ -50,10 +60,15 @@ export default function CountUp({ value, duration = 1400, style, className }: Co
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = eased * num;
       setDisplay(prefix + formatNum(current, value) + suffix);
-      if (progress < 1) requestAnimationFrame(tick);
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        window.clearTimeout(settleTimer);
+      }
     };
 
     requestAnimationFrame(tick);
+    return () => window.clearTimeout(settleTimer);
   }, [inView, value, duration, reduce]);
 
   // aria-label carries the final value so screen readers never read intermediate ticks
