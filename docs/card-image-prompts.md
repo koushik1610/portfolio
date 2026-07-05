@@ -13,7 +13,7 @@ or the look drifts between cards.
 ## STYLE BLOCK (prepend to every prompt)
 
 > Warm, painterly oil-painting in the style of Cassius Coolidge's "Dogs Playing
-> Poker" — rich shadows, cozy single-lamp lighting, characterful animals as the
+> Poker": rich shadows, cozy single-lamp lighting, characterful animals as the
 > actors, humorous but tasteful. Subtle glowing neural circuitry and faint
 > geometric nodes woven into the scene to signal AI. Landscape 16:9, muted
 > palette with one warm accent. No text or logos in the image.

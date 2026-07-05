@@ -13,8 +13,10 @@
 
 <h3 align="center">koushik.io</h3>
 
+  <img src="https://media.giphy.com/media/7j2hfyeVcDtf2/giphy.gif" alt="bird animation" width="200" />
+
   <p align="center">
-    Personal portfolio for Koushik Kotamraju — Sr. Security Engineer building AI-native security platforms at enterprise scale. A rotating set of fully bespoke visual themes, each a complete layout redesign built around one security-engineering artifact.
+    Personal portfolio for Koushik Kotamraju, Sr. Security Engineer building AI-native security platforms at enterprise scale. A rotating set of fully bespoke visual themes, each a complete layout redesign built around one security-engineering artifact.
     <br />
     <br />
     <a href="https://koushik.io"><strong>View Live Site »</strong></a>
@@ -56,15 +58,15 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-A personal portfolio that rotates through a growing set of visually distinct themes — each one a full layout redesign with its own typography, color palette, animation, and structural conceit. Nothing is a template with new paint: every theme is a genuinely different layout, and most render the career itself *as* a recognizable engineering artifact (an IAM policy document, a detection-coverage matrix, a security advisory, an incident-response transcript) rather than a generic "about me" page.
+A personal portfolio that rotates through a growing set of visually distinct themes. Each one is a full layout redesign with its own typography, color palette, animation, and structural conceit. Nothing is a template with new paint: every theme is a genuinely different layout, and most render the career itself *as* a recognizable engineering artifact (an IAM policy document, a detection-coverage matrix, a security advisory, an incident-response transcript) rather than a generic "about me" page.
 
-The theme badge in the top-right corner shows the active theme; click it to cycle to the next one. Rotation is time-based (it shifts weekly for every visitor) plus a per-visitor click offset — see [Theme System](#theme-system).
+The theme badge in the top-right corner shows the active theme; click it to cycle to the next one. Rotation is time-based (it shifts weekly for every visitor) plus a per-visitor click offset. See [Theme System](#theme-system).
 
 ### Design principles
 
-- **Person-first, always.** Koushik Kotamraju is the visual subject of every hero — never a product name, a company, or a slogan.
+- **Person-first, always.** Koushik Kotamraju is the visual subject of every hero, never a product name, a company, or a slogan.
 - **One owned accent per theme.** Distinctiveness comes from a deliberately chosen accent color, not a house palette repeated everywhere.
-- **The format carries the story.** Detection engineering, IAM analysis, and AI security platforms are told through document types security engineers actually produce — not generic portfolio sections.
+- **The format carries the story.** Detection engineering, IAM analysis, and AI security platforms are told through document types security engineers actually produce, not generic portfolio sections.
 - **Real accessibility, not retrofitted.** Every theme ships with a real `<h1>`, skip links, visible focus rings, 44px touch targets, `prefers-reduced-motion` support, and information that never depends on color alone.
 - **No motion debt.** Animation is GSAP-driven, gated behind reduced-motion checks, and backed by a wall-clock "settle" failsafe so a throttled background tab can never leave content invisible.
 
@@ -77,7 +79,7 @@ The theme badge in the top-right corner shows the active theme; click it to cycl
 * [![GSAP][GSAP]][GSAP-url]
 * [![Tailwind][Tailwind]][Tailwind-url]
 
-Deployed on **GitHub Pages** via GitHub Actions as a static export. Fonts: **Geist Sans + Geist Mono** exclusively (no CDN fonts). Animation: **GSAP** (`gsap`, `useGSAP`, `ScrollTrigger`, `SplitText`) via a single re-export module — never `framer-motion`. No CMS — all content lives in typed constants inside each theme's own component file.
+Deployed on **GitHub Pages** via GitHub Actions as a static export. Fonts: **Geist Sans + Geist Mono** exclusively (no CDN fonts). Animation: **GSAP** (`gsap`, `useGSAP`, `ScrollTrigger`, `SplitText`) via a single re-export module, never `framer-motion`. No CMS: all content lives in typed constants inside each theme's own component file.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -86,22 +88,22 @@ Deployed on **GitHub Pages** via GitHub Actions as a static export. Fonts: **Gei
 Every theme is exactly **two files**, fully self-contained:
 
 ```
-components/layouts/<name>/<Name>Hero.tsx   — the entire page for that theme
-components/layouts/<name>/styles.css       — every rule, scoped to that theme
+components/layouts/<name>/<Name>Hero.tsx   the entire page for that theme
+components/layouts/<name>/styles.css       every rule, scoped to that theme
 ```
 
 Wiring a theme into the site touches exactly three shared files:
 
 ```
-lib/themes.ts        — LayoutVariant union + themes[] registry (colors, content, accent)
-lib/rotation.ts       — theme selection: ISO-week number + a persistent click offset
-components/Hero.tsx  — switch (theme.layout) → renders the matching hero component
+lib/themes.ts        LayoutVariant union + themes[] registry (colors, content, accent)
+lib/rotation.ts       theme selection: ISO-week number + a persistent click offset
+components/Hero.tsx  switch (theme.layout) → renders the matching hero component
 ```
 
 `components/Hero.tsx` uses an exhaustiveness guard on the `switch`, so adding a theme to the
 `LayoutVariant` union without a matching `case` is a compile-time error, not a silent blank
 page. `app/globals.css` holds only true globals (reset, the shared top-right widget stack,
-the print-friendly `/resume` page) — it never carries theme-specific styling.
+the print-friendly `/resume` page); it never carries theme-specific styling.
 
 The active theme is chosen by `getThemeIndex()`: the current ISO week number picks a default
 starting theme (so the site looks different to everyone, and shifts weekly), and clicking the
@@ -111,8 +113,8 @@ theme badge adds a persistent per-visitor offset on top via `localStorage`.
 
 ### The Live Themes
 
-The canonical list is always `lib/themes.ts` — read it directly for the current count and
-exact accent values; the table below is a snapshot and will drift.
+The canonical list is always `lib/themes.ts`. Read it directly for the current count and
+exact accent values: the table below is a snapshot and will drift.
 
 | Theme | Concept | Mode |
 |---|---|---|
@@ -133,10 +135,15 @@ exact accent values; the table below is a snapshot and will drift.
 | `waveform` | Oscilloscope signal bench | Dark |
 | `policy` | AWS IAM policy document as an editor buffer | Dark |
 | `coverage` | MITRE ATT&CK detection coverage matrix | Dark |
-| `rfc` | An IETF RFC — a standards-track document for one engineer | Light |
+| `rfc` | An IETF RFC: a standards-track document for one engineer | Light |
+| `reference` | API reference docs, one resource: the engineer | Light |
+| `mainline` | A career as a git graph, three branches merged to one HEAD | Dark |
+| `oncall` | Incident ledger, nine years, every page resolved | Dark |
+| `wrapped` | Five stat slabs in a drenched color sequence | Dark |
 
-More themes are built one at a time, each gated behind a multi-persona design-council review
-(≥95 composite score, no single reviewer below 80) before it ships.
+22 themes total (17 dark, 5 light). More are built one at a time, each gated behind a
+multi-persona design-council review (≥95 composite score, no single reviewer below 80)
+before it ships.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -200,16 +207,16 @@ http://localhost:3000/theme/rfc
 ```
 
 **Adding a new theme:**
-1. Create `components/layouts/<name>/<Name>Hero.tsx` + `styles.css` — nothing else.
+1. Create `components/layouts/<name>/<Name>Hero.tsx` + `styles.css`, nothing else.
 2. Add `"<name>"` to the `LayoutVariant` union and a matching entry to `themes[]` in
    `lib/themes.ts` (all 8 CSS vars, `layout`, `id`, `name`, `content`).
 3. Import the component and add `case "<name>": return <NameHero key={theme.id} theme={theme} />;`
    in `components/Hero.tsx`.
-4. Run `npm run build` — must pass clean. The exhaustiveness guard will fail the build if the
+4. Run `npm run build`. Must pass clean. The exhaustiveness guard will fail the build if the
    `case` is missing.
 
 **AI-readable content:** [`/llms.txt`](https://koushik.io/llms.txt) exposes a plain-text
-summary of career achievements optimized for LLM consumption — the mechanism behind the
+summary of career achievements optimized for LLM consumption. It's the mechanism behind the
 "Ask AI about me" widget.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -219,10 +226,10 @@ summary of career achievements optimized for LLM consumption — the mechanism b
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] 18 fully bespoke themes, each a distinct layout structure
+- [x] 22 fully bespoke themes, each a distinct layout structure
 - [x] Time-based + click-offset theme rotation with `localStorage` persistence
 - [x] `llms.txt` for AI-readable career data
-- [x] "Ask AI about me" — answer questions about the portfolio via LLM
+- [x] "Ask AI about me": answer questions about the portfolio via LLM
 - [ ] Additional themes (in active design-council pipeline)
 - [ ] Dark/light toggle independent of theme rotation
 
@@ -236,7 +243,7 @@ proposed features.
 <!-- CONTACT -->
 ## Contact
 
-**Koushik Kotamraju** — Sr. Security Engineer
+**Koushik Kotamraju**, Sr. Security Engineer
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
