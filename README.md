@@ -119,31 +119,21 @@ exact accent values: the table below is a snapshot and will drift.
 | Theme | Concept | Mode |
 |---|---|---|
 | `aethera` | Cinematic video hero, dark luxury editorial | Light |
-| `command` | Glass ⌘K command console | Dark |
-| `lumen` | Technical spec-sheet document | Light |
-| `axiom` | Live scroll-driven attack-path graph | Dark |
 | `avatar` | Darkroom portrait, one develop beat | Dark |
 | `telemetry` | SOC operations console | Dark |
-| `solstice` | Kinetic broadsheet | Light |
-| `casefile` | Incident-response terminal transcript | Dark |
 | `briefing` | Bento operations brief | Dark |
-| `monolith` | Ink poster of restraint, one motion beat | Dark |
-| `advisory` | Security advisory (GHSA-style), "no patch available" | Dark |
-| `intercept` | Packet capture dissecting to the name | Dark |
-| `uptime` | Career status page, all systems operational | Dark |
-| `dispatch` | Split-flap operations board | Dark |
-| `waveform` | Oscilloscope signal bench | Dark |
 | `policy` | AWS IAM policy document as an editor buffer | Dark |
 | `coverage` | MITRE ATT&CK detection coverage matrix | Dark |
 | `rfc` | An IETF RFC: a standards-track document for one engineer | Light |
-| `reference` | API reference docs, one resource: the engineer | Light |
-| `mainline` | A career as a git graph, three branches merged to one HEAD | Dark |
-| `oncall` | Incident ledger, nine years, every page resolved | Dark |
 | `wrapped` | Five stat slabs in a drenched color sequence | Dark |
 
-22 themes total (17 dark, 5 light). More are built one at a time, each gated behind a
-multi-persona design-council review (≥95 composite score, no single reviewer below 80)
-before it ships.
+8 themes total (6 dark, 2 light) — a deliberate cull from a prior 22-theme
+rotation, in favor of fewer, more structurally distinct builds (each theme
+now differs in layout skeleton, scroll flow, hero composition, typography,
+and animation signature, not just accent color). More are built one at a
+time, each gated behind a multi-persona design-council review (≥95
+composite score, no single reviewer below 80, plus a dedicated
+distinctiveness reviewer with its own ≥90 floor) before it ships.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -226,7 +216,7 @@ summary of career achievements optimized for LLM consumption. It's the mechanism
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] 22 fully bespoke themes, each a distinct layout structure
+- [x] 8 fully bespoke themes, each a distinct layout structure
 - [x] Time-based + click-offset theme rotation with `localStorage` persistence
 - [x] `llms.txt` for AI-readable career data
 - [x] "Ask AI about me": answer questions about the portfolio via LLM
