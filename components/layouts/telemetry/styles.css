@@ -2,7 +2,13 @@
    W-Theme-13 — "TELEMETRY" · layout variant: w13
    Always-on 3-pane SOC operations console. The career is a running process.
    Left rail = identity/nav · Center = streaming log content · Right = live telemetry.
-   Palette: GitHub-dark base #0d1117 · accent cyan #22d3ee · steel chrome.
+   Palette: GitHub-dark base #0d1117 (already deep grey-blue, not pure black —
+   confirmed against the SOC-dashboard glare research, no change needed) ·
+   accent alert-red #e0524a (4.93:1 on #0d1117, 5.15:1 for the dark-on-accent
+   #160605 text) — a deliberately desaturated red, not a saturated stop-sign
+   red, so it reads as a critical-severity indicator. Severity vocabulary:
+   critical = accent red, high = amber #d9a441 (8.41:1), medium/info = steel-
+   blue #8aa0b8 (7.03:1), ok = the pre-existing green #34d399.
    All rules scoped under .w13-root / html[data-layout="telemetry"]
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -20,15 +26,18 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   --w13-text: #e6edf3;
   --w13-body: #aeb8c4;     /* AA on near-black */
   --w13-muted: #8a949f;    /* ≥ ~#8A8A93 */
-  --w13-accent: #22d3ee;
-  --w13-accent-dim: #0e7490;
-  --w13-accent-soft: rgba(34, 211, 238, 0.14);
+  --w13-accent: #e0524a;
+  --w13-accent-dim: #b8443c;
+  --w13-accent-soft: rgba(224, 82, 74, 0.14);
+  --w13-on-accent: #160605; /* 5.15:1 dark-on-accent text/icon color */
   --w13-ok: #34d399;
+  --w13-high: #d9a441;
+  --w13-medium: #8aa0b8;
   --w13-rail-w: 320px;
   --w13-tele-w: 320px;
 
   background:
-    radial-gradient(900px 500px at 85% -5%, rgba(34, 211, 238, 0.06), transparent 60%),
+    radial-gradient(900px 500px at 85% -5%, rgba(224, 82, 74, 0.06), transparent 60%),
     var(--w13-bg);
   color: var(--w13-text);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
@@ -52,7 +61,7 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
 
 .w13-skip {
   position: absolute; left: -9999px; top: 0; z-index: 999;
-  background: var(--w13-accent); color: #04141a;
+  background: var(--w13-accent); color: var(--w13-on-accent);
   padding: 10px 18px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none;
 }
 .w13-skip:focus { left: 16px; top: 16px; }
@@ -215,7 +224,7 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
 .w13-rail-link-label { font-size: 14px; font-weight: 500; }
 .w13-rail-link:hover {
   background: var(--w13-accent-soft);
-  border-color: rgba(34, 211, 238, 0.25);
+  border-color: rgba(224, 82, 74, 0.25);
   color: var(--w13-text);
 }
 .w13-rail-link:hover .w13-rail-link-code { color: var(--w13-accent); }
@@ -313,7 +322,7 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
 .w13-log-tick {
   width: 8px; height: 8px; border-radius: 2px;
   background: var(--w13-accent);
-  box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+  box-shadow: 0 0 8px rgba(224, 82, 74, 0.6);
 }
 .w13-log-tick--proj { background: var(--w13-ok); box-shadow: 0 0 8px rgba(52, 211, 153, 0.55); }
 
@@ -347,7 +356,7 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   letter-spacing: 0.12em;
   color: var(--w13-accent);
   padding: 2px 7px;
-  border: 1px solid rgba(34, 211, 238, 0.3);
+  border: 1px solid rgba(224, 82, 74, 0.3);
   border-radius: 4px;
   background: var(--w13-accent-soft);
 }
@@ -461,7 +470,7 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   stroke: var(--w13-accent);
   stroke-width: 6;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.55));
+  filter: drop-shadow(0 0 5px rgba(224, 82, 74, 0.55));
 }
 .w13-gauge-center {
   position: absolute;
@@ -493,26 +502,40 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   color: var(--w13-muted);
 }
 
-/* Sparklines */
-.w13-sparks { display: flex; flex-direction: column; gap: 14px; }
-.w13-spark { display: flex; flex-direction: column; gap: 5px; }
-.w13-spark-top {
+/* Severity distribution — real house stats framed as CRITICAL/HIGH/MEDIUM */
+.w13-sev { display: flex; flex-direction: column; gap: 12px; }
+.w13-sev-head {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--w13-muted);
+}
+.w13-sev-row { display: flex; flex-direction: column; gap: 6px; }
+.w13-sev-top {
   display: flex; align-items: baseline; justify-content: space-between;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
-.w13-spark-label { font-size: 10.5px; color: var(--w13-muted); letter-spacing: 0.02em; }
-.w13-spark-value { font-size: 12px; color: var(--w13-text); font-weight: 600; }
-.w13-spark-svg { width: 100%; height: 30px; display: block; }
-.w13-spark-path {
-  fill: none;
-  stroke: var(--w13-accent);
-  stroke-width: 1.5;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.4));
+.w13-sev-tier { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; }
+.w13-sev-tier--critical { color: var(--w13-accent); }
+.w13-sev-tier--high { color: var(--w13-high); }
+.w13-sev-tier--medium { color: var(--w13-medium); }
+.w13-sev-value { font-size: 13px; color: var(--w13-text); font-weight: 600; }
+.w13-sev-track {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
 }
-.w13-spark-dot { fill: var(--w13-accent); }
+.w13-sev-fill { display: block; height: 100%; border-radius: 3px; }
+.w13-sev-fill--critical { background: var(--w13-accent); }
+.w13-sev-fill--high { background: var(--w13-high); }
+.w13-sev-fill--medium { background: var(--w13-medium); }
+.w13-sev-sub {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--w13-muted);
+}
 
 /* Counters */
 .w13-counters {
@@ -538,9 +561,10 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
 }
 .w13-counter-label { font-size: 10.5px; color: var(--w13-muted); letter-spacing: 0.01em; }
 
-/* Ticker */
-.w13-ticker { padding: 14px 14px 6px; }
-.w13-ticker-head {
+/* Live alert feed — each row's severity tag is visible mono text, not a
+   color-only dot (house rule: color-encoded meaning needs a text equivalent). */
+.w13-feed { padding: 14px 14px 6px; }
+.w13-feed-head {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -548,26 +572,38 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   color: var(--w13-muted);
   margin-bottom: 8px;
 }
-.w13-ticker-window {
+.w13-feed-window {
   height: 132px;
   overflow: hidden;
   position: relative;
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 14%, #000 86%, transparent);
 }
-.w13-ticker-track { display: flex; flex-direction: column; gap: 9px; will-change: transform; }
-.w13-ev {
+.w13-feed-track { display: flex; flex-direction: column; gap: 9px; will-change: transform; }
+.w13-alert {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 11px;
   color: var(--w13-body);
   white-space: nowrap;
 }
-.w13-ev i { width: 6px; height: 6px; border-radius: 50%; flex: none; }
-.w13-ev-ok { background: var(--w13-ok); }
-.w13-ev-info { background: var(--w13-accent); }
+.w13-alert-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
+.w13-alert-dot--crit { background: var(--w13-accent); }
+.w13-alert-dot--high { background: var(--w13-high); }
+.w13-alert-dot--info { background: var(--w13-medium); }
+.w13-alert-dot--ok { background: var(--w13-ok); }
+.w13-alert-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  flex: none;
+}
+.w13-alert-tag--crit { color: var(--w13-accent); }
+.w13-alert-tag--high { color: var(--w13-high); }
+.w13-alert-tag--info { color: var(--w13-medium); }
+.w13-alert-tag--ok { color: var(--w13-ok); }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */
 
@@ -629,8 +665,8 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   /* Status / live dots resolve to a steady visible state */
   .w13-status-dot { box-shadow: none; }
   .w13-live-dot { opacity: 1; }
-  /* Sparklines freeze at their static waveform (path "a" as authored);
-     gauge offsets are set to final by JS. Ticker stays at its rest position. */
+  /* Severity bars sit at their final inline width (set in markup, not JS);
+     gauge offsets are set to final by JS. Alert feed stays at its rest position. */
 }
 
 /* ── Above-fold CTA row (left rail) ───────────────────────────────────────── */
@@ -643,10 +679,10 @@ html[data-layout="telemetry"] nav:not(.w13-nav) {
   text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 .w13-btn--primary {
-  background: var(--w13-accent); color: #04141a; /* 10.4:1 dark-on-cyan */
+  background: var(--w13-accent); color: var(--w13-on-accent); /* 5.15:1 dark-on-accent */
   border: 1px solid transparent;
 }
-.w13-btn--primary:hover { background: #67e8f9; }
+.w13-btn--primary:hover { background: #ee6a61; }
 .w13-btn--ghost {
   background: transparent; color: var(--w13-text, #e6edf3);
   border: 1px solid rgba(255, 255, 255, 0.16);
