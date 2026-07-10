@@ -15,6 +15,14 @@ import "./styles.css";
    accent: ink-teal, derived from the registry token (~5.2:1 on paper).
    Mono throughout except the h1 name (the one deliberate Sans break).
    Animation owner: GSAP only — near-none by genre; documents don't slide.
+
+   2026-07 polish pass (00-STRATEGY-2026-07-cull-and-rebuild.md §5.5): the
+   strongest of the three "improve, don't rework" themes per Koushik's own
+   review, so the fix is tightening the format's own conceits, not new
+   structure — a fuller document-control header (Obsoletes/Updates lines,
+   real RFC convention) and heavier, more consistent use of RFC 2119
+   MUST/SHOULD/MAY language through the body sections (previously confined
+   to §2's own definition, then almost never used again).
 ───────────────────────────────────────────────────────────────────────────── */
 
 const TOC = [
@@ -31,22 +39,22 @@ const OVERVIEW = [
   {
     n: "3.1",
     title: "Detection",
-    body: "200+ Python/Lambda signatures evaluate 1,400+ AWS accounts. The posture scores the company is measured against derive from this fleet. The v6.0 release added 50+ new baselines, the largest single control expansion in program history.",
+    body: "200+ Python/Lambda signatures evaluate 1,400+ AWS accounts. Coverage claims MUST be measured against the full account estate; a signature fleet SHOULD NOT be represented as complete on the basis of a sample. The v6.0 release added 50+ new baselines, the largest single control expansion in program history.",
   },
   {
     n: "3.2",
     title: "Identity",
-    body: "65+ escalation paths are catalogued across 10 vulnerability classes. GOAT was built before it was trusted: 32 ground-truth findings, and the IAM audit agent was evaluated against all 32. Antitoxin catalogues 62 toxic IAM combinations with minimum cut-set dissolution.",
+    body: "65+ escalation paths are catalogued across 10 vulnerability classes. An escalation path MUST be catalogued before it is considered mitigated. GOAT was built before it was trusted: 32 ground-truth findings, and the IAM audit agent was evaluated against all 32 before any recall claim was made. Antitoxin catalogues 62 toxic IAM combinations with minimum cut-set dissolution.",
   },
   {
     n: "3.3",
     title: "Review",
-    body: "150+ Paranoid Security Reviews were conducted in partnership with Product Security, Network, and Identity, covering every business unit before launch.",
+    body: "150+ Paranoid Security Reviews were conducted in partnership with Product Security, Network, and Identity. A new cloud architecture MUST undergo review before it is permitted to serve production traffic; this requirement covers every business unit.",
   },
   {
     n: "3.4",
     title: "AI Platforms",
-    body: "A self-learning research router orchestrates 19 models across 5 providers at $1.40 per run. A deterministic advisor enforces hard deny gates. Implementations MUST remain auditable.",
+    body: "A self-learning research router orchestrates 19 models across 5 providers at $1.40 per run. A deterministic advisor enforces hard deny gates. Implementations MUST remain auditable, and an agentic recommendation SHOULD NOT bypass human review on a hard-deny path.",
   },
 ] as const;
 
@@ -129,6 +137,8 @@ export default function RfcHero({ theme }: { theme: Theme }) {
           <div className="rc-header-col">
             <p>Independent Submission</p>
             <p>Request for Comments: 9161</p>
+            <p>Obsoletes: none</p>
+            <p>Updates: none</p>
             <p>Category: Standards Track</p>
             <p>ISSN: none (one of one)</p>
           </div>
@@ -209,8 +219,9 @@ export default function RfcHero({ theme }: { theme: Theme }) {
           <h2 id="rc-security">4.  Security Considerations</h2>
           <p>
             This document IS the security considerations. Every claim above
-            traces to a benchmarked artifact, a shipped control, or a
-            production system — nothing here is aspirational.
+            MUST trace to a benchmarked artifact, a shipped control, or a
+            production system; a claim that cannot be traced this way MUST
+            NOT appear in this document — nothing here is aspirational.
           </p>
         </section>
 

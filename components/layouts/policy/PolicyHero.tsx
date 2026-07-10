@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
 import "./styles.css";
 
@@ -14,6 +14,13 @@ import "./styles.css";
    the CTA is the first statement (Sid: HireKoushik). One owned accent:
    AWS orange #ff9900 — semantic for an IAM artifact, used sparingly.
    Animation owner: GSAP only (buffer lines print once; CountUp owns its spans).
+
+   2026-07 polish pass (00-STRATEGY-2026-07-cull-and-rebuild.md §5.5): the
+   Principal name was previously swept into the same uniform tiny-stagger
+   line fade as every surrounding JSON punctuation line, so the one moment
+   that should read as a hero beat ("the person is the subject") arrived
+   with no more ceremony than a comma. It now gets its own SplitText
+   word-mask reveal, separate from the buffer-line fade around it.
 ───────────────────────────────────────────────────────────────────────────── */
 
 const FILE_META = "~/policies/koushik-kotamraju.iam.json · read-only";
@@ -86,19 +93,38 @@ export default function PolicyHero({ theme }: { theme: Theme }) {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (prefersReduced) return;
 
-      // The buffer prints — one quick line stagger, no typing theater.
-      const intro = gsap.from(".pol-doc--intro .pol-line", {
+      // The buffer prints — one quick line stagger, no typing theater. The
+      // Principal name is excluded here and given its own reveal below —
+      // it's the hero beat, not another punctuation line.
+      const intro = gsap.from(".pol-doc--intro .pol-line:not(.pol-name)", {
         autoAlpha: 0,
         duration: 0.16,
         stagger: 0.055,
         ease: "none",
         delay: 0.15,
       });
+      // The name arrives as its own moment — a word-mask slide, timed to
+      // land right after the two lines above it ("Version", "Principal")
+      // have printed, so the buffer still feels continuous. .pol-name is a
+      // real, visible h1 (not aria-hidden) so this split uses aria: "auto"
+      // per CLAUDE.md §3.4b, unlike the decorative aria-hidden splits used
+      // elsewhere in the rotation.
+      const nameSplit = SplitText.create(".pol-name", { type: "words", mask: "words", aria: "auto" });
+      const nameIn = gsap.from(nameSplit.words, {
+        yPercent: 115,
+        duration: 0.7,
+        stagger: 0.05,
+        ease: "power3.out",
+        delay: 0.4,
+      });
       // Failsafe: if the rAF ticker is throttled (background tab, low-power
       // mode), never leave the above-fold content hidden — settle it by
       // wall clock. setTimeout still fires when rAF does not.
       const settle = window.setTimeout(() => {
         if (intro.progress() < 1) intro.progress(1);
+      }, 3000);
+      const nameSettle = window.setTimeout(() => {
+        if (nameIn.progress() < 1) nameIn.progress(1);
       }, 3000);
 
       // Statement blocks print as they scroll in, once each. Each gets the
@@ -141,6 +167,7 @@ export default function PolicyHero({ theme }: { theme: Theme }) {
 
       return () => {
         window.clearTimeout(settle);
+        window.clearTimeout(nameSettle);
         settleTimers.forEach((t) => window.clearTimeout(t));
       };
     },
