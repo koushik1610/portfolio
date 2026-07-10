@@ -1,12 +1,13 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    BRIEFING · layout variant: briefing · class prefix: bf-
-   Dark operations-brief bento. One dominant identity tile, one accent-filled
-   CTA tile, strict hierarchy — never equal-weight card soup.
+   2026-07 rework: an editorial magazine spread, not a bento of equal-weight
+   cards. Masthead: full-height photo panel (same crop Koushik liked) with
+   the name overlapping its left edge via CSS grid stacking, revealed by a
+   solid colour plate that wipes off (the signature move). Feature spread:
+   one pull-quote stat + flowing body copy + a marginalia sidebar. Feature
+   index: numbered rows with a large ghost numeral, not bordered cards.
    Palette: near-black #0c0a09 (warm) · bone #efece8 · muted #a39d94 (7:1)
    Owned accent: signal coral #ff7a5c — MUST equal --accent in lib/themes.ts.
-   (Shifted from #ff5c3d so it cannot be read as a sibling of Monolith's
-   vermilion #ff3b1f — the two warm accents stay clearly distinct.)
-   Tiles are layered translucency (no backdrop-filter on scrolling content).
 ───────────────────────────────────────────────────────────────────────────── */
 
 html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
@@ -17,8 +18,7 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   --bf-muted: #a39d94;
   --bf-coral: #ff7a5c;     /* MUST equal --accent in lib/themes.ts */
   --bf-coral-dim: #d05a3e;
-  --bf-tile: rgba(255, 255, 255, 0.035);
-  --bf-tile-2: rgba(255, 255, 255, 0.055);
+  --bf-panel: rgba(255, 255, 255, 0.035);
   --bf-line: rgba(255, 255, 255, 0.09);
   background: var(--bf-bg);
   color: var(--bf-text);
@@ -27,8 +27,7 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  /* one quiet coral bloom anchors the brief, fixed cost */
-  background-image: radial-gradient(52% 38% at 82% -4%, rgba(255, 122, 92, 0.07), transparent 70%);
+  background-image: radial-gradient(52% 38% at 82% -4%, rgba(255, 122, 92, 0.06), transparent 70%);
 }
 
 .bf-sr-only {
@@ -80,114 +79,145 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
 .bf-main {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 48px 24px 120px;
+  padding: 0 24px 120px;
 }
 
-/* ── Bento grid ───────────────────────────────────────────────────────────── */
-.bf-grid {
+.bf-rule { height: 1px; background: var(--bf-line); margin: 0; }
+
+/* ── Masthead ─────────────────────────────────────────────────────────────── */
+.bf-masthead {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  grid-template-rows: 1fr auto;
+  align-items: start;
+  min-height: 88vh;
+  gap: 0 28px;
+  padding: 48px 0 44px;
 }
-.bf-tile {
-  background: var(--bf-tile);
-  border: 1px solid var(--bf-line);
-  border-radius: 18px;
-  padding: 26px 28px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  /* GSAP owns tile transforms (entrance tween) — CSS transitions border only (§3.3) */
-  transition: border-color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+.bf-photo-panel {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  position: relative;
+  align-self: stretch;
+  min-height: 440px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #000;
 }
-/* Tiles are not clickable — no lift; a quiet border response only. */
-.bf-tile:hover { border-color: rgba(255, 255, 255, 0.16); }
-
-.bf-tile--identity { grid-column: span 8; grid-row: span 2; display: flex; flex-direction: column; justify-content: center; padding: 44px 44px 40px; }
-.bf-tile--cta { grid-column: span 4; }
-.bf-tile--stats { grid-column: span 4; }
-.bf-tile--portrait { grid-column: span 4; padding: 0; overflow: hidden; }
-.bf-tile--path { grid-column: span 8; }
-.bf-tile--ai { grid-column: span 5; }
-.bf-tile--now { grid-column: span 7; display: flex; align-items: baseline; gap: 28px; flex-wrap: wrap; }
-
 .bf-portrait {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 220px;
   object-fit: cover;
-  object-position: center 22%;
+  object-position: center 22%; /* preserved from the prior build */
 }
-
-.bf-tile-label {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--bf-muted); margin: 0 0 16px;
+.bf-masthead-text {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 28px;
+  max-width: 46ch;
 }
-
-/* ── Identity tile ────────────────────────────────────────────────────────── */
 .bf-kicker {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 12px; letter-spacing: 0.08em; color: var(--bf-coral);
-  margin: 0 0 18px;
+  font-size: 12px; letter-spacing: 0.08em; color: var(--bf-coral); margin: 0;
+}
+.bf-lede { font-size: 1.05rem; line-height: 1.55; color: var(--bf-text); margin: 0; }
+.bf-lede strong { font-weight: 700; }
+.bf-hook { font-size: 0.9rem; line-height: 1.6; color: var(--bf-muted); margin: 0; }
+
+.bf-name-row {
+  grid-column: 1 / 3;
+  grid-row: 2;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  margin-top: 32px;
+  overflow: hidden;
 }
 .bf-name {
-  font-size: clamp(2.6rem, 6.5vw, 4.6rem);
-  font-weight: 700;
+  /* deliberately large enough to run past the text column and bleed onto
+     the photo panel — the masthead's "name overlaps the cover" move. The
+     10.6vw coefficient (with a tighter column gap above) keeps the overlap
+     holding down to the ~1024px breakpoint, not just at wide desktop. */
+  font-size: clamp(2.8rem, 10.6vw, 7.6rem);
+  font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 0.98;
-  margin: 0 0 22px;
+  line-height: 0.94;
+  margin: 0;
+  padding: 6px 0;
+  white-space: nowrap;
 }
-.bf-lede { font-size: 1.05rem; line-height: 1.55; color: var(--bf-text); max-width: 52ch; margin: 0 0 10px; }
-.bf-lede strong { font-weight: 700; }
-.bf-hook { font-size: 0.9rem; line-height: 1.6; color: var(--bf-muted); max-width: 52ch; margin: 0; }
+.bf-name-plate {
+  position: absolute;
+  inset: 0;
+  background: var(--bf-bg);
+  z-index: 3;
+}
 
-/* ── CTA tile — the one loud surface in the brief ─────────────────────────── */
-.bf-tile--cta {
-  background: var(--bf-coral);
-  border-color: transparent;
-  color: #190c08; /* 7.46:1 on coral #ff7a5c */
-  display: flex; flex-direction: column; gap: 6px;
-}
-.bf-tile--cta:hover { border-color: transparent; }
-.bf-cta-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
-.bf-cta-sub { font-size: 0.82rem; font-weight: 500; margin: 0 0 16px; color: #2c150d; /* 6.71:1 on coral */ }
-.bf-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+/* ── CTA row ──────────────────────────────────────────────────────────────── */
+.bf-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 .bf-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 44px; padding: 10px 20px; border-radius: 11px;
-  font-size: 14px; font-weight: 700; text-decoration: none;
+  min-height: 44px; padding: 10px 22px; border-radius: 11px;
+  font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;
+  text-decoration: none;
   transition: background 0.25s cubic-bezier(0.32, 0.72, 0, 1), border-color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
 }
-.bf-btn--onaccent {
-  background: #190c08; color: #ffe9e2; /* 12+:1 */
+.bf-btn--primary {
+  background: var(--bf-coral); color: #190c08; /* 7.46:1 on coral */
   border: 1px solid transparent;
 }
-.bf-btn--onaccent:hover { background: #2c150d; }
-.bf-btn--outline {
-  background: transparent; color: #190c08;
-  border: 1.5px solid rgba(25, 12, 8, 0.55);
+.bf-btn--primary:hover { background: #ff9276; }
+.bf-btn--ghost {
+  background: transparent; color: var(--bf-text);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
-.bf-btn--outline:hover { border-color: #190c08; }
+.bf-btn--ghost:hover { border-color: var(--bf-coral); }
 
-/* ── Stats tile ───────────────────────────────────────────────────────────── */
-.bf-stats { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px; }
-.bf-stat { display: flex; flex-direction: column-reverse; gap: 3px; }
-.bf-stat-val { margin: 0; }
-.bf-stat-num {
+/* ── Feature spread ───────────────────────────────────────────────────────── */
+.bf-feature { padding: 64px 0; }
+.bf-feature-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.5fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.bf-pull { display: flex; flex-direction: column; gap: 10px; }
+.bf-pull-num {
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--bf-coral);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.bf-pull-cap { font-size: 14px; line-height: 1.5; color: var(--bf-muted); margin: 0; max-width: 22ch; }
+
+.bf-feature-body { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.bf-body-p { font-size: 15.5px; line-height: 1.7; color: var(--bf-text); margin: 0; max-width: 62ch; }
+
+.bf-path {
+  border-left: 2px solid var(--bf-line);
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bf-path-label {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: clamp(1.4rem, 2.4vw, 1.9rem); font-weight: 700; letter-spacing: -0.02em;
-  color: var(--bf-text); font-variant-numeric: tabular-nums;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bf-muted); margin: 0;
 }
-.bf-stat-label { font-size: 11.5px; color: var(--bf-muted); }
-
-/* ── Attack-path tile ─────────────────────────────────────────────────────── */
-.bf-path { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 4px 0 14px; }
+.bf-path-chain { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
 .bf-path-seg { display: inline-flex; align-items: center; }
 .bf-path-node {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 12.5px; padding: 7px 12px; border-radius: 8px;
   border: 1px solid var(--bf-line); color: var(--bf-muted);
-  background: var(--bf-tile-2);
+  background: var(--bf-panel);
   white-space: nowrap;
 }
 .bf-path-node--toxic { color: var(--bf-coral); border-color: rgba(255, 122, 92, 0.35); }
@@ -197,70 +227,73 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   text-decoration-color: var(--bf-coral);
   text-decoration-thickness: 2px;
 }
-.bf-path-edge {
-  display: inline-block; width: 22px; height: 1px;
-  background: var(--bf-line); margin: 0 2px;
-}
+.bf-path-edge { display: inline-block; width: 20px; height: 1px; background: var(--bf-line); margin: 0 2px; }
 .bf-path-edge--cut {
   background: repeating-linear-gradient(90deg, var(--bf-coral) 0 4px, transparent 4px 8px);
   height: 2px;
 }
-.bf-path-note { font-size: 12px; color: var(--bf-muted); margin: 0; }
 
-/* ── AI tile ──────────────────────────────────────────────────────────────── */
-.bf-ai-row { display: flex; gap: 26px; flex-wrap: wrap; margin-bottom: 12px; }
-.bf-ai-fact { display: flex; flex-direction: column; gap: 2px; }
-.bf-ai-num {
+.bf-marginalia { border-left: 1px solid var(--bf-line); padding-left: 24px; }
+.bf-margin-head {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em;
-  color: var(--bf-coral); font-variant-numeric: tabular-nums;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bf-muted); margin: 0 0 16px;
 }
-.bf-ai-label { font-size: 11.5px; color: var(--bf-muted); }
-.bf-ai-note { font-size: 12px; color: var(--bf-muted); margin: 0; }
-
-/* ── Now tile ─────────────────────────────────────────────────────────────── */
-.bf-tile--now .bf-tile-label { margin: 0; flex-shrink: 0; }
-.bf-now-list {
-  list-style: none; margin: 0; padding: 0;
-  display: flex; flex-wrap: wrap; gap: 8px 26px;
-  font-size: 13.5px; color: var(--bf-text);
-}
-.bf-now-list li { display: inline-flex; align-items: center; gap: 8px; }
-.bf-now-list li::before {
-  content: ""; width: 4px; height: 4px; border-radius: 50%;
-  background: var(--bf-coral); flex-shrink: 0;
+.bf-margin-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+.bf-margin-list li { display: flex; flex-direction: column; gap: 2px; }
+.bf-margin-k { font-size: 11.5px; color: var(--bf-muted); }
+.bf-margin-v {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 14px; font-weight: 600; color: var(--bf-text);
 }
 
-/* ── Selected work ────────────────────────────────────────────────────────── */
-.bf-work { margin-top: 72px; }
-.bf-work-head, .bf-contact { display: flex; align-items: baseline; gap: 16px; }
-.bf-h2 {
-  font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 8px;
-}
-.bf-work-count {
+/* ── Feature index — "in this issue" ─────────────────────────────────────── */
+.bf-index { padding: 8px 0 56px; }
+.bf-index-head-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+.bf-h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+.bf-index-count {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 12px; color: var(--bf-muted);
 }
-.bf-work-list { list-style: none; margin: 12px 0 0; padding: 0; }
-.bf-work-row {
+.bf-index-list { list-style: none; margin: 0; padding: 0; }
+.bf-index-row {
+  position: relative;
   display: grid;
-  grid-template-columns: 200px 1fr auto;
+  grid-template-columns: 1fr auto;
+  align-items: center;
   gap: 20px;
-  align-items: baseline;
-  padding: 18px 4px;
+  padding: 30px 0;
   border-top: 1px solid var(--bf-line);
+  overflow: hidden;
 }
-.bf-work-row:last-child { border-bottom: 1px solid var(--bf-line); }
-.bf-work-name { font-weight: 700; font-size: 15px; }
-.bf-work-desc { font-size: 13.5px; color: var(--bf-muted); }
-.bf-work-metric {
+.bf-index-row:last-child { border-bottom: 1px solid var(--bf-line); }
+.bf-index-num {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: clamp(3.2rem, 7vw, 5rem);
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--bf-line);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.bf-index-body { position: relative; z-index: 1; padding-left: clamp(72px, 9vw, 108px); min-width: 0; }
+.bf-index-name { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
+.bf-index-desc { font-size: 13.5px; color: var(--bf-muted); margin: 0; }
+.bf-index-metric {
+  position: relative; z-index: 1;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 12.5px; color: var(--bf-coral); white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
 /* ── Contact ──────────────────────────────────────────────────────────────── */
-.bf-contact { margin-top: 64px; flex-direction: column; align-items: flex-start; }
+.bf-contact { padding: 8px 0 0; display: flex; flex-direction: column; align-items: flex-start; }
 .bf-contact-list {
   list-style: none; margin: 8px 0 0; padding: 0;
   display: flex; flex-wrap: wrap; gap: 12px;
@@ -286,29 +319,36 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   outline-offset: 3px;
   border-radius: 6px;
 }
-/* On the coral tile the coral ring is invisible — use ink instead. */
-.bf-tile--cta a:focus-visible { outline-color: #190c08; }
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 1023px) {
-  .bf-tile--identity { grid-column: span 12; }
-  .bf-tile--cta { grid-column: span 6; }
-  .bf-tile--stats { grid-column: span 6; }
-  .bf-tile--portrait { grid-column: span 5; }
-  .bf-tile--path { grid-column: span 7; }
-  .bf-tile--ai { grid-column: span 12; }
-  .bf-tile--now { grid-column: span 12; }
+  .bf-feature-grid { grid-template-columns: 1fr 1fr; }
+  .bf-marginalia { grid-column: 1 / 3; border-left: none; border-top: 1px solid var(--bf-line); padding-left: 0; padding-top: 20px; }
+  .bf-margin-list { flex-direction: row; flex-wrap: wrap; gap: 18px 32px; }
+}
+@media (max-width: 900px) {
+  .bf-masthead {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    min-height: 0;
+    gap: 28px;
+    padding: 32px 0 36px;
+  }
+  .bf-photo-panel { grid-column: 1; grid-row: 1; min-height: 340px; }
+  .bf-masthead-text { grid-column: 1; grid-row: 2; padding-top: 0; max-width: none; }
+  .bf-name-row { grid-column: 1; grid-row: 3; margin-top: 4px; }
 }
 @media (max-width: 639px) {
-  .bf-main { padding: 20px 14px 90px; }
-  .bf-grid { gap: 10px; }
-  .bf-tile { padding: 20px; border-radius: 14px; }
-  .bf-tile--identity { padding: 24px 20px; }
-  .bf-name { margin-bottom: 16px; }
-  .bf-kicker { margin-bottom: 12px; }
-  .bf-tile--cta, .bf-tile--stats, .bf-tile--portrait, .bf-tile--path { grid-column: span 12; }
-  .bf-portrait { max-height: 320px; }
-  .bf-tile--now { flex-direction: column; gap: 12px; }
-  .bf-work-row { grid-template-columns: 1fr; gap: 4px; }
-  .bf-work-metric { justify-self: start; }
+  .bf-main { padding: 0 16px 90px; }
+  .bf-feature { padding: 44px 0; }
+  .bf-feature-grid { grid-template-columns: 1fr; gap: 32px; }
+  .bf-marginalia { grid-column: 1; }
+  .bf-index-body { padding-left: 64px; }
+  .bf-index-row { grid-template-columns: 1fr; row-gap: 8px; }
+  .bf-index-metric { padding-left: 64px; }
+}
+
+/* ── Reduced motion · static, complete, correct page ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bf-name-plate { display: none; }
 }
