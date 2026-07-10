@@ -5,6 +5,34 @@ import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 import "./styles.css";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   TELEMETRY · layout variant: telemetry · class prefix: w13-
+   Always-on 3-pane SOC operations console — a real security-operations-center
+   dashboard, not a hacker/Matrix-rain aesthetic (banned per CLAUDE.md §4).
+
+   2026-07 SOC rework (theme-plans/25-telemetry-soc-rework.md): Koushik likes
+   the concept, asked to push it further toward a real SOC feel — "deep black
+   and red color scheme." Kept the masthead -> live-console body -> contact
+   structural bones (rework, not a rebuild). Changes:
+   (1) Accent cyan #22d3ee -> a desaturated alert-red #e0524a (4.93:1 on the
+   #0d1117 background, 5.15:1 for the dark-on-accent button/skip-link text
+   #160605) — deliberately NOT a saturated stop-sign red, so it reads as a
+   critical-severity indicator rather than a warning label. Background was
+   already deep-grey-blue (#0d1117), not pure black, per the SOC-dashboard
+   research's glare guidance — no change needed there.
+   (2) Added a severity-distribution strip: three real, already-sanctioned
+   house stats (65+ escalation paths, 62 toxic combinations, 200+ detection
+   signatures) framed as CRITICAL/HIGH/MEDIUM tiers, bar length scaled to each
+   stat's real magnitude — never an invented proportion of any one number.
+   (3) Reworked the decorative events ticker into a live alert feed: each row
+   now carries an explicit, visible severity tag (not color alone, per the
+   house color+text rule) alongside the existing marquee motion.
+   (4) Cut the sparkline waveforms: their morphing paths never represented
+   real data, pure decoration once the severity strip does the actual
+   representational work — house discipline is to cut decoration-only cards
+   rather than keep them for symmetry.
+───────────────────────────────────────────────────────────────────────────── */
+
 // ── Content ─────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
@@ -14,7 +42,7 @@ const NAV_LINKS = [
   { id: "w13-contact", label: "Contact", code: "0x03" },
 ] as const;
 
-// Right-rail telemetry gauges/sparklines. Each metric carries a static aria-label.
+// Right-rail telemetry gauges. Each metric carries a static aria-label.
 const GAUGES = [
   {
     key: "recall",
@@ -80,33 +108,50 @@ const COUNTERS = [
   },
 ] as const;
 
-// Sparkline waveforms — paired path "d" strings GSAP morphs between via attr tween.
-// 0..120 wide, 0..32 tall. Kept cheap (few points), eased on a slow yoyo loop.
-const SPARKS = [
+// Severity-distribution strip: three real, already-public house stats framed
+// as severity tiers. Bar length is each stat's real magnitude scaled against
+// the largest (200) — never an invented sub-split of any single number.
+const SEVERITY = [
   {
-    key: "signals",
-    label: "signals / sec",
-    value: "200+",
-    a: "M0 22 L15 18 L30 24 L45 10 L60 20 L75 8 L90 16 L105 6 L120 14",
-    b: "M0 18 L15 24 L30 12 L45 20 L60 9 L75 19 L90 7 L105 17 L120 8",
-    ariaLabel: "200 plus detection signatures active",
-  },
-  {
-    key: "paths",
-    label: "esc. paths",
+    key: "critical",
+    tier: "CRITICAL",
+    label: "escalation paths",
     value: "65+",
-    a: "M0 26 L20 20 L40 22 L60 12 L80 16 L100 6 L120 10",
-    b: "M0 20 L20 14 L40 18 L60 8 L80 20 L100 12 L120 4",
-    ariaLabel: "65 plus privilege escalation paths across 10 vulnerability classes",
+    sub: "10 vulnerability classes",
+    pct: 33,
+    ariaLabel: "Critical: 65 plus privilege escalation paths across 10 vulnerability classes",
   },
   {
-    key: "graph",
-    label: "graph nodes",
-    value: "1,700+",
-    a: "M0 16 L18 22 L36 14 L54 24 L72 12 L90 22 L108 10 L120 18",
-    b: "M0 22 L18 12 L36 24 L54 10 L72 20 L90 8 L108 18 L120 6",
-    ariaLabel: "1,700 plus knowledge graph nodes",
+    key: "high",
+    tier: "HIGH",
+    label: "toxic combinations",
+    value: "62",
+    sub: "graph-theoretic CIEM",
+    pct: 31,
+    ariaLabel: "High: 62 toxic IAM combinations",
   },
+  {
+    key: "medium",
+    tier: "MEDIUM",
+    label: "detection signatures",
+    value: "200+",
+    sub: "1,400+ AWS accounts",
+    pct: 100,
+    ariaLabel: "Medium: 200 plus active detection signatures across 1,400 plus AWS accounts",
+  },
+] as const;
+
+// Live alert feed — replaces the old decorative sparkline/ticker pairing.
+// Each row carries a visible severity tag (never color alone) plus the
+// existing marquee "live" motion. Decorative only: aria-hidden, no aria-live
+// (duplicate announcements) per house convention.
+const ALERTS = [
+  { sev: "crit", tag: "CRIT", text: "iam-audit.d · path confirmed" },
+  { sev: "high", tag: "HIGH", text: "cnapp.d · toxic combo flagged" },
+  { sev: "info", tag: "INFO", text: "ai-tooling.d · router dispatch" },
+  { sev: "ok", tag: "OK", text: "detection.d · signature resolved" },
+  { sev: "info", tag: "INFO", text: "research.d · GOAT bench 32/32" },
+  { sev: "ok", tag: "OK", text: "cnapp.d · sweep, 2,800+ acct" },
 ] as const;
 
 const EXPERTISE = [
@@ -295,38 +340,24 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
       });
       settle(teleCardIn, 3000);
 
-      // ── Sparklines: morph the path "d" on a slow yoyo loop ("live" feel). ──
-      SPARKS.forEach((s, i) => {
-        const path = root.querySelector<SVGPathElement>(`.w13-spark-path[data-spark="${s.key}"]`);
-        if (!path) return;
-        gsap.to(path, {
-          attr: { d: s.b },
-          duration: 2.6 + i * 0.4,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
+      // ── Severity bars: sweep in from empty. Final width is already set
+      // inline (style="width: N%") so reduced-motion users see it correct
+      // without this ever running — this only adds the reveal motion. ──
+      gsap.utils.toArray<HTMLElement>(".w13-sev-fill").forEach((el, i) => {
+        const sevTw = gsap.from(el, {
+          width: "0%",
+          duration: 1.1,
+          ease: "power2.out",
+          delay: 0.6 + i * 0.1,
         });
-        // travelling scan dot riding the line
-        const dot = root.querySelector<SVGCircleElement>(`.w13-spark-dot[data-spark="${s.key}"]`);
-        if (dot) {
-          gsap.fromTo(
-            dot,
-            { attr: { cx: 0 } },
-            {
-              attr: { cx: 120 },
-              duration: 3.2 + i * 0.3,
-              ease: "none",
-              repeat: -1,
-            }
-          );
-        }
+        settle(sevTw, 3000);
       });
 
-      // ── Ticker: slow vertical marquee of pseudo-events. ──
-      const tickerInner = root.querySelector<HTMLElement>(".w13-ticker-track");
-      if (tickerInner) {
-        const half = tickerInner.scrollHeight / 2;
-        gsap.to(tickerInner, {
+      // ── Alert feed: slow vertical marquee of pseudo-alerts. ──
+      const feedInner = root.querySelector<HTMLElement>(".w13-feed-track");
+      if (feedInner) {
+        const half = feedInner.scrollHeight / 2;
+        gsap.to(feedInner, {
           y: -half,
           duration: 22,
           ease: "none",
@@ -575,18 +606,23 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
             ))}
           </div>
 
-          {/* Sparklines */}
-          <div className="w13-tele-card w13-sparks">
-            {SPARKS.map((s) => (
-              <div key={s.key} className="w13-spark" aria-label={s.ariaLabel}>
-                <div className="w13-spark-top" aria-hidden="true">
-                  <span className="w13-spark-label">{s.label}</span>
-                  <span className="w13-spark-value">{s.value}</span>
+          {/* Severity distribution — real house stats framed as CRITICAL/HIGH/
+              MEDIUM tiers; each tier's name is visible text, not color alone. */}
+          <div className="w13-tele-card w13-sev">
+            <div className="w13-sev-head" aria-hidden="true">severity · active findings</div>
+            {SEVERITY.map((s) => (
+              <div key={s.key} className="w13-sev-row" aria-label={s.ariaLabel}>
+                <div className="w13-sev-top" aria-hidden="true">
+                  <span className={`w13-sev-tier w13-sev-tier--${s.key}`}>{s.tier}</span>
+                  <span className="w13-sev-value">{s.value}</span>
                 </div>
-                <svg className="w13-spark-svg" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
-                  <path className="w13-spark-path" data-spark={s.key} d={s.a} />
-                  <circle className="w13-spark-dot" data-spark={s.key} cx="0" cy="16" r="2" />
-                </svg>
+                <div className="w13-sev-track" aria-hidden="true">
+                  <span
+                    className={`w13-sev-fill w13-sev-fill--${s.key}`}
+                    style={{ width: `${s.pct}%` }}
+                  />
+                </div>
+                <div className="w13-sev-sub" aria-hidden="true">{s.label} · {s.sub}</div>
               </div>
             ))}
           </div>
@@ -601,28 +637,27 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
             ))}
           </div>
 
-          {/* Events ticker (decorative; no aria-live per house rule) */}
-          <div className="w13-tele-card w13-ticker" aria-hidden="true">
-            <div className="w13-ticker-head">events/sec</div>
-            <div className="w13-ticker-window">
-              <div className="w13-ticker-track">
-                <span className="w13-ev"><i className="w13-ev-ok" />signature.match resolved · clean</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />iam.path traversed · class 7</span>
-                <span className="w13-ev"><i className="w13-ev-info" />graph.enrich · +12 nodes</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />goat.bench · 32 cases evaluated</span>
-                <span className="w13-ev"><i className="w13-ev-info" />router.dispatch · 19 models</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />antitoxin.scan · 62 combos</span>
-                <span className="w13-ev"><i className="w13-ev-info" />run.cost settled · $1.40</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />cnapp.sweep · 2,800+ acct</span>
+          {/* Live alert feed (decorative; no aria-live per house rule) — each
+              row's severity tag is visible mono text, not a color-only dot. */}
+          <div className="w13-tele-card w13-feed" aria-hidden="true">
+            <div className="w13-feed-head">alert feed</div>
+            <div className="w13-feed-window">
+              <div className="w13-feed-track">
+                {ALERTS.map((a, i) => (
+                  <span key={`a-${i}`} className="w13-alert">
+                    <i className={`w13-alert-dot w13-alert-dot--${a.sev}`} />
+                    <span className={`w13-alert-tag w13-alert-tag--${a.sev}`}>{a.tag}</span>
+                    {a.text}
+                  </span>
+                ))}
                 {/* duplicate set for seamless loop */}
-                <span className="w13-ev"><i className="w13-ev-ok" />signature.match resolved · clean</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />iam.path traversed · class 7</span>
-                <span className="w13-ev"><i className="w13-ev-info" />graph.enrich · +12 nodes</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />goat.bench · 32 cases evaluated</span>
-                <span className="w13-ev"><i className="w13-ev-info" />router.dispatch · 19 models</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />antitoxin.scan · 62 combos</span>
-                <span className="w13-ev"><i className="w13-ev-info" />run.cost settled · $1.40</span>
-                <span className="w13-ev"><i className="w13-ev-ok" />cnapp.sweep · 2,800+ acct</span>
+                {ALERTS.map((a, i) => (
+                  <span key={`b-${i}`} className="w13-alert">
+                    <i className={`w13-alert-dot w13-alert-dot--${a.sev}`} />
+                    <span className={`w13-alert-tag w13-alert-tag--${a.sev}`}>{a.tag}</span>
+                    {a.text}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

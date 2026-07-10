@@ -43,7 +43,7 @@ export const themes: Theme[] = [
   {
     name: "Telemetry",
     id: "telemetry",
-    vars: { "--background": "#0d1117", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e6edf3", "--text-muted": "#9aa4af", "--accent": "#22d3ee", "--accent-dim": "#0e7490", "--border": "rgba(48,54,61,0.8)" },
+    vars: { "--background": "#0d1117", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e6edf3", "--text-muted": "#9aa4af", "--accent": "#e0524a", "--accent-dim": "#b8443c", "--border": "rgba(48,54,61,0.8)" },
     layout: "telemetry",
     content: { tagline: "An always-on operations console.", bio: "9 years uptime. 2,800+ cloud accounts monitored.", cta: "View Work" },
   },
