@@ -5,6 +5,27 @@ import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
 import "./styles.css";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   AVATAR (Aperture) · layout variant: avatar · class prefix: w12-
+   Darkroom-editorial hero with a one-shot photo "develop" beat.
+
+   2026-07 rework (theme-plans/00-STRATEGY-2026-07-cull-and-rebuild.md §5.3):
+   Koushik likes the darkroom-develop concept but flagged it "loads weird, not
+   smooth." Root cause: the develop tween started on a fixed timer regardless
+   of whether the (1MB) portrait had actually finished loading, so on a cold
+   cache the filter/opacity animation played out against a still-fetching
+   <img> and the real photo just popped in later, decoupled from the motion.
+   Fixed by gating the develop tween on the image's own load/decode state
+   (checked via .complete/.naturalWidth, or a one-time "load" listener), with
+   a wall-clock fallback so the reveal still fires if the image is slow or
+   fails — same "never leave it stuck" philosophy as the settle failsafe, one
+   level up (gating on load readiness, not just animation progress).
+   Also rebuilt the below-fold "contact sheet" from a stacked list of rows
+   into a literal grid of small framed cells (each with its own corner-tick
+   frame, reusing the hero's exact darkroom visual language) so the metaphor
+   holds top to bottom instead of a photo hero bolted onto a generic list.
+───────────────────────────────────────────────────────────────────────────── */
+
 // ── Content ─────────────────────────────────────────────────────────────────
 
 // The 3D avatar is this theme's identity — the real photo lives in aethera/briefing.
@@ -21,7 +42,7 @@ interface ProjectFrame {
   name: string;
   desc: string;
   metric: string;
-  stack: string;
+  stack: string[];
 }
 
 const PROJECTS: ProjectFrame[] = [
@@ -30,28 +51,28 @@ const PROJECTS: ProjectFrame[] = [
     name: "Artemis",
     desc: "Multi-cloud attack-path simulation. GCP SCC and AWS Security Hub unified into an AI-enriched graph layer across the estate.",
     metric: "2,800+ accounts",
-    stack: "Python · GCP SCC · AWS Security Hub · Vertex AI",
+    stack: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"],
   },
   {
     frame: "02",
     name: "IAM Audit Agent",
     desc: "Boto3 tool-calling agent traversing 65+ escalation paths across 10 vulnerability classes with semantic interpretation of transitive chains.",
     metric: "32 GOAT benchmarks",
-    stack: "IAM · Python · Boto3 · LLM tool-use",
+    stack: ["IAM", "Python", "Boto3", "LLM tool-use"],
   },
   {
     frame: "03",
     name: "Autonomous Threat Intel",
     desc: "19 models from 5 providers behind a performance-weighted router. Analyst-ready proposals at a fraction of baseline cost.",
     metric: "$1.40 / run",
-    stack: "Multi-Agent · Claude · GPT · Gemini",
+    stack: ["Multi-Agent", "Claude", "GPT", "Gemini"],
   },
   {
     frame: "04",
     name: "Detection Engine",
     desc: "200+ active signatures deployed via Terraform, evaluating 1,400+ AWS accounts. MITRE ATT&CK gap analysis from incident response data.",
     metric: "200+ signatures",
-    stack: "Python · Lambda · Terraform · MITRE ATT&CK",
+    stack: ["Python", "Lambda", "Terraform", "MITRE ATT&CK"],
   },
 ];
 
@@ -69,6 +90,7 @@ const CONTACT = [
 export default function AvatarHero({ theme }: { theme: Theme }) {
   void theme;
   const rootRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLImageElement>(null);
 
   useGSAP(
     () => {
@@ -87,16 +109,38 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
         );
       };
 
-      // Portrait "develops": one-shot filter ramp, no loop.
-      const portraitIn = gsap.from(".w12-portrait", {
-        autoAlpha: 0,
-        filter: "grayscale(1) brightness(0.55) contrast(1.2)",
-        duration: 1.4,
-        ease: "power2.out",
-        delay: 0.1,
-        clearProps: "filter",
-      });
-      settle(portraitIn, 3000);
+      // Portrait "develops": one-shot filter ramp, no loop. Gated on the
+      // image actually being decoded first — starting this on a fixed timer
+      // (the previous defect) let the filter/opacity tween finish against a
+      // still-fetching <img>, so the real photo just popped in later,
+      // decoupled from the animation ("loads weird, not smooth"). A wall-
+      // clock fallback still guarantees the reveal fires even if the image
+      // is slow or fails to load.
+      const runPortraitReveal = () => {
+        const portraitIn = gsap.from(".w12-portrait", {
+          autoAlpha: 0,
+          filter: "grayscale(1) brightness(0.55) contrast(1.2)",
+          duration: 1.4,
+          ease: "power2.out",
+          delay: 0.1,
+          clearProps: "filter",
+        });
+        settle(portraitIn, 3000);
+      };
+      const img = portraitRef.current;
+      if (img && img.complete && img.naturalWidth > 0) {
+        runPortraitReveal();
+      } else if (img) {
+        let fired = false;
+        const fire = () => {
+          if (fired) return;
+          fired = true;
+          runPortraitReveal();
+        };
+        img.addEventListener("load", fire, { once: true });
+        settleTimers.push(window.setTimeout(fire, 2500));
+      }
+
       const ticksIn = gsap.from(".w12-frame-tick", {
         autoAlpha: 0,
         duration: 0.6,
@@ -139,13 +183,14 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
         });
       });
 
-      gsap.utils.toArray<HTMLElement>(".w12-sheet-row").forEach((row) => {
-        gsap.from(row, {
+      gsap.utils.toArray<HTMLElement>(".w12-frame-cell").forEach((cell, i) => {
+        gsap.from(cell, {
           autoAlpha: 0,
           y: 24,
           duration: 0.7,
           ease: "power3.out",
-          scrollTrigger: { trigger: row, start: "top 86%", once: true },
+          scrollTrigger: { trigger: cell, start: "top 86%", once: true },
+          delay: (i % 2) * 0.08,
         });
       });
 
@@ -190,9 +235,11 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
           <div className="w12-stage">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              ref={portraitRef}
               src={PORTRAIT_SRC}
               alt="Portrait of Koushik Kotamraju"
               className="w12-portrait"
+              decoding="async"
             />
             <span className="w12-frame-tick w12-frame-tick--tl" aria-hidden="true" />
             <span className="w12-frame-tick w12-frame-tick--tr" aria-hidden="true" />
@@ -233,7 +280,9 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
 
         <div className="w12-rule" aria-hidden="true" />
 
-        {/* ── Contact sheet of projects ──────────────────────────────────── */}
+        {/* ── Contact sheet of projects — a literal grid of small frames, each
+            one an "exposure," reusing the hero's corner-tick frame language
+            instead of a generic stat-row list. ─────────────────────────── */}
         <section className="w12-sheet" aria-labelledby="w12-sheet-head">
           <div className="w12-sheet-top">
             <h2 id="w12-sheet-head" className="w12-sheet-title">Contact sheet — selected work</h2>
@@ -242,14 +291,22 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
 
           <ol className="w12-sheet-list" role="list">
             {PROJECTS.map((p) => (
-              <li key={p.frame} className="w12-sheet-row" aria-label={`Project: ${p.name} — ${p.metric}`}>
-                <span className="w12-sheet-frame" aria-hidden="true">{p.frame}</span>
-                <div className="w12-sheet-body">
-                  <h3 className="w12-sheet-name">{p.name}</h3>
-                  <p className="w12-sheet-desc">{p.desc}</p>
-                  <p className="w12-sheet-stack" aria-label="Stack">{p.stack}</p>
+              <li key={p.frame} className="w12-frame-cell" aria-label={`Project: ${p.name} — ${p.metric}`}>
+                <span className="w12-frame-tick w12-frame-tick--sm w12-frame-tick--tl" aria-hidden="true" />
+                <span className="w12-frame-tick w12-frame-tick--sm w12-frame-tick--tr" aria-hidden="true" />
+                <span className="w12-frame-tick w12-frame-tick--sm w12-frame-tick--bl" aria-hidden="true" />
+                <span className="w12-frame-tick w12-frame-tick--sm w12-frame-tick--br" aria-hidden="true" />
+                <div className="w12-frame-top">
+                  <span className="w12-frame-num" aria-hidden="true">FRAME {p.frame}</span>
+                  <span className="w12-frame-metric" aria-hidden="true">{p.metric}</span>
                 </div>
-                <span className="w12-sheet-metric" aria-hidden="true">{p.metric}</span>
+                <h3 className="w12-frame-name">{p.name}</h3>
+                <p className="w12-frame-desc">{p.desc}</p>
+                <div className="w12-frame-stack" role="list" aria-label="Stack">
+                  {p.stack.map((t) => (
+                    <span key={t} className="w12-frame-tag" role="listitem">{t}</span>
+                  ))}
+                </div>
               </li>
             ))}
           </ol>
