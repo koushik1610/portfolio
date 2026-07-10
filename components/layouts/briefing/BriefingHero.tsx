@@ -2,33 +2,39 @@
 
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
-import { gsap, useGSAP, SplitText } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    BRIEFING · layout variant: briefing · class prefix: bf-
-   A dark operations-brief bento. Strict hierarchy: ONE dominant identity tile,
-   ONE accent-filled CTA tile (the conversion path is structural), supporting
-   tiles for stats / attack path / featured work / availability.
-   Owned accent: signal coral #ff7a5c (7.6:1 as text on bg; tiles use dark
-   text on coral at 7.3:1). Animation owner: GSAP only.
+   2026-07 rework (theme-plans/00-STRATEGY-2026-07-cull-and-rebuild.md §5.4):
+   Koushik named the profile-photo placement/treatment as the one thing he
+   likes — kept verbatim (same photo, same object-position crop). Everything
+   else was a 7-tile bento of equal-weight cards, which is exactly the
+   generic "hero-metric SaaS template" the house style bans. Rebuilt as an
+   editorial magazine spread instead: a masthead where the name overlaps the
+   photo's edge (CSS grid stacking, not absolute-position hacks), a feature
+   spread with one pull-quote stat + flowing body copy + a marginalia
+   sidebar (not another card grid — that shape is now Avatar's), and a
+   numbered "in this issue" feature index with a large ghost numeral behind
+   each row. Signature move: the masthead's name band reveals via a solid
+   colour plate that wipes off (a print-registration beat), distinct from
+   Avatar's grayscale photo-develop and every other theme's reveal style.
 ───────────────────────────────────────────────────────────────────────────── */
 
-const STATS = [
-  { value: "2,800+", label: "cloud accounts" },
-  { value: "200+", label: "detection signatures" },
-  { value: "150+", label: "security reviews" },
-  { value: "1,700+", label: "knowledge-graph nodes" },
+const MARGINALIA = [
+  { k: "Signatures", v: "200+" },
+  { k: "Reviews", v: "150+" },
+  { k: "KG nodes", v: "1,700+" },
+  { k: "Models", v: "19 · 5 providers" },
+  { k: "Cost / run", v: "$1.40" },
+  { k: "Experience", v: "9 yrs · 3 orgs" },
+  { k: "Certs", v: "AWS SA · Security Specialty" },
 ] as const;
 
-const AI_FACTS = [
-  { value: "19", label: "models orchestrated" },
-  { value: "5", label: "providers" },
-  { value: "$1.40", label: "per research run" },
-] as const;
-
-/* The mini attack path the Antitoxin work cuts — rendered as a static chain. */
+/* The mini attack path the Antitoxin work cuts — rendered as a static chain,
+   kept from the prior build as an illustrative aside inside the feature body. */
 const ATTACK_PATH = [
   { node: "role", state: "entry" },
   { node: "iam:PassRole", state: "toxic" },
@@ -59,8 +65,8 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
       if (prefersReduced) return;
 
       // Failsafe: if the rAF ticker stalls (background tab, low-power mode),
-      // never leave the on-mount name reveal stuck mid-flight — force-
-      // complete it by wall clock. Timer is cleared on cleanup below.
+      // never leave an on-mount tween stuck mid-flight — force-complete it
+      // by wall clock. Timers are cleared on cleanup below.
       const settleTimers: number[] = [];
       const settle = (tw: gsap.core.Tween | gsap.core.Timeline, ms: number) => {
         settleTimers.push(
@@ -70,50 +76,129 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
         );
       };
 
-      // Name reveals first (the identity tile itself stays visible), then the
-      // supporting tiles assemble — each on its own once-only scroll trigger so
-      // below-fold tiles never animate unseen.
-      const split = SplitText.create(".bf-name", { type: "words", mask: "words", aria: "none" });
-      const nameIn = gsap.from(split.words, {
-        yPercent: 115,
-        duration: 0.85,
-        stagger: 0.08,
-        ease: "power3.out",
-        delay: 0.1,
-      });
-      settle(nameIn, 3000);
-      gsap.utils.toArray<HTMLElement>(".bf-tile:not(.bf-tile--identity)").forEach((tile, i) => {
-        gsap.from(tile, {
-          autoAlpha: 0,
-          y: 18,
-          scale: 0.985,
-          duration: 0.6,
-          ease: "power3.out",
-          // small index offset staggers the above-fold cluster on load without
-          // making late below-fold tiles hesitate after their trigger fires
-          delay: Math.min(i, 3) * 0.06,
-          scrollTrigger: { trigger: tile, start: "top 92%", once: true },
-        });
-      });
-
-      // Attack-path chain lights left → right, then the cut lands.
-      gsap.from(".bf-path-node, .bf-path-edge", {
+      // Photo panel: quiet scale-settle, no filter (that beat belongs to Avatar).
+      const photoIn = gsap.from(".bf-photo-panel img", {
         autoAlpha: 0,
-        duration: 0.35,
-        stagger: 0.12,
-        ease: "power1.out",
-        delay: 0.4,
-        scrollTrigger: { trigger: ".bf-tile--path", start: "top 90%", once: true },
+        scale: 1.04,
+        duration: 1.1,
+        ease: "power2.out",
+      });
+      settle(photoIn, 3000);
+
+      // Signature move: the name band's colour plate wipes off, revealing the
+      // overlapping masthead title in one clean beat — this IS the reveal,
+      // the name text itself stays static underneath (no second, competing
+      // reveal mechanic on the same element).
+      const plateOut = gsap.to(".bf-name-plate", {
+        scaleX: 0,
+        transformOrigin: "right center",
+        duration: 0.75,
+        ease: "power3.inOut",
+        delay: 0.35,
+      });
+      settle(plateOut, 3000);
+
+      const textIn = gsap.from(".bf-masthead-text > *", {
+        autoAlpha: 0,
+        y: 14,
+        duration: 0.6,
+        stagger: 0.07,
+        ease: "power2.out",
+        delay: 0.15,
+      });
+      settle(textIn, 3000);
+
+      // Pull-quote stat rises on scroll; CountUp owns its own count animation.
+      // Every below-fold reveal below also arms a settle timer on enter —
+      // once a scroll-triggered tween starts, it's just as exposed to a
+      // throttled/backgrounded rAF ticker as an on-mount one.
+      gsap.from(".bf-pull", {
+        autoAlpha: 0,
+        y: 20,
+        duration: 0.65,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".bf-feature",
+          start: "top 82%",
+          once: true,
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
+        },
       });
 
-      // Work rows rise on scroll, once.
-      gsap.from(".bf-work-row", {
+      // Body copy + attack-path aside settle in together.
+      gsap.from(".bf-feature-body > *", {
         autoAlpha: 0,
         y: 16,
-        duration: 0.55,
+        duration: 0.6,
         stagger: 0.08,
         ease: "power2.out",
-        scrollTrigger: { trigger: ".bf-work", start: "top 84%", once: true },
+        scrollTrigger: {
+          trigger: ".bf-feature-body",
+          start: "top 84%",
+          once: true,
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
+        },
+      });
+
+      // Marginalia footnotes stagger in as a column of small annotations.
+      gsap.from(".bf-margin-list li", {
+        autoAlpha: 0,
+        x: 10,
+        duration: 0.45,
+        stagger: 0.06,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".bf-marginalia",
+          start: "top 84%",
+          once: true,
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
+        },
+      });
+
+      // Feature-index rows: the ghost numeral settles from a larger scale
+      // while the title/desc/metric do the standard rise — same trigger,
+      // two coordinated moves on one row.
+      gsap.utils.toArray<HTMLElement>(".bf-index-row").forEach((row, i) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: row,
+            start: "top 88%",
+            once: true,
+            onEnter: (self) => settle(self.animation as gsap.core.Timeline, 2500),
+          },
+          delay: i * 0.05,
+        });
+        tl.from(row.querySelector(".bf-index-num"), {
+          autoAlpha: 0,
+          scale: 1.18,
+          duration: 0.6,
+          ease: "power2.out",
+        }, 0);
+        tl.from(row.querySelector(".bf-index-body"), {
+          autoAlpha: 0,
+          y: 14,
+          duration: 0.5,
+          ease: "power2.out",
+        }, 0.05);
+        tl.from(row.querySelector(".bf-index-metric"), {
+          autoAlpha: 0,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0.15);
+      });
+
+      gsap.from(".bf-contact-link", {
+        autoAlpha: 0,
+        y: 14,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".bf-contact",
+          start: "top 86%",
+          once: true,
+          onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
+        },
       });
 
       return () => {
@@ -141,11 +226,20 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
       </nav>
 
       <main id="bf-main" className="bf-main">
-        <div className="bf-grid">
-          {/* ── 1 · Identity — the dominant tile ─────────────────────── */}
-          <section className="bf-tile bf-tile--identity" aria-label="Identity">
+        {/* ── Masthead — photo bleeds full-height right, name overlaps its
+            left edge (a magazine cover-line move), text column left ────── */}
+        <header className="bf-masthead">
+          <div className="bf-photo-panel">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/profile.jpeg"
+              alt="Portrait of Koushik Kotamraju"
+              className="bf-portrait"
+            />
+          </div>
+
+          <div className="bf-masthead-text">
             <p className="bf-kicker">Sr. Security Engineer · Yahoo Paranoids</p>
-            <p className="bf-name" aria-hidden="true">Koushik<br />Kotamraju</p>
             <p className="bf-lede">
               Cloud security engineer building AI-native security platforms —{" "}
               <strong>production systems, not prototypes.</strong>
@@ -154,106 +248,102 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
               A small team. 2,800+ cloud accounts. The math only works if you
               build the right systems.
             </p>
-          </section>
-
-          {/* ── 2 · CTA — the accent-filled action tile ──────────────── */}
-          <section className="bf-tile bf-tile--cta" aria-label="Contact actions">
-            <p className="bf-cta-title">Hire signal</p>
-            <p className="bf-cta-sub">Staff / Principal Security Engineer · AI Security</p>
-            <div className="bf-cta-actions">
-              <a href="mailto:koushik.kotamraju1610@gmail.com" className="bf-btn bf-btn--onaccent">Email me</a>
-              <a href="/resume" className="bf-btn bf-btn--outline">Résumé</a>
+            <div className="bf-cta-row">
+              <a href="mailto:koushik.kotamraju1610@gmail.com" className="bf-btn bf-btn--primary">Email me</a>
+              <a href="/resume" className="bf-btn bf-btn--ghost">Résumé</a>
             </div>
-          </section>
-
-          {/* ── 3 · Stats ─────────────────────────────────────────────── */}
-          <section className="bf-tile bf-tile--stats" aria-label="Scale">
-            <p className="bf-tile-label">Scale</p>
-            <dl className="bf-stats">
-              {STATS.map((s) => (
-                <div key={s.label} className="bf-stat">
-                  <dt className="bf-stat-label">{s.label}</dt>
-                  {/* CountUp's own aria-label carries the final value */}
-                  <dd className="bf-stat-val"><CountUp value={s.value} className="bf-stat-num" /></dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-
-          {/* ── 4 · Portrait ──────────────────────────────────────────── */}
-          <section className="bf-tile bf-tile--portrait" aria-label="Portrait">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/profile.jpeg"
-              alt="Portrait of Koushik Kotamraju"
-              className="bf-portrait"
-              loading="lazy"
-            />
-          </section>
-
-          {/* ── 5 · Attack path (decorative narrative) ───────────────── */}
-          <section
-            className="bf-tile bf-tile--path"
-            aria-label="62 toxic IAM combinations catalogued; 65+ privilege-escalation paths cut across 10 vulnerability classes"
-          >
-            <p className="bf-tile-label" aria-hidden="true">Escalation path · cut</p>
-            <div className="bf-path" aria-hidden="true">
-              {ATTACK_PATH.map((p, i) => (
-                <span key={p.node} className="bf-path-seg">
-                  {i > 0 && <span className={`bf-path-edge${p.state === "cut" ? " bf-path-edge--cut" : ""}`} />}
-                  <span className={`bf-path-node bf-path-node--${p.state}`}>{p.node}</span>
-                </span>
-              ))}
-            </div>
-            <p className="bf-path-note" aria-hidden="true">
-              62 toxic combinations · 65+ paths across 10 classes · minimum cut-set remediation
-            </p>
-          </section>
-
-          {/* ── 6 · AI platform ───────────────────────────────────────── */}
-          <section className="bf-tile bf-tile--ai" aria-label="AI platform">
-            <p className="bf-tile-label">AI platform</p>
-            <div className="bf-ai-row">
-              {AI_FACTS.map((f) => (
-                <div key={f.label} className="bf-ai-fact" role="group" aria-label={`${f.value} ${f.label}`}>
-                  <span className="bf-ai-num" aria-hidden="true">{f.value}</span>
-                  <span className="bf-ai-label" aria-hidden="true">{f.label}</span>
-                </div>
-              ))}
-            </div>
-            <p className="bf-ai-note">Performance-weighted routing · 55% cost cut vs baseline</p>
-          </section>
-
-          {/* ── 7 · Credentials / now ─────────────────────────────────── */}
-          <section className="bf-tile bf-tile--now" aria-label="Credentials">
-            <p className="bf-tile-label">Now</p>
-            <ul className="bf-now-list" role="list">
-              <li>9 years · 3 organizations</li>
-              <li>AWS Solutions Architect Associate</li>
-              <li>AWS Security Specialty</li>
-              <li>CIEM · CNAPP · Detection · IAM</li>
-            </ul>
-          </section>
-        </div>
-
-        {/* ── Selected work ─────────────────────────────────────────────── */}
-        <section className="bf-work" aria-labelledby="bf-work-head">
-          <div className="bf-work-head">
-            <h2 id="bf-work-head" className="bf-h2">Selected work</h2>
-            <span className="bf-work-count" aria-hidden="true">04</span>
           </div>
-          <ul className="bf-work-list" role="list">
-            {WORK.map((w) => (
-              <li key={w.name} className="bf-work-row">
-                <span className="bf-work-name">{w.name}</span>
-                <span className="bf-work-desc">{w.desc}</span>
-                <span className="bf-work-metric">{w.metric}</span>
-              </li>
-            ))}
-          </ul>
+
+          <div className="bf-name-row">
+            <span className="bf-name-plate" aria-hidden="true" />
+            <p className="bf-name" aria-hidden="true">Koushik<br />Kotamraju</p>
+          </div>
+        </header>
+
+        <div className="bf-rule" aria-hidden="true" />
+
+        {/* ── Feature spread — pull-quote stat, flowing body copy, and a
+            marginalia sidebar of small facts (not another card grid) ────── */}
+        <section className="bf-feature" aria-labelledby="bf-feature-head">
+          <h2 id="bf-feature-head" className="bf-sr-only">The work</h2>
+          <div className="bf-feature-grid">
+            <div className="bf-pull" role="group" aria-label="2,800 plus cloud accounts secured by a small senior team">
+              <CountUp value="2,800+" className="bf-pull-num" />
+              <p className="bf-pull-cap" aria-hidden="true">cloud accounts secured by a small senior team</p>
+            </div>
+
+            <div className="bf-feature-body">
+              <p className="bf-body-p">
+                A detection fleet of 200+ Python and Lambda signatures evaluates
+                1,400+ AWS accounts — the posture scores the company is measured
+                against. An AI-native IAM audit agent traverses 65+ escalation
+                paths across 10 vulnerability classes, interpreting transitive
+                privilege chains the way an analyst would.
+              </p>
+              <p className="bf-body-p">
+                Antitoxin, a graph-theoretic CIEM engine, catalogues 62 toxic IAM
+                combinations with minimum cut-set auto-remediation. Multi-agent AI
+                platforms orchestrate 19 models from 5 providers behind a
+                performance-weighted router, at $1.40 per research run.
+              </p>
+
+              <div
+                className="bf-path"
+                role="group"
+                aria-label="62 toxic IAM combinations catalogued; 65+ privilege-escalation paths cut across 10 vulnerability classes"
+              >
+                <p className="bf-path-label" aria-hidden="true">Escalation path · cut</p>
+                <div className="bf-path-chain" aria-hidden="true">
+                  {ATTACK_PATH.map((p, i) => (
+                    <span key={p.node} className="bf-path-seg">
+                      {i > 0 && <span className={`bf-path-edge${p.state === "cut" ? " bf-path-edge--cut" : ""}`} />}
+                      <span className={`bf-path-node bf-path-node--${p.state}`}>{p.node}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <aside className="bf-marginalia" aria-label="At a glance">
+              <p className="bf-margin-head" aria-hidden="true">At a glance</p>
+              <ul className="bf-margin-list" role="list">
+                {MARGINALIA.map((m) => (
+                  <li key={m.k}>
+                    <span className="bf-margin-k">{m.k}</span>
+                    <span className="bf-margin-v">{m.v}</span>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </div>
         </section>
 
-        {/* ── Contact bar ───────────────────────────────────────────────── */}
+        <div className="bf-rule" aria-hidden="true" />
+
+        {/* ── Feature index — "in this issue": numbered rows, each with a
+            large ghost numeral behind the title instead of a bordered card ── */}
+        <section className="bf-index" aria-labelledby="bf-index-head">
+          <div className="bf-index-head-row">
+            <h2 id="bf-index-head" className="bf-h2">In this issue</h2>
+            <span className="bf-index-count" aria-hidden="true">04</span>
+          </div>
+          <ol className="bf-index-list" role="list">
+            {WORK.map((w, i) => (
+              <li key={w.name} className="bf-index-row" aria-label={`Feature ${i + 1}: ${w.name} — ${w.metric}`}>
+                <span className="bf-index-num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                <div className="bf-index-body">
+                  <h3 className="bf-index-name">{w.name}</h3>
+                  <p className="bf-index-desc">{w.desc}</p>
+                </div>
+                <span className="bf-index-metric" aria-hidden="true">{w.metric}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <div className="bf-rule" aria-hidden="true" />
+
+        {/* ── Contact ────────────────────────────────────────────────────── */}
         <section className="bf-contact" aria-labelledby="bf-contact-head">
           <h2 id="bf-contact-head" className="bf-h2">Contact</h2>
           <ul className="bf-contact-list" role="list">
