@@ -119,21 +119,26 @@ exact accent values: the table below is a snapshot and will drift.
 | Theme | Concept | Mode |
 |---|---|---|
 | `aethera` | Cinematic video hero, dark luxury editorial | Light |
-| `avatar` | Darkroom portrait, one develop beat | Dark |
-| `telemetry` | SOC operations console | Dark |
-| `briefing` | Bento operations brief | Dark |
+| `avatar` | Darkroom portrait with a contact-sheet grid of framed exposures | Dark |
+| `telemetry` | SOC operations console, red/black severity feed | Dark |
+| `briefing` | Editorial magazine spread, name overlapping a full-bleed photo | Dark |
 | `policy` | AWS IAM policy document as an editor buffer | Dark |
-| `coverage` | MITRE ATT&CK detection coverage matrix | Dark |
+| `coverage` | MITRE ATT&CK detection coverage matrix, full-bleed heat map | Dark |
 | `rfc` | An IETF RFC: a standards-track document for one engineer | Light |
-| `wrapped` | Five stat slabs in a drenched color sequence | Dark |
+| `wrapped` | Five stat slabs in a drenched color sequence, plus a recap reel | Dark |
+| `route` | The career as a scroll-scrubbed schematic transit line | Dark |
+| `ide` | A VS Code–style shell — click a file/tab to switch content | Dark |
+| `trace` | An AI agent-trace replay ending in a verdict card | Dark |
+| `keynote` | The unshipped conference talk, staged as 16:9 framed slides | Dark |
 
-8 themes total (6 dark, 2 light) — a deliberate cull from a prior 22-theme
-rotation, in favor of fewer, more structurally distinct builds (each theme
-now differs in layout skeleton, scroll flow, hero composition, typography,
-and animation signature, not just accent color). More are built one at a
-time, each gated behind a multi-persona design-council review (≥95
-composite score, no single reviewer below 80, plus a dedicated
-distinctiveness reviewer with its own ≥90 floor) before it ships.
+12 themes total (10 dark, 2 light) — the 8-theme cull (from a prior 22-theme
+rotation) plus four net-new builds (`route`, `ide`, `trace`, `keynote`),
+matching the rotation's planned target size. Each theme differs in layout
+skeleton, scroll flow, hero composition, typography, and animation
+signature, not just accent color. Further additions are gated behind a
+multi-persona design-council review (≥95 composite score, no single
+reviewer below 80, plus a dedicated distinctiveness reviewer with its own
+≥90 floor) before they ship.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -216,11 +221,11 @@ summary of career achievements optimized for LLM consumption. It's the mechanism
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] 8 fully bespoke themes, each a distinct layout structure
+- [x] 12 fully bespoke themes, each a distinct layout structure
 - [x] Time-based + click-offset theme rotation with `localStorage` persistence
 - [x] `llms.txt` for AI-readable career data
 - [x] "Ask AI about me": answer questions about the portfolio via LLM
-- [ ] Additional themes (in active design-council pipeline)
+- [ ] Additional themes (optional stretch: a transit-map variant, an isometric CSS-3D scene)
 - [ ] Dark/light toggle independent of theme rotation
 
 See [open issues](https://github.com/koushik1610/portfolio/issues) for known issues and
