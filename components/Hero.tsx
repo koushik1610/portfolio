@@ -14,6 +14,7 @@ import WrappedHero from "./layouts/wrapped/WrappedHero";
 import RouteHero from "./layouts/route/RouteHero";
 import IdeHero from "./layouts/ide/IdeHero";
 import TraceHero from "./layouts/trace/TraceHero";
+import KeynoteHero from "./layouts/keynote/KeynoteHero";
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -52,6 +53,7 @@ export default function Hero() {
     case "route":     return <RouteHero     key={theme.id} theme={theme} />;
     case "ide":       return <IdeHero       key={theme.id} theme={theme} />;
     case "trace":     return <TraceHero     key={theme.id} theme={theme} />;
+    case "keynote":   return <KeynoteHero   key={theme.id} theme={theme} />;
     default: {
       // Exhaustiveness guard: adding a LayoutVariant without a case above is a
       // compile error here instead of a silent undefined render.
