@@ -1,0 +1,294 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   IDE · layout variant: ide · class prefix: ide-
+   A full VS Code–style shell: title bar, file-tree sidebar, tab bar, a
+   syntax-colored editor pane, a status bar. Palette: near-black editor bg
+   #0d0e14 · ice #eef0f4 · muted #8b93a3 (7.1:1). Owned accent: violet
+   #9d7bff (6.16:1 on bg) — deliberately not another blue (glacier/klein/
+   route-cyan already occupy that band). Radius scale: 4px (tabs, file
+   rows) · 6px (buttons).
+───────────────────────────────────────────────────────────────────────────── */
+
+/* the sidebar's own file-tree <nav> (.ide-filenav) is theme content, not the
+   site's global nav — excluded here alongside the titlebar so this rule
+   doesn't hide it (a self-inflicted version of the "leaked global rule"
+   pitfall CLAUDE.md warns about) */
+html[data-layout="ide"] nav:not(.ide-titlebar):not(.ide-filenav) { display: none !important; }
+
+.ide-root {
+  --ide-bg: #0d0e14;
+  --ide-bg-2: #101219;
+  --ide-panel: #0a0b10;
+  --ide-text: #eef0f4;
+  --ide-muted: #8b93a3;         /* 7.1:1 on bg */
+  --ide-dim: #565e6c;           /* decorative chrome only */
+  --ide-accent: var(--accent, #9d7bff);       /* 6.16:1 on bg */
+  --ide-accent-dim: var(--accent-dim, #7458d1);
+  --ide-on-accent: #14101f;
+  --ide-line: rgba(238, 240, 244, 0.08);
+  --ide-line-strong: rgba(238, 240, 244, 0.16);
+  --ide-green: #7ec699;
+  --ide-gold: #e5c07b;
+  background: var(--ide-bg);
+  color: var(--ide-text);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.ide-root *, .ide-root *::before, .ide-root *::after { box-sizing: border-box; }
+
+.ide-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.ide-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--ide-accent); color: var(--ide-on-accent);
+  padding: 10px 18px; border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.ide-skip:focus { left: 16px; top: 16px; }
+
+.ide-root a:focus-visible,
+.ide-root button:focus-visible {
+  outline: 2px solid var(--ide-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Title bar ────────────────────────────────────────────────────────────── */
+.ide-titlebar {
+  position: sticky; top: 0; z-index: 30;
+  display: flex; align-items: center; gap: 16px;
+  padding: 10px 16px;
+  background: var(--ide-panel);
+  border-bottom: 1px solid var(--ide-line);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+}
+.ide-traffic { display: inline-flex; gap: 7px; flex: none; }
+.ide-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.ide-dot--r { background: #ff5f57; }
+.ide-dot--y { background: #febc2e; }
+.ide-dot--g { background: #28c840; }
+.ide-breadcrumb { color: var(--ide-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.ide-crumb-sep { color: var(--ide-dim); margin: 0 2px; }
+.ide-open {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--ide-muted); white-space: nowrap;
+}
+.ide-open-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ide-accent); flex: none; }
+@media (min-width: 640px) {
+  /* right padding reserves the fixed WidgetStack's corner. The tab bar sits
+     in the same y-band as the widget (directly below the title bar) at
+     EVERY width down to 640px, not just on phones — an actual width
+     reduction (not padding, which only adds trailing scroll space without
+     narrowing where flex children lay out) forces any tab that would
+     render under the widget's reserved zone into the tab bar's existing
+     horizontal scroll instead. */
+  .ide-titlebar { padding-right: 270px; }
+  .ide-tabbar { width: calc(100% - 270px); }
+}
+@media (max-width: 639px) {
+  .ide-titlebar { padding: 10px 12px; }
+  .ide-open { display: none; } /* sits under the fixed WidgetStack on phones */
+}
+
+.ide-files-toggle {
+  display: none;
+  align-items: center; gap: 6px;
+  background: transparent; border: 1px solid var(--ide-line-strong);
+  color: var(--ide-text); border-radius: 6px;
+  padding: 6px 10px; font-size: 12px; font-family: inherit;
+  min-height: 32px;
+}
+@media (max-width: 1023px) {
+  .ide-files-toggle { display: inline-flex; }
+}
+
+.ide-drawer-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 24;
+  background: rgba(0, 0, 0, 0.5);
+  border: 0; padding: 0; cursor: pointer;
+}
+@media (max-width: 1023px) {
+  .ide-drawer-backdrop { display: block; }
+}
+
+/* ── Shell ────────────────────────────────────────────────────────────────── */
+.ide-shell { display: flex; align-items: stretch; min-height: calc(100vh - 45px); }
+
+.ide-sidebar {
+  width: 240px;
+  flex: none;
+  padding: 16px 10px;
+  background: var(--ide-panel);
+  border-right: 1px solid var(--ide-line);
+  overflow-y: auto;
+}
+.ide-sidebar-head {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: 0.12em; color: var(--ide-muted);
+  margin: 0 0 12px; padding: 0 8px;
+}
+.ide-folder { margin-bottom: 6px; }
+.ide-folder-name {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12.5px; color: var(--ide-muted); font-weight: 600;
+  margin: 0; padding: 6px 8px;
+}
+.ide-file-list { list-style: none; margin: 0; padding: 0 0 4px 19px; }
+.ide-file-row {
+  display: flex; align-items: center; gap: 9px;
+  width: 100%; text-align: left;
+  background: transparent; border: 1px solid transparent; border-radius: 5px;
+  color: var(--ide-muted);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  padding: 7px 9px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: background 0.15s cubic-bezier(0.32, 0.72, 0, 1), color 0.15s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ide-file-row:hover { background: rgba(238, 240, 244, 0.04); color: var(--ide-text); }
+.ide-file-row--active {
+  background: color-mix(in srgb, var(--ide-accent) 14%, transparent);
+  color: var(--ide-text);
+  border-color: color-mix(in srgb, var(--ide-accent) 30%, transparent);
+}
+.ide-file-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--ide-dim); }
+.ide-file-dot[data-lang="Markdown"] { background: var(--ide-muted); }
+.ide-file-dot[data-lang="JSON"] { background: var(--ide-gold); }
+.ide-file-dot[data-lang="Python"] { background: var(--ide-green); }
+
+@media (max-width: 1023px) {
+  .ide-sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 25;
+    transform: translateX(-100%);
+    transition: transform 0.24s cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.4);
+    padding-top: 64px;
+    width: min(280px, 82vw);
+  }
+  .ide-sidebar--open { transform: translateX(0); }
+}
+
+/* ── Editor column ────────────────────────────────────────────────────────── */
+.ide-editor { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.ide-tabbar {
+  display: flex; overflow-x: auto;
+  border-bottom: 1px solid var(--ide-line);
+  background: var(--ide-bg-2);
+}
+.ide-tab {
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+  background: transparent; border: 0;
+  border-right: 1px solid var(--ide-line);
+  border-bottom: 2px solid transparent;
+  color: var(--ide-muted);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  padding: 11px 16px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: color 0.15s cubic-bezier(0.32, 0.72, 0, 1), background 0.15s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ide-tab:hover { color: var(--ide-text); background: rgba(238, 240, 244, 0.03); }
+.ide-tab--active {
+  color: var(--ide-text);
+  background: var(--ide-bg);
+  border-bottom-color: var(--ide-accent);
+}
+
+.ide-pane-wrap { flex: 1; overflow-y: auto; background: var(--ide-bg); }
+.ide-pane { padding: 32px clamp(20px, 4vw, 56px) 56px; max-width: 820px; }
+
+/* Code rendering */
+.ide-code { font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 13.5px; line-height: 1.75; }
+.ide-code-row { display: flex; gap: 20px; }
+.ide-gutter { width: 24px; flex: none; text-align: right; color: var(--ide-dim); user-select: none; }
+.ide-line { min-width: 0; }
+.ide-line--blank { height: 1.75em; }
+.ide-tok-comment { color: var(--ide-green); opacity: 0.85; }
+.ide-tok-key { color: var(--ide-text); }
+.ide-tok-str { color: var(--ide-accent); }
+.ide-tok-num { color: var(--ide-gold); }
+.ide-tok-kw { color: var(--ide-accent-dim); font-weight: 600; }
+.ide-tok-punct { color: var(--ide-dim); }
+
+/* Markdown rendering */
+.ide-md-heading {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--ide-text); margin: 0 0 18px;
+}
+.ide-md-text { font-size: 15px; line-height: 1.65; color: var(--ide-text); margin: 0 0 4px; max-width: 62ch; }
+.ide-md-text strong { color: var(--ide-accent); font-weight: 700; }
+.ide-md-bullet { font-size: 14.5px; color: var(--ide-muted); margin: 0 0 4px; }
+.ide-md-link {
+  color: var(--ide-accent); text-decoration: underline; text-underline-offset: 2px;
+}
+.ide-md-link:hover { color: var(--ide-text); }
+
+.ide-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.ide-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 10px 22px; border-radius: 6px;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 14.5px; font-weight: 600; text-decoration: none;
+  transition:
+    background 0.2s cubic-bezier(0.32, 0.72, 0, 1),
+    border-color 0.2s cubic-bezier(0.32, 0.72, 0, 1),
+    transform 0.15s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.ide-btn:active { transform: scale(0.98); }
+.ide-btn--primary { background: var(--ide-accent); color: var(--ide-on-accent); border: 1px solid transparent; }
+.ide-btn--primary:hover { background: #b39dff; }
+.ide-btn--ghost { background: transparent; color: var(--ide-text); border: 1px solid var(--ide-line-strong); }
+.ide-btn--ghost:hover { border-color: var(--ide-accent-dim); }
+
+/* ── Status bar ───────────────────────────────────────────────────────────── */
+.ide-statusbar {
+  display: flex; align-items: center; gap: 20px;
+  padding: 7px 16px;
+  /* bright accent, not accent-dim — dark text on accent-dim was only 3.61:1,
+     below AA; the bright accent gives 5.97:1 and matches real VS Code's own
+     bright-blue status bar convention */
+  background: var(--ide-accent);
+  color: var(--ide-on-accent);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+}
+.ide-status-branch { display: inline-flex; align-items: center; gap: 6px; }
+.ide-status-pos { margin-left: auto; }
+.ide-status-enc { opacity: 0.85; }
+
+/* ── Reduced motion · static, complete, correct page ─────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ide-sidebar { transition: none; }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* The fixed WidgetStack (top:1rem, ~133px tall, right-anchored) sits
+     directly over the tab bar's own screen position at this width — two of
+     five tabs are untappable there regardless of the tab bar's own scroll
+     position, since the widget is fixed to the viewport, not the page. The
+     Files drawer already fully covers file-switching on phones (confirmed
+     unobstructed), so the redundant, partially-dead tab bar is hidden here
+     rather than fought over; the breadcrumb still names the open file.
+     Pane padding-top follows 00-COMMON.md §3.3's ≥116px rule so content
+     clears the widget's bottom edge with the tab bar now gone from the
+     layout entirely (titlebar ~53px + this padding ≥116px). */
+  .ide-tabbar { display: none; }
+  .ide-pane { padding: 120px 18px 40px; }
+  .ide-md-heading { font-size: 1.5rem; }
+  .ide-cta-row { width: 100%; }
+  .ide-btn { flex: 1 1 auto; }
+  .ide-statusbar { font-size: 10.5px; gap: 12px; padding: 7px 12px; }
+  .ide-status-enc { display: none; }
+}
