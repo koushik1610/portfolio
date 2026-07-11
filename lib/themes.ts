@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped";
+export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped" | "route";
 
 export interface ThemeContent {
   tagline: string;
@@ -81,6 +81,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#0a0b12", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f4f1e8", "--text-muted": "#b9b5a8", "--accent": "#2743e0", "--accent-dim": "#1c31a8", "--border": "rgba(244,241,232,0.12)" },
     layout: "wrapped",
     content: { tagline: "Nine years, wrapped.", bio: "Five numbers you'll repeat in the debrief.", cta: "Email me" },
+  },
+  {
+    name: "Route",
+    id: "route",
+    vars: { "--background": "#070a10", "--surface": "rgba(238,242,246,0.03)", "--surface-2": "rgba(238,242,246,0.05)", "--text-primary": "#eef2f6", "--text-muted": "#90a0ae", "--accent": "#22d3ee", "--accent-dim": "#0e7490", "--border": "rgba(238,242,246,0.09)" },
+    layout: "route",
+    content: { tagline: "The career, one line at a time.", bio: "Five stops, one line, nine years built.", cta: "Email me" },
   },
 ];
 
