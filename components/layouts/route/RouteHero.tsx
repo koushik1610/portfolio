@@ -252,6 +252,10 @@ export default function RouteHero({ theme }: { theme: Theme }) {
 
         {/* ── Destination — the route's terminus ──────────────────────── */}
         <section className="rt-dest" aria-labelledby="rt-dest-head">
+          {/* Connects the last station down to this node — without it, the
+              destination read as a disconnected footer rather than where
+              the line actually ends (a real QA finding, not cosmetic). */}
+          <span className="rt-dest-connector" aria-hidden="true" />
           <span className="rt-dest-node" aria-hidden="true" />
           <p className="rt-dest-eyebrow">Current position</p>
           <h2 id="rt-dest-head" className="rt-dest-head">

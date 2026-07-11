@@ -4,7 +4,7 @@
    CSS class prefix: ath-
    ══════════════════════════════════════════════════════════════════════════════ */
 
-html[data-layout="aethera"] nav { display: none !important; }
+html[data-layout="aethera"] nav:not(.ath-nav):not(.ath-mobile-nav) { display: none !important; }
 
 /* ── Keyframes ───────────────────────────────────────────────────────────── */
 @keyframes ath-fade-rise {
@@ -398,6 +398,13 @@ html[data-layout="aethera"] .ath-project-row {
   margin: 0 -1rem;
   border-bottom: 1px solid #e5e5e3;
   transition: background 0.2s ease;
+}
+
+@media (min-width: 1024px) {
+  /* the fixed WidgetStack corner sits over this row's right-aligned metric
+     column at common laptop widths (~1280-1600px) where .ath-projects-inner's
+     centered max-width nearly fills the viewport — reserve room for it. */
+  html[data-layout="aethera"] .ath-project-row { padding-right: 190px; }
 }
 
 html[data-layout="aethera"] .ath-project-row:hover {

@@ -67,9 +67,9 @@ const FILES: ReadonlyArray<FileTab> = [
       { kind: "text", text: "Cloud security engineer building AI-native security platforms — **production systems, not prototypes.**" },
       { kind: "blank" },
       { kind: "text", text: "A small team. 2,800+ cloud accounts. The math only works if you build the right systems." },
-      { kind: "blank" },
-      { kind: "bullet", text: "[Email me](mailto:koushik.kotamraju1610@gmail.com)" },
-      { kind: "bullet", text: "[Résumé](/resume)" },
+      // No markdown-link CTA bullets here — the button row rendered below
+      // for this file already is the CTA; a QA pass found the two doing
+      // the same job back to back read as duplicated, not reinforcing.
     ],
   },
   {
@@ -103,10 +103,15 @@ const FILES: ReadonlyArray<FileTab> = [
       { kind: "text", parts: [{ t: "class ", k: "kw" }, { t: "DetectionFleet", k: "key" }, { t: ":", k: "punct" }] },
       { kind: "text", indent: 1, parts: [{ t: "signatures ", k: "key" }, { t: "= ", k: "punct" }, { t: '"200+"', k: "str" }] },
       { kind: "text", indent: 1, parts: [{ t: "accounts_evaluated ", k: "key" }, { t: "= ", k: "punct" }, { t: '"1,400+"', k: "str" }] },
+      { kind: "text", indent: 1, parts: [{ t: "new_baselines_v6 ", k: "key" }, { t: "= ", k: "punct" }, { t: '"50+"', k: "str" }] },
       { kind: "blank" },
       { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "coverage_score", k: "key" }, { t: "(self):", k: "punct" }] },
       { kind: "comment", indent: 2, text: '"""The posture scores the company is measured against."""' },
       { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "self.signatures", k: "key" }] },
+      { kind: "blank" },
+      { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "expand_baseline", k: "key" }, { t: "(self):", k: "punct" }] },
+      { kind: "comment", indent: 2, text: '"""v6.0 — the largest control expansion in program history."""' },
+      { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "self.new_baselines_v6", k: "key" }] },
     ],
   },
   {
@@ -124,6 +129,10 @@ const FILES: ReadonlyArray<FileTab> = [
       { kind: "text", indent: 1, parts: [{ t: "vulnerability_classes ", k: "key" }, { t: "= ", k: "punct" }, { t: "10", k: "num" }] },
       { kind: "text", indent: 1, parts: [{ t: "goat_benchmarks ", k: "key" }, { t: "= ", k: "punct" }, { t: "32", k: "num" }] },
       { kind: "text", indent: 1, parts: [{ t: "toxic_combinations ", k: "key" }, { t: "= ", k: "punct" }, { t: "62", k: "num" }] },
+      { kind: "blank" },
+      { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "dissolve", k: "key" }, { t: "(self, chain):", k: "punct" }] },
+      { kind: "comment", indent: 2, text: '"""Antitoxin: find the keystone permission whose removal collapses the chain."""' },
+      { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "min_cut_set", k: "key" }, { t: "(chain)", k: "punct" }] },
     ],
   },
   {
@@ -148,27 +157,43 @@ const FILES: ReadonlyArray<FileTab> = [
 
 const FOLDER_ORDER = ["career", "detection", "projects"] as const;
 
-/* Renders one markdown "part" — a **bold** run inside otherwise-plain text. */
+/* Renders one markdown "part" as RAW source with syntax coloring — the
+   ** and [](...) markers stay visible (like a real editor's markdown mode
+   shows the source, not a rendered preview), styled as punctuation and
+   aria-hidden so a screen reader hears the clean text, not the marks. */
 function MdText({ text }: { text: string }) {
   const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).filter(Boolean);
   return (
     <>
       {parts.map((p, i) => {
         const boldMatch = p.match(/^\*\*([^*]+)\*\*$/);
-        if (boldMatch) return <strong key={i}>{boldMatch[1]}</strong>;
+        if (boldMatch) {
+          return (
+            <span key={i}>
+              <span className="ide-tok-punct" aria-hidden="true">**</span>
+              <strong>{boldMatch[1]}</strong>
+              <span className="ide-tok-punct" aria-hidden="true">**</span>
+            </span>
+          );
+        }
         const linkMatch = p.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
         if (linkMatch) {
           const [, label, href] = linkMatch;
           const ext = href.startsWith("http");
           return (
-            <a
-              key={i}
-              href={href}
-              className="ide-md-link"
-              {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              {label}
-            </a>
+            <span key={i}>
+              <span className="ide-tok-punct" aria-hidden="true">[</span>
+              <a
+                href={href}
+                className="ide-md-link"
+                {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
+                {label}
+              </a>
+              <span className="ide-tok-punct" aria-hidden="true">{"]("}</span>
+              <span className="ide-tok-str" aria-hidden="true">{href}</span>
+              <span className="ide-tok-punct" aria-hidden="true">)</span>
+            </span>
           );
         }
         return <span key={i}>{p}</span>;
@@ -204,10 +229,21 @@ function CodeLine({ line }: { line: Line }) {
 function MdLine({ line }: { line: Line }) {
   if (line.kind === "blank") return <div className="ide-line ide-line--blank">&nbsp;</div>;
   if (line.kind === "heading") {
-    return <h2 className="ide-line ide-md-heading">{(line.text ?? "").replace(/^#\s*/, "")}</h2>;
+    const headingText = (line.text ?? "").replace(/^#\s*/, "");
+    return (
+      <h2 className="ide-line ide-md-heading">
+        <span className="ide-tok-punct" aria-hidden="true"># </span>
+        {headingText}
+      </h2>
+    );
   }
   if (line.kind === "bullet") {
-    return <p className="ide-line ide-md-bullet">— <MdText text={line.text ?? ""} /></p>;
+    return (
+      <p className="ide-line ide-md-bullet">
+        <span className="ide-tok-punct" aria-hidden="true">- </span>
+        <MdText text={line.text ?? ""} />
+      </p>
+    );
   }
   return <p className="ide-line ide-md-text"><MdText text={line.text ?? ""} /></p>;
 }

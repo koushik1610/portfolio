@@ -220,7 +220,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
           <a href="#about"     className="ath-nav-link">Home</a>
           <a href="#work"      className="ath-nav-link">Work</a>
           <a href="#about-bio" className="ath-nav-link">About</a>
-          <a href="#contact"   className="ath-nav-link">Contact</a>
+          <a href="#ath-contact"   className="ath-nav-link">Contact</a>
         </div>
         <a href="#work" className="ath-nav-cta">View Work</a>
       </nav>
@@ -376,7 +376,10 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
       </section>
 
       {/* ── CONTACT ──────────────────────────────────────────────────────────── */}
-      <section id="contact" className="ath-contact">
+      {/* id is "ath-contact", not "contact" — the global rule in app/globals.css
+          hides any section#contact to suppress the generic Contact component
+          on themed pages, and would otherwise nuke this bespoke one too. */}
+      <section id="ath-contact" className="ath-contact">
         <p className="ath-contact-label">Let&apos;s connect</p>
         <h2 className="ath-contact-heading">
           Open to senior{" "}
@@ -414,7 +417,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
         <a href="#about"     className="ath-mobile-nav-link">Home</a>
         <a href="#work"      className="ath-mobile-nav-link">Work</a>
         <a href="#about-bio" className="ath-mobile-nav-link">About</a>
-        <a href="#contact"   className="ath-mobile-nav-link">Contact</a>
+        <a href="#ath-contact"   className="ath-mobile-nav-link">Contact</a>
       </nav>
     </div>
   );

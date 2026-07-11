@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped" | "route" | "ide" | "trace" | "keynote";
+export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped" | "route" | "ide";
 
 export interface ThemeContent {
   tagline: string;
@@ -95,20 +95,6 @@ export const themes: Theme[] = [
     vars: { "--background": "#0d0e14", "--surface": "rgba(238,240,244,0.03)", "--surface-2": "rgba(238,240,244,0.05)", "--text-primary": "#eef0f4", "--text-muted": "#8b93a3", "--accent": "#9d7bff", "--accent-dim": "#7458d1", "--border": "rgba(238,240,244,0.08)" },
     layout: "ide",
     content: { tagline: "The career, open in an editor.", bio: "Five files, one editor, nine years of production code.", cta: "Email me" },
-  },
-  {
-    name: "Trace",
-    id: "trace",
-    vars: { "--background": "#070a09", "--surface": "rgba(232,242,236,0.025)", "--surface-2": "rgba(232,242,236,0.05)", "--text-primary": "#e8f2ec", "--text-muted": "#94a69c", "--accent": "#5eead4", "--accent-dim": "#14a38f", "--border": "rgba(232,242,236,0.09)" },
-    layout: "trace",
-    content: { tagline: "Agent run: should_we_hire — verdict HIRE.", bio: "An agent trace whose final span is a hire decision.", cta: "Email me" },
-  },
-  {
-    name: "Keynote",
-    id: "keynote",
-    vars: { "--background": "#08090c", "--surface": "rgba(238,241,246,0.03)", "--surface-2": "rgba(238,241,246,0.05)", "--text-primary": "#eef1f6", "--text-muted": "#98a0ae", "--accent": "#ec4899", "--accent-dim": "#b3306e", "--border": "rgba(238,241,246,0.08)" },
-    layout: "keynote",
-    content: { tagline: "The talk: a small team, 2,800+ accounts.", bio: "A conference keynote, staged slide by slide.", cta: "Email me" },
   },
 ];
 

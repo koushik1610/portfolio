@@ -31,6 +31,15 @@ export const glassSurface: CSSProperties = {
   width: "100%",
   minHeight: "44px",
   color: "var(--text-primary)",
+  transition: "padding 0.22s cubic-bezier(0.32, 0.72, 0, 1)",
+};
+
+// Compact variant — a smaller footprint once the page has scrolled (see
+// WidgetStack.tsx). Same shape, tighter padding; children hide their own
+// secondary line when compact, so this alone doesn't need to.
+export const glassSurfaceCompact: CSSProperties = {
+  ...glassSurface,
+  padding: "0.45rem 0.85rem",
 };
 
 export const glassPrimaryText: CSSProperties = {
@@ -52,12 +61,14 @@ export function GlassWidget({
   title,
   ariaLabel,
   ariaExpanded,
+  compact,
 }: {
   children: ReactNode;
   onClick?: () => void;
   title?: string;
   ariaLabel?: string;
   ariaExpanded?: boolean;
+  compact?: boolean;
 }) {
   return (
     <button
@@ -66,7 +77,7 @@ export function GlassWidget({
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
       className="widget-shine glass-widget"
-      style={glassSurface}
+      style={compact ? glassSurfaceCompact : glassSurface}
     >
       {children}
     </button>

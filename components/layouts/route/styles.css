@@ -181,6 +181,12 @@ html[data-layout="route"] nav:not(.rt-nav) { display: none !important; }
   display: flex;
   flex-direction: column;
   gap: 10px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.rt-station:hover .rt-station-card,
+.rt-station:focus-within .rt-station-card {
+  border-color: var(--rt-accent-dim);
+  background: rgba(238, 242, 246, 0.045);
 }
 .rt-station-code {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
@@ -201,7 +207,21 @@ html[data-layout="route"] nav:not(.rt-nav) { display: none !important; }
   position: relative;
   margin-top: 72px;
   padding: 48px 0 0 40px;
-  border-top: 1px solid var(--rt-line);
+  /* no border-top here on purpose — a plain full-width hairline read as a
+     new, unrelated section; .rt-dest-connector carries the transition
+     instead, so the line reads as continuing, not restarting. */
+}
+/* A short accent-colored continuation of the track, from where the last
+   station left off down into the destination node — already "traveled,"
+   so it's a static fill, not a scroll-scrubbed one like the track above. */
+.rt-dest-connector {
+  position: absolute;
+  top: 0;
+  left: 20px; /* centers under .rt-dest-node's 19px-wide circle at left:12px */
+  width: 3px;
+  height: 53px;
+  background: var(--rt-accent);
+  border-radius: 3px;
 }
 .rt-dest-node {
   position: absolute;
@@ -267,6 +287,7 @@ html[data-layout="route"] nav:not(.rt-nav) { display: none !important; }
   .rt-station-card { padding: 18px 18px; }
   .rt-dest { padding-left: 32px; margin-top: 56px; }
   .rt-dest-node { left: 4px; }
+  .rt-dest-connector { left: 12px; }
   .rt-contact-link { flex-wrap: wrap; row-gap: 2px; }
   .rt-contact-k { min-width: 0; }
 }

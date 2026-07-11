@@ -1,9 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { getCurrentTheme } from "@/lib/themes";
 
 export default function ThemeApplier() {
-  useEffect(() => {
+  // useLayoutEffect (not useEffect): CSS vars + data-layout must land before
+  // the browser's first paint of the real theme content, not after, or that
+  // first frame paints with default/unset vars.
+  useLayoutEffect(() => {
     const apply = () => {
       const theme = getCurrentTheme();
       const root = document.documentElement;
