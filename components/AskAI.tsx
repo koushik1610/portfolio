@@ -81,7 +81,7 @@ const TOOLS = [
 
 // ── Floating button ────────────────────────────────────────────────────────────
 
-export function AskAIFloat() {
+export function AskAIFloat({ compact }: { compact?: boolean }) {
   // Themed pages hide the #ask-ai section, so the float owns the interaction:
   // clicking it expands the four AI-tool links in place. Disclosure pattern
   // (trigger + aria-expanded + Escape), deliberately NOT role="menu" — plain
@@ -89,6 +89,9 @@ export function AskAIFloat() {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const wrapRef = useRef<HTMLDivElement>(null);
+  // Never collapse mid-interaction — only go compact when the disclosure
+  // is closed, so a user who has it open never has it shrink under them.
+  const showCompact = compact && !open;
 
   return (
     <div
@@ -106,6 +109,7 @@ export function AskAIFloat() {
         onClick={() => setOpen((v) => !v)}
         ariaLabel="Ask AI about Koushik"
         ariaExpanded={open}
+        compact={showCompact}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <span style={{ display: "flex", gap: "3px", alignItems: "center" }} aria-hidden="true">
@@ -116,9 +120,11 @@ export function AskAIFloat() {
           </span>
           <span style={glassPrimaryText}>ASK AI ABOUT ME</span>
         </div>
-        <span style={{ ...glassSecondaryText, paddingLeft: "0.1rem" }}>
-          {open ? "click to close" : "click to choose an AI"}
-        </span>
+        {!showCompact && (
+          <span style={{ ...glassSecondaryText, paddingLeft: "0.1rem" }}>
+            {open ? "click to close" : "click to choose an AI"}
+          </span>
+        )}
       </GlassWidget>
 
       <AnimatePresence>

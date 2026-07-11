@@ -465,7 +465,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
 
           <div className="w13-rail-foot">
             <span className="w13-rail-foot-k">AWS SA · Security Specialty</span>
-            <span className="w13-rail-foot-k">9 years · 3 orgs</span>
+            <span className="w13-rail-foot-k">9 years · cloud security</span>
             <span className="w13-rail-foot-k">koushik.io</span>
           </div>
         </aside>

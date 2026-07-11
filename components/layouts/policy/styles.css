@@ -269,7 +269,11 @@ html[data-layout="policy"] nav:not(.pol-nav) { display: none !important; }
   /* keep a slim gutter — the line numbers are the theme's identity */
   .pol-line::before { width: 22px; font-size: 10px; }
   .pol-name::before { padding-top: 8px; }
-  .pol-nav { padding: 12px 16px; }
+  /* padding-right reserves the fixed WidgetStack's corner — .pol-file's
+     ellipsis only truncates once content exceeds its own box width, so
+     without this reserve the long file-path breadcrumb renders straight
+     under the widget instead of truncating before it (a real QA finding). */
+  .pol-nav { padding: 12px 270px 12px 16px; }
   .pol-open { display: none; } /* sits under the fixed WidgetStack on phones */
   .pol-avail {
     display: flex; align-items: center; gap: 8px;

@@ -4,7 +4,7 @@ import { getCurrentTheme, type Theme } from "@/lib/themes";
 import { incrementOffset } from "@/lib/rotation";
 import { GlassWidget, glassPrimaryText, glassSecondaryText } from "./GlassWidget";
 
-export default function ThemeBadge() {
+export default function ThemeBadge({ compact }: { compact?: boolean }) {
   const [theme, setTheme] = useState<Theme | null>(null);
   const [spinning, setSpinning] = useState(false);
 
@@ -25,7 +25,7 @@ export default function ThemeBadge() {
   if (!theme) return null;
 
   return (
-    <GlassWidget onClick={rotate} title="Click to rotate theme">
+    <GlassWidget onClick={rotate} title="Click to rotate theme" compact={compact}>
       {/* Primary action — bigger, on top */}
       <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
         <span
@@ -43,23 +43,27 @@ export default function ThemeBadge() {
         </span>
         <span style={glassPrimaryText}>ROTATE THEME</span>
       </div>
-      {/* Current theme — secondary info below */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", paddingLeft: "0.05rem" }}>
-        <span
-          aria-hidden="true"
-          style={{
-            width: "6px",
-            height: "6px",
-            borderRadius: "50%",
-            background: "var(--accent, #818cf8)",
-            display: "inline-block",
-            boxShadow: "0 0 7px var(--accent, #818cf8)",
-            animation: "dot-pulse 2s ease-in-out infinite",
-            flexShrink: 0,
-          }}
-        />
-        <span style={glassSecondaryText}>Current Theme: {theme.name}</span>
-      </div>
+      {/* Current theme — secondary info below, hidden once compact so the
+          stack's scrolled footprint stays small enough to stop clipping
+          in-flow content underneath it (see WidgetStack.tsx). */}
+      {!compact && (
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", paddingLeft: "0.05rem" }}>
+          <span
+            aria-hidden="true"
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              background: "var(--accent, #818cf8)",
+              display: "inline-block",
+              boxShadow: "0 0 7px var(--accent, #818cf8)",
+              animation: "dot-pulse 2s ease-in-out infinite",
+              flexShrink: 0,
+            }}
+          />
+          <span style={glassSecondaryText}>Current Theme: {theme.name}</span>
+        </div>
+      )}
     </GlassWidget>
   );
 }

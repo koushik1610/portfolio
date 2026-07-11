@@ -128,17 +128,19 @@ exact accent values: the table below is a snapshot and will drift.
 | `wrapped` | Five stat slabs in a drenched color sequence, plus a recap reel | Dark |
 | `route` | The career as a scroll-scrubbed schematic transit line | Dark |
 | `ide` | A VS Code–style shell — click a file/tab to switch content | Dark |
-| `trace` | An AI agent-trace replay ending in a verdict card | Dark |
-| `keynote` | The unshipped conference talk, staged as 16:9 framed slides | Dark |
 
-12 themes total (10 dark, 2 light) — the 8-theme cull (from a prior 22-theme
-rotation) plus four net-new builds (`route`, `ide`, `trace`, `keynote`),
-matching the rotation's planned target size. Each theme differs in layout
-skeleton, scroll flow, hero composition, typography, and animation
-signature, not just accent color. Further additions are gated behind a
-multi-persona design-council review (≥95 composite score, no single
-reviewer below 80, plus a dedicated distinctiveness reviewer with its own
-≥90 floor) before they ship.
+10 themes total (8 dark, 2 light). Culled from a 12-theme rotation (2026-07):
+`trace` (an AI agent-trace replay) and `keynote` (a slide-deck talk) were
+retired after a round-robin council pass: `keynote` shared its layout
+skeleton, scroll mechanic, hero composition, and closing-slide anatomy with
+`wrapped`, and `trace` sat in an already-crowded monospace-artifact register
+alongside `policy`/`telemetry`/`ide`/`coverage` with the weakest remaining
+distinctiveness score. Each surviving theme differs in layout skeleton,
+scroll flow, hero composition, typography, and animation signature, not just
+accent color. Further additions are gated behind a multi-persona
+design-council review (≥95 composite score, no single reviewer below 80,
+plus a dedicated distinctiveness reviewer with its own ≥90 floor) before
+they ship.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -221,7 +223,7 @@ summary of career achievements optimized for LLM consumption. It's the mechanism
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] 12 fully bespoke themes, each a distinct layout structure
+- [x] 10 fully bespoke themes, each a distinct layout structure
 - [x] Time-based + click-offset theme rotation with `localStorage` persistence
 - [x] `llms.txt` for AI-readable career data
 - [x] "Ask AI about me": answer questions about the portfolio via LLM

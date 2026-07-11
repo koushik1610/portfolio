@@ -182,7 +182,6 @@ export default function RfcHero({ theme }: { theme: Theme }) {
                 <a href={t.href}>
                   <span>{t.label}</span>
                   <span className="rc-toc-leader" aria-hidden="true" />
-                  <span aria-hidden="true">1</span>
                 </a>
               </li>
             ))}
