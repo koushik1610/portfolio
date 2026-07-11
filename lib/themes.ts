@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped" | "route";
+export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped" | "route" | "ide";
 
 export interface ThemeContent {
   tagline: string;
@@ -88,6 +88,13 @@ export const themes: Theme[] = [
     vars: { "--background": "#070a10", "--surface": "rgba(238,242,246,0.03)", "--surface-2": "rgba(238,242,246,0.05)", "--text-primary": "#eef2f6", "--text-muted": "#90a0ae", "--accent": "#22d3ee", "--accent-dim": "#0e7490", "--border": "rgba(238,242,246,0.09)" },
     layout: "route",
     content: { tagline: "The career, one line at a time.", bio: "Five stops, one line, nine years built.", cta: "Email me" },
+  },
+  {
+    name: "IDE",
+    id: "ide",
+    vars: { "--background": "#0d0e14", "--surface": "rgba(238,240,244,0.03)", "--surface-2": "rgba(238,240,244,0.05)", "--text-primary": "#eef0f4", "--text-muted": "#8b93a3", "--accent": "#9d7bff", "--accent-dim": "#7458d1", "--border": "rgba(238,240,244,0.08)" },
+    layout: "ide",
+    content: { tagline: "The career, open in an editor.", bio: "Five files, one editor, nine years of production code.", cta: "Email me" },
   },
 ];
 
