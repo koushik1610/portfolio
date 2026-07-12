@@ -179,16 +179,28 @@ html[data-layout="coverage"] nav:not(.cv-nav) { display: none !important; }
    review) — widened the low end and gave the top tier (enforced) a soft
    glow, so the matrix reads as a genuine heat map, not a colored grid. */
 .cv-h0 { background: transparent; border: 1px dashed rgba(233, 237, 243, 0.22); }
+/* 2026-07-12 asset rework: layered a genuine halftone dot pattern (21st.dev
+   Halftone-shader-derived, done in pure CSS — no image asset) under each
+   heat tier's flat tint. Dot size/density scales with heat, so the matrix
+   reads as an actual print-halftone gradient, not a flat 4-step opacity
+   ramp — a more literal, more distinctive take on "heat map" than color
+   alone. Dots stay small enough (<=2px) not to compete with cell text. */
 .cv-h1 {
-  background: color-mix(in srgb, var(--cv-blue) 9%, transparent);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--cv-blue) 55%, transparent) 1px, transparent 1.3px) 0 0 / 9px 9px,
+    color-mix(in srgb, var(--cv-blue) 9%, transparent);
   border: 1px solid color-mix(in srgb, var(--cv-blue) 26%, transparent);
 }
 .cv-h2 {
-  background: color-mix(in srgb, var(--cv-blue) 40%, transparent);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--cv-blue) 70%, transparent) 1.3px, transparent 1.6px) 0 0 / 6px 6px,
+    color-mix(in srgb, var(--cv-blue) 40%, transparent);
   border: 1px solid color-mix(in srgb, var(--cv-blue) 58%, transparent);
 }
 .cv-h3 {
-  background: var(--cv-blue);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--cv-blue) 85%, white) 1.6px, transparent 2px) 0 0 / 4px 4px,
+    var(--cv-blue);
   border: 1px solid color-mix(in srgb, var(--cv-blue) 70%, white);
   box-shadow: 0 0 14px color-mix(in srgb, var(--cv-blue) 55%, transparent);
 }
