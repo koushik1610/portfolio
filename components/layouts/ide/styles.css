@@ -204,8 +204,32 @@ html[data-layout="ide"] nav:not(.ide-titlebar):not(.ide-filenav) { display: none
   border-bottom-color: var(--ide-accent);
 }
 
-.ide-pane-wrap { flex: 1; overflow-y: auto; background: var(--ide-bg); }
-.ide-pane { padding: 32px clamp(20px, 4vw, 56px) 56px; max-width: 820px; }
+.ide-pane-wrap { flex: 1; display: flex; align-items: stretch; overflow-y: auto; background: var(--ide-bg); }
+.ide-pane { flex: 1; min-width: 0; padding: 32px clamp(20px, 4vw, 56px) 56px; max-width: 820px; }
+
+/* Minimap — see IdeHero.tsx banner comment. One bar per source line. */
+.ide-minimap {
+  flex: none;
+  width: 84px;
+  padding: 32px 14px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-left: 1px solid var(--ide-line);
+  opacity: 0.8;
+}
+.ide-mm-row { height: 3px; display: flex; align-items: center; }
+.ide-mm-bar { display: block; height: 2px; border-radius: 1px; background: var(--ide-dim); }
+.ide-mm-tone-comment { background: var(--ide-green); opacity: 0.7; }
+.ide-mm-tone-key { background: var(--ide-text); opacity: 0.55; }
+.ide-mm-tone-str { background: var(--ide-accent); opacity: 0.7; }
+.ide-mm-tone-num { background: var(--ide-gold); opacity: 0.7; }
+.ide-mm-tone-kw { background: var(--ide-accent-dim); opacity: 0.8; }
+.ide-mm-tone-punct { background: var(--ide-dim); opacity: 0.5; }
+.ide-mm-tone-text { background: var(--ide-muted); opacity: 0.45; }
+@media (max-width: 900px) {
+  .ide-minimap { display: none; }
+}
 
 /* Code rendering */
 .ide-code { font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 13.5px; line-height: 1.75; }
