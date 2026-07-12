@@ -111,6 +111,34 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   object-fit: cover;
   object-position: center 22%; /* preserved from the prior build */
 }
+
+/* Rotating stamp badge (Cuberto-derived) — a literal magazine seal on the
+   photo panel corner. Slow, ambient, gated off under reduced motion. */
+.bf-stamp {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 76px;
+  height: 76px;
+  z-index: 4;
+  animation: bf-stamp-spin 16s linear infinite;
+}
+.bf-stamp-svg { width: 100%; height: 100%; }
+.bf-stamp-bg { fill: rgba(12, 10, 9, 0.55); }
+.bf-stamp-text {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 7.2px;
+  letter-spacing: 0.05em;
+  fill: var(--bf-text);
+  text-transform: uppercase;
+}
+.bf-stamp-dot { fill: var(--bf-coral); }
+@keyframes bf-stamp-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bf-stamp { animation: none; }
+}
 .bf-masthead-text {
   grid-column: 1;
   grid-row: 1;
@@ -149,6 +177,14 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   margin: 0;
   padding: 6px 0;
   white-space: nowrap;
+  /* Council-caught bug (2026-07-12): the trailing letters bleed onto the
+     photo and, depending on crop, can land on a bright area (e.g. a white
+     shirt) where white-on-white becomes nearly illegible. A soft dark
+     shadow is imperceptible against the near-black column background but
+     restores contrast wherever the text crosses onto brighter photo
+     content — cheaper and more robust across breakpoints than trying to
+     track the exact overlap position with a scrim. */
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 .bf-name-plate {
   position: absolute;
@@ -299,6 +335,8 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   display: flex; flex-wrap: wrap; gap: 12px;
 }
 .bf-contact-link {
+  position: relative;
+  overflow: hidden;
   display: inline-flex; flex-direction: column; gap: 2px;
   min-height: 44px; justify-content: center;
   text-decoration: none; color: var(--bf-text);
@@ -306,6 +344,24 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
   transition: border-color 0.25s cubic-bezier(0.32, 0.72, 0, 1);
 }
 .bf-contact-link:hover { border-color: rgba(255, 122, 92, 0.45); }
+/* One-shot diagonal foil sweep on hover/focus — a fixed transition, not
+   cursor-tracked, so it reads distinct from Telemetry's scan-line mechanic. */
+.bf-contact-link::after {
+  content: "";
+  position: absolute;
+  inset: -60% -20%;
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.09) 50%, transparent 58%);
+  transform: translateX(-140%);
+  transition: transform 0.55s cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: none;
+}
+.bf-contact-link:hover::after,
+.bf-contact-link:focus-visible::after {
+  transform: translateX(40%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bf-contact-link::after { transition: none; }
+}
 .bf-contact-k { font-size: 13px; font-weight: 700; }
 .bf-contact-v {
   font-family: var(--font-geist-mono), ui-monospace, monospace;

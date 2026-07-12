@@ -21,6 +21,13 @@ import "./styles.css";
    each row. Signature move: the masthead's name band reveals via a solid
    colour plate that wipes off (a print-registration beat), distinct from
    Avatar's grayscale photo-develop and every other theme's reveal style.
+
+   2026-07-12 asset rework (theme-plans/00-STRATEGY-2026-07-research-rework.md
+   §2): added a rotating circular "stamp" badge on the photo panel corner
+   (Cuberto-derived) — a literal magazine-seal detail, not decoration for its
+   own sake — and a one-shot diagonal foil sweep on the contact links on
+   hover/focus (deliberately a fixed transition, not cursor-tracked, so it
+   reads distinct from Telemetry's continuous scan-line mechanic).
 ───────────────────────────────────────────────────────────────────────────── */
 
 const MARGINALIA = [
@@ -236,6 +243,24 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
               alt="Portrait of Koushik Kotamraju"
               className="bf-portrait"
             />
+            {/* Rotating stamp badge (Cuberto-derived circular text) — reads
+                as a literal magazine seal, reinforcing the "operations
+                brief" issue concept rather than decorating for its own
+                sake. Static under reduced motion (see CSS). */}
+            <div className="bf-stamp" aria-hidden="true">
+              <svg viewBox="0 0 100 100" className="bf-stamp-svg">
+                <defs>
+                  <path id="bf-stamp-circle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+                </defs>
+                <circle cx="50" cy="50" r="45" className="bf-stamp-bg" />
+                <text className="bf-stamp-text">
+                  <textPath href="#bf-stamp-circle" startOffset="0%">
+                    OPEN TO WORK · OPEN TO WORK ·
+                  </textPath>
+                </text>
+                <circle cx="50" cy="50" r="4" className="bf-stamp-dot" />
+              </svg>
+            </div>
           </div>
 
           <div className="bf-masthead-text">
