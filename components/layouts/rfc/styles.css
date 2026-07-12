@@ -68,6 +68,23 @@ html[data-layout="rfc"] nav:not(.rc-nav):not(.rc-toc) { display: none !important
 .rc-header-col p { margin: 0 0 2px; }
 .rc-header-col--right { text-align: right; }
 
+/* ── Status of This Memo — real RFC boilerplate ─────────────────────────── */
+.rc-status {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--rc-muted);
+  max-width: 60ch;
+  margin: 0 0 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rc-line);
+}
+.rc-status-label {
+  font-weight: 700;
+  color: var(--rc-ink);
+  margin: 0 0 8px;
+}
+.rc-status p:last-child { margin: 0; }
+
 /* ── Title block ─────────────────────────────────────────────────────────── */
 .rc-title-block { text-align: center; margin-bottom: 32px; }
 .rc-eyebrow {
