@@ -35,6 +35,12 @@ import "./styles.css";
    is added; the masthead gets a plain settle-protected fade-up and nothing
    else. Track fill and marker position are driven by ONE GSAP timeline/
    ScrollTrigger so they can never drift apart.
+
+   2026-07-12 asset rework: the base track (the "not yet traveled" portion,
+   visible below the accent fill) now carries a subtle tick-scale pattern —
+   an authentic engineering/blueprint measurement-scale convention. Static,
+   contained to one element, no new motion — the scrub stays the theme's
+   one signature move.
 ───────────────────────────────────────────────────────────────────────────── */
 
 interface Station {

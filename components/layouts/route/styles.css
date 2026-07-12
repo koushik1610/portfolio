@@ -128,8 +128,16 @@ html[data-layout="route"] nav:not(.rt-nav) { display: none !important; }
   left: 19px;
   width: 3px;
   border-radius: 3px;
-  background: var(--rt-line-strong);
   overflow: visible;
+  /* 2026-07-12 asset rework: a subtle engineering-scale tick pattern on
+     the base track — visible only where the accent fill hasn't yet
+     traveled (the fill is a separate, opaque, scaleY-animated overlay).
+     An authentic schematic/blueprint convention (a measurement scale),
+     not a new motion or a second signature move — the scrub above it
+     stays the only one. */
+  background:
+    repeating-linear-gradient(to bottom, var(--rt-line-strong) 0 1px, transparent 1px 14px),
+    var(--rt-line);
 }
 .rt-track-fill {
   display: block;
