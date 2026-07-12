@@ -23,6 +23,13 @@ import "./styles.css";
    real RFC convention) and heavier, more consistent use of RFC 2119
    MUST/SHOULD/MAY language through the body sections (previously confined
    to §2's own definition, then almost never used again).
+
+   2026-07-12 asset rework: added a real "Status of This Memo" paragraph —
+   every published RFC has one and this document was conspicuously missing
+   it. Textual-only, zero motion, zero layout risk, deliberately the only
+   addition: this theme's own stated genre is "documents don't slide," and
+   it was already reviewed as the strongest of its cluster pre-rework, so
+   authenticity is the right lever here, not a new visual mechanic.
 ───────────────────────────────────────────────────────────────────────────── */
 
 const TOC = [
@@ -147,6 +154,17 @@ export default function RfcHero({ theme }: { theme: Theme }) {
             <p>Yahoo Paranoids</p>
             <p>July 2026</p>
           </div>
+        </div>
+
+        {/* ── Status of This Memo — real RFC convention, every published
+            RFC has one; this document was conspicuously missing it ────── */}
+        <div className="rc-status">
+          <p className="rc-status-label">Status of This Memo</p>
+          <p>
+            This document is not an Internet Standards Track specification; it
+            is published as an informational reference for interested
+            employers. Distribution of this document is unlimited.
+          </p>
         </div>
 
         {/* ── Title block ──────────────────────────────────────────────── */}
