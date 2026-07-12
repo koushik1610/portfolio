@@ -47,6 +47,29 @@ html[data-layout="wrapped"] { scroll-snap-type: y proximity; }
   overflow-x: hidden;
 }
 
+/* 2026-07-12 asset rework: a static film-grain texture over every slab —
+   the signature tactile finish real Wrapped-style story cards use on
+   flat color fields. Deliberately STATIC (no animation, no hue shift),
+   per this theme's own house rule (banner comment: "no perpetual
+   motion"). Fixed + low z-index so it never competes with WidgetStack;
+   pointer-events:none so it never intercepts input. */
+.wr-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* No mix-blend-mode: every multiply-family blend (overlay, soft-light,
+     multiply itself) mathematically crushes toward invisible on the
+     near-black cover/outro slabs — confirmed by direct pixel testing, not
+     a tuning issue. Default (normal) alpha compositing is the only option
+     that stays consistently visible across all five slab tones, from
+     near-black through ivory. */
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
 .wr-sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
