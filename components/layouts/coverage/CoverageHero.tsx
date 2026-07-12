@@ -22,7 +22,12 @@ const BOARD_META = "att&ck coverage · cloud estate · koushik · 2026";
    3 = enforced + detected. Depth is conveyed by fill AND by visible sr-only
    text inside each cell — never color alone.
    ⚠ Co-update sites if a level is added: HEAT (here), .cv-h<N> in styles.css,
-   and the legend renders from HEAT automatically. */
+   and the legend renders from HEAT automatically.
+
+   2026-07-12 asset rework: heat cells now carry a genuine halftone dot
+   pattern (21st.dev-derived, pure CSS) whose density scales with heat
+   level, layered under the existing flat tint — a more literal "heat map"
+   than a 4-step opacity ramp alone. See styles.css .cv-h1/.cv-h2/.cv-h3. */
 type Heat = 0 | 1 | 2 | 3;
 const HEAT: Record<Heat, { word: string; short: string }> = {
   0: { word: "out of scope", short: "out of scope" },
