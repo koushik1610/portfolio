@@ -35,6 +35,15 @@ import "./styles.css";
    Switching files/tabs is a fast opacity-dip + settle, never a per-line
    restagger — kept deliberately distinct from the load moment so there is
    exactly one "print" beat, not a repeating one.
+
+   2026-07-12 asset rework: added a minimap — VS Code's single most
+   recognizable feature, and the biggest authenticity gap in a theme that
+   otherwise impersonates the whole shell. Not scaled legible text (needs
+   real canvas rendering); a lightweight, honest abstraction real minimap
+   clones use too — one colored bar per line, width ~proportional to line
+   length, tone matched to the editor pane's own token colors. Mirrors
+   whichever file is active. Hidden below ~900px (see styles.css) — VS
+   Code itself hides the minimap on narrow windows too.
 ───────────────────────────────────────────────────────────────────────────── */
 
 type LineKind = "heading" | "text" | "bullet" | "blank" | "comment" | "key" | "str" | "kw" | "punct-line";
@@ -224,6 +233,56 @@ function CodeLine({ line }: { line: Line }) {
     );
   }
   return <div className="ide-line" style={{ paddingLeft: (line.indent ?? 0) * 20 }}>{line.text}</div>;
+}
+
+/* The minimap: VS Code's single most recognizable UI feature, and the
+   biggest authenticity gap in a theme that otherwise impersonates the
+   whole shell. Not scaled-down legible text (that needs real canvas
+   rendering) — a lightweight, honest abstraction real minimap clones use
+   too: one colored bar per line, width roughly proportional to line
+   length, tone matched to the same token colors the editor pane already
+   uses. Purely decorative/aria-hidden; mirrors whichever file is active. */
+/* Council-caught bug (2026-07-12): sampling `parts[0]` always picked the
+   first token, and every JSON line starts with a key — the whole file
+   rendered near-monochrome despite the real editor pane showing real
+   string/number colors on the same lines. Fix: prefer whichever token
+   kind actually reads as most visually distinctive on the line (the
+   colorful "content" a glance lands on), not just positional order. */
+const TONE_PRIORITY = ["str", "num", "kw", "key", "comment", "punct"] as const;
+function minimapTone(line: Line): string {
+  if (line.kind === "comment") return "comment";
+  if (line.kind === "heading") return "key";
+  if (line.kind === "punct-line") return "punct";
+  if (line.kind === "bullet") return "text"; // real bullet text renders in default color, not accent
+  if (line.parts) {
+    for (const kind of TONE_PRIORITY) {
+      if (line.parts.some((p) => p.k === kind)) return kind;
+    }
+  }
+  return "text";
+}
+function minimapLength(line: Line): number {
+  if (line.text) return line.text.length;
+  if (line.parts) return line.parts.reduce((n, p) => n + p.t.length, 0);
+  return 0;
+}
+function Minimap({ lines }: { lines: ReadonlyArray<Line> }) {
+  return (
+    <div className="ide-minimap" aria-hidden="true">
+      {lines.map((l, i) => {
+        if (l.kind === "blank") return <div key={i} className="ide-mm-row" />;
+        const len = Math.min(minimapLength(l), 70);
+        return (
+          <div key={i} className="ide-mm-row">
+            <span
+              className={`ide-mm-bar ide-mm-tone-${minimapTone(l)}`}
+              style={{ width: `${Math.max((len / 70) * 100, 6)}%` }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 function MdLine({ line }: { line: Line }) {
@@ -455,6 +514,7 @@ export default function IdeHero({ theme }: { theme: Theme }) {
                 </div>
               )}
             </div>
+            <Minimap lines={active.lines} />
           </main>
 
           <div className="ide-statusbar" aria-hidden="true">
