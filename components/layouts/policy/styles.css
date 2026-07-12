@@ -103,6 +103,34 @@ html[data-layout="policy"] nav:not(.pol-nav) { display: none !important; }
 .pol-name::before { padding-top: clamp(10px, 2vw, 26px); }
 .pol-cta-line::before { padding-top: 14px; }
 
+/* Diff-added gutter treatment (2026-07-12 asset rework) — the three lines
+   that actually matter (Principal, the name, the hire CTA) get a git-diff
+   "+" marker and a faint accent wash, read as "this is what's being added"
+   in a policy reviewed like a pull request. Reuses the existing gutter
+   infrastructure rather than adding new chrome; no new hue (the existing
+   orange accent), no side-stripe border (banned per house style). */
+.pol-diff-add {
+  background: color-mix(in srgb, var(--pol-orange) 6%, transparent);
+  border-radius: 3px;
+}
+.pol-diff-add::before {
+  content: "+" counter(pol-ln) / "";
+  color: var(--pol-orange);
+  font-weight: 700;
+}
+/* .pol-name is GSAP SplitText's target (word-mask reveal) — its ::before
+   counter glyph renders corrupted in that specific combination (confirmed
+   via live DOM testing: identical CSS renders correctly on any other
+   element, and correctly here once SplitText's transform is bypassed).
+   The giant display-scale name is already the page's obvious focal point,
+   so it doesn't need the small "+" marker too — keep only the background
+   wash and let its gutter number stay a plain, unmarked line number. */
+.pol-name.pol-diff-add::before {
+  content: counter(pol-ln) / "";
+  color: var(--pol-dim);
+  font-weight: 400;
+}
+
 /* The buffer breathes on pointer travel — a quiet active-line tint, exactly
    like an editor's current-line highlight. Keyboard gets it via focus-within. */
 .pol-stmt .pol-line:hover,
