@@ -21,6 +21,14 @@ import "./styles.css";
    that should read as a hero beat ("the person is the subject") arrived
    with no more ceremony than a comma. It now gets its own SplitText
    word-mask reveal, separate from the buffer-line fade around it.
+
+   2026-07-12 asset rework: extended the existing gutter line-number
+   infrastructure with a git-diff-style "+" marker + faint accent wash on
+   the three lines that actually matter (Principal, name, hire CTA) — the
+   policy reads as reviewed like a pull request. Deliberately the ONLY
+   addition this pass: the theme's own philosophy is "accent is rationed,"
+   so piling on more flourishes would work against what already makes it
+   distinct from its siblings.
 ───────────────────────────────────────────────────────────────────────────── */
 
 const FILE_META = "~/policies/koushik-kotamraju.iam.json · read-only";
@@ -197,10 +205,10 @@ export default function PolicyHero({ theme }: { theme: Theme }) {
           <div className="pol-line pol-i1">
             <Key>Version</Key> <span className="pol-str">&quot;2012-10-17&quot;</span><Punct>,</Punct>
           </div>
-          <div className="pol-line pol-i1 pol-principal-line">
+          <div className="pol-line pol-i1 pol-principal-line pol-diff-add">
             <Key>Principal</Key>
           </div>
-          <h1 id="pol-name" className="pol-line pol-i1 pol-name">Koushik Kotamraju</h1>
+          <h1 id="pol-name" className="pol-line pol-i1 pol-name pol-diff-add">Koushik Kotamraju</h1>
           <p className="pol-line pol-i1 pol-role">
             <Key>Role</Key> <span className="pol-str">&quot;Sr. Security Engineer · Yahoo Paranoids · 9 years&quot;</span><Punct>,</Punct>
           </p>
@@ -222,7 +230,7 @@ export default function PolicyHero({ theme }: { theme: Theme }) {
           <div className="pol-line pol-i3">
             <Key>Effect</Key> <span className="pol-allow">&quot;Allow&quot;</span><Punct>,</Punct>
           </div>
-          <div className="pol-line pol-i3 pol-cta-line">
+          <div className="pol-line pol-i3 pol-cta-line pol-diff-add">
             <Key>Action</Key>
             <span className="pol-cta-row">
               <a href="mailto:koushik.kotamraju1610@gmail.com" className="pol-btn pol-btn--primary">Email me</a>
