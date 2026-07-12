@@ -31,6 +31,12 @@ import "./styles.css";
    round of CountUp instances (those already animated once each; replaying
    the count-up semantics a second time in one viewport would be confusing
    to re-announce to assistive tech for no benefit).
+
+   2026-07-12 asset rework: added a static film-grain texture (SVG
+   feTurbulence, fixed opacity, no animation) over every slab — the
+   tactile finish real Wrapped-style cards use on flat color fields.
+   Static by design, respecting this theme's own "no perpetual motion, no
+   hue animation" rule (see styles.css .wr-root::after).
 ───────────────────────────────────────────────────────────────────────────── */
 
 interface Slab {
