@@ -31,15 +31,24 @@ import "./styles.css";
    real data, pure decoration once the severity strip does the actual
    representational work — house discipline is to cut decoration-only cards
    rather than keep them for symmetry.
+
+   2026-07-12 asset rework (research pass across 21st.dev/motion.dev + 10
+   sites, see theme-plans/00-STRATEGY-2026-07-research-rework.md §2): added a
+   diagonal ambient glow-beam across the right telemetry rail (ReactBits-style
+   depth cue, accent-only, no new hue) and a tick-scale ruler under the
+   severity bars (motion.dev's oscilloscope-ruler motif, reinforces the
+   "instrument panel" read). Nav rows for collection sections now show an
+   item count in parens (basement.studio's nav-count pattern), matching the
+   counts already stated in each section's block-tag.
 ───────────────────────────────────────────────────────────────────────────── */
 
 // ── Content ─────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
-  { id: "w13-overview", label: "Overview", code: "0x00" },
-  { id: "w13-disciplines", label: "Disciplines", code: "0x01" },
-  { id: "w13-projects", label: "Deployments", code: "0x02" },
-  { id: "w13-contact", label: "Contact", code: "0x03" },
+  { id: "w13-overview", label: "Overview", code: "0x00", count: null },
+  { id: "w13-disciplines", label: "Disciplines", code: "0x01", count: "05" },
+  { id: "w13-projects", label: "Deployments", code: "0x02", count: "04" },
+  { id: "w13-contact", label: "Contact", code: "0x03", count: null },
 ] as const;
 
 // Right-rail telemetry gauges. Each metric carries a static aria-label.
@@ -353,6 +362,24 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         settle(sevTw, 3000);
       });
 
+      // ── Pointer-tracked scan line on the telemetry cards: an oscilloscope-
+      // style horizontal beam follows the cursor's vertical position, tying
+      // the hover state to the instrument-panel concept the ruler already
+      // established (a generic radial "glare" card was tried first and
+      // correctly flagged as a template pattern with no theme-specific
+      // meaning — this replaces it). CSS owns the opacity transition; the
+      // listener only writes one custom property. Embellishment only —
+      // never gates information. Listeners removed on cleanup. ──
+      const glareCleanups: Array<() => void> = [];
+      gsap.utils.toArray<HTMLElement>(".w13-tele-card").forEach((card) => {
+        const onMove = (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty("--w13-glare-y", `${e.clientY - rect.top}px`);
+        };
+        card.addEventListener("mousemove", onMove);
+        glareCleanups.push(() => card.removeEventListener("mousemove", onMove));
+      });
+
       // ── Alert feed: slow vertical marquee of pseudo-alerts. ──
       const feedInner = root.querySelector<HTMLElement>(".w13-feed-track");
       if (feedInner) {
@@ -401,8 +428,46 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
         });
       });
 
+      // ── Boot sequence: a real diagnostic checklist, not a decorative
+      // percentage bar. A generic loading-bar boot was correctly flagged
+      // (2026-07-12 council) as trope-y even with an oscilloscope skin —
+      // the fix is to make the overlay carry actual information instead of
+      // simulating progress. Each line names one of the five disciplines
+      // (the SAME data the Disciplines section renders below, not a
+      // duplicated list) and flips from pending to OK in sequence, closing
+      // on "ALL SYSTEMS OPERATIONAL" — the intro doubles as a preview of
+      // what's below the fold, which is the actual novelty: content the
+      // overlay reveals, not motion for its own sake. Purely decorative/
+      // aria-hidden; real content is already in the DOM and reachable
+      // regardless of this overlay's visual state, so it never gates a11y. ──
+      const bootOverlay = root.querySelector<HTMLElement>(".w13-boot");
+      const bootChecks = gsap.utils.toArray<HTMLElement>(".w13-boot-check");
+      const bootFinal = root.querySelector<HTMLElement>(".w13-boot-final");
+      if (bootOverlay && bootChecks.length && bootFinal) {
+        const bootTl = gsap.timeline({ delay: 0.05 });
+        bootChecks.forEach((check, i) => {
+          const status = check.querySelector<HTMLElement>(".w13-boot-check-status");
+          bootTl.to(
+            check,
+            {
+              autoAlpha: 1,
+              duration: 0.01,
+              onComplete: () => {
+                if (status) status.textContent = "OK";
+              },
+            },
+            i * 0.14
+          );
+        });
+        bootTl
+          .to(bootFinal, { autoAlpha: 1, duration: 0.2, ease: "power2.out" }, "+=0.05")
+          .to(bootOverlay, { autoAlpha: 0, duration: 0.35, ease: "power2.out" }, "+=0.35");
+        settle(bootTl, 2500);
+      }
+
       return () => {
         settleTimers.forEach((t) => window.clearTimeout(t));
+        glareCleanups.forEach((fn) => fn());
       };
     },
     { scope: rootRef }
@@ -414,6 +479,21 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
       <h1 className="w13-sr-only">
         Koushik Kotamraju — Sr. Security Engineer at Yahoo Paranoids
       </h1>
+
+      <div className="w13-boot" aria-hidden="true">
+        <div className="w13-boot-inner">
+          <span className="w13-boot-line">initializing soc console</span>
+          <div className="w13-boot-checks">
+            {EXPERTISE.map((item) => (
+              <div key={item.proc} className="w13-boot-check">
+                <span className="w13-boot-check-id">{item.proc}</span>
+                <span className="w13-boot-check-status">···</span>
+              </div>
+            ))}
+          </div>
+          <span className="w13-boot-final">ALL SYSTEMS OPERATIONAL</span>
+        </div>
+      </div>
 
       <div className="w13-shell">
         {/* ── LEFT RAIL · identity / nav / status ─────────────────────────── */}
@@ -456,7 +536,10 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
                 <li key={l.id}>
                   <a href={`#${l.id}`} className="w13-rail-link">
                     <span className="w13-rail-link-code" aria-hidden="true">{l.code}</span>
-                    <span className="w13-rail-link-label">{l.label}</span>
+                    <span className="w13-rail-link-label">
+                      {l.label}
+                      {l.count && <span className="w13-rail-link-count" aria-hidden="true"> ({l.count})</span>}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -573,6 +656,16 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
 
         {/* ── RIGHT RAIL · live telemetry ─────────────────────────────────── */}
         <aside className="w13-rail w13-rail-right" aria-label="Live telemetry">
+          {/* Fixed, non-scrolling spacer that reserves the WidgetStack's
+              footprint. Previously this was scrollable padding-top on the
+              rail itself, which meant content rose up underneath the fixed
+              WidgetStack once the rail's own overflow-y:auto was scrolled —
+              a real bug (council-caught 2026-07-12). A spacer OUTSIDE the
+              scroll container is structurally immune to that: the scroll
+              region's own clip boundary starts below it and can never rise
+              above it, scroll amount notwithstanding. */}
+          <div className="w13-rail-right-clearance" aria-hidden="true" />
+          <div className="w13-rail-right-scroll">
           <div className="w13-tele-head" aria-hidden="true">
             <span className="w13-tele-head-title">TELEMETRY</span>
             <span className="w13-tele-head-live">
@@ -625,6 +718,17 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
                 <div className="w13-sev-sub" aria-hidden="true">{s.label} · {s.sub}</div>
               </div>
             ))}
+            <div className="w13-sev-ruler" aria-hidden="true">
+              <span className="w13-sev-ruler-ticks">
+                <span className="w13-sev-ruler-tick" />
+                <span className="w13-sev-ruler-tick" />
+                <span className="w13-sev-ruler-tick" />
+                <span className="w13-sev-ruler-tick" />
+                <span className="w13-sev-ruler-tick" />
+                <span className="w13-sev-ruler-tick" />
+              </span>
+              <span className="w13-sev-ruler-label">0–100 scale</span>
+            </div>
           </div>
 
           {/* Counters */}
@@ -660,6 +764,7 @@ export default function TelemetryHero({ theme }: { theme: Theme }) {
                 ))}
               </div>
             </div>
+          </div>
           </div>
         </aside>
       </div>

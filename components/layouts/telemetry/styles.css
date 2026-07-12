@@ -75,6 +75,65 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
   border-radius: 3px;
 }
 
+/* ── Boot overlay · a real diagnostic checklist, not a decorative percentage
+   bar (2026-07-12: the generic loading-bar version was correctly flagged as
+   trope-y even with an oscilloscope skin — this carries actual content: the
+   same five disciplines the page renders below, previewed as boot checks). */
+.w13-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--w13-bg);
+  pointer-events: none;
+}
+.w13-boot-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+.w13-boot-line {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--w13-muted);
+}
+.w13-boot-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 240px;
+}
+.w13-boot-check {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 12.5px;
+  opacity: 0;
+}
+.w13-boot-check-id { color: var(--w13-text); }
+.w13-boot-check-status {
+  color: var(--w13-accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.w13-boot-final {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--w13-accent);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .w13-boot { display: none; }
+}
+
 /* ── Shell · 3-column grid ──────────────────────────────────────────────── */
 
 .w13-shell {
@@ -123,19 +182,32 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
 }
 
 .w13-rail-right {
-  gap: 14px;
-  /* top padding clears the fixed WidgetStack's expanded footprint — this
-     rail is sticky/100vh (always on screen), so it can't rely on scrolling
-     away from the widget the way a normal in-flow nav bar does. */
-  padding: 150px 20px 24px;
+  padding: 0 20px 24px;
   border-left: 1px solid var(--w13-line);
-  background: var(--w13-panel);
+  /* Diagonal ambient glow beam (ReactBits-derived depth cue) layered under
+     the existing panel fill — accent-only, static, no new hue. */
+  background:
+    linear-gradient(155deg, transparent 32%, var(--w13-accent-soft) 48%, transparent 64%),
+    var(--w13-panel);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+/* Fixed, non-scrolling spacer reserving the WidgetStack's footprint — see
+   the TSX comment for why this replaced scrollable padding-top. */
+.w13-rail-right-clearance {
+  flex: none;
+  height: 150px;
+}
+.w13-rail-right-scroll {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   overflow-y: auto;
 }
-.w13-rail-right::-webkit-scrollbar { width: 6px; }
-.w13-rail-right::-webkit-scrollbar-thumb { background: var(--w13-line-strong); border-radius: 3px; }
+.w13-rail-right-scroll::-webkit-scrollbar { width: 6px; }
+.w13-rail-right-scroll::-webkit-scrollbar-thumb { background: var(--w13-line-strong); border-radius: 3px; }
 
 /* ── Left rail · identity ───────────────────────────────────────────────── */
 
@@ -227,6 +299,11 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
   color: var(--w13-muted);
 }
 .w13-rail-link-label { font-size: 14px; font-weight: 500; }
+.w13-rail-link-count {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--w13-muted);
+}
 .w13-rail-link:hover {
   background: var(--w13-accent-soft);
   border-color: rgba(224, 82, 74, 0.25);
@@ -322,6 +399,34 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
   border-top: 1px solid var(--w13-line);
 }
 .w13-log-row:last-child { border-bottom: 1px solid var(--w13-line); }
+
+/* Directional hover sweep (Osmo-derived) — a left-anchored highlight grows
+   in behind the row's content on hover/focus. Embellishment only. */
+.w13-log-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(90deg, var(--w13-accent-soft), transparent 55%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: none;
+}
+.w13-log-row:hover::before,
+.w13-log-row:focus-within::before {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .w13-log-row::before { transition: none; }
+}
+
+.w13-log-gutter,
+.w13-log-body,
+.w13-log-meta {
+  position: relative;
+  z-index: 1;
+}
 
 .w13-log-gutter { display: flex; justify-content: center; padding-top: 4px; }
 .w13-log-tick {
@@ -450,12 +555,41 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
 @keyframes w13-blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.25; } }
 
 .w13-tele-card {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0; /* the rail scrolls (overflow-y: auto); cards must never
+    get flex-compressed below their content height — that's what silently
+    clipped the severity ruler once overflow:hidden made it visible. */
   border: 1px solid var(--w13-line);
   border-radius: 12px;
   background: var(--w13-panel);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 16px;
+}
+/* Pointer-tracked oscilloscope scan line — a thin accent-colored beam sits
+   at the cursor's vertical position, evoking a live instrument sweep rather
+   than a generic card "glare." Opacity-gated so it's invisible until
+   hovered; harmless on touch/keyboard where it simply never appears. */
+.w13-tele-card::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: var(--w13-glare-y, 50%);
+  z-index: 0;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, transparent, var(--w13-accent) 20%, var(--w13-accent) 80%, transparent);
+  box-shadow: 0 0 10px 1px var(--w13-accent-soft);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.w13-tele-card:hover::after { opacity: 0.6; }
+.w13-tele-card > * { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .w13-tele-card::after { display: none; }
 }
 
 /* Gauges */
@@ -540,6 +674,39 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 10px;
   color: var(--w13-muted);
+}
+
+/* Tick-scale ruler under the severity bars — motion.dev's oscilloscope-ruler
+   motif, reinforces the "instrument panel" read of the telemetry rail. */
+.w13-sev-ruler {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--w13-line-strong);
+}
+.w13-sev-ruler-ticks {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex: 1;
+  height: 7px;
+}
+.w13-sev-ruler-tick {
+  width: 1px;
+  height: 7px;
+  background: var(--w13-accent-dim);
+  opacity: 0.65;
+}
+.w13-sev-ruler-label {
+  flex: none;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--w13-body);
+  white-space: nowrap;
 }
 
 /* Counters */
@@ -637,6 +804,12 @@ html[data-layout="telemetry"] nav:not(.w13-rail-nav) {
     align-items: start;
   }
   .w13-tele-head { grid-column: 1 / -1; }
+  /* Below 1200px the rail is no longer sticky/100vh (it's static, in normal
+     flow), so the WidgetStack-clearance spacer and inner scroll wrapper
+     serve no purpose — collapse the spacer and let the scroll wrapper's
+     children flow directly into this grid as if unwrapped. */
+  .w13-rail-right-clearance { display: none; }
+  .w13-rail-right-scroll { display: contents; }
   /* Live telemetry (severity, alert feed, gauges) sits right after the
      identity hero, before the detailed log streams and Contact — a real
      QA finding: the old order put Contact before the rail, so a mobile
