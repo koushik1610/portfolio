@@ -336,7 +336,7 @@ html[data-layout="coverage"] nav:not(.cv-nav) { display: none !important; }
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (min-width: 640px) {
   /* right padding reserves the fixed WidgetStack's corner (see WidgetStack.tsx) */
-  .cv-nav { padding-right: 270px; }
+  .cv-nav { padding-right: 300px; }
 }
 @media (max-width: 639px) {
   /* extra top padding clears the fixed WidgetStack so the name never sits

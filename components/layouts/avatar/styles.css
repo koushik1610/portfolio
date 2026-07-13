@@ -60,7 +60,7 @@ html[data-layout="avatar"] nav:not(.w12-nav) { display: none !important; }
 }
 @media (min-width: 640px) {
   /* right padding reserves the fixed WidgetStack's corner */
-  .w12-nav { padding-right: 270px; }
+  .w12-nav { padding-right: 300px; }
 }
 @media (max-width: 639px) { .w12-nav { padding: 16px 18px; } .w12-nav-mid { display: none; } }
 

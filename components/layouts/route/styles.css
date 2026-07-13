@@ -65,7 +65,7 @@ html[data-layout="route"] nav:not(.rt-nav) { display: none !important; }
 .rt-open-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rt-accent); flex: none; }
 @media (min-width: 640px) {
   /* right padding reserves the fixed WidgetStack's corner */
-  .rt-nav { padding-right: 270px; }
+  .rt-nav { padding-right: 300px; }
 }
 @media (max-width: 639px) {
   .rt-nav { padding: 14px 16px; }
