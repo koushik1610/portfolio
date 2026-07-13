@@ -67,7 +67,7 @@ html[data-layout="briefing"] nav:not(.bf-nav) { display: none !important; }
 .bf-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bf-coral); }
 @media (min-width: 640px) {
   /* right padding reserves the fixed WidgetStack's corner (see WidgetStack.tsx) */
-  .bf-nav { padding-right: 270px; }
+  .bf-nav { padding-right: 300px; }
 }
 @media (max-width: 639px) {
   .bf-nav { padding: 14px 16px; }

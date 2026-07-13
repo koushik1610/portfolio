@@ -87,7 +87,7 @@ html[data-layout="ide"] nav:not(.ide-titlebar):not(.ide-filenav) { display: none
      narrowing where flex children lay out) forces any tab that would
      render under the widget's reserved zone into the tab bar's existing
      horizontal scroll instead. */
-  .ide-titlebar { padding-right: 270px; }
+  .ide-titlebar { padding-right: 300px; }
   .ide-tabbar { width: calc(100% - 270px); }
 }
 @media (max-width: 639px) {

@@ -197,7 +197,7 @@ html[data-layout="rfc"] nav:not(.rc-nav):not(.rc-toc) { display: none !important
 }
 
 @media (min-width: 640px) {
-  .rc-nav { padding-right: 270px; }
+  .rc-nav { padding-right: 300px; }
 }
 @media (max-width: 639px) {
   .rc-main { padding: 118px 16px 72px; }
