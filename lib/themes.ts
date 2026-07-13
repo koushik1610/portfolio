@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "avatar" | "telemetry" | "briefing" | "policy" | "coverage" | "rfc" | "wrapped" | "route" | "ide";
+export type LayoutVariant = "aethera" | "avatar" | "briefing" | "coverage" | "rfc" | "route" | "ide";
 
 export interface ThemeContent {
   tagline: string;
@@ -41,25 +41,11 @@ export const themes: Theme[] = [
     content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
   },
   {
-    name: "Telemetry",
-    id: "telemetry",
-    vars: { "--background": "#0d1117", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e6edf3", "--text-muted": "#9aa4af", "--accent": "#e0524a", "--accent-dim": "#b8443c", "--border": "rgba(48,54,61,0.8)" },
-    layout: "telemetry",
-    content: { tagline: "An always-on operations console.", bio: "9 years uptime. 2,800+ cloud accounts monitored.", cta: "View Work" },
-  },
-  {
     name: "Briefing",
     id: "briefing",
     vars: { "--background": "#0c0a09", "--surface": "rgba(255,255,255,0.035)", "--surface-2": "rgba(255,255,255,0.055)", "--text-primary": "#efece8", "--text-muted": "#a39d94", "--accent": "#ff7a5c", "--accent-dim": "#d05a3e", "--border": "rgba(255,255,255,0.09)" },
     layout: "briefing",
     content: { tagline: "An operations brief in bento form.", bio: "One dominant tile, one hire signal, the numbers around them.", cta: "Email me" },
-  },
-  {
-    name: "Policy",
-    id: "policy",
-    vars: { "--background": "#0a0908", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f0ede6", "--text-muted": "#a49d8f", "--accent": "#ff9900", "--accent-dim": "#c77700", "--border": "rgba(240,237,230,0.09)" },
-    layout: "policy",
-    content: { tagline: "Effect: Allow. Principal: one name.", bio: "An IAM policy document whose principal is the engineer.", cta: "Email me" },
   },
   {
     name: "Coverage",
@@ -74,13 +60,6 @@ export const themes: Theme[] = [
     vars: { "--background": "#fcfbf8", "--surface": "#ffffff", "--surface-2": "#f3f1ea", "--text-primary": "#191817", "--text-muted": "#5d5b55", "--accent": "#0f766e", "--accent-dim": "#115e59", "--border": "rgba(25,24,23,0.14)" },
     layout: "rfc",
     content: { tagline: "RFC 9161: the Kotamraju protocol.", bio: "A standards-track document for one engineer.", cta: "Email me" },
-  },
-  {
-    name: "Wrapped",
-    id: "wrapped",
-    vars: { "--background": "#0a0b12", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#f4f1e8", "--text-muted": "#b9b5a8", "--accent": "#2743e0", "--accent-dim": "#1c31a8", "--border": "rgba(244,241,232,0.12)" },
-    layout: "wrapped",
-    content: { tagline: "Nine years, wrapped.", bio: "Five numbers you'll repeat in the debrief.", cta: "Email me" },
   },
   {
     name: "Route",
