@@ -5,12 +5,9 @@ import { getCurrentTheme, type Theme } from "@/lib/themes";
 import { ScrollTrigger } from "@/lib/gsap";
 import AetheraHero from "./layouts/aethera/AetheraHero";
 import AvatarHero from "./layouts/avatar/AvatarHero";
-import TelemetryHero from "./layouts/telemetry/TelemetryHero";
 import BriefingHero from "./layouts/briefing/BriefingHero";
-import PolicyHero from "./layouts/policy/PolicyHero";
 import CoverageHero from "./layouts/coverage/CoverageHero";
 import RfcHero from "./layouts/rfc/RfcHero";
-import WrappedHero from "./layouts/wrapped/WrappedHero";
 import RouteHero from "./layouts/route/RouteHero";
 import IdeHero from "./layouts/ide/IdeHero";
 
@@ -42,12 +39,9 @@ export default function Hero() {
   switch (theme.layout) {
     case "aethera":   return <AetheraHero   key={theme.id} theme={theme} />;
     case "avatar":    return <AvatarHero    key={theme.id} theme={theme} />;
-    case "telemetry": return <TelemetryHero key={theme.id} theme={theme} />;
     case "briefing":  return <BriefingHero  key={theme.id} theme={theme} />;
-    case "policy":    return <PolicyHero    key={theme.id} theme={theme} />;
     case "coverage":  return <CoverageHero  key={theme.id} theme={theme} />;
     case "rfc":       return <RfcHero       key={theme.id} theme={theme} />;
-    case "wrapped":   return <WrappedHero   key={theme.id} theme={theme} />;
     case "route":     return <RouteHero     key={theme.id} theme={theme} />;
     case "ide":       return <IdeHero       key={theme.id} theme={theme} />;
     default: {
