@@ -120,24 +120,15 @@ exact accent values: the table below is a snapshot and will drift.
 |---|---|---|
 | `aethera` | Cinematic video hero, dark luxury editorial | Light |
 | `avatar` | Darkroom portrait with a contact-sheet grid of framed exposures | Dark |
-| `telemetry` | SOC operations console, red/black severity feed | Dark |
 | `briefing` | Editorial magazine spread, name overlapping a full-bleed photo | Dark |
-| `policy` | AWS IAM policy document as an editor buffer | Dark |
-| `coverage` | MITRE ATT&CK detection coverage matrix, full-bleed heat map | Dark |
+| `coverage` | MITRE ATT&CK detection coverage matrix, a genuine halftone heat map | Dark |
 | `rfc` | An IETF RFC: a standards-track document for one engineer | Light |
-| `wrapped` | Five stat slabs in a drenched color sequence, plus a recap reel | Dark |
 | `route` | The career as a scroll-scrubbed schematic transit line | Dark |
 | `ide` | A VS Code–style shell — click a file/tab to switch content | Dark |
 
-10 themes total (8 dark, 2 light). Culled from a 12-theme rotation (2026-07):
-`trace` (an AI agent-trace replay) and `keynote` (a slide-deck talk) were
-retired after a round-robin council pass: `keynote` shared its layout
-skeleton, scroll mechanic, hero composition, and closing-slide anatomy with
-`wrapped`, and `trace` sat in an already-crowded monospace-artifact register
-alongside `policy`/`telemetry`/`ide`/`coverage` with the weakest remaining
-distinctiveness score. Each surviving theme differs in layout skeleton,
-scroll flow, hero composition, typography, and animation signature, not just
-accent color. Further additions are gated behind a multi-persona
+7 themes total (5 dark, 2 light). Each surviving theme differs in layout
+skeleton, scroll flow, hero composition, typography, and animation signature,
+not just accent color. Further additions are gated behind a multi-persona
 design-council review (≥95 composite score, no single reviewer below 80,
 plus a dedicated distinctiveness reviewer with its own ≥90 floor) before
 they ship.
@@ -198,7 +189,7 @@ you on the same theme.
 
 **Jumping to a specific theme:** Navigate directly to `/theme/<name>`, e.g.:
 ```
-http://localhost:3000/theme/policy
+http://localhost:3000/theme/ide
 http://localhost:3000/theme/coverage
 http://localhost:3000/theme/rfc
 ```
@@ -223,11 +214,10 @@ summary of career achievements optimized for LLM consumption. It's the mechanism
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] 10 fully bespoke themes, each a distinct layout structure
+- [x] 7 fully bespoke themes, each a distinct layout structure
 - [x] Time-based + click-offset theme rotation with `localStorage` persistence
 - [x] `llms.txt` for AI-readable career data
 - [x] "Ask AI about me": answer questions about the portfolio via LLM
-- [ ] Additional themes (optional stretch: a transit-map variant, an isometric CSS-3D scene)
 - [ ] Dark/light toggle independent of theme rotation
 
 See [open issues](https://github.com/koushik1610/portfolio/issues) for known issues and
