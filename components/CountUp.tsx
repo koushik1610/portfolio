@@ -33,6 +33,14 @@ export default function CountUp({ value, duration = 1400, style, className }: Co
   const [display, setDisplay] = useState(value);
   const hasAnimated = useRef(false);
 
+  // `display` is seeded from `value` once, but the animation effect below bails
+  // on hasAnimated and never re-enters. Without this, a later `value` change
+  // would leave the visible number stale forever. No theme mutates `value`
+  // today; the new themes read from lib/stats.ts, which makes it easy to start.
+  useEffect(() => {
+    if (!hasAnimated.current) setDisplay(value);
+  }, [value]);
+
   useEffect(() => {
     if (reduce) { setDisplay(value); return; }
     if (!inView || hasAnimated.current) return;
@@ -71,10 +79,14 @@ export default function CountUp({ value, duration = 1400, style, className }: Co
     return () => window.clearTimeout(settleTimer);
   }, [inView, value, duration, reduce]);
 
-  // aria-label carries the final value so screen readers never read intermediate ticks
+  // The final value is carried by a visually-hidden SIBLING, not by aria-label.
+  // aria-label is not permitted on an element with the generic role, and AT that
+  // drops it would leave a user with only the aria-hidden span — i.e. nothing at
+  // all for that stat. A real text node cannot be dropped.
   return (
-    <span ref={ref} style={style} className={className} aria-label={value}>
+    <span ref={ref} style={style} className={className}>
       <span aria-hidden="true">{display}</span>
+      <span className="th-sr-only">{value}</span>
     </span>
   );
 }

@@ -10,6 +10,24 @@
   --accent: #818cf8;
   --accent-dim: #6366f1;
   --border: #2a2a2a;
+  /* Text/glyph color on an accent-filled surface. theme-base.css consumes this
+     with no local fallback, and an unresolved var() would make color inherit —
+     the failure case on a filled button. */
+  --on-accent: #0a0a0c;
+  /* Boundary color for controls whose only affordance is their border (the
+     ghost CTA). --border is a hairline for decorative rules at ~1.2:1 and is
+     NOT sufficient for WCAG 1.4.11 non-text contrast. */
+  --border-strong: rgba(255, 255, 255, 0.4);
+}
+
+/* Visually-hidden utility. Lives in globals, NOT in theme-base.css, because
+   components/CountUp.tsx uses it and CountUp is shared by every theme —
+   including the ones that have not opted into theme-base.css. If this were
+   scoped to the opt-in layer, CountUp's accessible value would render as
+   visible duplicate text in every theme that has not migrated yet. */
+.th-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 
 * {
@@ -169,7 +187,7 @@ section[id] {
 .resume-page-back { color: var(--text-muted); }
 .resume-page-back:hover { color: var(--text-primary); }
 .resume-page-email {
-  color: var(--background);
+  color: var(--on-accent);
   background: var(--accent);
   padding: 0 1.1rem;
   font-weight: 600;
@@ -186,6 +204,21 @@ section[id] {
    #resume / #contact / #ask-ai sections that otherwise render below the theme.
    (The floating Ask-AI button is separate and stays. The standalone /resume
    page wraps ResumeSection in main.resume-page and is exempt.) */
+/* Defence in depth only. The site nav is no longer COMPOSED into the themed
+   pages at all (see app/page.tsx) — that deletion is what actually removed the
+   cold-load flash. This rule stays so any future page that does render <Nav/>
+   beside a theme still hides it. Targets .site-nav (components/Nav.tsx) rather
+   than every <nav>, so each theme's own chrome is untouched.
+
+   Do NOT read this as a before-paint guarantee. `data-layout` is set by
+   ThemeApplier's useLayoutEffect, which runs after hydration; it is absent from
+   the exported HTML entirely (`grep -c data-layout out/index.html` returns 0).
+   An earlier revision of this comment claimed useLayoutEffect made the rule
+   fire before first paint. That was false — a selector keyed on an attribute
+   that does not exist at first paint cannot match at first paint. A suppression
+   selector can never fix a flash; only not rendering the element can. */
+html[data-layout] nav.site-nav { display: none !important; }
+
 html[data-layout] main:not(.resume-page) section#resume,
 html[data-layout] section#contact,
 html[data-layout] section#ask-ai {
