@@ -121,24 +121,16 @@ body {
   }
 }
 
-/* ── Nav responsive ──────────────────────────────────────────────────────── */
-
-@media (max-width: 680px) {
-  .nav-desktop  { display: none !important; }
-  .nav-hamburger { display: flex !important; }
-}
-
-/* ── Scroll anchor: compensate for 64px fixed nav ───────────────────────── */
+/* ── Scroll anchor ───────────────────────────────────────────────────────── */
+/* The 64px offset dates from a fixed global nav that no longer exists. Kept
+   because theme sections still use it for in-page anchors. */
 
 section[id] {
   scroll-margin-top: 64px;
 }
 
 @media (max-width: 640px) {
-  section#experience,
-  section#projects,
-  section#resume,
-  section#contact {
+  section#resume {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
@@ -148,11 +140,7 @@ section[id] {
 
 @media print {
   nav,
-  .theme-badge,
-  section#about,
-  section#experience,
-  section#projects,
-  section#contact {
+  .theme-badge {
     display: none !important;
   }
   section#resume {
@@ -199,28 +187,3 @@ section[id] {
   outline-offset: 2px;
 }
 @media print { .resume-page-bar { display: none; } }
-
-/* Every theme is a self-contained page with its own contact; hide the global
-   #resume / #contact / #ask-ai sections that otherwise render below the theme.
-   (The floating Ask-AI button is separate and stays. The standalone /resume
-   page wraps ResumeSection in main.resume-page and is exempt.) */
-/* Defence in depth only. The site nav is no longer COMPOSED into the themed
-   pages at all (see app/page.tsx) — that deletion is what actually removed the
-   cold-load flash. This rule stays so any future page that does render <Nav/>
-   beside a theme still hides it. Targets .site-nav (components/Nav.tsx) rather
-   than every <nav>, so each theme's own chrome is untouched.
-
-   Do NOT read this as a before-paint guarantee. `data-layout` is set by
-   ThemeApplier's useLayoutEffect, which runs after hydration; it is absent from
-   the exported HTML entirely (`grep -c data-layout out/index.html` returns 0).
-   An earlier revision of this comment claimed useLayoutEffect made the rule
-   fire before first paint. That was false — a selector keyed on an attribute
-   that does not exist at first paint cannot match at first paint. A suppression
-   selector can never fix a flash; only not rendering the element can. */
-html[data-layout] nav.site-nav { display: none !important; }
-
-html[data-layout] main:not(.resume-page) section#resume,
-html[data-layout] section#contact,
-html[data-layout] section#ask-ai {
-  display: none !important;
-}
