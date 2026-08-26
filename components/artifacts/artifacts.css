@@ -1,0 +1,162 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   ARTIFACT LAYER — shared scales and base styles.
+   Imported once by components/artifacts/index.ts, so any theme that renders an
+   artifact gets this without having to remember.
+
+   TYPE SCALE. Ratio ~1.25, floor at 10px because mono numerals below that stop
+   being readable. The first draft of this layer used three near-identical SVG
+   sizes (7.5 / 7 / 6.5, ratios 1.07 and 1.08) separated only by opacity, which
+   is a wash rather than a hierarchy — and inverted, since the largest size
+   carried the lowest opacity. Real steps, stated once:
+     --af-fs-0  10      micro: legend, fixture id, axis tick
+     --af-fs-1  12.5    secondary: finding label, edge label
+     --af-fs-2  15.5    primary label: fixture class, node label
+     --af-fs-3  19.5    column header
+     --af-fs-4  24.5    the one figure the artifact exists to state
+   RULE: no artifact uses more than three adjacent steps. Three is a hierarchy,
+   five is a soup.
+
+   SPACING. Base 4 with a widening ramp, so rhythm comes from varying the step
+   rather than repeating 8/16/24.
+
+   COLOR. Artifacts pin their own text color rather than inheriting, because an
+   artifact whose contrast depends on an unstated inherited `color` cannot be
+   audited once and trusted across seven components and three themes. Dropping
+   one into a container styled `color: var(--text-muted)` silently multiplied
+   every label opacity and pushed 22 of 24 cells under 4.5:1.
+───────────────────────────────────────────────────────────────────────────── */
+
+.af-bench,
+.af-svg-root {
+  --af-fs-0: 10px;
+  --af-fs-1: 12.5px;
+  --af-fs-2: 15.5px;
+  --af-fs-3: 19.5px;
+  --af-fs-4: 24.5px;
+
+  --af-sp-1: 4px;
+  --af-sp-2: 8px;
+  --af-sp-3: 12px;
+  --af-sp-4: 20px;
+  --af-sp-5: 32px;
+  --af-sp-6: 52px;
+
+  /* Pinned, never inherited. See the color note above. */
+  color: var(--text-primary);
+}
+
+/* ── BenchmarkGrid ───────────────────────────────────────────────────────── */
+
+.af-bench { display: block; width: 100%; }
+
+.af-bench-key {
+  display: flex;
+  align-items: center;
+  gap: var(--af-sp-2);
+  margin-bottom: var(--af-sp-4);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--af-fs-0);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.af-bench-swatch {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border: 1px solid var(--border-strong);
+}
+.af-bench-swatch--hit { background: var(--accent); border-color: var(--accent); }
+.af-bench-swatch--miss { background: transparent; }
+.af-bench-swatch--miss + * { margin-right: 0; }
+.af-bench-key-sep { flex: 1 1 auto; }
+
+.af-bench-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.af-bench-row + .af-bench-row .af-bench-fixture,
+.af-bench-row + .af-bench-row .af-bench-cells {
+  border-top: 1px solid var(--border);
+}
+
+.af-bench-fixture {
+  width: 40%;
+  padding: var(--af-sp-3) var(--af-sp-3) var(--af-sp-3) 0;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 400;
+}
+.af-bench-fx-id {
+  display: block;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--af-fs-0);
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+.af-bench-fx-class {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--af-fs-2);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.af-bench-cells { padding: var(--af-sp-3) 0; vertical-align: middle; }
+.af-bench-track { display: flex; flex-wrap: wrap; gap: var(--af-sp-1); }
+
+.af-bench-cell {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border: 1px solid var(--accent);
+}
+.af-bench-cell--hit { background: var(--accent); }
+.af-bench-cell--miss {
+  background: transparent;
+  border-color: var(--border-strong);
+}
+/* Redundant non-color channel: a missed cell also carries a diagonal rule, so
+   the encoding survives greyscale, low vision, and forced-colors mode, where
+   opacity and fill are flattened to a single system color. */
+.af-bench-cell--miss::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top right,
+    transparent calc(50% - 0.5px),
+    var(--border-strong) calc(50% - 0.5px),
+    var(--border-strong) calc(50% + 0.5px),
+    transparent calc(50% + 0.5px)
+  );
+}
+
+@media (max-width: 639px) {
+  .af-bench-fixture { width: 46%; padding-right: var(--af-sp-2); }
+  .af-bench-cell { width: 20px; height: 20px; }
+}
+
+/* ── Shared SVG artifact root ────────────────────────────────────────────── */
+/* UNIT CONVENTION: 1 user unit = 1 CSS px at the artifact's design width. Each
+   SVG artifact sets viewBox="0 0 <designWidth> <designHeight>" and caps itself
+   at that width, so it scales DOWN on narrow viewports and never scales up past
+   1:1. That makes every font-size in the artifact a real px number, comparable
+   across artifacts, instead of a viewBox unit that renders at 3px on a phone. */
+.af-svg-root { display: block; width: 100%; margin-inline: auto; }
+.af-svg-root svg { display: block; width: 100%; height: auto; }
+
+/* Forced-colors: opacity-based encodings collapse to one system color, so any
+   artifact relying on fill alone loses 100% of its information rather than
+   degrading. Every artifact must carry a second channel (a rule, a glyph, a
+   stroke style); this block only makes the boundaries survive. */
+@media (forced-colors: active) {
+  .af-bench-cell,
+  .af-bench-swatch { border-color: CanvasText; }
+  .af-bench-cell--miss::after { background: none; }
+  .af-bench-cell--miss { border-style: dashed; }
+}
