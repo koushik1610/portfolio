@@ -185,7 +185,7 @@ export default function RfcHero({ theme }: { theme: Theme }) {
           </p>
           <div className="rc-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="rc-btn rc-btn--primary">Email me</a>
-            <a href="/resume" className="rc-btn rc-btn--ghost">Résumé</a>
+            <a href="/resume/" className="rc-btn rc-btn--ghost">Résumé</a>
           </div>
           <p className="rc-avail">
             <span className="rc-open-dot" aria-hidden="true" /> Open to opportunities

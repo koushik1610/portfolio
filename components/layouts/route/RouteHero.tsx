@@ -217,7 +217,7 @@ export default function RouteHero({ theme }: { theme: Theme }) {
           </p>
           <div className="rt-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="rt-btn rt-btn--primary">Email me</a>
-            <a href="/resume" className="rt-btn rt-btn--ghost">Résumé</a>
+            <a href="/resume/" className="rt-btn rt-btn--ghost">Résumé</a>
           </div>
           <p className="rt-avail">
             <span className="rt-open-dot" aria-hidden="true" /> Open to opportunities
@@ -272,7 +272,7 @@ export default function RouteHero({ theme }: { theme: Theme }) {
           </p>
           <div className="rt-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="rt-btn rt-btn--primary">Email me</a>
-            <a href="/resume" className="rt-btn rt-btn--ghost">Résumé</a>
+            <a href="/resume/" className="rt-btn rt-btn--ghost">Résumé</a>
           </div>
           <ul className="rt-contacts" role="list">
             {CONTACT.map((c) => (

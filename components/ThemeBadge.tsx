@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getCurrentTheme, type Theme } from "@/lib/themes";
+import { getCurrentTheme, themes, type Theme } from "@/lib/themes";
 import { incrementOffset } from "@/lib/rotation";
 import { GlassWidget, glassPrimaryText, glassSecondaryText } from "./GlassWidget";
 
@@ -18,6 +18,22 @@ export default function ThemeBadge({ compact }: { compact?: boolean }) {
   function rotate() {
     if (spinning) return;
     setSpinning(true);
+
+    // On a /theme/<name> route getCurrentTheme() short-circuits on the pathname
+    // and returns the forced theme, ignoring the stored offset entirely. So
+    // incrementing here used to spin the glyph, change nothing on screen, AND
+    // silently shift which theme the next visit to / would serve. Navigate to
+    // the next theme instead. Trailing slash because next.config sets
+    // trailingSlash: true; without it every click costs a redirect.
+    const forced = window.location.pathname.match(/^\/theme\/([^/]+)/);
+    if (forced) {
+      const slug = forced[1];
+      const i = themes.findIndex((t) => t.layout === slug || t.id === slug);
+      const next = themes[(i + 1) % themes.length];
+      window.location.assign(`/theme/${next.layout}/`);
+      return;
+    }
+
     incrementOffset();
     setTimeout(() => setSpinning(false), 600);
   }

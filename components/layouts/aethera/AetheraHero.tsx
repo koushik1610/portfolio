@@ -259,7 +259,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
-            <a href="/resume" className="ath-hero-cta ath-hero-cta--ghost">
+            <a href="/resume/" className="ath-hero-cta ath-hero-cta--ghost">
               Résumé
             </a>
           </div>

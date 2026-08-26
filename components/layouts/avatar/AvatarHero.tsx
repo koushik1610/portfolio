@@ -273,7 +273,7 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
 
             <div className="w12-cta-row">
               <a href="mailto:koushik.kotamraju1610@gmail.com" className="w12-btn w12-btn--primary">Email me</a>
-              <a href="/resume" className="w12-btn w12-btn--ghost">Résumé</a>
+              <a href="/resume/" className="w12-btn w12-btn--ghost">Résumé</a>
             </div>
           </div>
         </header>
