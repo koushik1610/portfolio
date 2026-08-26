@@ -297,13 +297,6 @@ html[data-layout="coverage"] nav:not(.cv-nav) { display: none !important; }
   white-space: nowrap;
 }
 .cv-depth-desc { font-size: 14.5px; color: var(--cv-muted); max-width: 72ch; margin: 0 0 18px; }
-.cv-bar {
-  height: 5px;
-  background: var(--cv-line);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.cv-bar-fill { height: 100%; background: var(--cv-blue); border-radius: 3px; }
 
 /* ── Contact ─────────────────────────────────────────────────────────────── */
 .cv-contact { margin-top: 56px; padding-top: 44px; border-top: 1px solid var(--cv-line); }
