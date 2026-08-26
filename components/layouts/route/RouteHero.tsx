@@ -244,9 +244,9 @@ export default function RouteHero({ theme }: { theme: Theme }) {
                     <p className="rt-station-desc">{s.desc}</p>
                     <div className="rt-station-stat">
                       <CountUp value={s.stat} className="rt-station-num" />
-                      {/* visible, not aria-hidden — a screen reader hearing
-                          CountUp's own final-value aria-label needs this
-                          unit text too, or "200+" reads with no context */}
+                      {/* visible, not aria-hidden — CountUp exposes its final
+                          value as a visually-hidden text node, and a screen
+                          reader hearing "200+" with no unit has no context */}
                       <span className="rt-station-statlabel">{s.statLabel}</span>
                     </div>
                   </div>

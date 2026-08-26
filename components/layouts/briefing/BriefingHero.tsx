@@ -292,9 +292,13 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
         <section className="bf-feature" aria-labelledby="bf-feature-head">
           <h2 id="bf-feature-head" className="bf-sr-only">The work</h2>
           <div className="bf-feature-grid">
-            <div className="bf-pull" role="group" aria-label="2,800 plus cloud accounts secured by a small senior team">
+            {/* No role="group" + aria-label here. CountUp carries its own
+                visually-hidden text node with the final value (see CountUp.tsx),
+                so naming the group would announce the number twice in browse
+                mode. The caption is real text for the same reason. */}
+            <div className="bf-pull">
               <CountUp value="2,800+" className="bf-pull-num" />
-              <p className="bf-pull-cap" aria-hidden="true">cloud accounts secured by a small senior team</p>
+              <p className="bf-pull-cap">cloud accounts secured by a small senior team</p>
             </div>
 
             <div className="bf-feature-body">
