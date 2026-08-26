@@ -1,0 +1,119 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   THEME BASE — the shared accessibility floor for theme layouts.
+
+   Extracted 2026-08. Before this, every theme hand-copied ~40 lines of skip
+   link, sr-only, focus ring, and CTA button CSS with a different class prefix.
+   That tax has been paid once already: commit e88c7cd changed the WidgetStack
+   clearance across every theme in a single sweep.
+
+   OPT-IN BY DESIGN. EVERY rule here is scoped under `.th-root`, not under
+   `html[data-layout]`, so adding this file changes nothing about the existing
+   themes — they keep their own prefixed copies until they are replaced. A new
+   theme opts in by adding `th-root` alongside its own root class:
+
+       <div className="c1-root th-root" ref={rootRef}>
+
+   The scoping is uniform ON PURPOSE. An earlier revision left only the focus
+   ring gated on `.th-root` while every button, skip-link and chip class was a
+   bare global. That inverted the failure mode: a theme that rendered <CtaRow/>
+   but forgot `th-root` got fully styled buttons and NO focus ring — the one
+   thing that must never silently go missing was the only thing that could.
+   Now forgetting `th-root` yields obviously unstyled buttons, which is caught
+   the first time anyone looks at the page.
+
+   Everything here reads from the registry tokens in lib/themes.ts, so a theme
+   never re-declares --accent, --on-accent or --border-strong locally.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* box-sizing is already set globally on * by app/globals.css — not repeated here. */
+
+/* .th-sr-only is defined in app/globals.css, not here — CountUp.tsx depends on
+   it and is shared by themes that have not opted into this layer. */
+
+/* ── Skip link ────────────────────────────────────────────────────────────── */
+.th-root .th-skip {
+  /* fixed, not absolute: an absolutely-positioned skip link renders at
+     document top, so if focus reaches it while the page is scrolled it is
+     off-screen and the "skip" does nothing visible. Inherited as `absolute`
+     from the retiring themes; corrected here rather than canonized. */
+  position: fixed; left: -9999px; top: 0; z-index: 999;
+  background: var(--accent); color: var(--on-accent);
+  padding: 10px 18px; border-radius: 6px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+.th-root .th-skip:focus { left: 16px; top: 16px; }
+
+/* ── Focus ring ───────────────────────────────────────────────────────────── */
+.th-root :is(a, button, [tabindex], summary, input, select, textarea):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* skipTarget() puts tabIndex={-1} on <main> so the skip link actually moves
+   focus. That makes <main> match the selector above and draws a 2px ring
+   around the entire viewport on activation. The element is a focus destination,
+   not a control, so it gets no ring. Programmatic-only targets (tabindex="-1")
+   are excluded; genuinely focusable tabindex="0" elements keep theirs. */
+.th-root [tabindex="-1"]:focus-visible { outline: none; }
+
+/* ── CTA row ──────────────────────────────────────────────────────────────────
+   Identical grammar in every theme: accent-filled primary first, ghost second,
+   same order, 44px minimum target. A recruiter arriving in week 34 and again in
+   week 37 sees two different sites; the constant has to be the action.
+   Themes may reposition .th-cta-row freely; they must not restyle the buttons.
+──────────────────────────────────────────────────────────────────────────── */
+.th-root .th-cta-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+}
+
+.th-root .th-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 20px;
+  border-radius: 9px;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  font-size: 15px; font-weight: 600; line-height: 1;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 160ms ease,
+              border-color 160ms ease;
+}
+.th-root .th-btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid transparent;
+}
+.th-root .th-btn--ghost {
+  background: transparent;
+  color: var(--text-primary);
+  /* --border-strong, NOT --border. --border is a decorative hairline
+     (rgba(255,255,255,0.09) on dark = 1.22:1 composited) and this border is the
+     ONLY affordance marking the Résumé control as a control, so it is governed
+     by WCAG 1.4.11 non-text contrast at 3:1. coverage/styles.css:114 already
+     reached for its strong line token here for the same reason. */
+  border: 1px solid var(--border-strong);
+}
+.th-root .th-btn:hover { transform: translateY(-1px); }
+.th-root .th-btn--ghost:hover { border-color: var(--accent); }
+.th-root .th-btn:active { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .th-root .th-btn { transition: none; }
+  .th-root .th-btn:hover, .th-root .th-btn:active { transform: none; }
+}
+
+/* ── Availability chip ────────────────────────────────────────────────────────
+   Renders ONCE per page, in the masthead beside the CTA row, where it does
+   conversion work. Never in the nav — the fixed WidgetStack competes for that
+   corner. The dot is decorative; the text carries the meaning.
+──────────────────────────────────────────────────────────────────────────── */
+.th-root .th-avail {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px; letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+.th-root .th-avail-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); flex: none;
+}
