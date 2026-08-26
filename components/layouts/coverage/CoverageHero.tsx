@@ -125,26 +125,27 @@ const STATS = [
   { value: "$1.40", label: "per research run · 19 models" },
 ] as const;
 
-/* Depth rows — where the coverage is deepest. Bar widths are editorial,
-   not measurements; the metrics carry the facts. */
+/* Depth rows. Each carries a real metric and a real description.
+   These previously also drove a progress bar from a `pct` field (94/88/82)
+   whose own comment conceded the widths were "editorial, not measurements".
+   A fabricated chart on a security engineer's portfolio is the one category of
+   error this site cannot afford, so the bar is gone rather than re-based: there
+   is no honest percentage to put there. The metric is the quantitative claim. */
 const DEPTH = [
   {
     name: "Identity & Privilege",
     desc: "65+ escalation paths across 10 vulnerability classes. 62 toxic combinations catalogued with minimum cut-set dissolution. The audit agent was benchmarked before it was trusted.",
     metric: "32 GOAT benchmarks",
-    pct: 94,
   },
   {
     name: "Detection & Baselines",
     desc: "200+ Python/Lambda signatures evaluating 1,400+ AWS accounts — the posture scores the company is measured against. v6.0: the largest control expansion in program history.",
     metric: "50+ new baselines",
-    pct: 88,
   },
   {
     name: "AI Security Platforms",
     desc: "A self-learning research router across 19 models, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates. All in daily production use.",
     metric: "$1.40 / research run",
-    pct: 82,
   },
 ] as const;
 
@@ -214,17 +215,6 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
           once: true,
           onEnter: (self) => settle(self.animation as gsap.core.Tween, 2500),
         },
-      });
-
-      // Depth bars draw once, on scroll.
-      gsap.utils.toArray<HTMLElement>(".cv-bar-fill").forEach((bar) => {
-        gsap.from(bar, {
-          scaleX: 0,
-          transformOrigin: "left center",
-          duration: 0.9,
-          ease: "power3.inOut",
-          scrollTrigger: { trigger: bar, start: "top 88%", once: true },
-        });
       });
 
       // Rows below the fold print in, once each.
@@ -355,9 +345,6 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
                 <span className="cv-depth-metric">{d.metric}</span>
               </div>
               <p className="cv-depth-desc">{d.desc}</p>
-              <div className="cv-bar" aria-hidden="true">
-                <div className="cv-bar-fill" style={{ width: `${d.pct}%` }} />
-              </div>
             </article>
           ))}
         </section>
