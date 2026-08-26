@@ -30,6 +30,7 @@ export default function Nav() {
 
   return (
     <nav
+      className="site-nav"
       style={{
         position: "fixed",
         top: 0,
