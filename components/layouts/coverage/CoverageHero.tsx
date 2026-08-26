@@ -259,7 +259,7 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
           </p>
           <div className="cv-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="cv-btn cv-btn--primary">Email me</a>
-            <a href="/resume" className="cv-btn cv-btn--ghost">Résumé</a>
+            <a href="/resume/" className="cv-btn cv-btn--ghost">Résumé</a>
           </div>
           {/* Availability chip surfaces here on phones (nav chip hides there) */}
           <p className="cv-avail">

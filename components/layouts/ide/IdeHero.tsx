@@ -510,7 +510,7 @@ export default function IdeHero({ theme }: { theme: Theme }) {
               {active.id === "about" && (
                 <div className="ide-cta-row">
                   <a href="mailto:koushik.kotamraju1610@gmail.com" className="ide-btn ide-btn--primary">Email me</a>
-                  <a href="/resume" className="ide-btn ide-btn--ghost">Résumé</a>
+                  <a href="/resume/" className="ide-btn ide-btn--ghost">Résumé</a>
                 </div>
               )}
             </div>

@@ -88,7 +88,7 @@ html[data-layout="ide"] nav:not(.ide-titlebar):not(.ide-filenav) { display: none
      render under the widget's reserved zone into the tab bar's existing
      horizontal scroll instead. */
   .ide-titlebar { padding-right: 300px; }
-  .ide-tabbar { width: calc(100% - 270px); }
+  .ide-tabbar { width: calc(100% - 300px); }
 }
 @media (max-width: 639px) {
   .ide-titlebar { padding: 10px 12px; }

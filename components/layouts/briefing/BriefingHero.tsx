@@ -275,7 +275,7 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
             </p>
             <div className="bf-cta-row">
               <a href="mailto:koushik.kotamraju1610@gmail.com" className="bf-btn bf-btn--primary">Email me</a>
-              <a href="/resume" className="bf-btn bf-btn--ghost">Résumé</a>
+              <a href="/resume/" className="bf-btn bf-btn--ghost">Résumé</a>
             </div>
           </div>
 
