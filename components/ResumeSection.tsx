@@ -29,15 +29,19 @@ export default function ResumeSection() {
       <div style={{ height: "1px", background: "var(--border)", marginBottom: "3rem" }} />
 
       {/* Certs & Stack */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", marginBottom: "3rem" }}>
-        <div>
-          <p style={{ ...mono, fontSize: "0.6rem", color: "var(--text-muted)", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>CERTIFICATIONS</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-            {certs.map((c) => (
-              <p key={c} style={{ fontSize: "0.82rem", color: "var(--text-primary)" }}>{c}</p>
-            ))}
+      <div style={{ display: "grid", gridTemplateColumns: certs.length ? "1fr 1fr" : "1fr", gap: "2rem", marginBottom: "3rem" }}>
+        {/* Rendered only when non-empty. An empty CERTIFICATIONS heading reads
+            worse than no heading at all. */}
+        {certs.length > 0 && (
+          <div>
+            <p style={{ ...mono, fontSize: "0.6rem", color: "var(--text-muted)", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>CERTIFICATIONS</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+              {certs.map((c) => (
+                <p key={c} style={{ fontSize: "0.82rem", color: "var(--text-primary)" }}>{c}</p>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
         <div>
           <p style={{ ...mono, fontSize: "0.6rem", color: "var(--text-muted)", letterSpacing: "0.15em", marginBottom: "0.75rem" }}>TECHNICAL STACK</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>

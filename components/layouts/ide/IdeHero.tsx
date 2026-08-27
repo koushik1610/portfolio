@@ -119,7 +119,7 @@ const FILES: ReadonlyArray<FileTab> = [
       { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "self.signatures", k: "key" }] },
       { kind: "blank" },
       { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "expand_baseline", k: "key" }, { t: "(self):", k: "punct" }] },
-      { kind: "comment", indent: 2, text: '"""v6.0 — the largest control expansion in program history."""' },
+      { kind: "comment", indent: 2, text: '"""The largest control expansion in program history."""' },
       { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "self.new_baselines_v6", k: "key" }] },
     ],
   },

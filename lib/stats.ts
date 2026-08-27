@@ -4,7 +4,7 @@
 // rotating StatItem sets with a second, uncanonical stat vocabulary. It had
 // ZERO consumers (fully tree-shaken, never rendered) and sat above the
 // canonical table, so anyone opening this file read the wrong one first.
-// Deleted 2026-08. Its one figure not represented below, the v6.0 / 50+
+// Deleted 2026-08. Its one figure not represented below, the 50+
 // baselines line, was carried over as `baselines`.
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -87,7 +87,7 @@ export const STATS = {
   baselines: {
     value: "50+",
     label: "new baselines",
-    context: "Shipped in the v6.0 AWS security baseline release, the program's largest control expansion, with Checkov parity analysis and severity re-scoring.",
+    context: "Shipped in the AWS security baseline program's largest control expansion, with Checkov parity analysis and severity re-scoring.",
   },
   experience: {
     value: "9 years",
