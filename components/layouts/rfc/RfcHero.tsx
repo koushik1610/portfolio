@@ -46,7 +46,7 @@ const OVERVIEW = [
   {
     n: "3.1",
     title: "Detection",
-    body: "200+ Python/Lambda signatures evaluate 1,400+ AWS accounts. Coverage claims MUST be measured against the full account estate; a signature fleet SHOULD NOT be represented as complete on the basis of a sample. The v6.0 release added 50+ new baselines, the largest single control expansion in program history.",
+    body: "200+ Python/Lambda signatures evaluate 1,400+ AWS accounts. Coverage claims MUST be measured against the full account estate; a signature fleet SHOULD NOT be represented as complete on the basis of a sample. The largest single control expansion in program history added 50+ new baselines.",
   },
   {
     n: "3.2",

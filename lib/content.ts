@@ -40,7 +40,7 @@ const RESEARCH_PROJECTS: ResearchProject[] = [
     name: "Artemis",
     status: "In Research",
     tagline: "Multi-cloud attack path simulation at enterprise scale.",
-    body: "A CNAPP-class multi-cloud attack path simulation platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched graph layer. Exports to BigQuery, applies Gemini enrichment, maps to business units via fuzzy crown-jewel matching, and tracks toxic combination persistence over time. The open engineering problem: turning simulation output into dissolution playbooks that actually execute — not just reports that sit in a dashboard.",
+    body: "A CNAPP-class multi-cloud attack path simulation platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub and GCP Security Command Center findings into an AI-enriched graph layer. Exports to BigQuery, applies Gemini enrichment, maps to business units via fuzzy crown-jewel matching, and tracks toxic combination persistence over time. The open engineering problem: turning simulation output into dissolution playbooks that actually execute — not just reports that sit in a dashboard.",
     hypothesis: "Most CNAPPs surface individual findings. Artemis surfaces the chain — and the minimum intervention that collapses it.",
     tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI", "Gemini", "BigQuery", "Databricks"],
   },
@@ -65,7 +65,7 @@ const V1: ContentVariation = {
     sections: [
       {
         heading: "Detection Engineering",
-        body: "Define and operate Yahoo's company-wide cloud security baselines — authoring and maintaining a detection system of 200+ Python/Lambda signatures that evaluates resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account, business-unit, and org-level security-posture scores the company is measured against, each with CIS-style audit and remediation guidance. Coordinated the program's largest control expansion (the v6.0 release, 50+ new baselines): researched new AWS services, ran Checkov parity analysis to close policy gaps, and re-scored every control's severity on a risk × likelihood × impact matrix. Also built the organization's first GenAI security guardrails and detection (Amazon Bedrock, SageMaker) from zero prior art.",
+        body: "Define and operate Yahoo's company-wide cloud security baselines — authoring and maintaining a detection system of 200+ Python/Lambda signatures that evaluates resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account, business-unit, and org-level security-posture scores the company is measured against, each with CIS-style audit and remediation guidance. Coordinated the program's largest control expansion (50+ new baselines): researched new AWS services, ran Checkov parity analysis to close policy gaps, and re-scored every control's severity on a risk × likelihood × impact matrix. Also built the organization's first GenAI security guardrails and detection (Amazon Bedrock, SageMaker) from zero prior art.",
       },
       {
         heading: "Security Reviews at Scale",
@@ -102,7 +102,7 @@ const V2: ContentVariation = {
     sections: [
       {
         heading: "Detection Fleet Ownership",
-        body: "Full ownership of the detection system: 200+ active Python/Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account/BU/org posture scores (CSPM) the company is measured against — each signature shipping with CIS-style audit and remediation guidance, deployed via Terraform for reproducible rollout. Primary point of contact for the AWS security baselines program: coordinated the v6.0 release (largest control expansion in program history, 50+ new baselines), ran Checkov parity analysis to close policy gaps, and re-scored every control on a risk × likelihood × impact matrix. The core engineering challenge is evaluation logic precise enough to hold signal quality at account scale while covering per-service configuration nuance.",
+        body: "Full ownership of the detection system: 200+ active Python/Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account/BU/org posture scores (CSPM) the company is measured against — each signature shipping with CIS-style audit and remediation guidance, deployed via Terraform for reproducible rollout. Primary point of contact for the AWS security baselines program: coordinated the largest control expansion in program history (50+ new baselines), ran Checkov parity analysis to close policy gaps, and re-scored every control on a risk × likelihood × impact matrix. The core engineering challenge is evaluation logic precise enough to hold signal quality at account scale while covering per-service configuration nuance.",
       },
       {
         heading: "Agentic Security Review Platform",
@@ -139,7 +139,7 @@ const V3: ContentVariation = {
     sections: [
       {
         heading: "Getting the Signal Right",
-        body: "200+ detection signatures evaluating 1,400+ AWS accounts — each one a judgment call on whether a configuration pattern is genuinely risky, and at what threshold. The output isn't just alerts: it's the per-resource findings and posture scores the whole company is measured against, so signal quality is the product. When a false-positive storm hits, I root-cause it to the upstream AWS change — runtime deprecations, KMS evaluation changes, S3 policy format shifts — and rewrite the evaluation logic rather than suppress the noise. I coordinated the baseline program's largest control expansion (v6.0, 50+ new baselines) because the existing controls had coverage gaps I could map directly to real attack techniques from cloud incident response data. The forcing function: if we can't detect a known technique, that's a gap to close.",
+        body: "200+ detection signatures evaluating 1,400+ AWS accounts — each one a judgment call on whether a configuration pattern is genuinely risky, and at what threshold. The output isn't just alerts: it's the per-resource findings and posture scores the whole company is measured against, so signal quality is the product. When a false-positive storm hits, I root-cause it to the upstream AWS change — runtime deprecations, KMS evaluation changes, S3 policy format shifts — and rewrite the evaluation logic rather than suppress the noise. I coordinated the baseline program's largest control expansion (50+ new baselines) because the existing controls had coverage gaps I could map directly to real attack techniques from cloud incident response data. The forcing function: if we can't detect a known technique, that's a gap to close.",
       },
       {
         heading: "Scaling Reviews Without Scaling Headcount",
@@ -176,7 +176,7 @@ const V4: ContentVariation = {
     sections: [
       {
         heading: "200+ Signatures, 1,400+ AWS Accounts",
-        body: "Own Yahoo's company-wide cloud security baselines and the detection system enforcing them: 200+ Python/Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, producing the per-resource findings and posture scores (CSPM) the company is measured against. Coordinated the program's largest control expansion — the v6.0 release, 50+ new baselines — with Checkov parity analysis and severity re-scoring on a risk × likelihood × impact matrix. First GenAI security guardrails (Bedrock, SageMaker) built from zero prior art. Fleet managed via Terraform.",
+        body: "Own Yahoo's company-wide cloud security baselines and the detection system enforcing them: 200+ Python/Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, producing the per-resource findings and posture scores (CSPM) the company is measured against. Coordinated the program's largest control expansion, 50+ new baselines, with Checkov parity analysis and severity re-scoring on a risk × likelihood × impact matrix. First GenAI security guardrails (Bedrock, SageMaker) built from zero prior art. Fleet managed via Terraform.",
       },
       {
         heading: "150+ Security Reviews, Small Team",

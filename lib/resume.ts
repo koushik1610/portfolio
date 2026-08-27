@@ -1,7 +1,8 @@
-export const certs = [
-  "AWS Certified Security – Specialty",
-  "AWS Certified Solutions Architect – Associate",
-];
+/* Both AWS certifications lapsed (Solutions Architect Associate May 2023,
+   Security Specialty Dec 2024). Displaying an expired cert undated reads as
+   current and fails a background screen, so they are withheld until recertified
+   rather than shown with a caveat. Restore this list the day either renews. */
+export const certs: string[] = [];
 
 export const stack = [
   "AWS", "Azure", "GCP", "IAM & CIEM", "Detection Engineering", "CSPM", "CNAPP",
@@ -21,8 +22,8 @@ export const jobs = [
     current: true,
     bullets: [
       "Define and operate Yahoo's company-wide cloud security baselines, authoring and maintaining the Paranoids AWS Cloud Alerts Detection system of 200+ Python detection signatures on AWS Lambda that evaluate resource configurations across 1,400+ AWS accounts, producing per-resource findings and account/BU/org security-posture scores (CSPM) the company is measured against, each with CIS-style audit and remediation guidance.",
-      "Conducted 150+ cloud security reviews under Yahoo's Paranoid Security Review (PSR), partnering with the Product Security, Network, and Identity teams and submitting developers, leads, and managers to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech.",
-      "Primary point of contact for Yahoo's AWS security baselines, coordinating the v6.0 release (the program's largest control expansion, 50+ new baselines) by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix.",
+      "Conducted 150+ cloud security reviews under Yahoo's Paranoid Security Review (PSR), partnering with the Product Security, Network, and Identity teams and convening developers, leads, and managers to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech.",
+      "Primary point of contact for Yahoo's AWS security baselines, coordinating the program's largest control expansion (, 50+ new baselines) by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix.",
       "Built security Claude Code skills to harden AI-assisted development: a package-hallucination detector flagging AI-invented dependency names before slopsquatting supply-chain exploitation, and a live AWS IAM audit skill (AWS CLI + IAM Access Analyzer) returning findings with severity, source attribution, and escalation-path IDs.",
       "Built a toxic-combination correlation engine over CIS-based alert data, chaining findings into privilege-escalation paths across three classes: misconfig+misconfig (public SSH/RDP without IMDSv2), misconfig+IAM (public Lambda with a privileged role, or an exposed host with an over-permissioned profile), and IAM+IAM (cross-account assume-role into a privileged role, or self-escalation via attach/put-policy), catching chains single-finding scanners miss.",
     ],
@@ -68,7 +69,7 @@ export const projects = [
   {
     name: "Artemis",
     description:
-      "CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched attack path graph. Surfaces toxic IAM combinations, crown-jewel exposure, and CWPP-level workload risk; maps to MITRE ATT&CK and generates prioritized AI-driven remediation backlogs consumed by 4 engineering teams.",
+      "CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub and GCP Security Command Center findings into an AI-enriched attack path graph. Surfaces toxic IAM combinations and crown-jewel exposure; maps to MITRE ATT&CK and generates prioritized AI-driven remediation backlogs consumed by 4 engineering teams.",
     tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI", "Gemini", "BigQuery", "Databricks"],
     wip: false,
     link: null,
@@ -156,7 +157,7 @@ export const projects = [
   {
     name: "AWS Security Baselines",
     description:
-      "Primary point of contact for Yahoo's AWS security baselines program — coordinated the v6.0 release, the largest control expansion in program history (50+ new baselines), by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix. Includes a full MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data and a machine-readable control registry.",
+      "Primary point of contact for Yahoo's AWS security baselines program — coordinated the largest control expansion in program history (50+ new baselines), by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix. Includes a full MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data and a machine-readable control registry.",
     tags: ["AWS", "CIS Baselines", "MITRE ATT&CK", "Checkov", "Compliance"],
     wip: false,
     link: null,

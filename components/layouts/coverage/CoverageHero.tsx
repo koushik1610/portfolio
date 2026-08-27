@@ -139,7 +139,7 @@ const DEPTH = [
   },
   {
     name: "Detection & Baselines",
-    desc: "200+ Python/Lambda signatures evaluating 1,400+ AWS accounts — the posture scores the company is measured against. v6.0: the largest control expansion in program history.",
+    desc: "200+ Python/Lambda signatures evaluating 1,400+ AWS accounts — the posture scores the company is measured against. The largest control expansion in program history.",
     metric: "50+ new baselines",
   },
   {

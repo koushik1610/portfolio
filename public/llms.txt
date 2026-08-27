@@ -9,7 +9,7 @@ Senior Technical Security Engineer at Yahoo (Feb 2022 – present). Member of a 
 ## Key Technical Achievements
 
 **Secure-by-Default Guardrails & Detection Engineering**
-Defines and operates Yahoo's company-wide cloud security baselines. Owns the AWS Cloud Alerts Detection system: 200+ active Python/Lambda detection signatures evaluating resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account/BU/org security-posture scores (CSPM) the company is measured against — each with CIS-style audit and remediation guidance, deployed via Terraform. Primary point of contact for the AWS security baselines program: coordinated the v6.0 release (the program's largest control expansion, 50+ new baselines) with Checkov parity analysis and risk × likelihood × impact severity re-scoring, grounded in a MITRE ATT&CK gap analysis against real-world attack techniques from cloud incident response data. Built the organization's first GenAI security capability from zero prior art — the first AI-service guardrails (Amazon Bedrock, SageMaker), the first GenAI detection signatures, and the usage governance that gated company-wide GenAI adoption.
+Defines and operates Yahoo's company-wide cloud security baselines. Owns the AWS Cloud Alerts Detection system: 200+ active Python/Lambda detection signatures evaluating resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account/BU/org security-posture scores (CSPM) the company is measured against — each with CIS-style audit and remediation guidance, deployed via Terraform. Primary point of contact for the AWS security baselines program: coordinated the program's largest control expansion (50+ new baselines) with Checkov parity analysis and risk × likelihood × impact severity re-scoring, grounded in a MITRE ATT&CK gap analysis against real-world attack techniques from cloud incident response data. Built the organization's first GenAI security capability from zero prior art — the first AI-service guardrails (Amazon Bedrock, SageMaker), the first GenAI detection signatures, and the usage governance that gated company-wide GenAI adoption.
 
 **Posture Management & Security Metrics**
 Designed and launched the org-wide High Severity Alert Enforcement Program — converted untracked critical cloud alerts into SLA-driven remediation tickets across the AWS estate and defined the posture metrics leadership uses to track risk burn-down. Presented the framework at AWS Accelerator.
@@ -21,7 +21,7 @@ Built an AI-native IAM audit agent covering 65+ escalation paths across 10 vulne
 Graph-theoretic IAM toxic combination research framework (Cloud Infrastructure Entitlement Management). 62 toxic combinations across 8 attack categories, each with MITRE ATT&CK mappings and a minimum cut-set dissolution action — identifying the keystone permission whose removal collapses an entire privilege escalation chain without disrupting legitimate access. Provides a policy-as-code enforcement foundation for AI-driven auto-remediation.
 
 **Artemis — Multi-Cloud Attack Path Simulation**
-CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,800+ AWS and GCP accounts. Unifies AWS Security Hub, GCP Security Command Center, and Kubernetes/EKS workload findings into an AI-enriched attack path graph (BigQuery, Vertex AI/Gemini, Terraform). Surfaces toxic IAM combinations, crown-jewel exposure, and workload risk trends across business units; maps findings to MITRE ATT&CK and generates prioritized remediation backlogs consumed by 4 engineering teams. Closes capability gaps commercial CNAPP tooling does not address (longitudinal toxic-combination tracking, cross-cloud unification, business-context mapping).
+CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,800+ AWS and GCP accounts. Unifies AWS Security Hub and GCP Security Command Center findings into an AI-enriched attack path graph (BigQuery, Vertex AI/Gemini, Terraform). Surfaces toxic IAM combinations, crown-jewel exposure, and workload risk trends across business units; maps findings to MITRE ATT&CK and generates prioritized remediation backlogs consumed by 4 engineering teams. Closes capability gaps commercial CNAPP tooling does not address (longitudinal toxic-combination tracking, cross-cloud unification, business-context mapping).
 
 **Agentic Security Reviews**
 Conducted 150+ cloud security reviews under Yahoo's Paranoid Security Review (PSR) program — partnering with the Product Security, Network, and Identity teams to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech, including third-party vendor integrations and AI/ML platform reviews. Designed and shipped the agentic SOAR-style review platform behind that throughput, eliminating a multi-week backlog. Built a cross-ticket intelligence layer from a large corpus of historical security review tickets — 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles — wired into an autonomous Claude Code review agent with passive detection rules, slash commands, and bidirectional MCP integration with Jira and Confluence. Established as the team's standard review methodology.
@@ -45,12 +45,7 @@ Coached engineers on sister security teams on AI-assisted security engineering; 
 
 ## Technical Stack
 
-AWS, GCP, IAM, CIEM, CNAPP, CSPM, AI-SPM, Zero Trust, DevSecOps, Python, Go, FastAPI, Databricks, Terraform, Amazon Bedrock, Vertex AI, Multi-Agent Orchestration, LLM Security, MCP, Semgrep, Splunk, MITRE ATT&CK, Checkov, Docker, Kubernetes, CIS Benchmarks, NIST CSF
-
-## Certifications
-
-- AWS Certified Security – Specialty
-- AWS Certified Solutions Architect – Associate
+AWS, GCP, IAM, CIEM, CNAPP, CSPM, AI-SPM, Zero Trust, DevSecOps, Python, Go, FastAPI, Databricks, Terraform, Amazon Bedrock, Vertex AI, Multi-Agent Orchestration, LLM Security, MCP, MITRE ATT&CK, Checkov, Docker, Kubernetes, CIS Benchmarks, NIST CSF
 
 ## Career History
 
