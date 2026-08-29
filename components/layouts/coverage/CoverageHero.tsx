@@ -4,7 +4,7 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
-import { IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
+import { EMAIL_HREF, IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import "./styles.css";
 
@@ -248,7 +248,7 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
             {IDENTITY.hook}
           </p>
           <div className="cv-cta-row">
-            <a href="mailto:koushik.kotamraju1610@gmail.com" className="cv-btn cv-btn--primary">Email me</a>
+            <a href={EMAIL_HREF} className="cv-btn cv-btn--primary">Email me</a>
             <a href="/resume/" className="cv-btn cv-btn--ghost">Résumé</a>
           </div>
           {/* Availability chip surfaces here on phones (nav chip hides there) */}

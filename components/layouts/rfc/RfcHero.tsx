@@ -4,7 +4,7 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
-import { IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
+import { EMAIL, EMAIL_HREF, IDENTITY, CONTACT, CAPABILITIES, projectById } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import "./styles.css";
 
@@ -79,7 +79,7 @@ const OVERVIEW = (["detection", "identity", "review", "ai-platforms"] as const).
 const REFERENCES = [
   { tag: "GOAT", value: STATS.goatFindings.value, label: "ground-truth IAM findings" },
   { tag: "ANTITOXIN", value: STATS.toxicCombinations.value, label: "toxic combinations, catalogued by hand" },
-  { tag: "ARTEMIS", value: "GCP", label: "built; AWS designed, not built" },
+  { tag: "ARTEMIS", value: "GCP", label: projectById("artemis").caveat! },
   { tag: "BASELINES", value: STATS.baselines.value, label: "new controls, largest release in program history" },
 ] as const;
 
@@ -187,7 +187,7 @@ export default function RfcHero({ theme }: { theme: Theme }) {
             <strong>production systems, not prototypes.</strong> {IDENTITY.hook}
           </p>
           <div className="rc-cta-row">
-            <a href="mailto:koushik.kotamraju1610@gmail.com" className="rc-btn rc-btn--primary">Email me</a>
+            <a href={EMAIL_HREF} className="rc-btn rc-btn--primary">Email me</a>
             <a href="/resume/" className="rc-btn rc-btn--ghost">Résumé</a>
           </div>
           <p className="rc-avail">
@@ -250,7 +250,7 @@ export default function RfcHero({ theme }: { theme: Theme }) {
           <h2 id="rc-iana">5.  IANA Considerations</h2>
           <p>
             This document registers one value:{" "}
-            <a href="mailto:koushik.kotamraju1610@gmail.com">koushik.kotamraju1610@gmail.com</a>{" "}
+            <a href={EMAIL_HREF}>{EMAIL}</a>{" "}
             (permanent).
           </p>
         </section>

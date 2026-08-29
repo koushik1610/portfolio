@@ -1,3 +1,17 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   THE RESUME DOCUMENT. Deliberately NOT merged into lib/profile.ts.
+
+   A resume bullet and a portfolio sentence are different genres: bullets lead
+   with the verb, carry the employer's framing, and answer to the ATS keyword
+   pass; the profile layer answers to a hero's line budget. Forcing them through
+   one string would make both worse, and this file has exactly one consumer.
+
+   THE COST OF THAT DECISION, stated so nobody has to discover it: two facts are
+   written in both places. The Artemis build state (GCP built, AWS designed) and
+   the four career roles. If either changes, edit lib/profile.ts AND this file.
+   Nothing enforces it, which is why it is written here rather than assumed.
+───────────────────────────────────────────────────────────────────────────── */
+
 /* Both AWS certifications lapsed (Solutions Architect Associate May 2023,
    Security Specialty Dec 2024). Displaying an expired cert undated reads as
    current and fails a background screen, so they are withheld until recertified

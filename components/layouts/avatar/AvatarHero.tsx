@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
-import { CONTACT, PROJECTS as WORK } from "@/lib/profile";
+import { EMAIL_HREF, CONTACT, PROJECTS as WORK } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import "./styles.css";
 
@@ -243,7 +243,7 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
             </p>
 
             <div className="w12-cta-row">
-              <a href="mailto:koushik.kotamraju1610@gmail.com" className="w12-btn w12-btn--primary">Email me</a>
+              <a href={EMAIL_HREF} className="w12-btn w12-btn--primary">Email me</a>
               <a href="/resume/" className="w12-btn w12-btn--ghost">Résumé</a>
             </div>
           </div>

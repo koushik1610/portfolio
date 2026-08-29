@@ -4,7 +4,7 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
-import { IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
+import { EMAIL_HREF, IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import "./styles.css";
 
@@ -181,7 +181,7 @@ export default function RouteHero({ theme }: { theme: Theme }) {
             {IDENTITY.hook}
           </p>
           <div className="rt-cta-row">
-            <a href="mailto:koushik.kotamraju1610@gmail.com" className="rt-btn rt-btn--primary">Email me</a>
+            <a href={EMAIL_HREF} className="rt-btn rt-btn--primary">Email me</a>
             <a href="/resume/" className="rt-btn rt-btn--ghost">Résumé</a>
           </div>
           <p className="rt-avail">
@@ -236,7 +236,7 @@ export default function RouteHero({ theme }: { theme: Theme }) {
             Staff &amp; Principal Security Engineer · AI Security roles.
           </p>
           <div className="rt-cta-row">
-            <a href="mailto:koushik.kotamraju1610@gmail.com" className="rt-btn rt-btn--primary">Email me</a>
+            <a href={EMAIL_HREF} className="rt-btn rt-btn--primary">Email me</a>
             <a href="/resume/" className="rt-btn rt-btn--ghost">Résumé</a>
           </div>
           <ul className="rt-contacts" role="list">

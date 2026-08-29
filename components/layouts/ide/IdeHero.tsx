@@ -8,7 +8,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
    it are not, and eleven of them were previously typed as literals here, which
    is how a corrected figure stays wrong in exactly one theme. */
 import { STATS } from "@/lib/stats";
-import { IDENTITY } from "@/lib/profile";
+import { CONTACT, EMAIL_HREF, IDENTITY } from "@/lib/profile";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -160,11 +160,9 @@ const FILES: ReadonlyArray<FileTab> = [
       { kind: "blank" },
       { kind: "text", text: "Open to Staff & Principal Security Engineer and AI Security roles." },
       { kind: "blank" },
-      { kind: "bullet", text: "Email — koushik.kotamraju1610@gmail.com" },
-      { kind: "bullet", text: "LinkedIn — in/koushikkotamraju" },
-      { kind: "bullet", text: "GitHub — github.com/koushik1610" },
+      ...CONTACT.map((c) => ({ kind: "bullet" as const, text: `${c.k}: ${c.v}` })),
       { kind: "blank" },
-      { kind: "bullet", text: "[Email me](mailto:koushik.kotamraju1610@gmail.com)" },
+      { kind: "bullet", text: `[Email me](${EMAIL_HREF})` },
       { kind: "bullet", text: "[Résumé](/resume)" },
     ],
   },
@@ -515,7 +513,7 @@ export default function IdeHero({ theme }: { theme: Theme }) {
               )}
               {active.id === "about" && (
                 <div className="ide-cta-row">
-                  <a href="mailto:koushik.kotamraju1610@gmail.com" className="ide-btn ide-btn--primary">Email me</a>
+                  <a href={EMAIL_HREF} className="ide-btn ide-btn--primary">Email me</a>
                   <a href="/resume/" className="ide-btn ide-btn--ghost">Résumé</a>
                 </div>
               )}
