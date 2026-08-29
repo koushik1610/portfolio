@@ -21,12 +21,6 @@ const Placeholder = () => <section id="about" style={{ minHeight: "100dvh" }} />
 
 const AetheraHero  = dynamic(() => import("./layouts/aethera/AetheraHero"),   { ssr: false, loading: Placeholder });
 const AvatarHero   = dynamic(() => import("./layouts/avatar/AvatarHero"),     { ssr: false, loading: Placeholder });
-const BriefingHero = dynamic(() => import("./layouts/briefing/BriefingHero"), { ssr: false, loading: Placeholder });
-const CoverageHero = dynamic(() => import("./layouts/coverage/CoverageHero"), { ssr: false, loading: Placeholder });
-const RfcHero      = dynamic(() => import("./layouts/rfc/RfcHero"),           { ssr: false, loading: Placeholder });
-const RouteHero    = dynamic(() => import("./layouts/route/RouteHero"),       { ssr: false, loading: Placeholder });
-const IdeHero      = dynamic(() => import("./layouts/ide/IdeHero"),           { ssr: false, loading: Placeholder });
-const SwissHero    = dynamic(() => import("./layouts/swiss/SwissHero"),       { ssr: false, loading: Placeholder });
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -100,12 +94,6 @@ export default function Hero() {
   switch (theme.layout) {
     case "aethera":   return <AetheraHero   key={theme.id} theme={theme} />;
     case "avatar":    return <AvatarHero    key={theme.id} theme={theme} />;
-    case "briefing":  return <BriefingHero  key={theme.id} theme={theme} />;
-    case "coverage":  return <CoverageHero  key={theme.id} theme={theme} />;
-    case "rfc":       return <RfcHero       key={theme.id} theme={theme} />;
-    case "route":     return <RouteHero     key={theme.id} theme={theme} />;
-    case "ide":       return <IdeHero       key={theme.id} theme={theme} />;
-    case "swiss":     return <SwissHero     key={theme.id} theme={theme} />;
     default: {
       // Exhaustiveness guard: adding a LayoutVariant without a case above is a
       // compile error here instead of a silent undefined render.
