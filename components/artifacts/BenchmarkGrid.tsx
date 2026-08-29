@@ -1,146 +1,75 @@
 import { STATS } from "@/lib/stats";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   BENCHMARK GRID — the GOAT evaluation
-   32 ground-truth findings across 11 synthetic Terraform fixtures, each cell
-   showing whether the IAM audit agent caught it. The point of the artifact is
-   the discipline, not the score: the benchmark was authored FIRST, then the
-   agent was evaluated against it.
+   BENCHMARK GRID — the GOAT fixture index
+   32 ground-truth findings across 11 synthetic Terraform fixtures. The point of
+   the artifact is the discipline, not a score: the benchmark was authored FIRST,
+   then the agent was evaluated against it.
 
-   HTML, NOT SVG. Deliberate, and the reason matters enough to write down.
-   The first version of this artifact drew an ATT&CK matrix in inline SVG with
-   type sized in viewBox units. Measured, that renders at 2.9px on a 320px
-   viewport and needs a ~1190px container to reach 12px. SVG-unit type also
-   ignores browser text-only zoom and any minimum-font-size setting, and never
-   reflows — so a low-vision reader has no recourse at all. A grid of labelled
-   rectangles is a table, and a table is HTML. This version gets browser zoom,
-   text zoom, reflow, find-in-page, text selection, translation, and native
-   screen-reader semantics for free.
+   WHAT CHANGED, 2026-08-29, and why it matters more than the data swap.
+   The previous array was invented placeholder data that marked every one of the
+   32 findings as caught. Rendered, that is a wall of filled cells reading "32 of
+   32, no misses", which restates the "100% recall / 0% false positives" claim
+   retracted on 2026-06-30 — as a picture rather than a sentence, which is worse,
+   because a picture does not look like a claim. The component was gated shut
+   rather than shipped.
 
-   Inline SVG stays the right tool for genuinely vector artifacts
-   (EscalationGraph, CostCurve). It was the wrong tool for this one.
+   The real fixture index is now here. It deliberately does NOT carry per-finding
+   results, and this component deliberately cannot render them. GOAT reports
+   counts against a total, broken down by fixture and by which detection source
+   produced each finding, and never as a rate; a per-cell hit/miss encoding is a
+   rate with extra steps. So the cells count ground truth, not score. What the
+   artifact shows is how much ground truth each vulnerability class carries and
+   what each fixture was built to prove, which is the part that is actually
+   evidence of method.
 
-   SUBJECT CHANGE, 2026-08-26. This was an ATT&CK coverage matrix shaded by how
-   deeply Koushik's employer's detection estate covers each technique. That
-   published a gap map of a specific company's security posture, which
-   CLAUDE.md §7 exists to prevent ("security-posture detail is generalized,
-   never specific"). GOAT is his own research, already public, and a stronger
-   credential besides. No confidentiality question at all.
+   F11 is the one that makes the rest mean anything: a known-good fixture with
+   zero findings. Without it the other ten measure sensitivity alone, and a tool
+   that flags everything would score perfectly.
+
+   HTML, NOT SVG. Deliberate. The first version drew this in inline SVG with type
+   sized in viewBox units. Measured, that renders at 2.9px on a 320px viewport
+   and needs a ~1190px container to reach 12px. SVG-unit type also ignores
+   browser text-only zoom and any minimum-font-size setting, and never reflows,
+   so a low-vision reader has no recourse at all. A grid of labelled rectangles
+   is a table, and a table is HTML: browser zoom, text zoom, reflow,
+   find-in-page, selection, translation, and native screen-reader semantics, all
+   for free. Inline SVG stays right for genuinely vector artifacts
+   (EscalationGraph). It was wrong for this one.
+
+   SUBJECT, unchanged since 2026-08-26: this was once an ATT&CK matrix shaded by
+   how deeply Koushik's employer's detection estate covers each technique. That
+   published a gap map of a specific company's security posture, which CLAUDE.md
+   §7 exists to prevent. GOAT is his own research, already public, and a stronger
+   credential besides.
 ───────────────────────────────────────────────────────────────────────────── */
 
 interface Fixture {
-  /** Terraform fixture name. */
+  /** Fixture identifier in the ground-truth file. */
   id: string;
-  /** What the fixture plants. */
+  /** The vulnerability class the fixture encodes. */
   klass: string;
-  /** One cell per ground-truth finding in this fixture. */
-  findings: ReadonlyArray<{ caught: boolean; label: string }>;
+  /** The escalation primitive under test, in one short phrase. */
+  primitive: string;
+  /** Ground-truth findings planted in this fixture. */
+  findings: number;
 }
 
-/* 11 fixtures, 32 findings. Counts are asserted against STATS at render time
-   so this cannot silently drift from the published figure. */
+/* Eleven fixtures, 32 ground-truth findings. Ten encode known-bad
+   configurations; F11 encodes known-good ones for false-positive testing. This
+   index records what each fixture PROVES and nothing about what it contains. */
 const FIXTURES: ReadonlyArray<Fixture> = [
-  {
-    id: "fx-01",
-    klass: "Policy injection",
-    findings: [
-      { caught: true, label: "wildcard action in inline policy" },
-      { caught: true, label: "NotAction with Allow" },
-      { caught: true, label: "policy variable injection" },
-    ],
-  },
-  {
-    id: "fx-02",
-    klass: "Role chaining",
-    findings: [
-      { caught: true, label: "two-hop assume chain" },
-      { caught: true, label: "self-assuming role" },
-      { caught: true, label: "chain through service role" },
-    ],
-  },
-  {
-    id: "fx-03",
-    klass: "Service role abuse",
-    findings: [
-      { caught: true, label: "PassRole to compute" },
-      { caught: true, label: "unscoped PassRole" },
-      { caught: true, label: "PassRole plus RunInstances" },
-    ],
-  },
-  {
-    id: "fx-04",
-    klass: "SCP bypass",
-    findings: [
-      { caught: true, label: "region-scoped SCP gap" },
-      { caught: true, label: "service exempt from SCP" },
-      { caught: true, label: "root-account carve-out" },
-    ],
-  },
-  {
-    id: "fx-05",
-    klass: "Trust policy",
-    findings: [
-      { caught: true, label: "wildcard principal" },
-      { caught: true, label: "missing external id" },
-      { caught: true, label: "cross-account without condition" },
-    ],
-  },
-  {
-    id: "fx-06",
-    klass: "Condition logic",
-    findings: [
-      { caught: true, label: "ineffective IP condition" },
-      { caught: true, label: "condition on wrong key" },
-      { caught: true, label: "StringLike with bare wildcard" },
-    ],
-  },
-  {
-    id: "fx-07",
-    klass: "Permission boundary",
-    findings: [
-      { caught: true, label: "boundary not attached" },
-      { caught: true, label: "boundary wider than policy" },
-      { caught: true, label: "boundary removable by holder" },
-    ],
-  },
-  {
-    id: "fx-08",
-    klass: "Federated identity",
-    findings: [
-      { caught: true, label: "OIDC subject wildcard" },
-      { caught: true, label: "unbounded audience claim" },
-      { caught: true, label: "SAML assertion reuse" },
-    ],
-  },
-  {
-    id: "fx-09",
-    klass: "Resource policy",
-    findings: [
-      { caught: true, label: "bucket policy public grant" },
-      { caught: true, label: "KMS grant to wildcard" },
-      { caught: true, label: "cross-account resource grant" },
-    ],
-  },
-  {
-    id: "fx-10",
-    klass: "Privilege escalation",
-    findings: [
-      { caught: true, label: "AttachRolePolicy self-grant" },
-      { caught: true, label: "CreatePolicyVersion escalation" },
-      { caught: true, label: "UpdateAssumeRolePolicy" },
-      { caught: true, label: "lambda code update to role" },
-    ],
-  },
-  {
-    id: "fx-11",
-    klass: "Transitive chain",
-    findings: [
-      { caught: true, label: "three-hop transitive path" },
-      { caught: true, label: "chain across accounts" },
-      { caught: true, label: "chain via instance profile" },
-      { caught: true, label: "chain through CI role" },
-    ],
-  },
+  { id: "F01", klass: "Critically permissive policies", primitive: "direct grant of administrative action space", findings: 4 },
+  { id: "F02", klass: "Role assumption chains", primitive: "transitive assumption across intermediate roles", findings: 4 },
+  { id: "F03", klass: "Compute-to-data escalation", primitive: "execution role reachable by a lower-privileged caller", findings: 4 },
+  { id: "F04", klass: "Unused access", primitive: "dormant principals retaining live permission", findings: 3 },
+  { id: "F05", klass: "Long-lived credentials", primitive: "static credential material", findings: 3 },
+  { id: "F06", klass: "Cross-account confused deputy", primitive: "trust without a caller-supplied correlation value", findings: 4 },
+  { id: "F07", klass: "Federated trust misconfiguration", primitive: "token-subject condition too permissive", findings: 3 },
+  { id: "F08", klass: "Identity persistence", primitive: "attacker-controlled trust anchor or provider", findings: 3 },
+  { id: "F09", klass: "AI and ML service escalation", primitive: "managed model-hosting execution context", findings: 2 },
+  { id: "F10", klass: "Logging and monitoring evasion", primitive: "tampering with the services that produce the evidence", findings: 2 },
+  { id: "F11", klass: "Known-good baseline", primitive: "none, by design: the false-positive control", findings: 0 },
 ] as const;
 
 export interface BenchmarkGridProps {
@@ -148,39 +77,37 @@ export interface BenchmarkGridProps {
 }
 
 export default function BenchmarkGrid({ className }: BenchmarkGridProps) {
-  const all = FIXTURES.flatMap((f) => f.findings);
-  const caught = all.filter((f) => f.caught).length;
+  const total = FIXTURES.reduce((n, f) => n + f.findings, 0);
 
-  /* The published figure is 32 ground-truth findings. If the dataset above ever
-     drifts from lib/stats.ts, fail loudly in development rather than shipping a
-     grid that silently disagrees with the number printed beside it. */
-  if (process.env.NODE_ENV !== "production" && String(all.length) !== STATS.goatFindings.value) {
+  /* The published figure is 32 ground-truth findings. If this index ever drifts
+     from lib/stats.ts, fail loudly in development rather than shipping a grid
+     that silently disagrees with the number printed beside it. */
+  if (process.env.NODE_ENV !== "production" && String(total) !== STATS.goatFindings.value) {
     throw new Error(
-      `BenchmarkGrid: dataset has ${all.length} findings but STATS.goatFindings says ` +
+      `BenchmarkGrid: index sums to ${total} findings but STATS.goatFindings says ` +
         `${STATS.goatFindings.value}. Update one to match the other.`
     );
   }
 
   return (
     <div className={className ? `af-bench ${className}` : "af-bench"}>
-      {/* Visible key. An encoding without a key is decoration, not data —
-          and the screen reader must never get more information than the eye. */}
+      {/* An encoding without a key is decoration, not data. */}
       <p className="af-bench-key">
         <span className="af-bench-swatch af-bench-swatch--hit" aria-hidden="true" />
-        caught
-        <span className="af-bench-swatch af-bench-swatch--miss" aria-hidden="true" />
-        missed
+        one ground-truth finding
         <span className="af-bench-key-sep" aria-hidden="true" />
-        {FIXTURES.length} fixtures · {all.length} findings
+        {FIXTURES.length} fixtures · {total} findings
       </p>
 
-      {/* A real table. Screen readers get row and column semantics natively,
-          so no parallel hidden description is needed. */}
+      {/* A real table. Screen readers get row and column semantics natively, so
+          no parallel hidden description is needed. */}
       <table className="af-bench-table">
         <caption className="th-sr-only">
-          GOAT benchmark results. {caught} of {all.length} ground-truth findings caught across{" "}
-          {FIXTURES.length} synthetic Terraform fixtures. The benchmark was authored before the
-          agent was evaluated against it.
+          The GOAT benchmark fixture index. {total} ground-truth findings planted across{" "}
+          {FIXTURES.length} synthetic Terraform fixtures, written before the IAM audit agent was
+          evaluated against them. Ten fixtures encode known-bad configurations; F11 encodes
+          known-good ones, so that a tool which flags everything cannot score well. Counts are
+          ground truth, not results: the benchmark reports counts against the total, never a rate.
         </caption>
         <tbody>
           {FIXTURES.map((f) => (
@@ -188,26 +115,23 @@ export default function BenchmarkGrid({ className }: BenchmarkGridProps) {
               <th scope="row" className="af-bench-fixture">
                 <span className="af-bench-fx-id">{f.id}</span>
                 <span className="af-bench-fx-class">{f.klass}</span>
+                <span className="af-bench-fx-prim">{f.primitive}</span>
               </th>
               <td className="af-bench-cells">
                 <span className="af-bench-track">
-                  {f.findings.map((finding) => (
-                    <span
-                      key={finding.label}
-                      className={`af-bench-cell ${
-                        finding.caught ? "af-bench-cell--hit" : "af-bench-cell--miss"
-                      }`}
-                      /* Redundant non-color channel. Opacity alone loses all
-                         meaning in Windows High Contrast, where the browser
-                         forces every fill to one system color. */
-                      data-state={finding.caught ? "caught" : "missed"}
-                      title={finding.label}
-                    >
-                      <span className="th-sr-only">
-                        {finding.label}: {finding.caught ? "caught" : "missed"}
-                      </span>
-                    </span>
+                  {Array.from({ length: f.findings }, (_, i) => (
+                    <span key={i} className="af-bench-cell af-bench-cell--hit" />
                   ))}
+                  {/* The clean fixture has no cells, and an empty row reads as
+                      missing data rather than as the point. Say it instead. */}
+                  {f.findings === 0 && (
+                    <span className="af-bench-zero">no findings by design</span>
+                  )}
+                </span>
+                <span className="th-sr-only">
+                  {f.findings === 0
+                    ? "no ground-truth findings, by design"
+                    : `${f.findings} ground-truth findings`}
                 </span>
               </td>
             </tr>

@@ -121,8 +121,8 @@ const TECHNIQUES_COVERED = MATRIX.flatMap((t) => [...t.cells]).filter((c) => c.h
 const STATS = [
   { value: "200+", label: "detection signatures" },
   { value: "1,400+", label: "AWS accounts evaluated" },
-  { value: "150+", label: "security reviews" },
-  { value: "$1.40", label: "per research run · 19 models" },
+  { value: "100+", label: "security reviews" },
+  { value: "$1.40", label: "per run at the low end · 19 models" },
 ] as const;
 
 /* Depth rows. Each carries a real metric and a real description.
@@ -134,7 +134,7 @@ const STATS = [
 const DEPTH = [
   {
     name: "Identity & Privilege",
-    desc: "65+ escalation paths across 10 vulnerability classes. 62 toxic combinations catalogued with minimum cut-set dissolution. The audit agent was benchmarked before it was trusted.",
+    desc: "10 IAM vulnerability classes, matched against a public 65+ path catalogue. 62 toxic combinations catalogued by hand. The audit agent was benchmarked before it was trusted.",
     metric: "32 GOAT benchmarks",
   },
   {
@@ -145,7 +145,7 @@ const DEPTH = [
   {
     name: "AI Security Platforms",
     desc: "A self-learning research router across 19 models, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates. All in daily production use.",
-    metric: "$1.40 / research run",
+    metric: "from $1.40 / research run",
   },
 ] as const;
 
