@@ -14,6 +14,7 @@ import {
   CONTACT_LINKS,
 } from "@/components/layouts/_shared/ThemePrimitives";
 import { STATS } from "@/lib/stats";
+import { IDENTITY, CAREER as ROLES } from "@/lib/profile";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -62,46 +63,10 @@ import "./styles.css";
    `prefers-reduced-motion` nothing runs and nothing is missing.
 ───────────────────────────────────────────────────────────────────────────── */
 
-interface Role {
-  id: string;
-  org: string;
-  title: string;
-  period: string;
-  note: string;
-  current?: boolean;
-}
-
-const CAREER: ReadonlyArray<Role> = [
-  {
-    id: "sw-yahoo",
-    org: "Yahoo · Paranoids",
-    title: "Senior Technical Security Engineer",
-    period: "Feb 2022 –",
-    note: "Owns the company-wide cloud security baselines and the AWS Cloud Alerts Detection system behind the posture scores the business is measured against.",
-    current: true,
-  },
-  {
-    id: "sw-cyr3con",
-    org: "CYR3CON",
-    title: "Cyber Security Architect",
-    period: "May 2019 – Jan 2022",
-    note: "Built the multi-account AWS foundation as code: hub-and-spoke transit routing, segmented ranges, centralised SSO, and least-privilege IAM that removed public SSH entirely.",
-  },
-  {
-    id: "sw-cyrecon",
-    org: "Cyber Reconnaissance",
-    title: "Security Intern → Team Lead",
-    period: "Dec 2017 – May 2019",
-    note: "Cloud migration, network security, and data-centre work, alongside an M.S. in Software Engineering at Arizona State.",
-  },
-  {
-    id: "sw-infosys",
-    org: "Infosys",
-    title: "Systems Engineer",
-    period: "Dec 2015 – May 2017",
-    note: "Where the nine years start. Production systems first, security second. That order still shows in how the work gets built.",
-  },
-] as const;
+/* Career comes from the shared layer. The `sw-` id prefix is this theme's DOM
+   namespace, not a fact about the role, so it is applied here rather than
+   pushed into the layer where three other themes would have to ignore it. */
+const CAREER = ROLES.map((r) => ({ ...r, id: `sw-${r.id}` }));
 
 /* The review practice, stated as what a fixed instrument applied repeatedly
    actually produces. Values come from lib/stats.ts — never inlined. */
@@ -208,8 +173,7 @@ export default function SwissHero({ theme }: { theme: Theme }) {
             <strong className="sw-em">Production systems, not prototypes.</strong>
           </p>
           <p className="sw-hook sw-mast-reveal">
-            A small team. 2,800+ cloud accounts. The math only works if you build the right
-            systems.
+            {IDENTITY.hook}
           </p>
 
           {/* The CTA obeys the index grammar via a WRAPPER. <CtaRow /> renders
