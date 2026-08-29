@@ -3,6 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
+/* Stat values are read from the canonical table and interpolated into the
+   syntax tokens. The token structure is this theme's voice; the numbers inside
+   it are not, and eleven of them were previously typed as literals here, which
+   is how a corrected figure stays wrong in exactly one theme. */
+import { STATS } from "@/lib/stats";
+import { IDENTITY } from "@/lib/profile";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -71,11 +77,11 @@ const FILES: ReadonlyArray<FileTab> = [
     folder: "career",
     lines: [
       { kind: "heading", text: "# Koushik Kotamraju" },
-      { kind: "text", text: "Sr. Security Engineer · Yahoo Paranoids · 9 years" },
+      { kind: "text", text: `${IDENTITY.title} · ${IDENTITY.employer} ${IDENTITY.team} · ${STATS.experience.value}` },
       { kind: "blank" },
-      { kind: "text", text: "Cloud security engineer building AI-native security platforms — **production systems, not prototypes.**" },
+      { kind: "text", text: "Cloud security engineer building AI-native security platforms. **Production systems, not prototypes.**" },
       { kind: "blank" },
-      { kind: "text", text: "A small team. 2,800+ cloud accounts. The math only works if you build the right systems." },
+      { kind: "text", text: IDENTITY.hook },
       // No markdown-link CTA bullets here — the button row rendered below
       // for this file already is the CTA; a QA pass found the two doing
       // the same job back to back read as duplicated, not reinforcing.
@@ -88,14 +94,14 @@ const FILES: ReadonlyArray<FileTab> = [
     folder: "career",
     lines: [
       { kind: "punct-line", text: "{" },
-      { kind: "text", indent: 1, parts: [{ t: '"role"', k: "key" }, { t: ": ", k: "punct" }, { t: '"Sr. Security Engineer"', k: "str" }, { t: ",", k: "punct" }] },
+      { kind: "text", indent: 1, parts: [{ t: '"role"', k: "key" }, { t: ": ", k: "punct" }, { t: `"${IDENTITY.title}"`, k: "str" }, { t: ",", k: "punct" }] },
       { kind: "text", indent: 1, parts: [{ t: '"org"', k: "key" }, { t: ": ", k: "punct" }, { t: '"Yahoo Paranoids"', k: "str" }, { t: ",", k: "punct" }] },
       { kind: "text", indent: 1, parts: [{ t: '"years"', k: "key" }, { t: ": ", k: "punct" }, { t: "9", k: "num" }, { t: ",", k: "punct" }] },
       { kind: "text", indent: 1, parts: [{ t: '"stats"', k: "key" }, { t: ": {", k: "punct" }] },
-      { kind: "text", indent: 2, parts: [{ t: '"cloudAccounts"', k: "key" }, { t: ": ", k: "punct" }, { t: '"2,800+"', k: "str" }, { t: ",", k: "punct" }] },
-      { kind: "text", indent: 2, parts: [{ t: '"detectionSignatures"', k: "key" }, { t: ": ", k: "punct" }, { t: '"200+"', k: "str" }, { t: ",", k: "punct" }] },
-      { kind: "text", indent: 2, parts: [{ t: '"securityReviews"', k: "key" }, { t: ": ", k: "punct" }, { t: '"100+"', k: "str" }, { t: ",", k: "punct" }] },
-      { kind: "text", indent: 2, parts: [{ t: '"aiModels"', k: "key" }, { t: ": ", k: "punct" }, { t: "19", k: "num" }] },
+      { kind: "text", indent: 2, parts: [{ t: '"cloudAccounts"', k: "key" }, { t: ": ", k: "punct" }, { t: `"${STATS.cloudAccounts.value}"`, k: "str" }, { t: ",", k: "punct" }] },
+      { kind: "text", indent: 2, parts: [{ t: '"detectionSignatures"', k: "key" }, { t: ": ", k: "punct" }, { t: `"${STATS.signatures.value}"`, k: "str" }, { t: ",", k: "punct" }] },
+      { kind: "text", indent: 2, parts: [{ t: '"securityReviews"', k: "key" }, { t: ": ", k: "punct" }, { t: `"${STATS.securityReviews.value}"`, k: "str" }, { t: ",", k: "punct" }] },
+      { kind: "text", indent: 2, parts: [{ t: '"aiModels"', k: "key" }, { t: ": ", k: "punct" }, { t: STATS.modelsOrchestrated.value, k: "num" }] },
       { kind: "text", indent: 1, parts: [{ t: "}", k: "punct" }] },
       { kind: "punct-line", text: "}" },
     ],
@@ -106,13 +112,13 @@ const FILES: ReadonlyArray<FileTab> = [
     lang: "Python",
     folder: "detection",
     lines: [
-      { kind: "comment", text: "# 200+ Python/Lambda signatures evaluating 1,400+ AWS accounts." },
+      { kind: "comment", text: `# ${STATS.signatures.value} Python/Lambda signatures evaluating ${STATS.awsDetectionScope.value} AWS accounts.` },
       { kind: "comment", text: "# CIS-benchmarked baselines, MITRE ATT&CK gap analysis, Terraform-deployed." },
       { kind: "blank" },
       { kind: "text", parts: [{ t: "class ", k: "kw" }, { t: "DetectionFleet", k: "key" }, { t: ":", k: "punct" }] },
-      { kind: "text", indent: 1, parts: [{ t: "signatures ", k: "key" }, { t: "= ", k: "punct" }, { t: '"200+"', k: "str" }] },
-      { kind: "text", indent: 1, parts: [{ t: "accounts_evaluated ", k: "key" }, { t: "= ", k: "punct" }, { t: '"1,400+"', k: "str" }] },
-      { kind: "text", indent: 1, parts: [{ t: "new_baselines_v6 ", k: "key" }, { t: "= ", k: "punct" }, { t: '"50+"', k: "str" }] },
+      { kind: "text", indent: 1, parts: [{ t: "signatures ", k: "key" }, { t: "= ", k: "punct" }, { t: `"${STATS.signatures.value}"`, k: "str" }] },
+      { kind: "text", indent: 1, parts: [{ t: "accounts_evaluated ", k: "key" }, { t: "= ", k: "punct" }, { t: `"${STATS.awsDetectionScope.value}"`, k: "str" }] },
+      { kind: "text", indent: 1, parts: [{ t: "new_baselines ", k: "key" }, { t: "= ", k: "punct" }, { t: `"${STATS.baselines.value}"`, k: "str" }] },
       { kind: "blank" },
       { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "coverage_score", k: "key" }, { t: "(self):", k: "punct" }] },
       { kind: "comment", indent: 2, text: '"""The posture scores the company is measured against."""' },
@@ -120,7 +126,7 @@ const FILES: ReadonlyArray<FileTab> = [
       { kind: "blank" },
       { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "expand_baseline", k: "key" }, { t: "(self):", k: "punct" }] },
       { kind: "comment", indent: 2, text: '"""The largest control expansion in program history."""' },
-      { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "self.new_baselines_v6", k: "key" }] },
+      { kind: "text", indent: 2, parts: [{ t: "return ", k: "kw" }, { t: "self.new_baselines", k: "key" }] },
     ],
   },
   {
@@ -130,14 +136,14 @@ const FILES: ReadonlyArray<FileTab> = [
     folder: "projects",
     lines: [
       { kind: "comment", text: "# AI-native audit agent. The 10 vulnerability classes are mine; the" },
-      { kind: "comment", text: "# 65+ path catalogue is DataDog's, fetched and matched against." },
-      { kind: "comment", text: "# GOAT was written first: 32 ground-truth findings, then evaluated." },
+      { kind: "comment", text: `# ${STATS.escalationPaths.value} path catalogue is DataDog's, fetched and matched against.` },
+      { kind: "comment", text: `# GOAT was written first: ${STATS.goatFindings.value} ground-truth findings.` },
       { kind: "blank" },
       { kind: "text", parts: [{ t: "class ", k: "kw" }, { t: "IamAuditAgent", k: "key" }, { t: ":", k: "punct" }] },
-      { kind: "text", indent: 1, parts: [{ t: "path_catalogue ", k: "key" }, { t: "= ", k: "punct" }, { t: '"pathfinding.cloud (65+)"', k: "str" }] },
+      { kind: "text", indent: 1, parts: [{ t: "path_catalogue ", k: "key" }, { t: "= ", k: "punct" }, { t: `"pathfinding.cloud (${STATS.escalationPaths.value})"`, k: "str" }] },
       { kind: "text", indent: 1, parts: [{ t: "vulnerability_classes ", k: "key" }, { t: "= ", k: "punct" }, { t: "10", k: "num" }] },
-      { kind: "text", indent: 1, parts: [{ t: "goat_benchmarks ", k: "key" }, { t: "= ", k: "punct" }, { t: "32", k: "num" }] },
-      { kind: "text", indent: 1, parts: [{ t: "toxic_combinations ", k: "key" }, { t: "= ", k: "punct" }, { t: "62", k: "num" }] },
+      { kind: "text", indent: 1, parts: [{ t: "goat_findings ", k: "key" }, { t: "= ", k: "punct" }, { t: STATS.goatFindings.value, k: "num" }] },
+      { kind: "text", indent: 1, parts: [{ t: "toxic_combinations ", k: "key" }, { t: "= ", k: "punct" }, { t: STATS.toxicCombinations.value, k: "num" }] },
       { kind: "blank" },
       { kind: "text", indent: 1, parts: [{ t: "def ", k: "kw" }, { t: "dissolve", k: "key" }, { t: "(self, chain):", k: "punct" }] },
       { kind: "comment", indent: 2, text: '"""Antitoxin: the keystone permission whose removal breaks the chain."""' },

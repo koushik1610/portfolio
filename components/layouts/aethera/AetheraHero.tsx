@@ -6,75 +6,35 @@ import type { Theme } from "@/lib/themes";
 // Animation ownership: GSAP (SplitText) owns the hero headline/tagline;
 // motion/react owns the whileInView reveals on expertise cards + project rows.
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
+import { IDENTITY, CAPABILITIES, PROJECTS as WORK } from "@/lib/profile";
+import { STATS } from "@/lib/stats";
 import "./styles.css";
 
 // ── Content ───────────────────────────────────────────────────────────────────
 
-const BIO =
-  "With nine years of security engineering across three organizations, I focus on detection at cloud account scale, IAM privilege analysis, and agentic security workflows — AI-native security tooling that gives a small team genuine leverage over a large attack surface.";
+const BIO = IDENTITY.bio.full;
 
-const EXPERTISE = [
-  {
-    num: "01",
-    name: "Detection Engineering",
-    desc: "200+ active Python/Lambda detection signatures evaluating resource configurations across 1,400+ AWS accounts — producing per-resource findings and the security-posture scores the company is measured against. CIS-benchmarked baselines grounded in MITRE ATT&CK technique coverage from cloud incident response data. Detection fleet deployed via Terraform for machine-speed detection and response at account scale.",
-  },
-  {
-    num: "02",
-    name: "IAM Privilege Analysis",
-    desc: "AI-native IAM audit agent using Boto3 tool-calling to enumerate live AWS IAM configurations — organised around 10 vulnerability classes, matched against DataDog's public 65+ path catalogue, with LLM semantic interpretation to surface transitive chains that rule-based tools miss. Built the GOAT benchmark first — 32 ground-truth findings — and evaluated the agent against all of them.",
-  },
-  {
-    num: "03",
-    name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from a large corpus of historical tickets, serving as the autonomous review agent for 100+ security reviews across all business units.",
-  },
-  {
-    num: "04",
-    name: "Cloud Security Architecture",
-    desc: "Guardrails across 2,800+ AWS and GCP accounts. Attack-path operationalization built on GCP Security Command Center: AI enrichment, crown-jewel exposure tracking, longitudinal toxic-combination trending, and a coverage rotation under the platform's hard simulation cap. The AWS side is designed, not built.",
-  },
-  {
-    num: "05",
-    name: "Security Research",
-    desc: "Artemis: attack-path operationalization over a native cloud platform, implemented on GCP with the AWS side designed and not yet built. Antitoxin: CIEM research cataloguing 62 toxic IAM combinations by hand across 8 attack categories, each with the keystone permission whose removal breaks that chain. Research and design; no implementation yet.",
-  },
-] as const;
+/* This theme has the most room of any in the rotation, so it is the one that
+   takes the `full` tier. All five capabilities, numbered by position. */
+const EXPERTISE = CAPABILITIES.map((c, i) => ({
+  num: String(i + 1).padStart(2, "0"),
+  name: c.name,
+  desc: c.prose.full,
+}));
 
-const PROJECTS = [
-  {
-    id: "01",
-    name: "Artemis",
-    desc: "Attack-path operationalization on GCP Security Command Center: export, AI enrichment, business-context mapping, longitudinal tracking, and coverage rotation under a hard platform cap. AWS designed, not built, so the cross-cloud view does not exist yet.",
-    metric: "2,800+",
-    metricLabel: "accounts unified",
-    tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI"],
-  },
-  {
-    id: "02",
-    name: "IAM Audit Agent",
-    desc: "AI-native IAM audit agent — Boto3 tool-calling to enumerate live AWS IAM configurations. 10 vulnerability classes, matched against a public 65+ path catalogue. LLM semantic interpretation surfaces transitive chains. Evaluated against 32 GOAT findings.",
-    metric: "32",
-    metricLabel: "GOAT benchmarks",
-    tags: ["IAM Analysis", "Graph Theory", "Python", "Boto3"],
-  },
-  {
-    id: "03",
-    name: "Autonomous Threat Intelligence Pipeline",
-    desc: "Autonomous threat intelligence ingestion agent — multi-agent orchestration pipeline across 19 foundation models from 5 providers. Performance-weighted router delivering analyst-ready security proposals from $1.40 per sweep. Replaced a fully manual weekly research process.",
-    metric: "$1.40",
-    metricLabel: "per research sweep",
-    tags: ["Python", "Multi-Agent Orchestration", "Claude", "Gemini", "GPT-4"],
-  },
-  {
-    id: "04",
-    name: "Detection Engine",
-    desc: "200+ active detection signatures deployed via Terraform, evaluating 1,400+ AWS accounts. MITRE ATT&CK gap analysis against real-world techniques from cloud incident response data. Machine-speed detection and response at account scale.",
-    metric: "200+",
-    metricLabel: "active signatures",
-    tags: ["Python", "Lambda", "AWS", "MITRE ATT&CK", "Terraform"],
-  },
-] as const;
+/* Four project panels. Antitoxin is held back here for the same reason as in
+   avatar: this section reads as a shipped-work gallery, and its status line
+   would be the only thing distinguishing a design document from a running
+   system. It is carried instead by the Security Research capability above,
+   where the research framing is the point. */
+const PROJECTS = WORK.filter((p) => p.status !== "research").map((p, i) => ({
+  id: String(i + 1).padStart(2, "0"),
+  name: p.name,
+  desc: p.prose.medium,
+  metric: p.stat.value,
+  metricLabel: p.statLabel ?? p.stat.label,
+  tags: p.stack,
+}));
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
@@ -290,21 +250,21 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
             enterprise scale.
           </p>
           <p className="ath-bio-text">
-            On a small team covering 2,800+ cloud accounts, I build systems with genuine leverage:
+            On a small team covering {STATS.cloudAccounts.value} cloud accounts, I build systems with genuine leverage:
             attack path simulation, self-learning model orchestration, and detection signatures
             grounded in real-world MITRE ATT&CK coverage.
           </p>
           <div className="ath-bio-stats">
             <div className="ath-stat">
-              <span className="ath-stat-num">200+</span>
+              <span className="ath-stat-num">{STATS.signatures.value}</span>
               <span className="ath-stat-label">Active Signatures</span>
             </div>
             <div className="ath-stat">
-              <span className="ath-stat-num">2,800+</span>
+              <span className="ath-stat-num">{STATS.cloudAccounts.value}</span>
               <span className="ath-stat-label">Cloud Accounts</span>
             </div>
             <div className="ath-stat">
-              <span className="ath-stat-num">100+</span>
+              <span className="ath-stat-num">{STATS.securityReviews.value}</span>
               <span className="ath-stat-label">Security Reviews</span>
             </div>
             <div className="ath-stat">

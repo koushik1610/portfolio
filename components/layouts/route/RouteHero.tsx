@@ -4,6 +4,8 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
+import { IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
+import { STATS } from "@/lib/stats";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -52,54 +54,17 @@ interface Station {
   desc: string;
 }
 
-const STATIONS: ReadonlyArray<Station> = [
-  {
-    id: "rt-detect",
-    code: "01",
-    title: "Detection Engineering",
-    stat: "200+",
-    statLabel: "signatures",
-    desc: "200+ Python/Lambda signatures evaluating 1,400+ AWS accounts — the posture scores the company is measured against.",
-  },
-  {
-    id: "rt-iam",
-    code: "02",
-    title: "IAM Privilege Analysis",
-    stat: "10",
-    statLabel: "IAM vulnerability classes",
-    desc: "An AI-native audit agent organised around 10 IAM vulnerability classes, matched against DataDog's public 65+ path catalogue. Built the GOAT benchmark first — 32 ground-truth findings — then evaluated against all 32.",
-  },
-  {
-    id: "rt-ai",
-    code: "03",
-    title: "AI Security Platforms",
-    stat: "19",
-    statLabel: "models · 5 providers",
-    desc: "A self-learning research router from $1.40 per run, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates.",
-  },
-  {
-    id: "rt-review",
-    code: "04",
-    title: "Security Reviews",
-    stat: "100+",
-    statLabel: "reviews conducted",
-    desc: "100+ Paranoid Security Reviews, partnering with Product Security, Network, and Identity to approve new cloud architectures before launch.",
-  },
-  {
-    id: "rt-ciem",
-    code: "05",
-    title: "CIEM Research",
-    stat: "62",
-    statLabel: "toxic combinations",
-    desc: "Antitoxin. CIEM research, no code yet. 62 toxic combinations catalogued by hand, each with the keystone permission whose removal breaks that chain.",
-  },
-] as const;
-
-const CONTACT = [
-  { k: "Email", v: "koushik.kotamraju1610@gmail.com", href: "mailto:koushik.kotamraju1610@gmail.com", ext: false },
-  { k: "LinkedIn", v: "in/koushikkotamraju", href: "https://www.linkedin.com/in/koushikkotamraju/", ext: true },
-  { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
-] as const;
+/* Five stations, one per capability, in array order. The station code is the
+   index, so reordering CAPABILITIES renumbers the line rather than desyncing it
+   from the labels. */
+const STATIONS: ReadonlyArray<Station> = CAPABILITIES.map((c, i) => ({
+  id: `rt-${c.id}`,
+  code: String(i + 1).padStart(2, "0"),
+  title: c.name,
+  stat: c.stat.value,
+  statLabel: c.stat.label,
+  desc: c.prose.medium,
+}));
 
 export default function RouteHero({ theme }: { theme: Theme }) {
   void theme;
@@ -206,14 +171,14 @@ export default function RouteHero({ theme }: { theme: Theme }) {
       <main id="rt-main" className="rt-main">
         {/* ── Masthead ─────────────────────────────────────────────────── */}
         <header className="rt-masthead">
-          <p className="rt-kicker">Sr. Security Engineer · Yahoo Paranoids · 9 years</p>
+          <p className="rt-kicker">{IDENTITY.eyebrow}</p>
           <h1 className="rt-name">Koushik Kotamraju</h1>
           <p className="rt-lede">
             Cloud security engineer building AI-native security platforms —{" "}
             <strong className="rt-em">production systems, not prototypes.</strong>
           </p>
           <p className="rt-hook">
-            A small team. 2,800+ cloud accounts. The math only works if you build the right systems.
+            {IDENTITY.hook}
           </p>
           <div className="rt-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="rt-btn rt-btn--primary">Email me</a>
@@ -265,7 +230,7 @@ export default function RouteHero({ theme }: { theme: Theme }) {
           <span className="rt-dest-node" aria-hidden="true" />
           <p className="rt-dest-eyebrow">Current position</p>
           <h2 id="rt-dest-head" className="rt-dest-head">
-            2,800+ cloud accounts secured. Open to what&apos;s next.
+            {STATS.cloudAccounts.value} cloud accounts secured. Open to what&apos;s next.
           </h2>
           <p className="rt-dest-sub">
             Staff &amp; Principal Security Engineer · AI Security roles.

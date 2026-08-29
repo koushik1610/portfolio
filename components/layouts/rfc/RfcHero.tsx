@@ -4,6 +4,8 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
+import { IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
+import { STATS } from "@/lib/stats";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -42,40 +44,43 @@ const TOC = [
   { href: "#rc-author", label: "Author's Address" },
 ] as const;
 
-const OVERVIEW = [
-  {
-    n: "3.1",
-    title: "Detection",
-    body: "200+ Python/Lambda signatures evaluate 1,400+ AWS accounts. Coverage claims MUST be measured against the full account estate; a signature fleet SHOULD NOT be represented as complete on the basis of a sample. The largest single control expansion in program history added 50+ new baselines.",
-  },
-  {
-    n: "3.2",
-    title: "Identity",
-    body: "The IAM audit agent is organised around 10 vulnerability classes and matches its findings against pathfinding.cloud, DataDog's public catalogue of 65+ documented escalation paths. That catalogue is theirs; the taxonomy and the semantic layer are not. GOAT was built before the agent was trusted: 32 ground-truth findings, and the agent was evaluated against all 32 before any claim was made. Antitoxin catalogues 62 toxic IAM combinations by hand and remains research, not an implementation.",
-  },
-  {
-    n: "3.3",
-    title: "Review",
-    body: "100+ Paranoid Security Reviews were conducted in partnership with Product Security, Network, and Identity. A new cloud architecture MUST undergo review before it is permitted to serve production traffic; this requirement covers every business unit.",
-  },
-  {
-    n: "3.4",
-    title: "AI Platforms",
-    body: "A self-learning research router orchestrates 19 models across 5 providers from $1.40 per run, the low end of the observed range. No single-model baseline was run, so no comparison is claimed. A deterministic advisor enforces hard deny gates. Implementations MUST remain auditable, and an agentic recommendation SHOULD NOT bypass human review on a hard-deny path.",
-  },
-] as const;
+/* Composed, not copied. The fact comes from the shared layer; the requirements
+   language is this theme's voice and stays here. That split is the point: RFC
+   2119 keywords are a costume, and a costume must never be the reason a claim
+   is phrased differently from how the other six themes phrase it. */
+const SECTION_TITLE: Record<string, string> = {
+  detection: "Detection",
+  identity: "Identity",
+  review: "Review",
+  "ai-platforms": "AI Platforms",
+};
 
+const REQUIREMENTS: Record<string, string> = {
+  detection:
+    "Coverage claims MUST be measured against the full account estate; a signature fleet SHOULD NOT be represented as complete on the basis of a sample.",
+  identity:
+    "A path catalogue that originates elsewhere MUST be attributed to its maintainer. An agent SHOULD NOT be trusted before it has been measured against ground truth authored in advance.",
+  review:
+    "A new cloud architecture MUST undergo review before it is permitted to serve production traffic; this requirement covers every business unit.",
+  "ai-platforms":
+    "Implementations MUST remain auditable, and an agentic recommendation SHOULD NOT bypass human review on a hard-deny path. A cost comparison MUST NOT be published without a recorded baseline run.",
+};
+
+const OVERVIEW = (["detection", "identity", "review", "ai-platforms"] as const).map((id, i) => {
+  const c = CAPABILITIES.find((x) => x.id === id)!;
+  return { n: `3.${i + 1}`, title: SECTION_TITLE[id], body: `${c.prose.medium} ${REQUIREMENTS[id]}` };
+});
+
+/* Values read from the canonical table. ARTEMIS carries a build state rather
+   than a figure, because the honest answer to "how many clouds" is one, and a
+   number there would imply two. The baseline-expansion row deliberately does
+   NOT name the release version: an internal version number is a scrubbed
+   figure under the number policy, and "V6" was published here for months. */
 const REFERENCES = [
-  { tag: "GOAT", value: "32", label: "ground-truth IAM findings" },
-  { tag: "ANTITOXIN", value: "62", label: "toxic combinations, catalogued by hand" },
+  { tag: "GOAT", value: STATS.goatFindings.value, label: "ground-truth IAM findings" },
+  { tag: "ANTITOXIN", value: STATS.toxicCombinations.value, label: "toxic combinations, catalogued by hand" },
   { tag: "ARTEMIS", value: "GCP", label: "built; AWS designed, not built" },
-  { tag: "V6", value: "50+", label: "new baselines, largest release in program history" },
-] as const;
-
-const CONTACT = [
-  { k: "Email", v: "koushik.kotamraju1610@gmail.com", href: "mailto:koushik.kotamraju1610@gmail.com", ext: false },
-  { k: "LinkedIn", v: "in/koushikkotamraju", href: "https://www.linkedin.com/in/koushikkotamraju/", ext: true },
-  { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
+  { tag: "BASELINES", value: STATS.baselines.value, label: "new controls, largest release in program history" },
 ] as const;
 
 export default function RfcHero({ theme }: { theme: Theme }) {
@@ -179,9 +184,7 @@ export default function RfcHero({ theme }: { theme: Theme }) {
           <h2 id="rc-abstract">1.  Abstract</h2>
           <p>
             Cloud security engineer building AI-native security platforms —{" "}
-            <strong>production systems, not prototypes.</strong> A small team.
-            2,800+ cloud accounts. The math only works if you build the right
-            systems.
+            <strong>production systems, not prototypes.</strong> {IDENTITY.hook}
           </p>
           <div className="rc-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="rc-btn rc-btn--primary">Email me</a>

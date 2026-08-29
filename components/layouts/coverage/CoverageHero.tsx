@@ -4,6 +4,8 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
+import { IDENTITY, CONTACT, CAPABILITIES } from "@/lib/profile";
+import { STATS } from "@/lib/stats";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -118,11 +120,14 @@ const MATRIX: ReadonlyArray<Tactic> = [
 const TECHNIQUES_TOTAL = MATRIX.reduce((n, t) => n + t.cells.length, 0);
 const TECHNIQUES_COVERED = MATRIX.flatMap((t) => [...t.cells]).filter((c) => c.h >= 2).length;
 
-const STATS = [
-  { value: "200+", label: "detection signatures" },
-  { value: "1,400+", label: "AWS accounts evaluated" },
-  { value: "100+", label: "security reviews" },
-  { value: "$1.40", label: "per run at the low end · 19 models" },
+/* Named STAT_RAIL, not STATS: this theme had a local array called STATS that
+   shadowed the canonical table, which is a good way to make the import look
+   present while every value stays hand-typed. */
+const STAT_RAIL = [
+  { value: STATS.signatures.value, label: STATS.signatures.label },
+  { value: STATS.awsDetectionScope.value, label: "AWS accounts evaluated" },
+  { value: STATS.securityReviews.value, label: STATS.securityReviews.label },
+  { value: STATS.costPerRun.value, label: `${STATS.costPerRun.label} · ${STATS.modelsOrchestrated.value} models` },
 ] as const;
 
 /* Depth rows. Each carries a real metric and a real description.
@@ -131,29 +136,14 @@ const STATS = [
    A fabricated chart on a security engineer's portfolio is the one category of
    error this site cannot afford, so the bar is gone rather than re-based: there
    is no honest percentage to put there. The metric is the quantitative claim. */
-const DEPTH = [
-  {
-    name: "Identity & Privilege",
-    desc: "10 IAM vulnerability classes, matched against a public 65+ path catalogue. 62 toxic combinations catalogued by hand. The audit agent was benchmarked before it was trusted.",
-    metric: "32 GOAT benchmarks",
-  },
-  {
-    name: "Detection & Baselines",
-    desc: "200+ Python/Lambda signatures evaluating 1,400+ AWS accounts — the posture scores the company is measured against. The largest control expansion in program history.",
-    metric: "50+ new baselines",
-  },
-  {
-    name: "AI Security Platforms",
-    desc: "A self-learning research router across 19 models, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates. All in daily production use.",
-    metric: "from $1.40 / research run",
-  },
-] as const;
-
-const CONTACT = [
-  { k: "Email", v: "koushik.kotamraju1610@gmail.com", href: "mailto:koushik.kotamraju1610@gmail.com", ext: false },
-  { k: "LinkedIn", v: "in/koushikkotamraju", href: "https://www.linkedin.com/in/koushikkotamraju/", ext: true },
-  { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
-] as const;
+/* Three lanes, not five: the panel gives this theme three rows and a fourth
+   would scroll under the matrix. Identity leads because the matrix above it is
+   an identity artifact, so the first row has to answer the question the drawing
+   raises. */
+const DEPTH = (["identity", "detection", "ai-platforms"] as const).map((id) => {
+  const c = CAPABILITIES.find((x) => x.id === id)!;
+  return { name: c.name, desc: c.prose.medium, metric: `${c.stat.value} ${c.stat.label}` };
+});
 
 function SectionTitle({ ix, id, children }: { ix: string; id: string; children: string }) {
   return (
@@ -248,14 +238,14 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
       <main id="cv-main" className="cv-main">
         {/* ── Masthead — the person before the matrix ───────────────────── */}
         <header className="cv-masthead">
-          <p className="cv-eyebrow">Sr. Security Engineer · Yahoo Paranoids · 9 years</p>
+          <p className="cv-eyebrow">{IDENTITY.eyebrow}</p>
           <h1 className="cv-name">Koushik Kotamraju</h1>
           <p className="cv-lede">
             Cloud security engineer building AI-native security platforms —{" "}
             <strong className="cv-em">production systems, not prototypes.</strong>
           </p>
           <p className="cv-hook">
-            A small team. 2,800+ cloud accounts. The math only works if you build the right systems.
+            {IDENTITY.hook}
           </p>
           <div className="cv-cta-row">
             <a href="mailto:koushik.kotamraju1610@gmail.com" className="cv-btn cv-btn--primary">Email me</a>
@@ -325,7 +315,7 @@ export default function CoverageHero({ theme }: { theme: Theme }) {
 
         {/* ── The numbers ───────────────────────────────────────────────── */}
         <section className="cv-stats cv-reveal" aria-label="Key metrics">
-          {STATS.map((s) => (
+          {STAT_RAIL.map((s) => (
             <div key={s.label} className="cv-stat">
               <CountUp value={s.value} className="cv-stat-num" />
               <span className="cv-stat-label">{s.label}</span>

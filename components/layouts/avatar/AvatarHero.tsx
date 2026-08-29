@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
+import { CONTACT, PROJECTS as WORK } from "@/lib/profile";
+import { STATS } from "@/lib/stats";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -31,56 +33,25 @@ import "./styles.css";
 // The 3D avatar is this theme's identity — the real photo lives in aethera/briefing.
 const PORTRAIT_SRC = "/my-3d-avatar.png";
 
+/* The camera-setting labels are this theme's conceit; the values behind them
+   are not, and all three were typed as literals. */
 const EXPOSURE = [
-  { k: "ISO", v: "32 GOAT benchmarks" },
-  { k: "f/", v: "100+ security reviews" },
-  { k: "exp", v: "9 years · 5 providers" },
+  { k: "ISO", v: `${STATS.goatFindings.value} GOAT findings` },
+  { k: "f/", v: `${STATS.securityReviews.value} ${STATS.securityReviews.label}` },
+  { k: "exp", v: `${STATS.experience.value} · 5 providers` },
 ] as const;
 
-interface ProjectFrame {
-  frame: string;
-  name: string;
-  desc: string;
-  metric: string;
-  stack: string[];
-}
-
-const PROJECTS: ProjectFrame[] = [
-  {
-    frame: "01",
-    name: "Artemis",
-    desc: "Attack-path operationalization on GCP Security Command Center, with AI enrichment and coverage rotation. The AWS side is designed, not built.",
-    metric: "2,800+ accounts",
-    stack: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"],
-  },
-  {
-    frame: "02",
-    name: "IAM Audit Agent",
-    desc: "Boto3 tool-calling agent across 10 IAM vulnerability classes, matched against a public 65+ path catalogue, with semantic interpretation of transitive chains.",
-    metric: "32 GOAT benchmarks",
-    stack: ["IAM", "Python", "Boto3", "LLM tool-use"],
-  },
-  {
-    frame: "03",
-    name: "Autonomous Threat Intel",
-    desc: "19 models from 5 providers behind a performance-weighted router. Analyst-ready proposals at a fraction of baseline cost.",
-    metric: "from $1.40 / run",
-    stack: ["Multi-Agent", "Claude", "GPT", "Gemini"],
-  },
-  {
-    frame: "04",
-    name: "Detection Engine",
-    desc: "200+ active signatures deployed via Terraform, evaluating 1,400+ AWS accounts. MITRE ATT&CK gap analysis from incident response data.",
-    metric: "200+ signatures",
-    stack: ["Python", "Lambda", "Terraform", "MITRE ATT&CK"],
-  },
-];
-
-const CONTACT = [
-  { k: "Email", v: "koushik.kotamraju1610@gmail.com", href: "mailto:koushik.kotamraju1610@gmail.com", ext: false },
-  { k: "LinkedIn", v: "in/koushikkotamraju", href: "https://www.linkedin.com/in/koushikkotamraju/", ext: true },
-  { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
-] as const;
+/* Four frames, derived from the shared layer. Antitoxin is filtered out rather
+   than shortened: this theme frames every tile as shipped work, and a research
+   project shown in the same frame as a production system is exactly the
+   flattening `BuildStatus` exists to prevent. */
+const PROJECTS = WORK.filter((p) => p.status !== "research").map((p, i) => ({
+  frame: String(i + 1).padStart(2, "0"),
+  name: p.shortName ?? p.name,
+  desc: p.prose.medium,
+  metric: `${p.stat.value} ${p.statLabel ?? p.stat.label}`,
+  stack: p.stack,
+}));
 
 // ── Component ───────────────────────────────────────────────────────────────
 // The portrait ships clean (per design feedback — the earlier WebGL dither
@@ -268,7 +239,7 @@ export default function AvatarHero({ theme }: { theme: Theme }) {
 
             <p className="w12-lede">
               Cloud security engineer building AI-native security platforms — production
-              systems, not prototypes. Nine years, securing 2,800+ cloud accounts.
+              systems, not prototypes. Nine years, securing {STATS.cloudAccounts.value} cloud accounts.
             </p>
 
             <div className="w12-cta-row">

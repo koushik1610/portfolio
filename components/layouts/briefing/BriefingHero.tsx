@@ -4,6 +4,8 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
+import { IDENTITY, CONTACT, PROJECTS } from "@/lib/profile";
+import { STATS } from "@/lib/stats";
 import "./styles.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -31,12 +33,12 @@ import "./styles.css";
 ───────────────────────────────────────────────────────────────────────────── */
 
 const MARGINALIA = [
-  { k: "Signatures", v: "200+" },
-  { k: "Reviews", v: "100+" },
-  { k: "KG nodes", v: "1,700+" },
-  { k: "Models", v: "19 · 5 providers" },
-  { k: "Cost / run", v: "from $1.40" },
-  { k: "Experience", v: "9 yrs · 3 orgs" },
+  { k: "Signatures", v: STATS.signatures.value },
+  { k: "Reviews", v: STATS.securityReviews.value },
+  { k: "KG nodes", v: STATS.knowledgeNodes.value },
+  { k: "Models", v: STATS.modelsOrchestrated.label.replace("models · ", `${STATS.modelsOrchestrated.value} · `) },
+  { k: "Cost / run", v: `from ${STATS.costPerRun.value}` },
+  { k: "Experience", v: `${STATS.experience.value} · 3 orgs` },
   { k: "Focus", v: "IAM · CIEM · detection" },
 ] as const;
 
@@ -49,18 +51,15 @@ const ATTACK_PATH = [
   { node: "admin", state: "cut" },
 ] as const;
 
-const WORK = [
-  { name: "Artemis", desc: "Attack-path operationalization over a native platform.", metric: "GCP built · AWS designed" },
-  { name: "IAM Audit Agent", desc: "10 vulnerability classes · public path catalogue.", metric: "32 GOAT findings" },
-  { name: "Autonomous Threat Intel", desc: "19 models, 5 providers, weighted routing.", metric: "from $1.40 / run" },
-  { name: "Detection Engine", desc: "Terraform-deployed signature fleet, ATT&CK-mapped.", metric: "1,400+ accounts" },
-] as const;
-
-const CONTACT = [
-  { k: "Email", href: "mailto:koushik.kotamraju1610@gmail.com", v: "koushik.kotamraju1610@gmail.com", ext: false },
-  { k: "LinkedIn", href: "https://www.linkedin.com/in/koushikkotamraju/", v: "in/koushikkotamraju", ext: true },
-  { k: "GitHub", href: "https://github.com/koushik1610", v: "github.com/koushik1610", ext: true },
-] as const;
+/* The work column is narrow, so this row takes the `short` tier and the short
+   name. A project whose honest status is not "it works" shows that instead of
+   its number, because in a four-row table the number is the only thing that
+   gets read. */
+const WORK = PROJECTS.filter((p) => p.id !== "detection-engine").map((p) => ({
+  name: p.shortName ?? p.name,
+  desc: p.prose.short,
+  metric: p.status === "research" ? "research, no code" : `${p.stat.value} ${p.statLabel ?? p.stat.label}`,
+}));
 
 export default function BriefingHero({ theme }: { theme: Theme }) {
   void theme;
@@ -270,8 +269,7 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
               <strong>production systems, not prototypes.</strong>
             </p>
             <p className="bf-hook">
-              A small team. 2,800+ cloud accounts. The math only works if you
-              build the right systems.
+              {IDENTITY.hook}
             </p>
             <div className="bf-cta-row">
               <a href="mailto:koushik.kotamraju1610@gmail.com" className="bf-btn bf-btn--primary">Email me</a>
@@ -297,14 +295,14 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
                 so naming the group would announce the number twice in browse
                 mode. The caption is real text for the same reason. */}
             <div className="bf-pull">
-              <CountUp value="2,800+" className="bf-pull-num" />
+              <CountUp value={STATS.cloudAccounts.value} className="bf-pull-num" />
               <p className="bf-pull-cap">cloud accounts secured by a small senior team</p>
             </div>
 
             <div className="bf-feature-body">
               <p className="bf-body-p">
                 A detection fleet of 200+ Python and Lambda signatures evaluates
-                1,400+ AWS accounts — the posture scores the company is measured
+                {STATS.awsDetectionScope.value} AWS accounts, the posture scores the company is measured
                 against. An AI-native IAM audit agent works across 10 IAM
                 vulnerability classes and matches its findings against
                 DataDog&rsquo;s public catalogue of 65+ documented escalation
