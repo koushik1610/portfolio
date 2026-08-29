@@ -4,7 +4,7 @@ import { useRef } from "react";
 import type { Theme } from "@/lib/themes";
 import { gsap, useGSAP } from "@/lib/gsap";
 import CountUp from "@/components/CountUp";
-import { IDENTITY, CONTACT, PROJECTS } from "@/lib/profile";
+import { EMAIL_HREF, IDENTITY, CONTACT, PROJECTS } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import "./styles.css";
 
@@ -272,7 +272,7 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
               {IDENTITY.hook}
             </p>
             <div className="bf-cta-row">
-              <a href="mailto:koushik.kotamraju1610@gmail.com" className="bf-btn bf-btn--primary">Email me</a>
+              <a href={EMAIL_HREF} className="bf-btn bf-btn--primary">Email me</a>
               <a href="/resume/" className="bf-btn bf-btn--ghost">Résumé</a>
             </div>
           </div>

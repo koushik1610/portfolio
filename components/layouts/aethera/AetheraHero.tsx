@@ -6,7 +6,7 @@ import type { Theme } from "@/lib/themes";
 // Animation ownership: GSAP (SplitText) owns the hero headline/tagline;
 // motion/react owns the whileInView reveals on expertise cards + project rows.
 import { gsap, useGSAP, SplitText } from "@/lib/gsap";
-import { IDENTITY, CAPABILITIES, PROJECTS as WORK } from "@/lib/profile";
+import { CONTACT, EMAIL_HREF, IDENTITY, CAPABILITIES, PROJECTS as WORK } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import "./styles.css";
 
@@ -203,7 +203,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
           </p>
           <p className="ath-hero-desc">{BIO}</p>
           <div className="ath-cta-row">
-            <a href="mailto:koushik.kotamraju1610@gmail.com" className="ath-hero-cta">
+            <a href={EMAIL_HREF} className="ath-hero-cta">
               Email me
               <svg
                 width="16"
@@ -348,13 +348,13 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
         </h2>
         <div className="ath-contact-links">
           <a
-            href="mailto:koushik.kotamraju1610@gmail.com"
+            href={EMAIL_HREF}
             className="ath-contact-link"
           >
             Email
           </a>
           <a
-            href="https://www.linkedin.com/in/koushikkotamraju/"
+            href={CONTACT[1].href}
             className="ath-contact-link"
             target="_blank"
             rel="noopener noreferrer"
@@ -362,7 +362,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
             LinkedIn
           </a>
           <a
-            href="https://github.com/koushik1610"
+            href={CONTACT[2].href}
             className="ath-contact-link"
             target="_blank"
             rel="noopener noreferrer"

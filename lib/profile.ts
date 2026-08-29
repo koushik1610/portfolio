@@ -127,7 +127,16 @@ export const CONTACT: ReadonlyArray<ContactLink> = [
   { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
 ] as const;
 
-export const EMAIL = CONTACT[0].href;
+/** mailto: href. The above-fold CTA is mandatory in every theme, and all eight
+ *  had typed the address into the button by hand, which is twelve literals for
+ *  one mailbox. */
+export const EMAIL = CONTACT[0].v;
+export const EMAIL_HREF = CONTACT[0].href;
+
+/** Canonical availability copy. Targets the role rather than stating a status,
+ *  because a status goes stale silently and a target does not. */
+export const AVAILABILITY =
+  "Open to Staff & Principal Security Engineer roles · AI Security";
 
 /* ── Projects ────────────────────────────────────────────────────────────── */
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { SR_SUMMARY } from "@/lib/stats";
+import { EMAIL_HREF, AVAILABILITY } from "@/lib/profile";
 import "./theme-base.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -21,19 +22,15 @@ import "./theme-base.css";
    `th-root` class — see that file's header.
 ───────────────────────────────────────────────────────────────────────────── */
 
-export const EMAIL = "koushik.kotamraju1610@gmail.com";
-export const EMAIL_HREF = `mailto:${EMAIL}`;
+/* Re-exported, not redefined. This file previously declared its own EMAIL,
+   AVAILABILITY, and CONTACT_LINKS, which made it a second source of truth for
+   the same three facts and, because only one theme imported it, a second source
+   nobody noticed had drifted. The definitions live in lib/profile.ts; these
+   aliases exist so a theme already importing the primitives does not need a
+   second import line. */
+export { EMAIL, EMAIL_HREF, AVAILABILITY } from "@/lib/profile";
 
-/** Canonical availability copy. Targets the role rather than stating a status. */
-export const AVAILABILITY =
-  "Open to Staff & Principal Security Engineer roles · AI Security";
-
-/** Shared external links, in the order every theme lists them. */
-export const CONTACT_LINKS = [
-  { k: "Email", v: EMAIL, href: EMAIL_HREF, ext: false },
-  { k: "LinkedIn", v: "in/koushikkotamraju", href: "https://www.linkedin.com/in/koushikkotamraju/", ext: true },
-  { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
-] as const;
+export { CONTACT as CONTACT_LINKS } from "@/lib/profile";
 
 /**
  * First child of the theme root, before the nav. `targetId` is the id on the

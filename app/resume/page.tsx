@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ResumeSection from "@/components/ResumeSection";
+import { EMAIL_HREF } from "@/lib/profile";
 
 export const metadata: Metadata = {
   title: "Résumé — Koushik Kotamraju",
@@ -17,7 +18,7 @@ export default function ResumePage() {
     <main className="resume-page">
       <header className="resume-page-bar">
         <Link href="/" className="resume-page-back">← koushik.io</Link>
-        <a href="mailto:koushik.kotamraju1610@gmail.com" className="resume-page-email">Email me</a>
+        <a href={EMAIL_HREF} className="resume-page-email">Email me</a>
       </header>
       <ResumeSection />
     </main>
