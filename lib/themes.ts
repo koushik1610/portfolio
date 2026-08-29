@@ -123,7 +123,7 @@ export const themes: Theme[] = [
     layout: "swiss",
     content: {
       tagline: "The career, typeset.",
-      bio: "Four roles, nine years, and a fixed instrument applied 150+ times.",
+      bio: "Four roles, nine years, and a fixed instrument applied 100+ times.",
       cta: "Email me",
     },
   },

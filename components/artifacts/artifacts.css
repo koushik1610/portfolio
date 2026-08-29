@@ -105,7 +105,27 @@
   line-height: 1.15;
 }
 
+/* The escalation primitive: a third step down from the class name, so the row
+   reads id -> class -> mechanism without three sizes competing. */
+.af-bench-fx-prim {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--af-fs-1);
+  line-height: 1.3;
+  color: var(--text-muted);
+}
+
 .af-bench-cells { padding: var(--af-sp-3) 0; vertical-align: middle; }
+
+/* The known-good fixture renders zero cells. An empty cell track reads as
+   missing data, which is the opposite of the point it makes. */
+.af-bench-zero {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: var(--af-fs-0);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 .af-bench-track { display: flex; flex-wrap: wrap; gap: var(--af-sp-1); }
 
 .af-bench-cell {

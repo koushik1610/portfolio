@@ -32,12 +32,12 @@ import "./styles.css";
 
 const MARGINALIA = [
   { k: "Signatures", v: "200+" },
-  { k: "Reviews", v: "150+" },
+  { k: "Reviews", v: "100+" },
   { k: "KG nodes", v: "1,700+" },
   { k: "Models", v: "19 · 5 providers" },
-  { k: "Cost / run", v: "$1.40" },
+  { k: "Cost / run", v: "from $1.40" },
   { k: "Experience", v: "9 yrs · 3 orgs" },
-  { k: "Certs", v: "AWS SA · Security Specialty" },
+  { k: "Focus", v: "IAM · CIEM · detection" },
 ] as const;
 
 /* The mini attack path the Antitoxin work cuts — rendered as a static chain,
@@ -50,9 +50,9 @@ const ATTACK_PATH = [
 ] as const;
 
 const WORK = [
-  { name: "Artemis", desc: "Multi-cloud attack-path simulation across the estate.", metric: "2,800+ accounts" },
-  { name: "IAM Audit Agent", desc: "65+ escalation paths · 10 vulnerability classes.", metric: "32 GOAT benchmarks" },
-  { name: "Autonomous Threat Intel", desc: "19 models, 5 providers, weighted routing.", metric: "$1.40 / run" },
+  { name: "Artemis", desc: "Attack-path operationalization over a native platform.", metric: "GCP built · AWS designed" },
+  { name: "IAM Audit Agent", desc: "10 vulnerability classes · public path catalogue.", metric: "32 GOAT findings" },
+  { name: "Autonomous Threat Intel", desc: "19 models, 5 providers, weighted routing.", metric: "from $1.40 / run" },
   { name: "Detection Engine", desc: "Terraform-deployed signature fleet, ATT&CK-mapped.", metric: "1,400+ accounts" },
 ] as const;
 
@@ -305,21 +305,24 @@ export default function BriefingHero({ theme }: { theme: Theme }) {
               <p className="bf-body-p">
                 A detection fleet of 200+ Python and Lambda signatures evaluates
                 1,400+ AWS accounts — the posture scores the company is measured
-                against. An AI-native IAM audit agent traverses 65+ escalation
-                paths across 10 vulnerability classes, interpreting transitive
-                privilege chains the way an analyst would.
+                against. An AI-native IAM audit agent works across 10 IAM
+                vulnerability classes and matches its findings against
+                DataDog&rsquo;s public catalogue of 65+ documented escalation
+                paths, interpreting transitive privilege chains the way an
+                analyst would.
               </p>
               <p className="bf-body-p">
-                Antitoxin, a graph-theoretic CIEM engine, catalogues 62 toxic IAM
-                combinations with minimum cut-set auto-remediation. Multi-agent AI
+                Antitoxin, CIEM research with no implementation yet, catalogues
+                62 toxic IAM combinations by hand, each carrying the keystone
+                permission whose removal breaks that chain. Multi-agent AI
                 platforms orchestrate 19 models from 5 providers behind a
-                performance-weighted router, at $1.40 per research run.
+                performance-weighted router, from $1.40 per research run.
               </p>
 
               <div
                 className="bf-path"
                 role="group"
-                aria-label="62 toxic IAM combinations catalogued; 65+ privilege-escalation paths cut across 10 vulnerability classes"
+                aria-label="An escalation chain with its keystone permission marked. 62 toxic IAM combinations catalogued by hand across 8 attack categories, each with the keystone whose removal breaks that chain."
               >
                 <p className="bf-path-label" aria-hidden="true">Escalation path · cut</p>
                 <div className="bf-path-chain" aria-hidden="true">

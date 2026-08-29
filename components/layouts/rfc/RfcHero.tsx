@@ -51,24 +51,24 @@ const OVERVIEW = [
   {
     n: "3.2",
     title: "Identity",
-    body: "65+ escalation paths are catalogued across 10 vulnerability classes. An escalation path MUST be catalogued before it is considered mitigated. GOAT was built before it was trusted: 32 ground-truth findings, and the IAM audit agent was evaluated against all 32 before any recall claim was made. Antitoxin catalogues 62 toxic IAM combinations with minimum cut-set dissolution.",
+    body: "The IAM audit agent is organised around 10 vulnerability classes and matches its findings against pathfinding.cloud, DataDog's public catalogue of 65+ documented escalation paths. That catalogue is theirs; the taxonomy and the semantic layer are not. GOAT was built before the agent was trusted: 32 ground-truth findings, and the agent was evaluated against all 32 before any claim was made. Antitoxin catalogues 62 toxic IAM combinations by hand and remains research, not an implementation.",
   },
   {
     n: "3.3",
     title: "Review",
-    body: "150+ Paranoid Security Reviews were conducted in partnership with Product Security, Network, and Identity. A new cloud architecture MUST undergo review before it is permitted to serve production traffic; this requirement covers every business unit.",
+    body: "100+ Paranoid Security Reviews were conducted in partnership with Product Security, Network, and Identity. A new cloud architecture MUST undergo review before it is permitted to serve production traffic; this requirement covers every business unit.",
   },
   {
     n: "3.4",
     title: "AI Platforms",
-    body: "A self-learning research router orchestrates 19 models across 5 providers at $1.40 per run. A deterministic advisor enforces hard deny gates. Implementations MUST remain auditable, and an agentic recommendation SHOULD NOT bypass human review on a hard-deny path.",
+    body: "A self-learning research router orchestrates 19 models across 5 providers from $1.40 per run, the low end of the observed range. No single-model baseline was run, so no comparison is claimed. A deterministic advisor enforces hard deny gates. Implementations MUST remain auditable, and an agentic recommendation SHOULD NOT bypass human review on a hard-deny path.",
   },
 ] as const;
 
 const REFERENCES = [
   { tag: "GOAT", value: "32", label: "ground-truth IAM findings" },
-  { tag: "ANTITOXIN", value: "62", label: "toxic combinations, minimum cut-set" },
-  { tag: "ARTEMIS", value: "2,800+", label: "accounts, attack-path simulation" },
+  { tag: "ANTITOXIN", value: "62", label: "toxic combinations, catalogued by hand" },
+  { tag: "ARTEMIS", value: "GCP", label: "built; AWS designed, not built" },
   { tag: "V6", value: "50+", label: "new baselines, largest release in program history" },
 ] as const;
 

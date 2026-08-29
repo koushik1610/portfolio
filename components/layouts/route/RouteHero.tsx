@@ -65,9 +65,9 @@ const STATIONS: ReadonlyArray<Station> = [
     id: "rt-iam",
     code: "02",
     title: "IAM Privilege Analysis",
-    stat: "65+",
-    statLabel: "escalation paths",
-    desc: "An AI-native audit agent traversing 65+ escalation paths across 10 vulnerability classes. Built the GOAT benchmark first — 32 ground-truth findings — then evaluated against all 32.",
+    stat: "10",
+    statLabel: "IAM vulnerability classes",
+    desc: "An AI-native audit agent organised around 10 IAM vulnerability classes, matched against DataDog's public 65+ path catalogue. Built the GOAT benchmark first — 32 ground-truth findings — then evaluated against all 32.",
   },
   {
     id: "rt-ai",
@@ -75,15 +75,15 @@ const STATIONS: ReadonlyArray<Station> = [
     title: "AI Security Platforms",
     stat: "19",
     statLabel: "models · 5 providers",
-    desc: "A self-learning research router at $1.40 per run, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates.",
+    desc: "A self-learning research router from $1.40 per run, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates.",
   },
   {
     id: "rt-review",
     code: "04",
     title: "Security Reviews",
-    stat: "150+",
+    stat: "100+",
     statLabel: "reviews conducted",
-    desc: "150+ Paranoid Security Reviews, partnering with Product Security, Network, and Identity to approve new cloud architectures before launch.",
+    desc: "100+ Paranoid Security Reviews, partnering with Product Security, Network, and Identity to approve new cloud architectures before launch.",
   },
   {
     id: "rt-ciem",
@@ -91,7 +91,7 @@ const STATIONS: ReadonlyArray<Station> = [
     title: "CIEM Research",
     stat: "62",
     statLabel: "toxic combinations",
-    desc: "Antitoxin — graph-theoretic minimum cut-set dissolution. Find the keystone permission whose removal collapses the whole escalation chain.",
+    desc: "Antitoxin. CIEM research, no code yet. 62 toxic combinations catalogued by hand, each with the keystone permission whose removal breaks that chain.",
   },
 ] as const;
 

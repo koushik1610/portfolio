@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Senior Technical Security Engineer at Yahoo Paranoids. 200+ detection signatures across 1,400+ AWS accounts, 2,800+ cloud accounts secured, AI-native security platforms at enterprise scale.",
   openGraph: {
     title: "Koushik Kotamraju — Security Engineer & Builder",
-    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 1,400+ AWS accounts. 150+ security reviews. AI-native security infrastructure.",
+    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 1,400+ AWS accounts. 100+ security reviews. AI-native security infrastructure.",
     url: "https://koushik.io",
     siteName: "koushik.io",
     locale: "en_US",

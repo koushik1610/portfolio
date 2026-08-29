@@ -22,22 +22,22 @@ const EXPERTISE = [
   {
     num: "02",
     name: "IAM Privilege Analysis",
-    desc: "AI-native IAM audit agent using Boto3 tool-calling to enumerate live AWS IAM configurations — traversing 65+ privilege escalation paths across 10 vulnerability classes with LLM semantic interpretation to surface transitive chains that rule-based tools miss. Built the GOAT benchmark first — 32 ground-truth findings — and evaluated the agent against all of them.",
+    desc: "AI-native IAM audit agent using Boto3 tool-calling to enumerate live AWS IAM configurations — organised around 10 vulnerability classes, matched against DataDog's public 65+ path catalogue, with LLM semantic interpretation to surface transitive chains that rule-based tools miss. Built the GOAT benchmark first — 32 ground-truth findings — and evaluated the agent against all of them.",
   },
   {
     num: "03",
     name: "AI Security Tooling",
-    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from a large corpus of historical tickets, serving as the autonomous review agent for 150+ security reviews across all business units.",
+    desc: "Multi-agent orchestration across 19 foundation models from 5 providers — agentic pipeline with a performance-weighted router for autonomous security research. Agentic SOAR workstation backed by a 1,700+-node knowledge graph from a large corpus of historical tickets, serving as the autonomous review agent for 100+ security reviews across all business units.",
   },
   {
     num: "04",
     name: "Cloud Security Architecture",
-    desc: "Multi-cloud coverage across 2,800+ AWS and GCP accounts. CNAPP-class attack path simulation unifying GCP SCC and AWS Security Hub into an AI-enriched graph layer with AI-augmented CSPM, crown-jewel exposure tracking, and toxic IAM combination trending. Zero Trust posture enforcement across the full cloud account estate.",
+    desc: "Guardrails across 2,800+ AWS and GCP accounts. Attack-path operationalization built on GCP Security Command Center: AI enrichment, crown-jewel exposure tracking, longitudinal toxic-combination trending, and a coverage rotation under the platform's hard simulation cap. The AWS side is designed, not built.",
   },
   {
     num: "05",
     name: "Security Research",
-    desc: "Artemis: CNAPP-class multi-cloud attack path simulation platform — agentic pipeline mapping attack chains to dissolution playbooks. Antitoxin: graph-theoretic IAM privilege escalation analysis cataloguing 62 toxic combinations across 8 attack categories with minimum cut-set auto-remediation actions and policy-as-code output.",
+    desc: "Artemis: attack-path operationalization over a native cloud platform, implemented on GCP with the AWS side designed and not yet built. Antitoxin: CIEM research cataloguing 62 toxic IAM combinations by hand across 8 attack categories, each with the keystone permission whose removal breaks that chain. Research and design; no implementation yet.",
   },
 ] as const;
 
@@ -45,7 +45,7 @@ const PROJECTS = [
   {
     id: "01",
     name: "Artemis",
-    desc: "CNAPP-class multi-cloud attack path simulation. GCP SCC + AWS Security Hub unified into an AI-enriched graph layer via agentic pipeline. Crown-jewel exposure, toxic IAM combination trends, cross-cloud attack chains mapped to MITRE ATT&CK.",
+    desc: "Attack-path operationalization on GCP Security Command Center: export, AI enrichment, business-context mapping, longitudinal tracking, and coverage rotation under a hard platform cap. AWS designed, not built, so the cross-cloud view does not exist yet.",
     metric: "2,800+",
     metricLabel: "accounts unified",
     tags: ["Python", "GCP SCC", "AWS SHub", "Vertex AI"],
@@ -53,7 +53,7 @@ const PROJECTS = [
   {
     id: "02",
     name: "IAM Audit Agent",
-    desc: "AI-native IAM audit agent — Boto3 tool-calling to enumerate live AWS IAM configurations. 65+ escalation paths across 10 vulnerability classes. LLM semantic interpretation surfaces transitive chains. Evaluated against 32 GOAT benchmarks.",
+    desc: "AI-native IAM audit agent — Boto3 tool-calling to enumerate live AWS IAM configurations. 10 vulnerability classes, matched against a public 65+ path catalogue. LLM semantic interpretation surfaces transitive chains. Evaluated against 32 GOAT findings.",
     metric: "32",
     metricLabel: "GOAT benchmarks",
     tags: ["IAM Analysis", "Graph Theory", "Python", "Boto3"],
@@ -61,7 +61,7 @@ const PROJECTS = [
   {
     id: "03",
     name: "Autonomous Threat Intelligence Pipeline",
-    desc: "Autonomous threat intelligence ingestion agent — multi-agent orchestration pipeline across 19 foundation models from 5 providers. Performance-weighted router delivering analyst-ready security proposals at $1.40/run. Replaced a fully manual weekly research process.",
+    desc: "Autonomous threat intelligence ingestion agent — multi-agent orchestration pipeline across 19 foundation models from 5 providers. Performance-weighted router delivering analyst-ready security proposals from $1.40 per sweep. Replaced a fully manual weekly research process.",
     metric: "$1.40",
     metricLabel: "per research sweep",
     tags: ["Python", "Multi-Agent Orchestration", "Claude", "Gemini", "GPT-4"],
@@ -304,7 +304,7 @@ export default function AetheraHero({ theme }: { theme: Theme }) {
               <span className="ath-stat-label">Cloud Accounts</span>
             </div>
             <div className="ath-stat">
-              <span className="ath-stat-num">150+</span>
+              <span className="ath-stat-num">100+</span>
               <span className="ath-stat-label">Security Reviews</span>
             </div>
             <div className="ath-stat">

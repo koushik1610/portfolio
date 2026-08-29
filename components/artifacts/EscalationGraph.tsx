@@ -2,11 +2,22 @@ import { STATS } from "@/lib/stats";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    ESCALATION GRAPH
-   One real IAM privilege-escalation path: a low-privilege entry point reaching
-   a privileged role through hops that are each individually legitimate. Two
+   One IAM privilege-escalation path: a low-privilege entry point reaching a
+   privileged role through hops that are each individually legitimate. Two
    branches converge on a cross-account deploy role, and a single permission is
-   the minimum cut that collapses both. That cut is the point of the artifact —
-   it is what the Antitoxin work actually computes.
+   the cut that disconnects both. The cut is the point of the artifact, because
+   the keystone permission is the unit the CIEM catalogue is organised around.
+
+   WHAT THIS DOES AND DOES NOT CLAIM, corrected 2026-08-29. An earlier version of
+   this header said the cut "is what the Antitoxin work actually computes". It is
+   not. Antitoxin is research and design with no implementation, and every
+   keystone in its 62-entry catalogue was determined by hand. This drawing
+   computes the cut of its own five-edge graph, and it does so for a narrow
+   reason that has nothing to do with Antitoxin: a caption that asserts a cut
+   drifts away from the picture the moment an edge moves, and this one already
+   did exactly that once. Computing it keeps the two in agreement. Read the
+   artifact as an illustration of what a keystone permission is, not as a
+   screenshot of a running solver.
 
    CORRECTION, 2026-08-26. The first version flagged `iam:PassRole` as the
    keystone and claimed removing it collapsed the chain. It did not: the
@@ -247,11 +258,13 @@ export default function EscalationGraph({ className }: { className?: string }) {
       <p className="th-sr-only">
         An IAM privilege-escalation graph. An EC2 instance profile reaches an Administrator role
         in {hops} hops, along two branches that converge on a cross-account deploy role. Every hop
-        is individually legitimate: {EDGES.map(qualified).join(", ")}. The minimum cut is{" "}
+        is individually legitimate: {EDGES.map(qualified).join(", ")}. The cut is{" "}
         {cutVia}; removing that one permission disconnects both branches from Administrator
-        without disturbing the others. One of {STATS.escalationPaths.value} paths catalogued
-        across 10 vulnerability classes, alongside {STATS.toxicCombinations.value} toxic
-        permission combinations.
+        without disturbing the others. That permission is the keystone, and the keystone is the
+        unit {STATS.toxicCombinations.value} toxic permission combinations were catalogued around,
+        by hand, across 8 attack categories. Paths of this shape are matched against
+        pathfinding.cloud, DataDog&rsquo;s public catalogue of {STATS.escalationPaths.value}{" "}
+        documented escalation paths.
       </p>
     </div>
   );

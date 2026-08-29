@@ -4,11 +4,19 @@
    rather than shown with a caveat. Restore this list the day either renews. */
 export const certs: string[] = [];
 
+/* Pruned 2026-08-29 against the depth ledger. Removed: "Go" (reading and
+   modifying, never designing), "EKS" (appears in no source at all), and
+   "Kubernetes" as a bare peer of AWS (control authorship and architecture
+   review; he has not operated a cluster in production, and D1 of the extraction
+   says so out loud). "Azure" left the AWS/GCP triple for the same reason: one
+   substantial review is not parity, and a skills list that implies it is the
+   kind of thing a technical screen finds in four minutes. A list this long only
+   works if every entry survives being asked about. */
 export const stack = [
-  "AWS", "Azure", "GCP", "IAM & CIEM", "Detection Engineering", "CSPM", "CNAPP",
+  "AWS", "GCP", "IAM & CIEM", "Detection Engineering", "CSPM", "CNAPP",
   "AI/ML Security", "Threat Modeling", "MITRE ATT&CK", "DevSecOps",
-  "Terraform", "Checkov", "Kubernetes", "EKS",
-  "Python", "Go", "FastAPI", "Databricks",
+  "Terraform", "Checkov", "Containers",
+  "Python", "FastAPI", "Databricks",
   "Amazon Bedrock", "Vertex AI", "MCP", "Multi-Agent Orchestration",
 ];
 
@@ -22,8 +30,8 @@ export const jobs = [
     current: true,
     bullets: [
       "Define and operate Yahoo's company-wide cloud security baselines, authoring and maintaining the Paranoids AWS Cloud Alerts Detection system of 200+ Python detection signatures on AWS Lambda that evaluate resource configurations across 1,400+ AWS accounts, producing per-resource findings and account/BU/org security-posture scores (CSPM) the company is measured against, each with CIS-style audit and remediation guidance.",
-      "Conducted 150+ cloud security reviews under Yahoo's Paranoid Security Review (PSR), partnering with the Product Security, Network, and Identity teams and convening developers, leads, and managers to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech.",
-      "Primary point of contact for Yahoo's AWS security baselines, coordinating the program's largest control expansion (, 50+ new baselines) by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix.",
+      "Conducted 100+ cloud security reviews under Yahoo's Paranoid Security Review (PSR), partnering with the Product Security, Network, and Identity teams and convening developers, leads, and managers to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech.",
+      "Primary point of contact for Yahoo's AWS security baselines, coordinating the program's largest control expansion (50+ new baselines) by researching new AWS services, running Checkov parity analysis to close policy gaps, and re-scoring every control's severity on a risk × likelihood × impact matrix.",
       "Built security Claude Code skills to harden AI-assisted development: a package-hallucination detector flagging AI-invented dependency names before slopsquatting supply-chain exploitation, and a live AWS IAM audit skill (AWS CLI + IAM Access Analyzer) returning findings with severity, source attribution, and escalation-path IDs.",
       "Built a toxic-combination correlation engine over CIS-based alert data, chaining findings into privilege-escalation paths across three classes: misconfig+misconfig (public SSH/RDP without IMDSv2), misconfig+IAM (public Lambda with a privileged role, or an exposed host with an over-permissioned profile), and IAM+IAM (cross-account assume-role into a privileged role, or self-escalation via attach/put-policy), catching chains single-finding scanners miss.",
     ],
@@ -69,15 +77,15 @@ export const projects = [
   {
     name: "Artemis",
     description:
-      "CNAPP-class AI Security Posture Management (AI-SPM) platform spanning 2,800+ AWS and GCP accounts — unifying AWS Security Hub and GCP Security Command Center findings into an AI-enriched attack path graph. Surfaces toxic IAM combinations and crown-jewel exposure; maps to MITRE ATT&CK and generates prioritized AI-driven remediation backlogs consumed by 4 engineering teams.",
-    tags: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI", "Gemini", "BigQuery", "Databricks"],
+      "An operationalization layer over a native cloud platform's attack-path analysis, which computes the best signal in the estate and strands it in a console. Implemented on GCP: Security Command Center export, AI enrichment, business-context mapping, longitudinal tracking, and a coverage rotation that cycles resources through the platform's hard cap on how many can be simulated at once. AWS is designed, not built: an architecture and a written gap analysis of that platform's exposure findings. The risk analysis names its own obsolescence condition, which is the vendor raising the limit the rotation was built around.",
+    tags: ["Python", "GCP SCC", "Vertex AI", "Gemini", "BigQuery", "Terraform"],
     wip: false,
     link: null,
   },
   {
     name: "Autonomous Threat Intelligence Pipeline",
     description:
-      "Multi-agent orchestration pipeline across 19 foundation models and 5 providers with a performance-weighted router that autonomously assigns each stage (triage → analyze → decompose → peer review → synthesize) to the highest-performing model for that task. Replaced a fully manual research process: 59 vetted proposals generated at $1.40/run with 55% cost savings over single-model approaches.",
+      "Multi-agent orchestration pipeline across 19 foundation models and 5 providers with a performance-weighted router that autonomously assigns each stage (triage → analyze → decompose → peer review → synthesize) to the highest-performing model for that task. Replaced a fully manual research process, from $1.40 per full sweep on metered pricing. No single-model baseline run was recorded, so no comparison figure is claimed.",
     tags: ["Python", "Multi-Agent Orchestration", "OpenAI", "Anthropic", "Google", "Agentic Pipeline"],
     wip: false,
     link: null,
@@ -93,16 +101,16 @@ export const projects = [
   {
     name: "Antitoxin",
     description:
-      "Graph-theoretic IAM toxic combination research framework. 62 toxic combinations across 8 attack categories, each with MITRE ATT&CK mappings and a minimum cut-set dissolution action — identifying the keystone permissions whose removal collapses entire privilege escalation chains.",
-    tags: ["IAM Analysis", "Graph Theory", "MITRE ATT&CK", "CloudTrail", "Python"],
-    wip: false,
+      "CIEM research and design, no implementation yet. 62 toxic IAM combinations catalogued by hand across 8 attack categories, each mapped to MITRE ATT&CK and each carrying the keystone permission whose removal breaks that chain. The tool boundary was drawn before any code existed: it keeps granted-versus-used correlation, catalogue synthesis, and alert-to-trust-policy validation, and delegates asset resolution and escalation-path analysis to systems that already own them.",
+    tags: ["IAM Analysis", "CIEM", "MITRE ATT&CK", "Research"],
+    wip: true,
     link: null,
   },
   {
     name: "review-aws-iam-policies",
     description:
-      "AI-native IAM audit agent — a production tool-calling skill using Boto3 to enumerate live AWS IAM configurations, traverse the privilege graph across 65+ escalation paths and 10 vulnerability classes, and apply LLM semantic reasoning to surface transitive chains rule-based tools miss. Generates risk-ranked remediation reports. Built the GOAT benchmark first — 11 synthetic Terraform fixtures, 32 ground-truth findings — and evaluated the agent against all 32 before trusting it.",
-    tags: ["Bash", "AWS CLI", "IAMOK", "LLM Semantic Analysis", "GOAT Benchmarking"],
+      "AI-native IAM audit agent — a production tool-calling skill using Boto3 to enumerate live AWS IAM configurations, traverse the privilege graph across 10 vulnerability classes, match findings against pathfinding.cloud (DataDog's public catalogue of 65+ documented escalation paths), and apply LLM semantic reasoning to surface transitive chains rule-based tools miss. Generates risk-ranked remediation reports. Built the GOAT benchmark first — 11 synthetic Terraform fixtures, 32 ground-truth findings — and evaluated the agent against all 32 before trusting it.",
+    tags: ["Bash", "AWS CLI", "IAM Access Analyzer", "LLM Semantic Analysis", "GOAT Benchmarking"],
     wip: false,
     link: null,
   },
@@ -125,7 +133,7 @@ export const projects = [
   {
     name: "Security Review Workspace",
     description:
-      "Agentic SOAR-style cloud security review platform — turns Claude Code into a purpose-built autonomous review agent with passive detection rules, multi-step skills, slash commands, and MCP integration with Jira and Confluence. Backed by a 1,700+-node knowledge graph from a large corpus of historical security review tickets across many security domains and technology stacks. 150+ reviews conducted across all business units; scales security coverage without additional headcount.",
+      "Agentic SOAR-style cloud security review platform — turns Claude Code into a purpose-built autonomous review agent with passive detection rules, multi-step skills, slash commands, and MCP integration with Jira and Confluence. Backed by a 1,700+-node knowledge graph from a large corpus of historical security review tickets across many security domains and technology stacks. 100+ reviews conducted across all business units; scales security coverage without additional headcount.",
     tags: ["Claude Code", "MCP", "Jira", "Obsidian", "Knowledge Graph", "Python"],
     wip: false,
     link: null,

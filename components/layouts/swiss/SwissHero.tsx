@@ -23,10 +23,10 @@ import "./styles.css";
    underneath it — the grid measures the work rather than containing it.
 
    Format argues: rigor and restraint. A fixed instrument applied to many
-   different objects is what 150+ security reviews actually are, and it is what
+   different objects is what 100+ security reviews actually are, and it is what
    the reader is looking at.
 
-   Owns: career progression (9 years, four roles) and 150+ security reviews —
+   Owns: career progression (9 years, four roles) and 100+ security reviews —
    the narrative load left behind by the retiring `route` and `ide`.
 
    Palette: warm bone #f2f0eb · charcoal #191817 (15.57:1) · muted #5d5b55
@@ -261,11 +261,11 @@ export default function SwissHero({ theme }: { theme: Theme }) {
           </ol>
         </section>
 
-        {/* ── (150+) The practice ──────────────────────────────────────── */}
+        {/* ── (100+) The practice ──────────────────────────────────────── */}
         <section className="sw-section" aria-labelledby="sw-practice-head">
           <div className="sw-section-head sw-reveal">
             <p className="sw-eyebrow">
-              <span className="sw-eyebrow-num">(150+)</span> REVIEWS
+              <span className="sw-eyebrow-num">(100+)</span> REVIEWS
             </p>
             <h2 id="sw-practice-head" className="sw-h2">One instrument, many objects</h2>
             <p className="sw-sub">PARANOID SECURITY REVIEW · THREAT MODELLING BEFORE LAUNCH</p>

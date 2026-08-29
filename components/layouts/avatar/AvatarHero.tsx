@@ -33,7 +33,7 @@ const PORTRAIT_SRC = "/my-3d-avatar.png";
 
 const EXPOSURE = [
   { k: "ISO", v: "32 GOAT benchmarks" },
-  { k: "f/", v: "150+ security reviews" },
+  { k: "f/", v: "100+ security reviews" },
   { k: "exp", v: "9 years · 5 providers" },
 ] as const;
 
@@ -49,14 +49,14 @@ const PROJECTS: ProjectFrame[] = [
   {
     frame: "01",
     name: "Artemis",
-    desc: "Multi-cloud attack-path simulation. GCP SCC and AWS Security Hub unified into an AI-enriched graph layer across the estate.",
+    desc: "Attack-path operationalization on GCP Security Command Center, with AI enrichment and coverage rotation. The AWS side is designed, not built.",
     metric: "2,800+ accounts",
     stack: ["Python", "GCP SCC", "AWS Security Hub", "Vertex AI"],
   },
   {
     frame: "02",
     name: "IAM Audit Agent",
-    desc: "Boto3 tool-calling agent traversing 65+ escalation paths across 10 vulnerability classes with semantic interpretation of transitive chains.",
+    desc: "Boto3 tool-calling agent across 10 IAM vulnerability classes, matched against a public 65+ path catalogue, with semantic interpretation of transitive chains.",
     metric: "32 GOAT benchmarks",
     stack: ["IAM", "Python", "Boto3", "LLM tool-use"],
   },
@@ -64,7 +64,7 @@ const PROJECTS: ProjectFrame[] = [
     frame: "03",
     name: "Autonomous Threat Intel",
     desc: "19 models from 5 providers behind a performance-weighted router. Analyst-ready proposals at a fraction of baseline cost.",
-    metric: "$1.40 / run",
+    metric: "from $1.40 / run",
     stack: ["Multi-Agent", "Claude", "GPT", "Gemini"],
   },
   {
