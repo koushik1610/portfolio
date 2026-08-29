@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "avatar" | "briefing" | "coverage" | "rfc" | "route" | "ide" | "swiss";
+export type LayoutVariant = "aethera" | "avatar";
 
 export interface ThemeContent {
   tagline: string;
@@ -69,63 +69,6 @@ export const themes: Theme[] = [
     vars: { "--background": "#060606", "--surface": "#101010", "--surface-2": "#181818", "--text-primary": "#f3f1ea", "--text-muted": "#9a978d", "--accent": "#e0a44d", "--accent-dim": "#c08a36", "--on-accent": "#1a1204", "--border": "rgba(255,255,255,0.1)", "--border-strong": "rgba(255,255,255,0.4)" },
     layout: "avatar",
     content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
-  },
-  {
-    name: "Briefing",
-    id: "briefing",
-    vars: { "--background": "#0c0a09", "--surface": "rgba(255,255,255,0.035)", "--surface-2": "rgba(255,255,255,0.055)", "--text-primary": "#efece8", "--text-muted": "#a39d94", "--accent": "#ff7a5c", "--accent-dim": "#d05a3e", "--on-accent": "#260d06", "--border": "rgba(255,255,255,0.09)", "--border-strong": "rgba(255,255,255,0.4)" },
-    layout: "briefing",
-    content: { tagline: "An operations brief in bento form.", bio: "One dominant tile, one hire signal, the numbers around them.", cta: "Email me" },
-  },
-  {
-    name: "Coverage",
-    id: "coverage",
-    vars: { "--background": "#07090d", "--surface": "rgba(255,255,255,0.03)", "--surface-2": "rgba(255,255,255,0.05)", "--text-primary": "#e9edf3", "--text-muted": "#97a1ae", "--accent": "#7cb8f7", "--accent-dim": "#3a7dd6", "--on-accent": "#04121f", "--border": "rgba(233,237,243,0.09)", "--border-strong": "rgba(233,237,243,0.4)" },
-    layout: "coverage",
-    content: { tagline: "Detection coverage, mapped.", bio: "An ATT&CK matrix heat-mapped by nine years of detection depth.", cta: "Email me" },
-  },
-  {
-    name: "RFC",
-    id: "rfc",
-    vars: { "--background": "#fcfbf8", "--surface": "#ffffff", "--surface-2": "#f3f1ea", "--text-primary": "#191817", "--text-muted": "#5d5b55", "--accent": "#0f766e", "--accent-dim": "#115e59", "--on-accent": "#ffffff", "--border": "rgba(25,24,23,0.14)", "--border-strong": "rgba(25,24,23,0.5)" },
-    layout: "rfc",
-    content: { tagline: "RFC 9161: the Kotamraju protocol.", bio: "A standards-track document for one engineer.", cta: "Email me" },
-  },
-  {
-    name: "Route",
-    id: "route",
-    vars: { "--background": "#070a10", "--surface": "rgba(238,242,246,0.03)", "--surface-2": "rgba(238,242,246,0.05)", "--text-primary": "#eef2f6", "--text-muted": "#90a0ae", "--accent": "#22d3ee", "--accent-dim": "#0e7490", "--on-accent": "#04141a", "--border": "rgba(238,242,246,0.09)", "--border-strong": "rgba(238,242,246,0.4)" },
-    layout: "route",
-    content: { tagline: "The career, one line at a time.", bio: "Five stops, one line, nine years built.", cta: "Email me" },
-  },
-  {
-    name: "IDE",
-    id: "ide",
-    vars: { "--background": "#0d0e14", "--surface": "rgba(238,240,244,0.03)", "--surface-2": "rgba(238,240,244,0.05)", "--text-primary": "#eef0f4", "--text-muted": "#8b93a3", "--accent": "#9d7bff", "--accent-dim": "#7458d1", "--on-accent": "#14101f", "--border": "rgba(238,240,244,0.08)", "--border-strong": "rgba(238,240,244,0.4)" },
-    layout: "ide",
-    content: { tagline: "The career, open in an editor.", bio: "Five files, one editor, nine years of production code.", cta: "Email me" },
-  },
-  {
-    name: "Swiss",
-    id: "swiss",
-    vars: {
-      "--background": "#f2f0eb",
-      "--surface": "#ffffff",
-      "--surface-2": "#e9e6df",
-      "--text-primary": "#191817",
-      "--text-muted": "#5d5b55",          /* 5.96:1 on #f2f0eb */
-      "--accent": "#9a3328",              /* 6.41:1 on #f2f0eb */
-      "--accent-dim": "#7a2318",
-      "--on-accent": "#ffffff",           /* 7.29:1 on #9a3328 */
-      "--border": "rgba(25,24,23,0.14)",
-      "--border-strong": "#8a857c",       /* 3.22:1 on #f2f0eb — WCAG 1.4.11 */
-    },
-    layout: "swiss",
-    content: {
-      tagline: "The career, typeset.",
-      bio: "Four roles, nine years, and a fixed instrument applied 100+ times.",
-      cta: "Email me",
-    },
   },
 ];
 
