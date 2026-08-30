@@ -605,3 +605,20 @@ export const THE_MISS: Miss = {
   structuralFix: "Restored the delivery path in both. Then, because the failure mode was scaffolding surviving into production rather than a bug in either detection, audited the same pattern across the rest of the fleet: separating test-only imports from the production path in every detection where the two were mixed, so that a debug modification is visibly a debug modification rather than a one-character difference from correct.",
   stillExposed: "The audit was manual and one-time. There is still no automated check that a detection which ran actually delivered, and no alert on a detection whose delivered volume drops to zero. The same failure can happen again tomorrow in a different detection and would be found the same way, which is to say by accident. The metric that would close this is the last row in C4, and it does not exist.",
 };
+/* ── Depth boundaries ────────────────────────────────────────────────────── */
+
+/* The limits, in his own framing, said out loud rather than left for an
+   interviewer to discover twenty minutes in. PRODUCT.md's rule is show, do not
+   assert; this is the same rule applied to what he cannot do.
+
+   Rendered WITHOUT a recovery sentence, and that is load-bearing. The
+   extraction's note on D1 is explicit: a recovery sentence about how quickly he
+   learns is what turns an honest limitation into an excuse. Do not add one, and
+   do not soften "that is not me". */
+
+export interface Boundary { id: string; source: string; text: string; }
+
+export const BOUNDARIES: ReadonlyArray<Boundary> = [
+  { id: "containers", source: "D1", text: "My container work is centred on the managed non-Kubernetes scheduler: control authorship, task-role escalation paths, registry hygiene, and admission control at the platform level. Kubernetes I have authored controls for and reviewed as an architecture, but I have not operated a cluster in production. If the role needs someone who has run Kubernetes at scale, that is not me, and I would rather say that now than in month two." },
+  { id: "detection", source: "D2", text: "I build posture evaluation, not detection and response. My detections evaluate configuration state on a schedule and produce compliance findings, and my identity work reasons about effective permissions statically. Where I cross into behaviour it is retrospective and query-driven: correlating what a principal was granted against what it actually called, and validating whether an alert's claim is consistent with the trust relationships in the account. I have not built streaming detection, I have not carried a detection and response pager, and I do not claim time-to-detect as a metric I own. What I do own is the question of whether a control is enforceable, whether its detection is correct, and whether its findings reach anyone." },
+] as const;

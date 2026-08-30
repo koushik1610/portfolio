@@ -21,6 +21,7 @@ const Placeholder = () => <section id="about" style={{ minHeight: "100dvh" }} />
 
 const AetheraHero  = dynamic(() => import("./layouts/aethera/AetheraHero"),   { ssr: false, loading: Placeholder });
 const AvatarHero   = dynamic(() => import("./layouts/avatar/AvatarHero"),     { ssr: false, loading: Placeholder });
+const LedgerHero   = dynamic(() => import("./layouts/ledger/LedgerHero"),     { ssr: false, loading: Placeholder });
 
 export default function Hero() {
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -94,6 +95,7 @@ export default function Hero() {
   switch (theme.layout) {
     case "aethera":   return <AetheraHero   key={theme.id} theme={theme} />;
     case "avatar":    return <AvatarHero    key={theme.id} theme={theme} />;
+    case "ledger":    return <LedgerHero    key={theme.id} theme={theme} />;
     default: {
       // Exhaustiveness guard: adding a LayoutVariant without a case above is a
       // compile error here instead of a silent undefined render.

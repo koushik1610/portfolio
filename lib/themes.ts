@@ -1,6 +1,6 @@
 import { getThemeIndex } from "@/lib/rotation";
 
-export type LayoutVariant = "aethera" | "avatar";
+export type LayoutVariant = "aethera" | "avatar" | "ledger";
 
 export interface ThemeContent {
   tagline: string;
@@ -69,6 +69,37 @@ export const themes: Theme[] = [
     vars: { "--background": "#060606", "--surface": "#101010", "--surface-2": "#181818", "--text-primary": "#f3f1ea", "--text-muted": "#9a978d", "--accent": "#e0a44d", "--accent-dim": "#c08a36", "--on-accent": "#1a1204", "--border": "rgba(255,255,255,0.1)", "--border-strong": "rgba(255,255,255,0.4)" },
     layout: "avatar",
     content: { tagline: "Sr. Security Engineer · Yahoo Paranoids", bio: "Cloud security engineer building AI-native security platforms.", cta: "View Work" },
+  },
+  {
+    /* Ledger. Cool paper, two matched accents used only in the decision fork.
+       Ratios measured with scripts/contrast.py, not asserted:
+         ink   #1c1f1d on ground 13.13:1   on panel 14.93:1
+         muted #5e635e on ground  4.85:1   on panel  5.51:1
+         taken #1f5e58 on ground  5.92:1   on panel  6.73:1
+         alt   #5a5218 on ground  6.25:1   on panel  7.10:1
+         white on accent 7.50:1;  border-strong 4.85:1, clears the 3:1 floor
+       The accent pair is 8.1 percent apart in luminance, which is what makes
+       the equal-weight claim measurable rather than rhetorical. */
+    name: "Ledger",
+    id: "ledger",
+    vars: {
+      "--background": "#e4e5e0",
+      "--surface": "#f2f3f0",
+      "--surface-2": "#eceee9",
+      "--text-primary": "#1c1f1d",
+      "--text-muted": "#5e635e",
+      "--accent": "#1f5e58",
+      "--accent-dim": "#17463f",
+      "--on-accent": "#ffffff",
+      "--border": "#d2d4ce",
+      "--border-strong": "#5e635e",
+    },
+    layout: "ledger",
+    content: {
+      tagline: "Every decision, and the one he did not take.",
+      bio: "Thirteen decisions, the rejected branch argued in its own favour, and the price of each choice.",
+      cta: "Email me",
+    },
   },
 ];
 
