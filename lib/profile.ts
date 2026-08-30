@@ -382,3 +382,226 @@ export const CAREER: ReadonlyArray<Role> = [
     note: "Where the nine years start. Production systems first, security second. That order still shows in how the work gets built.",
   },
 ] as const;
+
+/* ── Decision records ────────────────────────────────────────────────────── */
+
+/* WHY THESE ARE IN THE SHARED LAYER RATHER THAN IN ONE THEME.
+   PRODUCT.md says Staff hiring assesses scope, influence and judgment; that this
+   site demonstrates scope well, asserts influence, and shows almost no judgment;
+   and that judgment is the one of the three a portfolio is actually good at
+   demonstrating. Twelve decision records existed and appeared on zero surfaces.
+
+   The first-principles seat made the argument that settled where they live: if
+   the judgment evidence sits in one theme, then five weeks out of seven
+   `getThemeIndex` decides whether a stranger sees the single thing the site most
+   needs to prove. So this is a rotation-wide requirement, not a theme feature.
+   EVERY theme renders at least one decision record with its rejected
+   alternative, the way every theme already carries the above-fold Email and
+   Resume CTA.
+
+   PROVENANCE. Every string below was parsed out of
+   koushik-docs/extraction/extract-2026-08-29.md by script, not retyped, and each
+   record carries the source id it came from. That file is the ceiling on what
+   may be claimed. Do not edit these strings to read better: edit the extraction,
+   re-run the parse, and keep the two in step.
+
+   CLEARANCE. The extraction marks each record with the surfaces it is cleared
+   for, and ten of the twelve were interview-and-post only. The owner reviewed
+   the held records against CLAUDE.md section 7 on 2026-08-29 and cleared five
+   more plus the miss. ITEM-2, 6, 7, 8 and 9 remain HELD: they render as title
+   and problem, and nothing else. A held record is not a teaser. It is the
+   sanitization policy being visible instead of pretended away, which is the
+   honest presentation of a real constraint. */
+
+export interface Decision {
+  id: string;
+  /** Source record in the extraction. Traceability, and it renders nowhere. */
+  source: string;
+  title: string;
+  /** Held records render title and problem only. Never silently promote one. */
+  published: boolean;
+  problem: string;
+  decided?: string;
+  rejected?: string;
+  /** The rejected option argued in its own favour. The hardest field to fake,
+   *  and the reason the equal-weight presentation is honest rather than a
+   *  rhetorical device. */
+  whyTempting?: string;
+  cost?: string;
+  limitation?: string;
+  /** Present only where it went worse than expected. */
+  outcome?: string;
+  wouldRedo?: string;
+  /** Only text Koushik actually typed. Five survived verification across the
+   *  whole extraction; four of them are here. Absent means restated, and a
+   *  restated line must never be rendered inside quotation marks. */
+  quote?: { text: string; fidelity: "verbatim" | "trimmed" };
+}
+
+export const DECISIONS: ReadonlyArray<Decision> = [
+  {
+    id: "d-01",
+    source: "ITEM-1",
+    title: "Freeze the tree before the run",
+    published: true,
+    problem: "A long serialized experiment was going to run out of a working directory that was still being edited. Any mid-run change would have split early sessions from late ones with nothing in the record to show it.",
+    decided: "Copy the tree to a frozen snapshot first and run the arm out of the copy, leaving the working directory free.",
+    rejected: "Snapshot after the run finished, which is what had been proposed and what the schedule assumed.",
+    whyTempting: "A post-run snapshot captures the same files with one less step, and if nobody touches the tree during the run it is identical.",
+    cost: "Two frozen trees now exist and have to be kept, and a bug found mid-run cannot be fixed in the arm that is running. The run either finishes with the bug in it or gets thrown away.",
+    limitation: "The snapshot proves the code was constant. It proves nothing about the environment around it: model versions, upstream services, and network conditions are still free to move under a run that takes hours.",
+    quote: { text: "Take it before, and run the arm from it.", fidelity: "trimmed" },
+  },
+  {
+    id: "d-02",
+    source: "ITEM-2",
+    title: "Three verdicts, not two",
+    published: false,
+    problem: "A replication was going to be judged on whether one arm's confidence interval contained the other's point estimate. At that sample size the intervals were wide enough that almost any result would land inside one.",
+  },
+  {
+    id: "d-03",
+    source: "ITEM-3",
+    title: "Deterministic scoring for suppression advice",
+    published: true,
+    problem: "Reviewers were approving and denying exception requests by cross-referencing a ticket system, a data warehouse, and a spreadsheet. The judgement was consistent only because the same small group made it.",
+    decided: "Score each request with a deterministic engine over four signals, clamp the confidence so it can never read as certain in either direction, and hard-gate a set of control categories where an exception is never appropriate.",
+    rejected: "Send the request and its history to a model and use the model's recommendation, which was the obvious build given every other pipeline in the same codebase already called one.",
+    whyTempting: "The rules had to be derived by hand from a large corpus of historical tickets. A model would have absorbed that corpus directly and shipped in a fraction of the time.",
+    cost: "The rule set is now a maintained artifact. Every time the control registry changes, the rules drift and have to be re-derived against the corpus by hand. Nothing about that is automatic.",
+    limitation: "The engine only reproduces judgements that were already being made. It cannot recognize a request shape that has no precedent in the corpus, and on those it returns a low-confidence score rather than an abstention, which reads as weak evidence instead of no evidence.",
+  },
+  {
+    id: "d-04",
+    source: "ITEM-4",
+    title: "Model as one source among five",
+    published: true,
+    problem: "A tool that reasons about relationships between identity objects cannot be built from pattern matching alone, and a tool built entirely on model output cannot be trusted with an access decision.",
+    decided: "Treat the model as one of five detection sources, tag every finding with the source that produced it, and let the deterministic sources carry the findings that gate action.",
+    rejected: "A single semantic pass over the whole configuration, which is simpler to build and reads better in a demonstration.",
+    whyTempting: "One pass over everything catches cross-object relationships that per-object rules structurally cannot see, and that gap is the entire reason the tool exists.",
+    cost: "Five sources have to be kept in agreement. The same finding can arrive from two of them and has to be reconciled, and the source-attribution field has to be maintained on every finding for the life of the tool.",
+    limitation: "Findings from the deterministic sources reproduce exactly. The semantic source does not, so the tool as a whole is not reproducible run to run, and its own validation report says so.",
+  },
+  {
+    id: "d-05",
+    source: "ITEM-5",
+    title: "Benchmark before trusting the tool",
+    published: true,
+    problem: "A security tool that reports findings has no way to tell a user whether an empty result means the environment is clean or the tool is broken.",
+    decided: "Write the fixtures and the ground-truth file first, then measure the tool against them, and publish the blind spots alongside the result.",
+    rejected: "Validate by running against real environments and having an engineer confirm the findings, which is how the adjacent tooling was validated.",
+    whyTempting: "Real environments are free, already available, and produce findings that are obviously real. Synthetic fixtures have to be written, and someone has to decide what counts as a finding.",
+    cost: "The fixtures are a second codebase. Every change to the detection path means re-running the benchmark and re-arguing the ground truth, and the ground-truth file is now a thing that can be wrong.",
+    limitation: "The result measures coverage of the taxonomy that was encoded. It says nothing about classes that were never enumerated, and nothing about how the tool behaves on a real environment, which the validation report lists as untested.",
+  },
+  {
+    id: "d-06",
+    source: "ITEM-6",
+    title: "Rotation under a hard platform cap",
+    published: false,
+    problem: "The platform's attack-path simulation only evaluates a bounded set of designated high-value resources, and the bound is a hard product limit. Above that size, most resources are never simulated at all.",
+  },
+  {
+    id: "d-07",
+    source: "ITEM-7",
+    title: "Build the layer, do not wait",
+    published: false,
+    problem: "The platform generated the highest-signal data available and exposed it only through a console. No structured export, no cross-finding correlation, no history beyond the retention window.",
+  },
+  {
+    id: "d-08",
+    source: "ITEM-8",
+    title: "Delete the first pipeline instead of hardening it",
+    published: false,
+    problem: "A security review of my own pipeline surfaced findings against a first-generation implementation that had already been superseded but was still in the repository, still deployable, and still carried embedded copies of control documents.",
+  },
+  {
+    id: "d-09",
+    source: "ITEM-9",
+    title: "Unmasking a suppressed detection path",
+    published: false,
+    problem: "A shared policy-evaluation helper had a cleanup step that discarded one class of evaluation result when another matched. Under the platform's own evaluation semantics, that discard was wrong, and it was hiding real access.",
+  },
+  {
+    id: "d-10",
+    source: "ITEM-10",
+    title: "Rewriting the experiment after bad rounds",
+    published: true,
+    problem: "An experiment testing whether a coding assistant would pull the right security control into context at the right moment produced rounds whose conclusions rested on assumptions that had not actually held during the runs.",
+    decided: "Throw out the methodology document, rewrite it from what the failed rounds had shown, and re-run the experiment against simulated developer behaviour rather than against the tasks that had been convenient to script.",
+    rejected: "Keep the existing runs, annotate the assumptions that did not hold, and report the result with caveats.",
+    whyTempting: "The runs were already paid for. A caveated result is still a result, and the direction it pointed was the direction that had been expected.",
+    cost: "Every round completed to that point stopped being usable evidence. The re-run cost the full compute again and pushed the report out by rounds, not days.",
+    limitation: "Simulated developer behaviour is still simulated. The measure is how often the assistant retrieved the right control under prompts written to provoke it, which is an upper bound on what real developers, writing their own prompts, would trigger.",
+    outcome: "The first methodology was wrong in a way that invalidated the conclusions rather than weakening them. Rounds that looked like progress were measuring conditions that had not occurred.",
+    wouldRedo: "Write down, before the first round, the specific things that must be true during a run for the result to mean anything, and check those during the run instead of inferring them afterwards. This is the same lesson as ITEM-1 and ITEM-2, learned in the wrong order.",
+    quote: { text: "based on what we learned, we made a lot of mistakes and assumed things that didnt happen", fidelity: "verbatim" },
+  },
+  {
+    id: "d-11",
+    source: "ITEM-11",
+    title: "Keep the signal, narrow the check",
+    published: true,
+    problem: "A certificate-expiry control fired constantly on one class of certificate whose lifetime is shorter than the window the control measures. Those certificates are rotated automatically and sit inside the window permanently, by design.",
+    decided: "Split the check by certificate class. The affected class passes only while renewal is demonstrably still running, and alerts if renewal has stalled.",
+    rejected: "Exclude that certificate class from the control, which is what the noise was pushing everyone toward and what a suppression would have done in one line.",
+    whyTempting: "The alerts were all false. Excluding the class removes every one of them immediately and nobody has to think about the control again.",
+    cost: "A class-specific branch now lives in the detector permanently. It has to be understood by anyone who touches that control, and it depends on a property of the issuing system that could change without notice.",
+    limitation: "The branch detects that renewal stopped. It does not detect that renewal is running but producing certificates that are wrong in some other way.",
+    quote: { text: "This keeps the broken-renewal signal instead of blanket-suppressing.", fidelity: "verbatim" },
+  },
+  {
+    id: "d-12",
+    source: "ITEM-12",
+    title: "One file per review",
+    published: true,
+    problem: "Each review was spread across several files in a folder. The authoritative state of a review was whichever file had been updated most recently, and nothing enforced that they agreed.",
+    decided: "Collapse each review to a single authoritative file with fixed sections, and add placeholder sections for an integration that does not exist yet so the template does not need restructuring when it arrives.",
+    rejected: "Keep the folder layout and add an index that tracks which file is current.",
+    whyTempting: "The folder layout separates concerns cleanly, and an index is a smaller change than migrating every open review.",
+    cost: "Every open review had to be migrated by hand. The single file also grows without bound over a long review, and the sections that were added for a future integration are dead weight until that integration exists, if it ever does.",
+    limitation: "A single authoritative file makes the state consistent. It does not make it correct, and nothing validates that the evidence section still matches the ticket it was captured from.",
+    quote: { text: "Add Slack integration placeholders now so future Slack MCP support can be incorporated without restructuring the template.", fidelity: "verbatim" },
+  },
+] as const;
+
+export const publishedDecisions = () => DECISIONS.filter((d) => d.published);
+export const heldDecisions = () => DECISIONS.filter((d) => !d.published);
+
+/* ── The miss ────────────────────────────────────────────────────────────── */
+
+/* Deliberately NOT a Decision. E1 is not a choice between two options, it is a
+   failure the system could not have surfaced, and forcing it into the decision
+   shape would have required inventing a rejected alternative that never existed.
+   It gets its own type instead.
+
+   Cleared in full by the owner on 2026-08-29. The extraction's own note is that
+   it costs nothing to publish, because every detail is a detection-engineering
+   failure mode with no incident, no service and no team attached. It is the
+   highest trust-per-word item in the document: the general problem it names is a
+   health signal that measured whether a detection RAN rather than whether its
+   output ARRIVED, and the reason it is credible is `stillExposed`, where he
+   found the class of bug and then did not build the control that catches it next
+   time, and says so. Do not soften that field. It is the whole point. */
+
+export interface Miss {
+  source: string;
+  supposedToCatch: string;
+  whyItDidnt: string;
+  howFound: string;
+  blastRadius: string;
+  structuralFix: string;
+  /** Never edit this to sound resolved. It is not resolved. */
+  stillExposed: string;
+}
+
+export const THE_MISS: Miss = {
+  source: "E1",
+  supposedToCatch: "Two configuration controls, evaluated continuously across the estate. One covers key management on a secrets store, the other covers end-of-life language runtimes on serverless functions. Both had working detections, both were enabled, and both appeared healthy in every operational view.",
+  whyItDidnt: "During earlier debugging of each detection, the call that delivers findings to the consuming system had been commented out and a debug print left in its place. The commenting was never reverted. Both detections then ran on schedule, executed correctly, and produced correct findings, which went to a log stream and nowhere else. The mechanism is not \"we had no coverage\". The mechanism is that the pipeline's health signal was \"the detection ran\", and nothing anywhere checked \"the detection's output arrived\". A detection producing zero delivered findings is indistinguishable from a detection covering a clean estate, and there was no control that could tell the difference.",
+  howFound: "By me, and not by looking. I was doing an unrelated hygiene pass across the detection fleet, cleaning up module-level imports that were only needed by test paths, and read the production path of these two while I was in the file. Nothing surfaced it. Nothing would have.",
+  blastRadius: "Two controls, no enforcement coverage, for a period measured in months rather than weeks, and the two periods differed. Bounded honestly: the findings were being generated correctly the whole time, so nothing was mis-evaluated and no wrong conclusion was drawn. What was lost is that no remediation obligation was ever created for any finding either control produced during that window, so the underlying conditions persisted with nobody assigned to them and no record that they existed.",
+  structuralFix: "Restored the delivery path in both. Then, because the failure mode was scaffolding surviving into production rather than a bug in either detection, audited the same pattern across the rest of the fleet: separating test-only imports from the production path in every detection where the two were mixed, so that a debug modification is visibly a debug modification rather than a one-character difference from correct.",
+  stillExposed: "The audit was manual and one-time. There is still no automated check that a detection which ran actually delivered, and no alert on a detection whose delivered volume drops to zero. The same failure can happen again tomorrow in a different detection and would be found the same way, which is to say by accident. The metric that would close this is the last row in C4, and it does not exist.",
+};
