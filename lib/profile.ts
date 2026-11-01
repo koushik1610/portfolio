@@ -77,34 +77,35 @@ function assertProse(where: string, p: Prose): Prose {
 
 /* ── Identity ────────────────────────────────────────────────────────────── */
 
+/* REFRESHED 2026-10-31 from Ascend master v7. Promotion to Principal (Oct 2026),
+   "10 years in engineering, 9 in cloud security", and the work named in v7
+   (correlation engine, the security MCP, attack-research pipeline, GCP attack-path analysis). Every sentence below is a
+   restatement of a master bullet or summary, never a new claim. */
 export const IDENTITY = {
   name: "Koushik Kotamraju",
-  /* The HR title, not the public-facing variant. F1 of the extraction flags that
-     the two differ and that a verification service returns the HR one, so every
-     surface uses it and none of them has to be reconciled later. */
-  title: "Senior Technical Security Engineer",
+  /* The HR title. The master's `label` is the short form for resume headers. */
+  title: "Principal Technical Security Engineer",
+  shortTitle: "Principal Security Engineer",
   employer: "Yahoo",
   team: "Paranoids",
-  /* Yahoo is context. The site markets the person. */
+  /* THE HERO SENTENCE. Replaces the 2026-08 "AI-native security platforms"
+     line, which no master v7 summary uses. Hallmark allows the hero one sentence of twelve words
+     or fewer, and the recruiter has to learn level and employer in ten
+     seconds, so the sentence carries both. Ten words. */
+  lede: "Principal security engineer at Yahoo, owning the AWS security baseline.",
+  /* The first line under the hero: what the work is, with AI as the method
+     rather than the identity. Master S1, cut. */
+  method: "I build the AI tooling that runs it, and keep deterministic gates wherever a decision touches access.",
   bio: assertProse("IDENTITY.bio", {
-    short: "Cloud security engineer building AI-native security platforms.",
+    short: "Principal security engineer. Owns the AWS security baseline.",
     medium:
-      "Cloud security engineer building AI-native security platforms: production systems, not prototypes. Nine years across detection engineering, IAM privilege analysis, and multi-agent orchestration.",
+      "Principal security engineer at Yahoo. I own the AWS security baseline for every engineering team, with 200+ detection signatures across 1,400+ accounts behind it.",
     full:
-      "Nine years of security engineering across three organizations, focused on detection at cloud account scale, IAM privilege analysis, and agentic security workflows. The through-line is building the measurement before trusting the tool, which is why the benchmark exists, why the metric is defined against gaming, and why the claims here are narrower than they used to be.",
+      "Ten years in engineering, nine of them in cloud security on AWS. I own the AWS security baseline for every engineering team at Yahoo, deciding which controls ship and when each is enforced. I build AI tooling for security work and the controls that keep it safe: models where they help, deterministic gates where a decision touches access, and a benchmark before any tool is trusted.",
   }),
-  openTo: "Staff and Principal Security Engineer, and AI Security Engineer roles",
-
-  /* THE HOOK. Council-approved, and not to be re-litigated per theme. It was
-     written into six heroes as a literal, which meant the 2026-07 edit that
-     removed the team headcount ("Four engineers.") had to be made six times and
-     the number inside it is a scrubbed figure that must track lib/stats.ts. It
-     is one sentence, so it lives in one place. */
-  hook: `A small team. ${STATS.cloudAccounts.value} cloud accounts. The math only works if you build the right systems.`,
-
-  /* The kicker line above the name. Two themes typed it out and both had drifted
-     to an abbreviated title that matches neither the HR record nor the resume. */
-  eyebrow: `${"Senior Technical Security Engineer"} · Yahoo Paranoids · ${STATS.experience.value}`,
+  openTo: "Principal and Staff security engineering roles, and cloud security management",
+  /* One line of position, used where a theme wants a sentence and not a name. */
+  hook: "Models where they help. Deterministic gates where a decision touches access.",
 } as const;
 
 /* ── Contact ─────────────────────────────────────────────────────────────── */
@@ -119,137 +120,170 @@ export interface ContactLink {
   ext: boolean;
 }
 
-/* This block was byte-identical in five heroes. Nothing about a contact row is
-   theme-specific, and a stale address in one of five is the failure mode. */
 export const CONTACT: ReadonlyArray<ContactLink> = [
   { k: "Email", v: "koushik.kotamraju1610@gmail.com", href: "mailto:koushik.kotamraju1610@gmail.com", ext: false },
   { k: "LinkedIn", v: "in/koushikkotamraju", href: "https://www.linkedin.com/in/koushikkotamraju/", ext: true },
   { k: "GitHub", v: "github.com/koushik1610", href: "https://github.com/koushik1610", ext: true },
 ] as const;
 
-/** mailto: href. The above-fold CTA is mandatory in every theme, and all eight
- *  had typed the address into the button by hand, which is twelve literals for
- *  one mailbox. */
 export const EMAIL = CONTACT[0].v;
 export const EMAIL_HREF = CONTACT[0].href;
 
-/** Canonical availability copy. Targets the role rather than stating a status,
- *  because a status goes stale silently and a target does not. */
-export const AVAILABILITY =
-  "Open to Staff & Principal Security Engineer roles · AI Security";
+/** Canonical availability copy. Targets the role rather than stating a status. */
+export const AVAILABILITY = "Open to Principal and Staff security roles, and security management";
+
+/* ── Photographs ─────────────────────────────────────────────────────────── */
+
+/* The two real images of him. Themes that carry a portrait read it from here so
+   alt text is written once. */
+export const PORTRAITS = {
+  photo: { src: "/profile.jpeg", alt: "Koushik Kotamraju" },
+  avatar: { src: "/my-3d-avatar.png", alt: "A 3D-rendered portrait of Koushik Kotamraju" },
+} as const;
 
 /* ── Projects ────────────────────────────────────────────────────────────── */
 
-/** How much of the thing exists. Themes that show status must not flatten
- *  `research` into `shipped`: the distinction is the correction that cost the
- *  most to make, and it is the one most likely to be lost in a redesign. */
+/** How much of the thing exists. Never flatten `research` into `shipped`. */
 export type BuildStatus = "shipped" | "partial" | "research";
 
 export interface Project {
   id: string;
   name: string;
-  /** Set only where the full name does not fit a tight rail or a table cell.
-   *  Themes should prefer `name` and fall back to this, never the reverse: an
-   *  abbreviation that leaks into a spacious layout reads as a different
-   *  project from the one the resume names. */
   shortName?: string;
   /** What it is, at three lengths. */
   prose: Prose;
-  /** The canonical figure this project is known by. Referenced, never inlined,
-   *  so `lib/stats.ts` stays the only place a number is written down. */
-  stat: CanonicalStat;
-  /** Overrides the stat's own label where the project frames it differently.
-   *  Kept short: it renders under a large number. */
+  /** The canonical figure this project is known by, by reference. Absent when
+   *  the project has no figure of its own: borrowing a neighbour's is how a
+   *  number ends up describing the wrong system. */
+  stat?: CanonicalStat;
   statLabel?: string;
   stack: ReadonlyArray<string>;
   status: BuildStatus;
-  /** Set where the honest answer is not "it works". Rendered by themes that
-   *  have room; never silently dropped when it is present. */
+  /** Where the honest answer is not "it works". Never silently dropped. */
   caveat?: string;
 }
 
+/* Ordered by what a hiring manager should meet first. Master bullet ids in each
+   comment are the provenance. */
 export const PROJECTS: ReadonlyArray<Project> = [
   {
-    id: "attack-path-analysis",
-    name: "GCP attack-path analysis",
-    prose: assertProse("PROJECTS.attack-path-analysis", {
-      short: "Attack-path operationalization over a native platform.",
+    id: "baseline", // PR1, PR6, Y4, Y5
+    name: "The AWS security baseline",
+    shortName: "AWS baseline",
+    prose: assertProse("PROJECTS.baseline", {
+      short: "Which controls ship, and when each is enforced.",
       medium:
-        "Attack-path operationalization on GCP Security Command Center: export, AI enrichment, business-context mapping, longitudinal tracking, and coverage rotation under a hard platform cap.",
+        "Owned since month three in 2022. 200+ Python signatures across 1,400+ AWS accounts turn each failed control into a per-resource finding with the fix attached.",
       full:
-        "A native cloud platform computes the best attack-path signal in the estate and strands it in a console: no structured export, no cross-finding correlation, no history past the retention window. GCP attack-path analysis is the layer around it, implemented on GCP. The shaping constraint is a hard cap on how many resources can be simulated at once, so coverage is a rotation rather than a fixed set, and the risk analysis names its own obsolescence condition: the vendor raising that limit.",
-    }),
-    stat: STATS.cloudAccounts,
-    statLabel: "accounts",
-    stack: ["Python", "GCP SCC", "Vertex AI", "BigQuery", "Terraform"],
-    status: "partial",
-    caveat: "GCP is built. AWS is designed, not built, so the cross-cloud view does not exist yet.",
-  },
-  {
-    id: "iam-audit-agent",
-    name: "IAM Audit Agent",
-    prose: assertProse("PROJECTS.iam-audit-agent", {
-      short: "10 IAM vulnerability classes, benchmarked before trusted.",
-      medium:
-        "A Boto3 tool-calling agent across 10 IAM vulnerability classes, matched against a public escalation-path catalogue, with semantic interpretation of the transitive chains rule-based tools miss.",
-      full:
-        "A production tool-calling agent that enumerates live AWS IAM configurations across 10 vulnerability classes, matches findings against pathfinding.cloud (DataDog's public catalogue of 65+ paths), and layers semantic interpretation over static graph traversal to catch transitive chains that rules cannot evaluate. The benchmark came first: GOAT, 11 synthetic Terraform fixtures, 32 ground-truth findings, written before the agent was measured against them.",
-    }),
-    stat: STATS.goatFindings,
-    statLabel: "GOAT findings",
-    stack: ["Python", "Boto3", "IAM Access Analyzer", "LLM tool-use"],
-    status: "shipped",
-    caveat: "The 65+ path catalogue is DataDog's, consumed and cited. The taxonomy and the semantic layer are not.",
-  },
-  {
-    id: "threat-intel",
-    name: "Autonomous Threat Intelligence Pipeline",
-    shortName: "Autonomous Threat Intel",
-    prose: assertProse("PROJECTS.threat-intel", {
-      short: "19 models, 5 providers, a router that retunes itself.",
-      medium:
-        "A 5-stage agentic pipeline behind a performance-weighted router that reassigns models after every run, delivering analyst-ready security proposals from $1.40 per sweep.",
-      full:
-        "Ingest, triage, decompose, peer-review, synthesize: five stages across 19 foundation models from 5 providers, behind a router that tracks output quality per task type and updates its own allocation weights after each run. It replaced a fully manual weekly research process. The claim stops at the observed cost, because no single-model baseline sweep was ever recorded and a comparison without one is arithmetic, not measurement.",
-    }),
-    stat: STATS.modelsOrchestrated,
-    statLabel: "models · 5 providers",
-    stack: ["Python", "Multi-Agent Orchestration", "Claude", "Gemini", "GPT"],
-    status: "shipped",
-    caveat: "No single-model baseline run exists, so no cost comparison is claimed.",
-  },
-  {
-    id: "detection-engine",
-    name: "Detection Engine",
-    prose: assertProse("PROJECTS.detection-engine", {
-      short: "Terraform-deployed signature fleet, ATT&CK-mapped.",
-      medium:
-        "200+ Python and Lambda signatures evaluating 1,400+ AWS accounts, producing the per-resource findings and posture scores the company is measured against.",
-      full:
-        "The AWS Cloud Alerts Detection system: 200+ Python and Lambda signatures evaluating resource configurations across 1,400+ AWS accounts, each with CIS-style audit and remediation guidance, deployed via Terraform. Behind it sits an enforcement program that converts every high-severity finding into a routed remediation ticket with a deadline, so not remediating became an explicit decision with an owner and an expiry rather than something that happened by inaction.",
+        "I decide which controls ship for every engineering team on AWS, when each becomes enforced, and which are merged or retired. 200+ Python signatures check it across 1,400+ accounts. I designed the enforcement program behind it: a three-tier severity model set by what an attacker gains, and declining a fix means a written exception with an expiry. Metrics follow detection state, not ticket state, so suppressing a finding cannot improve the chart.",
     }),
     stat: STATS.signatures,
-    statLabel: "active signatures",
-    stack: ["Python", "AWS Lambda", "Terraform", "MITRE ATT&CK"],
+    stack: ["AWS", "Python", "IAM", "CSPM"],
     status: "shipped",
   },
   {
-    id: "iam-research",
+    id: "toxic-combinations", // PR7
+    name: "correlation engine",
+    prose: assertProse("PROJECTS.toxic-combinations", {
+      short: "Low-severity alerts that form an escalation path together.",
+      medium:
+        "Correlates cloud alerts into toxic combinations, like a missing IMDSv2 requirement and an over-privileged role on one instance. 15 AWS combinations, from pathfinding.cloud.",
+      full:
+        "Two findings that are low severity alone can form a privilege-escalation path together: a missing IMDSv2 requirement and an over-privileged IAM role on the same instance is one. correlation engine correlates cloud alerts into those toxic combinations. I defined 15 AWS combinations from documented escalation paths in DataDog's public pathfinding.cloud catalog.",
+    }),
+    stat: STATS.awsToxicCombinations,
+    statLabel: "AWS combinations",
+    stack: ["AWS", "IAM", "Correlation"],
+    status: "shipped",
+    caveat: "The escalation paths are DataDog's public catalog. The combinations drawn from it are mine.",
+  },
+  {
+    id: "security-mcp", // PR8, PR8p
+    name: "security MCP",
+    prose: assertProse("PROJECTS.security-mcp", {
+      short: "Security baselines inside the coding assistant.",
+      medium:
+        "Extended the team's MCP server for Claude users to serve AWS, GCP, Kubernetes, and Docker baselines as tools, so the secure configuration arrives while code is written.",
+      full:
+        "The security team's MCP server for Claude users used to answer process questions. I extended it to serve the AWS, GCP, Kubernetes, and Docker security baselines as MCP tools, so engineers get the applicable controls where they build rather than at review. In evals that mimicked feature work across repositories, Terraform included, Claude identified and fetched the applicable baseline in every trial.",
+    }),
+    stat: STATS.mcpBaselines,
+    stack: ["MCP", "Claude", "Evals", "Terraform"],
+    status: "shipped",
+  },
+  {
+    id: "iam-review", // Y9
+    name: "review-aws-iam-policies",
+    shortName: "IAM policy review",
+    prose: assertProse("PROJECTS.iam-review", {
+      short: "10 escalation classes, benchmarked before it was trusted.",
+      medium:
+        "IAM analysis over 10 privilege-escalation classes: deterministic checks plus a model pass, every finding tagged with its source, paths mapped to pathfinding.cloud.",
+      full:
+        "An IAM analysis tool covering 10 privilege-escalation classes. It pairs deterministic checks with a model pass, tags each finding with the source that produced it, and maps paths to DataDog's public pathfinding.cloud catalog of 65+. The benchmark came first: 32 ground-truth findings in 11 synthetic Terraform fixtures, written before the tool was evaluated against them.",
+    }),
+    stat: STATS.goatFindings,
+    statLabel: "ground-truth findings",
+    stack: ["Python", "AWS IAM", "Terraform", "LLM"],
+    status: "shipped",
+    caveat: "The benchmark measures the classes that were encoded, and nothing outside them.",
+  },
+  {
+    id: "attack-research-pipeline", // PR2, PR2m
+    name: "attack-research pipeline",
+    prose: assertProse("PROJECTS.attack-research-pipeline", {
+      short: "New attack research in, draft baseline controls out.",
+      medium:
+        "An LLM pipeline that turns new AWS, GCP, Docker, and Kubernetes attack techniques into draft controls. A cheap model triages, a stronger one analyzes, a human reviews every draft.",
+      full:
+        "I proposed and built attack-research pipeline, an LLM pipeline that reads public bulletins and research blogs for new AWS, GCP, Docker, and Kubernetes attack techniques and turns them into draft baseline controls. A cheap model triages, a stronger one analyzes, and every draft waits for human review. A partner detection team adopted its staged design for their own workflow, and I fixed two configuration weaknesses in their deployment during the handoff.",
+    }),
+    stack: ["Python", "LLM pipelines", "Human review"],
+    status: "shipped",
+  },
+  {
+    id: "attack-path-analysis", // PR5, PR5m
+    name: "GCP attack-path analysis",
+    prose: assertProse("PROJECTS.attack-path-analysis", {
+      short: "Attack-path simulation that covers the full resource set.",
+      medium:
+        "Built on GCP (Cloud Run, Security Command Center, BigQuery, Terraform) to rotate resources through the platform's simulation limit, so results reach resource owners.",
+      full:
+        "GCP's attack-path simulation only covers a bounded set of resources at a time. I proposed and built GCP attack-path analysis on Cloud Run, Security Command Center, BigQuery, and Terraform to rotate resources through that limit, so simulation covers the full resource set and its results reach the people who own the resources. The AWS side is designed and not built.",
+    }),
+    stack: ["GCP", "Security Command Center", "BigQuery", "Terraform"],
+    status: "partial",
+    caveat: "GCP is built. AWS is designed, not built.",
+  },
+  {
+    id: "iam-research", // P2
     name: "IAM research project",
     prose: assertProse("PROJECTS.iam-research", {
-      short: "CIEM research. 62 toxic combinations, catalogued by hand.",
+      short: "62 IAM toxic combinations, catalogued by hand.",
       medium:
-        "CIEM research, no implementation yet. 62 toxic IAM combinations catalogued by hand across 8 attack categories, each carrying the keystone permission whose removal breaks that chain.",
+        "Research and design, no code yet. 62 IAM toxic combinations across 8 attack categories, each with the keystone permission whose removal breaks the chain.",
       full:
-        "A CIEM research project at the design stage. 62 toxic IAM combinations catalogued by hand across 8 attack categories, each mapped to MITRE ATT&CK and each carrying the keystone permission whose removal breaks that chain. The part worth stating is that the tool boundary was drawn before any code existed: it keeps granted-versus-used correlation, catalogue synthesis, and alert validation, and delegates asset resolution and path analysis to systems that own them.",
+        "A personal research project at the design stage. 62 IAM toxic combinations catalogued by hand across 8 attack categories, each carrying the keystone permission whose removal breaks the chain. There is no code yet, no graph and no solver: the keystones were worked out by hand as part of the catalogue.",
     }),
     stat: STATS.toxicCombinations,
-    statLabel: "toxic combinations",
-    stack: ["IAM Analysis", "CIEM", "MITRE ATT&CK", "Research"],
+    stack: ["IAM", "CIEM", "Research"],
     status: "research",
-    caveat: "No code yet, and the keystones are hand-authored. There is no graph and no solver.",
+    caveat: "No code yet. The keystones are hand-authored.",
   },
 ] as const;
+
+/* the correlation engine's worked example, from master bullet PR7 ("a missing IMDSv2 requirement
+   and an over-privileged IAM role on the same instance"). Themes that draw it
+   read it from here so the example exists once. */
+export const TOXIC_COMBINATION_EXAMPLE = {
+  resource: "One instance",
+  findings: ["IMDSv2 not required", "Over-privileged IAM role"],
+  findingNote: "Low severity alone",
+  path: "Together, one privilege-escalation path",
+} as const;
+
+/** The revision every surface was written against: the Ascend master's lock. */
+export const CONTENT_REVISION = { label: "Rev. Oct 2026", master: "Ascend master v7, locked 2026-10-31" } as const;
 
 export const projectById = (id: string): Project => {
   const p = PROJECTS.find((x) => x.id === id);
@@ -266,69 +300,78 @@ export interface Capability {
   stat: CanonicalStat;
 }
 
-/* The five lanes the work actually divides into. Themes that number their
-   sections take the array order; themes that show three take the first three,
-   which is why detection leads. */
 export const CAPABILITIES: ReadonlyArray<Capability> = [
   {
-    id: "detection",
-    name: "Detection Engineering",
-    prose: assertProse("CAPABILITIES.detection", {
-      short: "Posture evaluation at account scale, not incident response.",
+    id: "baseline",
+    name: "Baseline ownership",
+    prose: assertProse("CAPABILITIES.baseline", {
+      short: "Deciding which controls ship, and enforcing them.",
       medium:
-        "200+ Python and Lambda signatures evaluating 1,400+ AWS accounts on a schedule, producing the posture scores the company is measured against, CIS-benchmarked and ATT&CK-mapped.",
+        "Owns the AWS baseline for every engineering team, its enforcement program, and metrics built so that suppressing a finding cannot improve the chart.",
       full:
-        "Configuration-state evaluation across the account estate: 200+ signatures on a schedule, producing per-resource findings, CIS-style audit guidance, and the posture scores the business is measured against, deployed via Terraform. This is posture evaluation, not detection and response: it does not stream, does not page, and does not claim time-to-detect. What it owns is whether a control is enforceable, whether its detection is correct, and whether its findings reach anyone.",
+        "Owns the AWS security baseline for every engineering team on AWS, a role taken at month three in 2022. Designed the high-severity enforcement program: a three-tier severity model based on what an attacker gains, the full control-to-tier mapping published a quarter before enforcement, and a written exception with an expiry for any declined fix.",
+    }),
+    stat: STATS.severityTiers,
+  },
+  {
+    id: "detection",
+    name: "Configuration-state detection",
+    prose: assertProse("CAPABILITIES.detection", {
+      short: "200+ signatures, owned down to the false positives.",
+      medium:
+        "200+ Python signatures across 1,400+ AWS accounts, owned as production software: correctness, false positives, and findings that never reached an owner.",
+      full:
+        "Deploys and maintains 200+ Python signatures across 1,400+ AWS accounts, covering AWS service controls and IAM. Owns their correctness: fixed two controls whose findings never reached the ticketing system for months, and a shared policy-evaluation helper that hid real access, then audited the fleet for the same pattern. Posture detection, not detection and response.",
     }),
     stat: STATS.signatures,
   },
   {
     id: "identity",
-    name: "IAM Privilege Analysis",
+    name: "IAM and toxic combinations",
     prose: assertProse("CAPABILITIES.identity", {
-      short: "10 vulnerability classes, and a benchmark written first.",
+      short: "Escalation paths found by combining findings.",
       medium:
-        "An AI-native audit agent across 10 IAM vulnerability classes, matched against a public escalation-path catalogue, with the GOAT benchmark authored before the agent was trusted.",
+        "correlation engine correlates alerts into 15 AWS toxic combinations. review-aws-iam-policies covers 10 escalation classes, benchmarked against 32 findings written first.",
       full:
-        "Effective-permission analysis over live IAM configurations, organised around 10 vulnerability classes and matched against DataDog's public catalogue of 65+ escalation paths. A security tool that reports findings cannot tell a user whether an empty result means a clean environment or a broken tool, so the fixtures and the ground truth came first: 11 synthetic Terraform fixtures, 32 findings, and the blind spots published beside the result rather than after it.",
+        "correlation engine correlates low-severity alerts into 15 AWS toxic combinations drawn from DataDog's public pathfinding.cloud catalog. review-aws-iam-policies covers 10 privilege-escalation classes, pairs deterministic checks with a model pass, and was benchmarked against 32 ground-truth findings in 11 Terraform fixtures written before evaluation.",
     }),
-    stat: STATS.goatFindings,
+    stat: STATS.awsToxicCombinations,
   },
   {
-    id: "review",
-    name: "Security Architecture Review",
-    prose: assertProse("CAPABILITIES.review", {
-      short: "100+ reviews, and a method that survives without me.",
+    id: "ai-tooling",
+    name: "AI tooling with gates",
+    prose: assertProse("CAPABILITIES.ai-tooling", {
+      short: "Models where they help, rules where access is decided.",
       medium:
-        "100+ Paranoid Security Reviews across every business unit, backed by a 1,700+-node corpus mined from historical tickets and an agent that drafts the first pass.",
+        "Baselines served to Claude over MCP, an AI-assisted review workspace, attack-research pipeline, and a deterministic suppression advisor. Human approval on every write.",
       full:
-        "100+ cloud security reviews across every business unit, threat-modelling and approving new architectures before launch. Two things were tried to make it scale, and only the second worked: a searchable corpus of 1,700+ knowledge nodes mined from closed reviews makes one reviewer faster but does not make a second reviewer exist, so the first pass moved off my hours entirely. Every objection cites a written control by name, which is what stops review from being seniority.",
-    }),
-    stat: STATS.securityReviews,
-  },
-  {
-    id: "ai-platforms",
-    name: "AI Security Platforms",
-    prose: assertProse("CAPABILITIES.ai-platforms", {
-      short: "Production systems with deterministic bounds, not demos.",
-      medium:
-        "A self-learning research router across 19 models, an MCP-integrated agentic review platform, and a deterministic CSPM advisor with hard deny gates. All in daily use.",
-      full:
-        "Multi-agent systems with the safety bounds written in rather than added: schema validation on every model call so an unparseable response is discarded instead of acted on, confidence clamped so a recommendation can never read as certain, hard-gated categories where automation is never permitted to recommend, and human approval on every write path. The advisor that gates access exceptions is deterministic on purpose, in a codebase where every other pipeline calls a model.",
+        "Serves AWS, GCP, Kubernetes, and Docker baselines to Claude through the security MCP. Runs reviews through an assistant workspace that drafts findings, with nothing written until I approve the exact text. Built a deterministic advisory engine for suppression requests, and chose rules over a model because the decision gates access.",
     }),
     stat: STATS.modelsOrchestrated,
   },
   {
-    id: "research",
-    name: "Security Research",
-    prose: assertProse("CAPABILITIES.research", {
-      short: "CIEM research and benchmark work, published with limits.",
+    id: "review",
+    name: "Architecture review",
+    prose: assertProse("CAPABILITIES.review", {
+      short: "100+ reviews, every objection tied to a written control.",
       medium:
-        "IAM research project catalogues 62 toxic IAM combinations by hand, each with its keystone permission. GOAT is the benchmark, and its known limits ship with it.",
+        "100+ cloud security architecture reviews since 2021 across AWS, GCP, and Azure, for every business unit. Accepted risk always has an owner and an expiry.",
       full:
-        "IAM research project, at the design stage, catalogues 62 toxic IAM combinations by hand across 8 attack categories, each carrying the keystone permission whose removal breaks that chain. GOAT is the evaluation, and its limits are published with it: recall is bounded by the taxonomy that was encoded, the fixtures are static where several classes depend on runtime state, and nothing has been graded by anyone other than the person who wrote the tool.",
+        "Led 100+ cloud security architecture reviews since 2021 across AWS, GCP, and Azure for every business unit. Each objection is tied to a named written control and each accepted risk gets an owner and an expiry. Control interpretation is self-service: when a question recurs, the control text gets rewritten until teams cite it correctly without asking.",
     }),
-    stat: STATS.toxicCombinations,
+    stat: STATS.securityReviews,
+  },
+  {
+    id: "leadership",
+    name: "Team leadership",
+    prose: assertProse("CAPABILITIES.leadership", {
+      short: "Led infrastructure and security teams of up to 7.",
+      medium:
+        "Team lead at CYR3CON for the infrastructure and security teams, up to 7 engineers: sprint planning, project scope, and mentoring across AWS and on-prem.",
+      full:
+        "Team lead at CYR3CON for the infrastructure and security teams, up to 7 engineers. Ran sprint planning, defined project scope, and mentored both teams, which owned AWS infrastructure and security, on-prem data-center servers, firewalls, and shared engineering tooling. At Yahoo, taught assistant-driven development to a partner team that now ships into a platform I own.",
+    }),
+    stat: STATS.teamLed,
   },
 ] as const;
 
@@ -338,48 +381,43 @@ export interface Role {
   id: string;
   org: string;
   title: string;
-  /** En-dash range, matching lib/resume.ts. An em-dash here would render as one
-   *  in four themes and violate the house style everywhere at once. */
+  /** En-dash range, matching lib/resume.ts. */
   period: string;
   note: string;
   current?: boolean;
 }
 
-/* Dates and the intern/architect split match lib/resume.ts and the live site.
-   F1 of the extraction records the same tenure as a single 2017-12 to 2022-01
-   block and flags an unresolved intern end-date conflict (May vs Apr 2019).
-   Keeping the split: it is what the site already published, it shows the
-   progression, and an employment date is not something to change from an
-   ambiguous secondary reading. Resolve it against the portal, then edit here. */
+/* Matches master v7's `work` block. CYR3CON is one entry from Dec 2017 with the
+   intern period noted, as the master sets it (v7.1). */
 export const CAREER: ReadonlyArray<Role> = [
   {
-    id: "yahoo",
-    org: "Yahoo · Paranoids",
-    title: "Senior Technical Security Engineer",
-    period: "Feb 2022 –",
-    note: "Owns the company-wide cloud security baselines and the AWS Cloud Alerts Detection system behind the posture scores the business is measured against. Took org-wide ownership of baseline releases three months in and has held it since.",
+    id: "yahoo-principal",
+    org: "Yahoo, Cloud Security",
+    title: "Principal Technical Security Engineer",
+    period: "Oct 2026 – now",
+    note: "Owns the AWS security baseline and the 200+ signatures behind it. Built correlation engine, extended the security MCP, and runs attack-research pipeline and GCP attack-path analysis.",
     current: true,
+  },
+  {
+    id: "yahoo-senior",
+    org: "Yahoo, Cloud Security",
+    title: "Senior Technical Security Engineer",
+    period: "Feb 2022 – Sep 2026",
+    note: "Took the baseline at month three. Designed the high-severity enforcement program and led 100+ architecture reviews.",
   },
   {
     id: "cyr3con",
     org: "CYR3CON",
-    title: "Cyber Security Architect",
-    period: "May 2019 – Jan 2022",
-    note: "Built the multi-account AWS foundation as code: hub-and-spoke transit routing, segmented ranges, centralised SSO, and least-privilege IAM that removed public SSH entirely. No static credentials anywhere in the deployment path.",
-  },
-  {
-    id: "cyrecon",
-    org: "Cyber Reconnaissance",
-    title: "Security Intern → Team Lead",
-    period: "Dec 2017 – May 2019",
-    note: "Cloud migration, network security, and data-centre work, alongside an M.S. in Software Engineering at Arizona State.",
+    title: "Cyber Security Architect, Team Lead",
+    period: "Dec 2017 – Jan 2022",
+    note: "Led infrastructure and security teams of up to 7. Designed the multi-account AWS foundation as code and ran the on-prem data center. Intern until Apr 2019.",
   },
   {
     id: "infosys",
     org: "Infosys",
     title: "Systems Engineer",
     period: "Dec 2015 – May 2017",
-    note: "Where the nine years start. Production systems first, security second. That order still shows in how the work gets built.",
+    note: "Partner data exchange for a US logistics client on Dell Boomi. Throughput up about 80%.",
   },
 ] as const;
 
@@ -567,6 +605,16 @@ export const DECISIONS: ReadonlyArray<Decision> = [
 ] as const;
 
 export const publishedDecisions = () => DECISIONS.filter((d) => d.published);
+
+/** A published record by id. Throws at module load on a missing or held id, so
+ *  a theme that names a record cannot silently render a different one, and a
+ *  record that is later held cannot leak its unpublished fields. */
+export const decisionById = (id: string): Decision & Required<Pick<Decision, "decided" | "rejected">> => {
+  const d = DECISIONS.find((x) => x.id === id);
+  if (!d) throw new Error(`profile.ts: no decision "${id}". Ids: ${DECISIONS.map((x) => x.id).join(", ")}`);
+  if (!d.published || !d.decided || !d.rejected) throw new Error(`profile.ts: decision "${id}" is held; only published records render.`);
+  return d as Decision & Required<Pick<Decision, "decided" | "rejected">>;
+};
 export const heldDecisions = () => DECISIONS.filter((d) => !d.published);
 
 /* ── The miss ────────────────────────────────────────────────────────────── */
@@ -603,7 +651,7 @@ export const THE_MISS: Miss = {
   howFound: "By me, and not by looking. I was doing an unrelated hygiene pass across the detection fleet, cleaning up module-level imports that were only needed by test paths, and read the production path of these two while I was in the file. Nothing surfaced it. Nothing would have.",
   blastRadius: "Two controls, no enforcement coverage, for a period measured in months rather than weeks, and the two periods differed. Bounded honestly: the findings were being generated correctly the whole time, so nothing was mis-evaluated and no wrong conclusion was drawn. What was lost is that no remediation obligation was ever created for any finding either control produced during that window, so the underlying conditions persisted with nobody assigned to them and no record that they existed.",
   structuralFix: "Restored the delivery path in both. Then, because the failure mode was scaffolding surviving into production rather than a bug in either detection, audited the same pattern across the rest of the fleet: separating test-only imports from the production path in every detection where the two were mixed, so that a debug modification is visibly a debug modification rather than a one-character difference from correct.",
-  stillExposed: "The audit was manual and one-time. There is still no automated check that a detection which ran actually delivered, and no alert on a detection whose delivered volume drops to zero. The same failure can happen again tomorrow in a different detection and would be found the same way, which is to say by accident. The metric that would close this is the last row in C4, and it does not exist.",
+  stillExposed: "The audit was manual and one-time. There is still no automated check that a detection which ran actually delivered, and no alert on a detection whose delivered volume drops to zero. The same failure can happen again tomorrow in a different detection and would be found the same way, which is to say by accident. The metric that would close this does not exist yet.",
 };
 /* ── Depth boundaries ────────────────────────────────────────────────────── */
 

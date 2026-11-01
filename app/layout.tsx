@@ -1,77 +1,50 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { Instrument_Serif } from "next/font/google";
-import localFont from "next/font/local";
+import { fontVariables } from "@/lib/fonts";
+import { rotationScript } from "@/lib/rotation";
+import { SITE_DESCRIPTION } from "@/lib/stats";
 import ThemeApplier from "@/components/ThemeApplier";
+/* Token files load statically and are each scoped to their own data-theme, so
+   colours resolve the instant the attribute is set, before any theme chunk
+   arrives. About 2 KB each. globals.css comes last: its responsive gutter rules
+   share the token blocks' specificity and must follow them. */
+import "@/components/layouts/console/tokens.css";
+import "@/components/layouts/ink/tokens.css";
+import "@/components/layouts/darkroom/tokens.css";
+import "@/components/layouts/brutal/tokens.css";
+import "@/components/layouts/blueprint/tokens.css";
+import "./resume/tokens.css";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
-
-/* Bricolage Grotesque, SIL OFL 1.1, the `ledger` theme's bespoke display face.
-   Self-hosted rather than fetched, per the 2026-08-29 amendment to CLAUDE.md
-   section 3.1: each theme owns one non-Geist display face, shipped in
-   public/fonts and loaded with next/font/local, never from a CDN.
-
-   next/font/local rather than next/font/google on purpose. The Google loader
-   fetches at BUILD time, which makes a static export in CI depend on a network
-   call to a third party; the file in the repo does not. 128K, latin subset,
-   variable across weight, width and optical size.
-
-   The axes are the reason this face was chosen and are not decoration. The
-   theme sets two headings of different string lengths at the same OPTICAL
-   weight, which is what makes its equal-weight claim true rather than asserted,
-   and a static face cannot do that without fighting the tracking. */
-const bricolage = localFont({
-  src: "../public/fonts/BricolageGrotesque-latin.woff2",
-  variable: "--font-bricolage",
-  display: "swap",
-  weight: "200 800",
-  style: "normal",
-  /* Matched to Geist's metrics so the swap does not reflow the name. */
-  fallback: ["Geist Sans", "system-ui", "sans-serif"],
-});
+const TITLE = "Koushik Kotamraju, Principal Security Engineer";
+const DESCRIPTION = SITE_DESCRIPTION;
 
 export const metadata: Metadata = {
-  title: "Koushik Kotamraju — Security Engineer & Builder",
-  description:
-    "Senior Technical Security Engineer at Yahoo Paranoids. 200+ detection signatures across 1,400+ AWS accounts, 2,800+ cloud accounts secured, AI-native security platforms at enterprise scale.",
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: "Koushik Kotamraju — Security Engineer & Builder",
-    description: "Senior Technical Security Engineer at Yahoo. 200+ detection signatures across 1,400+ AWS accounts. 100+ security reviews. AI-native security infrastructure.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "https://koushik.io",
     siteName: "koushik.io",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "https://koushik.io/profile.jpeg",
-        width: 800,
-        height: 1067,
-        alt: "Koushik Kotamraju — Senior Security Engineer",
-      },
-    ],
+    images: [{ url: "https://koushik.io/profile.jpeg", width: 724, height: 1086, alt: "Koushik Kotamraju" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Koushik Kotamraju — Security Engineer & Builder",
-    description: "Sr. Technical Security Engineer at Yahoo. Cloud security and AI-native security platforms at enterprise scale.",
-    images: ["https://koushik.io/profile.jpeg"],
-  },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["https://koushik.io/profile.jpeg"] },
   robots: { index: true, follow: true },
   metadataBase: new URL("https://koushik.io"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${instrumentSerif.variable} ${bricolage.variable}`}>
-      <body style={{ fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
+      <head>
+        {/* Sets data-theme before first paint. Generated from lib/rotation.ts so
+            it cannot disagree with the React side. suppressHydrationWarning on
+            <html> covers the attribute it adds. */}
+        <script dangerouslySetInnerHTML={{ __html: rotationScript() }} />
+      </head>
+      <body>
         <ThemeApplier />
         {children}
       </body>

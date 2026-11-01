@@ -68,3 +68,6 @@ photos/
 
 # Claude Code local settings and agent worktrees, never commit
 .claude/
+
+# Hallmark run records and screenshots
+.hallmark/

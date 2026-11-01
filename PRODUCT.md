@@ -14,8 +14,11 @@ page's job is to be read once, by a stranger, in about ninety seconds.
 
 ## Who this is
 
-Koushik Kotamraju. Senior Technical Security Engineer at Yahoo, on the Paranoids cloud
-security team. Nine years. The site markets the person; Yahoo is context, never the subject.
+Koushik Kotamraju. Principal Technical Security Engineer at Yahoo (since Oct 2026), on the
+Paranoids cloud security team. Ten years in engineering, nine of them in cloud security. The
+site markets the person; Yahoo is context, never the subject. Content source since 2026-10-31:
+the Ascend master resume v7 (`koushik-docs/ascend-run-2026-10-31/master-v7.json`), with the
+extraction as its ceiling.
 
 ## Who reads it, and what each one needs
 
@@ -35,8 +38,9 @@ The conversion event is one of two things: an email arrives, or `/resume/` is op
 
 ## What he is going for
 
-Staff / Principal Security Engineer, and AI Security Engineer, at FAANG-tier companies and
-AI-native startups.
+Principal and Staff security engineering roles (frontier AI labs, FAANG-tier companies), and
+cloud security management. People-leadership evidence: team lead of up to 7 engineers at
+CYR3CON.
 
 Staff hiring assesses three things: **scope**, **influence beyond your own team**, and
 **judgment**. The site currently demonstrates scope well, asserts influence, and shows
@@ -69,7 +73,15 @@ Ordered by how hard each is to fake. Figures are the sanitized public values.
   live LLM, with the cost accepted and stated.
 - Nine years: Infosys, Cyber Reconnaissance, CYR3CON, Yahoo.
 
-## What to lead with — SETTLED 2026-08-29
+## What to lead with (resettled 2026-10-31)
+
+**2026-10-31, owner instruction to rebuild the content from master v7.** The hero sentence is
+now `IDENTITY.lede`: "Principal security engineer at Yahoo, owning the AWS security baseline."
+It carries level and employer because Hallmark allows the hero one sentence of twelve words or
+fewer. AI is the method, stated in the first section (`IDENTITY.method`), not the identity,
+which adopts the 2026-08 hiring-manager objection recorded below. The 2026-08 history follows.
+
+### 2026-08-29 (superseded)
 
 Unresolved, deliberately. The current site leads with *"cloud security engineer building
 AI-native security platforms, production systems not prototypes."*

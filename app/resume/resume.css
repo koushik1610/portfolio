@@ -1,0 +1,56 @@
+/* Hallmark · shape: Long Document · genre: editorial · theme: custom (neutral print sheet) · redesign: full
+ * hero: Settled · nav: a back link and two actions · footer: none · imagery: none · signature: the sheet prints exactly as it reads · resume: one face, one accent on the primary action
+ * axes: light/grotesk-sans/cool · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P_ H_ E_ S_ R_ V_ · weakest: density, kept to a 72ch measure with a section rhythm rather than cut, because a résumé is read whole */
+/* Hallmark · waive 77 · four sections: experience, research, skills, education · a résumé's sections are the master's; adding sections to reach six would invent content */
+/* Hallmark · waive 78 · h2 at 31px under a 60px h1 · display-size section heads push the printed résumé past two pages */
+/* Hallmark · waive 59 · 96px between sections · the same print-length reason; the rhythm is set by the rule under each h2 */
+/* Hallmark · waive 44c · the header ends at 662px of 900 with the summary as its last block · a résumé opens on its header and summary; the experience below it is the document, not a second screen */
+
+[data-theme="resume"] .rs-root { min-height: 100dvh; }
+[data-theme="resume"] { scrollbar-color: var(--color-rule-2) var(--color-paper); }
+[data-theme="resume"] ::selection { background: var(--color-paper-3); color: var(--color-ink); }
+[data-theme="resume"] a:focus-visible, [data-theme="resume"] button:focus-visible, [data-theme="resume"] main:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+[data-theme="resume"] .th-btn:active, [data-theme="resume"] .rs-back:active, [data-theme="resume"] .rs-contact a:active { transform: translateY(1px); }
+[data-theme="resume"] .th-btn:disabled { opacity: 0.5; cursor: default; }
+[data-theme="resume"] h1, [data-theme="resume"] h2, [data-theme="resume"] h3 { text-wrap: balance; }
+[data-theme="resume"] .rs-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); flex-wrap: wrap; }
+[data-theme="resume"] .rs-back { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-ink-2); }
+[data-theme="resume"] .rs-back:hover { color: var(--color-accent); }
+[data-theme="resume"] .rs-bar-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+[data-theme="resume"] .th-btn { border-radius: var(--radius-pill); }
+[data-theme="resume"] .th-btn--secondary { border-color: var(--color-rule-2); }
+
+[data-theme="resume"] .rs-sheet { max-width: calc(72ch + 2 * var(--gutter)); padding-block: var(--space-3xl) var(--section-gap); outline: none; }
+[data-theme="resume"] .rs-sheet section + section, [data-theme="resume"] .rs-two { margin-top: var(--space-3xl); }
+[data-theme="resume"] h1 { font-size: var(--text-display-s); max-width: none; }
+[data-theme="resume"] .rs-label { margin-top: var(--space-xs); font-size: var(--text-lead); color: var(--color-ink-2); }
+[data-theme="resume"] .rs-contact { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-lg); margin-top: var(--space-md); list-style: none; color: var(--color-muted); }
+[data-theme="resume"] .rs-contact a { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-ink); }
+[data-theme="resume"] .rs-contact li { display: inline-flex; align-items: center; }
+[data-theme="resume"] .rs-where { margin-top: var(--space-2xs); color: var(--color-muted); }
+[data-theme="resume"] .rs-summary { margin-top: var(--space-lg); max-width: 68ch; font-size: var(--text-lead); line-height: 1.5; }
+
+[data-theme="resume"] h2 { font-size: var(--text-2xl); max-width: none; padding-bottom: var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="resume"] .rs-h2-follow { margin-top: var(--space-xl); }
+[data-theme="resume"] .rs-job { margin-top: var(--space-xl); }
+[data-theme="resume"] .rs-job-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-md); flex-wrap: wrap; }
+[data-theme="resume"] h3 { font-size: var(--text-xl); max-width: none; }
+[data-theme="resume"] .rs-period { color: var(--color-muted); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+[data-theme="resume"] .rs-org { margin-top: var(--space-2xs); color: var(--color-ink-2); }
+[data-theme="resume"] .rs-loc { color: var(--color-muted); }
+[data-theme="resume"] .rs-bullets { margin-top: var(--space-md); padding-left: 1.1em; display: grid; gap: var(--space-sm); max-width: 72ch; }
+[data-theme="resume"] .rs-bullets li { padding-left: var(--space-2xs); }
+[data-theme="resume"] .rs-bullets li::marker { color: var(--color-muted); }
+[data-theme="resume"] .rs-plain { margin-top: var(--space-md); list-style: none; display: grid; gap: var(--space-xs); }
+[data-theme="resume"] .rs-two { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2xl); }
+@media (min-width: 64rem) { [data-theme="resume"] .rs-two { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+
+@media print {
+  [data-theme="resume"] .rs-bar, [data-theme="resume"] .th-skip { display: none; }
+  [data-theme="resume"] .rs-sheet { padding: 0; max-width: none; }
+  [data-theme="resume"] .rs-sheet section + section, [data-theme="resume"] .rs-two { margin-top: var(--space-xl); }
+  [data-theme="resume"] h1 { font-size: var(--text-3xl); }
+  [data-theme="resume"] .rs-job { break-inside: avoid; }
+  [data-theme="resume"] .rs-contact a { min-height: 0; }
+}

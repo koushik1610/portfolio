@@ -13,17 +13,15 @@
 
 <h3 align="center">koushik.io</h3>
 
-  <img src="https://media.giphy.com/media/7j2hfyeVcDtf2/giphy.gif" alt="bird animation" width="200" />
-
   <p align="center">
-    Personal portfolio for Koushik Kotamraju, Sr. Security Engineer building AI-native security platforms at enterprise scale. A rotating set of fully bespoke visual themes, each a complete layout redesign built around one security-engineering artifact.
+    Personal site for Koushik Kotamraju, Principal Technical Security Engineer at Yahoo. Five themes, each one a different design built from a Hallmark theme material, all reading from one content layer.
     <br />
     <br />
-    <a href="https://koushik.io"><strong>View Live Site »</strong></a>
+    <a href="https://koushik.io"><strong>View the live site</strong></a>
     &middot;
-    <a href="https://github.com/koushik1610/portfolio/issues/new?labels=bug">Report Bug</a>
+    <a href="https://koushik.io/resume/">Résumé</a>
     &middot;
-    <a href="https://github.com/koushik1610/portfolio/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/koushik1610/portfolio/issues/new?labels=bug">Report a bug</a>
   </p>
 </div>
 
@@ -33,21 +31,15 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#about-the-project">About The Project</a>
+    <li><a href="#about-the-project">About the project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
-        <li><a href="#theme-system">Theme System</a></li>
-        <li><a href="#the-live-themes">The Live Themes</a></li>
+        <li><a href="#built-with">Built with</a></li>
+        <li><a href="#the-themes">The themes</a></li>
+        <li><a href="#how-it-fits-together">How it fits together</a></li>
       </ul>
     </li>
-    <li><a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+    <li><a href="#getting-started">Getting started</a></li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -56,125 +48,88 @@
 ---
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## About the project
 
-A personal portfolio that rotates through a growing set of visually distinct themes. Each one is a full layout redesign with its own typography, color palette, animation, and structural conceit. Nothing is a template with new paint: every theme is a genuinely different layout, and most render the career itself *as* a recognizable engineering artifact (an IAM policy document, a detection-coverage matrix, a security advisory, an incident-response transcript) rather than a generic "about me" page.
+A personal site that shows one of five themes. A new visitor gets the week's theme and keeps it on later visits; "Next theme" in each theme's nav moves to the next one. Every theme carries the same facts: who he is and at what level, the AWS baseline he owns, the work with its honest build status, at least one decision record with the option he rejected, his career, and a way to reach him.
 
-The theme badge in the top-right corner shows the active theme; click it to cycle to the next one. Rotation is time-based (it shifts weekly for every visitor) plus a per-visitor click offset. See [Theme System](#theme-system).
+The themes were rebuilt in October 2026 with [Hallmark](https://github.com/nutlope/hallmark), a design skill whose linter fails the defaults generated pages fall into (eyebrows, tracked capitals, a centred template, invented numbers). A review council picked the five materials from the themes Hallmark dealt for this brief. Every page passes `sloplint --render` with zero FAIL, and every waiver is written into the page's own stylesheet with its reason.
 
-### Design principles
+### Design rules
 
-- **Person-first, always.** Koushik Kotamraju is the visual subject of every hero, never a product name, a company, or a slogan.
-- **One owned accent per theme.** Distinctiveness comes from a deliberately chosen accent color, not a house palette repeated everywhere.
-- **The format carries the story.** Detection engineering, IAM analysis, and AI security platforms are told through document types security engineers actually produce, not generic portfolio sections.
-- **Real accessibility, not retrofitted.** Every theme ships with a real `<h1>`, skip links, visible focus rings, 44px touch targets, `prefers-reduced-motion` support, and information that never depends on color alone.
-- **No motion debt.** Animation is GSAP-driven, gated behind reduced-motion checks, and backed by a wall-clock "settle" failsafe so a throttled background tab can never leave content invisible.
+- **One content layer.** Every sentence comes from `lib/profile.ts` and every number from `lib/stats.ts`. A theme never types a fact, so a correction lands everywhere at once.
+- **Show the judgment.** Each theme renders a decision record with the rejected alternative at equal weight.
+- **Honest status.** Research is labelled research and a half-built system says which half.
+- **The action never moves.** Email first, Résumé second, on the first screen of every theme.
+- **Accessible by construction.** One `<h1>`, a skip link, visible focus, 44px targets, computed contrast, reduced motion respected, and no content that waits on an animation.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Built With
+### Built with
 
 * [![Next][Next.js]][Next-url]
 * [![TypeScript][TypeScript]][TypeScript-url]
-* [![GSAP][GSAP]][GSAP-url]
-* [![Tailwind][Tailwind]][Tailwind-url]
 
-Deployed on **GitHub Pages** via GitHub Actions as a static export. Fonts: **Geist Sans + Geist Mono** exclusively (no CDN fonts). Animation: **GSAP** (`gsap`, `useGSAP`, `ScrollTrigger`, `SplitText`) via a single re-export module, never `framer-motion`. No CMS: all content lives in typed constants inside each theme's own component file.
+Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-hosted woff2 files in `public/fonts` (all SIL OFL), loaded through `next/font/local` with preloading off, so a visitor downloads only the active theme's faces. There is no animation library; the little motion there is uses CSS.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Theme System
+### The themes
 
-Every theme is exactly **two files**, fully self-contained:
+`lib/themes.ts` is the source of truth.
 
-```
-components/layouts/<name>/<Name>Hero.tsx   the entire page for that theme
-components/layouts/<name>/styles.css       every rule, scoped to that theme
-```
-
-Wiring a theme into the site touches exactly three shared files:
-
-```
-lib/themes.ts        LayoutVariant union + themes[] registry (colors, content, accent)
-lib/rotation.ts       theme selection: ISO-week number + a persistent click offset
-components/Hero.tsx  switch (theme.layout) → renders the matching hero component
-```
-
-`components/Hero.tsx` uses an exhaustiveness guard on the `switch`, so adding a theme to the
-`LayoutVariant` union without a matching `case` is a compile-time error, not a silent blank
-page. `app/globals.css` holds only true globals (reset, the shared top-right widget stack,
-the print-friendly `/resume` page); it never carries theme-specific styling.
-
-The active theme is chosen by `getThemeIndex()`: the current ISO week number picks a default
-starting theme (so the site looks different to everyone, and shifts weekly), and clicking the
-theme badge adds a persistent per-visitor offset on top via `localStorage`.
+| Theme | Hallmark material | What carries it | Ground |
+|---|---|---|---|
+| `console` | Console | A decision as a versioned reading: the rejected option struck above the one chosen | Dark |
+| `ink` | Ink | The project register with honest state pills and a status filter | Light |
+| `darkroom` | Darkroom | His photograph printed as Plate 01, the figures set as an edition | Dark |
+| `brutal` | Brutal | A boxed fact sheet, and the miss he has not yet closed, stated in full | Light |
+| `blueprint` | Blueprint | the correlation engine's escalation path drawn as an elevation, his photo as a cyanotype in the title block | Mid |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### The Live Themes
+### How it fits together
 
-The canonical list is always `lib/themes.ts`. Read it directly for the current count and
-exact accent values: the table below is a snapshot and will drift.
+```
+lib/profile.ts, lib/stats.ts      every sentence and every number
+lib/resume.ts                     generated from the Ascend master by scripts/sync-resume.py
+lib/themes.ts                     the five slugs, names, and Hallmark genres
+lib/rotation.ts                   which theme a visitor sees, and the pre-paint <head> script
+lib/fonts.ts                      every face, self-hosted
+components/Hero.tsx               slug to theme component (a Record, so a missing theme fails the build)
+components/SiteControls.tsx       "Next theme" and "Ask an AI about me"
+components/layouts/<slug>/        <Name>Hero.tsx, styles.css, tokens.css
+app/globals.css                   the shared base every theme inherits
+app/resume/                       one neutral, print-first résumé for all themes
+```
 
-| Theme | Concept | Mode |
-|---|---|---|
-| `aethera` | Cinematic video hero, dark luxury editorial | Light |
-| `avatar` | Darkroom portrait with a contact-sheet grid of framed exposures | Dark |
-| `briefing` | Editorial magazine spread, name overlapping a full-bleed photo | Dark |
-| `coverage` | MITRE ATT&CK detection coverage matrix, a genuine halftone heat map | Dark |
-| `rfc` | An IETF RFC: a standards-track document for one engineer | Light |
-| `route` | The career as a scroll-scrubbed schematic transit line | Dark |
-| `ide` | A VS Code–style shell — click a file/tab to switch content | Dark |
+Each theme's colours and faces live in its `tokens.css`, scoped to `:root[data-theme="<slug>"]`. All five token files load up front (about 2 KB each), so colours resolve the moment the head script sets `data-theme`, before the theme's own code arrives. Every rule in a theme's `styles.css` starts with its `[data-theme]` selector, because theme CSS stays loaded after a rotation.
 
-7 themes total (5 dark, 2 light). Each surviving theme differs in layout
-skeleton, scroll flow, hero composition, typography, and animation signature,
-not just accent color. Further additions are gated behind a multi-persona
-design-council review (≥95 composite score, no single reviewer below 80,
-plus a dedicated distinctiveness reviewer with its own ≥90 floor) before
-they ship.
+`npm run check` runs `scripts/check-themes.mjs`, which fails on an unscoped selector, a colour or font literal outside `tokens.css`, a missing Hallmark stamp, or a theme missing the decision record, the action row, the controls, or the screen-reader summary. Then ESLint.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Getting started
 
-### Prerequisites
-
-Node.js 18+ and npm:
+Node.js 18 or later.
 
 ```sh
-npm install npm@latest -g
+git clone https://github.com/koushik1610/portfolio.git
+cd portfolio
+npm install
+npm run dev        # http://localhost:3000
+npm run check      # theme rules and lint
+npm run build      # static export to out/
 ```
 
-### Installation
+To lint a theme with Hallmark, build, serve `out/`, and point sloplint at the theme's route:
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/koushik1610/portfolio.git
-   cd portfolio
-   ```
-
-2. Install dependencies
-   ```sh
-   npm install
-   ```
-
-3. Start the dev server
-   ```sh
-   npm run dev
-   # → http://localhost:3000
-   ```
-
-4. Build for production
-   ```sh
-   npm run build
-   # Static export → out/
-   ```
-
-There is no test suite. Verification is `npm run build` passing clean (TypeScript + ESLint +
-static export).
+```sh
+npx serve out -l 4173
+node ~/.claude/skills/hallmark/scripts/sloplint.mjs components/layouts/ink --genre editorial --render --url http://localhost:4173/theme/ink/
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -183,45 +138,17 @@ static export).
 <!-- USAGE -->
 ## Usage
 
-**Cycling themes:** Click the theme badge (top-right corner) to advance to the next theme.
-The click offset persists in `localStorage` on top of the weekly default, so refreshing keeps
-you on the same theme.
+**A specific theme:** `/theme/<slug>/`, for example `/theme/blueprint/`. These links are stable to share.
 
-**Jumping to a specific theme:** Navigate directly to `/theme/<name>`, e.g.:
-```
-http://localhost:3000/theme/ide
-http://localhost:3000/theme/coverage
-http://localhost:3000/theme/rfc
-```
+**Updating the résumé:** edit the bullet selection in `scripts/sync-resume.py`, then `npm run sync-resume`. Bullets are copied verbatim from the master; the script never rewords them.
 
-**Adding a new theme:**
-1. Create `components/layouts/<name>/<Name>Hero.tsx` + `styles.css`, nothing else.
-2. Add `"<name>"` to the `LayoutVariant` union and a matching entry to `themes[]` in
-   `lib/themes.ts` (all 8 CSS vars, `layout`, `id`, `name`, `content`).
-3. Import the component and add `case "<name>": return <NameHero key={theme.id} theme={theme} />;`
-   in `components/Hero.tsx`.
-4. Run `npm run build`. Must pass clean. The exhaustiveness guard will fail the build if the
-   `case` is missing.
+**Adding a theme:**
+1. Add the slug to `THEME_SLUGS` and an entry to `themes` in `lib/themes.ts`.
+2. Create `components/layouts/<slug>/` with `<Name>Hero.tsx`, `styles.css`, and `tokens.css` (start from `theme.mjs scaffold <slug>` and scope the token block).
+3. Add the component to `HEROES` in `components/Hero.tsx`, a face to `lib/fonts.ts` if needed, and the token import to `app/layout.tsx`.
+4. `npm run check`, `npm run build`, then sloplint the route.
 
-**AI-readable content:** [`/llms.txt`](https://koushik.io/llms.txt) exposes a plain-text
-summary of career achievements optimized for LLM consumption. It's the mechanism behind the
-"Ask AI about me" widget.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] 7 fully bespoke themes, each a distinct layout structure
-- [x] Time-based + click-offset theme rotation with `localStorage` persistence
-- [x] `llms.txt` for AI-readable career data
-- [x] "Ask AI about me": answer questions about the portfolio via LLM
-- [ ] Dark/light toggle independent of theme rotation
-
-See [open issues](https://github.com/koushik1610/portfolio/issues) for known issues and
-proposed features.
+**AI-readable profile:** [`/llms.txt`](https://koushik.io/llms.txt) is a plain-text profile generated from the same master. The "Ask an AI about me" links open each tool with a prompt pointing at it.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -230,15 +157,13 @@ proposed features.
 <!-- CONTACT -->
 ## Contact
 
-**Koushik Kotamraju**, Sr. Security Engineer
+**Koushik Kotamraju**, Principal Technical Security Engineer
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 - Email: [koushik.kotamraju1610@gmail.com](mailto:koushik.kotamraju1610@gmail.com)
-- Portfolio: [koushik.io](https://koushik.io)
+- Site: [koushik.io](https://koushik.io)
 - GitHub: [@koushik1610](https://github.com/koushik1610)
-
-Project Link: [https://github.com/koushik1610/portfolio](https://github.com/koushik1610/portfolio)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -247,9 +172,9 @@ Project Link: [https://github.com/koushik1610/portfolio](https://github.com/kous
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
+* [nutlope/hallmark](https://github.com/nutlope/hallmark), the theme materials and the linter
+* [Fontsource](https://fontsource.org) for the open-licensed font files
 * [othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-* [GSAP](https://gsap.com)
-* [Vercel Geist Font](https://vercel.com/font)
 * [shields.io](https://shields.io)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -270,7 +195,3 @@ Project Link: [https://github.com/koushik1610/portfolio](https://github.com/kous
 [Next-url]: https://nextjs.org/
 [TypeScript]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
 [TypeScript-url]: https://www.typescriptlang.org/
-[GSAP]: https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=black
-[GSAP-url]: https://gsap.com/
-[Tailwind]: https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white
-[Tailwind-url]: https://tailwindcss.com/

@@ -1,106 +1,81 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import dynamic from "next/dynamic";
-import { getCurrentTheme, type Theme } from "@/lib/themes";
-import { ScrollTrigger } from "@/lib/gsap";
+import { resolveTheme } from "@/lib/rotation";
+import type { ThemeSlug } from "@/lib/themes";
+import { IDENTITY, EMAIL_HREF } from "@/lib/profile";
+import { SR_SUMMARY } from "@/lib/stats";
 
-// Each theme is its own chunk. These were static imports until 2026-08, which
-// meant every visitor downloaded all seven themes to render the one the week's
-// rotation picked. ssr:false is correct rather than merely convenient: the
-// themes read window/matchMedia at mount, the rotation itself is client-only
-// (localStorage offset), and this component already renders a placeholder until
-// `theme` resolves — so there was never server-rendered theme markup to lose.
-//
-// The `loading` fallback is not optional. next/dynamic renders null while a
-// chunk is in flight, so without it the document collapses from 100dvh to zero
-// height between the line-77 placeholder unmounting and the hero mounting —
-// a guaranteed layout shift, and exactly what the double-rAF scroll re-assert
-// below exists to fight.
-const Placeholder = () => <section id="about" style={{ minHeight: "100dvh" }} />;
+/* Each theme is its own chunk, so a visitor downloads one theme's code and
+   styles. ssr:false is correct: the rotation is client-only (localStorage), and
+   the <head> script has already set data-theme, so the placeholder paints in
+   the right colours. The placeholder holds 100dvh so nothing shifts while the
+   chunk loads. */
+const Placeholder = () => (
+  <div style={{ minHeight: "100dvh" }}>
+    {/* The exported HTML has no theme markup (every theme is client-only), so
+        this is what a crawler or a no-JS fetcher reads. Inert when JS runs. */}
+    <noscript>
+      <main style={{ maxWidth: "65ch", margin: "0 auto", padding: "48px 16px" }}>
+        <h1>{IDENTITY.name}</h1>
+        <p>{IDENTITY.lede}</p>
+        <p>{SR_SUMMARY}</p>
+        <p>
+          <a href={EMAIL_HREF}>Email me</a>, or read the <a href="/resume/">résumé</a>.
+        </p>
+      </main>
+    </noscript>
+  </div>
+);
 
-const AetheraHero  = dynamic(() => import("./layouts/aethera/AetheraHero"),   { ssr: false, loading: Placeholder });
-const AvatarHero   = dynamic(() => import("./layouts/avatar/AvatarHero"),     { ssr: false, loading: Placeholder });
-const LedgerHero   = dynamic(() => import("./layouts/ledger/LedgerHero"),     { ssr: false, loading: Placeholder });
+/* A Record, not a switch: a slug added to THEME_SLUGS without a component here
+   is a compile error. */
+const HEROES: Record<ThemeSlug, ComponentType> = {
+  console: dynamic(() => import("./layouts/console/ConsoleHero"), { ssr: false, loading: Placeholder }),
+  ink: dynamic(() => import("./layouts/ink/InkHero"), { ssr: false, loading: Placeholder }),
+  darkroom: dynamic(() => import("./layouts/darkroom/DarkroomHero"), { ssr: false, loading: Placeholder }),
+  brutal: dynamic(() => import("./layouts/brutal/BrutalHero"), { ssr: false, loading: Placeholder }),
+  blueprint: dynamic(() => import("./layouts/blueprint/BlueprintHero"), { ssr: false, loading: Placeholder }),
+};
 
 export default function Hero() {
-  const [theme, setTheme] = useState<Theme | null>(null);
-  // True once a rotation-triggered swap is in flight — distinguishes "just
-  // navigated here on this theme" (never force scroll) from "the user
-  // clicked rotate" (force scroll on the NEXT theme that mounts).
-  const rotatingRef = useRef(false);
-  const isFirstMount = useRef(true);
+  const [slug, setSlug] = useState<ThemeSlug | null>(null);
+  const rotated = useRef(false);
 
   useEffect(() => {
-    // Every theme swap fully unmounts one Hero and mounts another, each
-    // creating its own batch of ScrollTriggers. GSAP batches its internal
-    // position refresh to the next animation frame for performance; that
-    // batched refresh runs independently of React's own commit/cleanup
-    // ordering. After enough swaps in succession, a still-pending batched
-    // refresh belonging to the theme about to be unmounted can end up
-    // interleaved with the next theme's trigger construction, throwing deep
-    // inside ScrollTrigger's own internals. Flushing it synchronously here,
-    // while the outgoing theme's triggers are still intact, keeps that
-    // internal bookkeeping consistent before the swap begins.
-    const refresh = () => {
+    setSlug(resolveTheme());
+    const onChange = () => {
+      rotated.current = true;
       window.scrollTo({ top: 0, behavior: "auto" });
-      rotatingRef.current = true;
-      ScrollTrigger.refresh();
-      setTheme(getCurrentTheme());
+      setSlug(resolveTheme());
     };
-    setTheme(getCurrentTheme());
-    window.addEventListener("themechange", refresh);
-    return () => window.removeEventListener("themechange", refresh);
+    window.addEventListener("themechange", onChange);
+    return () => window.removeEventListener("themechange", onChange);
   }, []);
 
+  /* After "Next theme", move focus to the new page's <h1> so a keyboard or
+     screen-reader user lands at the top of what changed. The incoming chunk
+     may still be loading, so look for the heading for up to two seconds. */
   useEffect(() => {
-    if (isFirstMount.current) {
-      isFirstMount.current = false;
-      return;
-    }
-    if (!rotatingRef.current) return;
-    rotatingRef.current = false;
-    // The incoming theme's own intro tweens (SplitText masks, autoAlpha/y
-    // reveals) change element geometry right after mount, and Chromium's
-    // scroll-anchoring feature can interpret that as "content changed above
-    // the viewport" and silently readjust scrollY away from 0 to compensate
-    // — the single scrollTo(0) above the fold in `refresh` landed fine on
-    // some themes (route, ide, aethera) but got dragged back down on others
-    // (avatar, briefing, coverage) whose intro tweens run heavier layout
-    // shifts right at mount. A real bug, caught 2026-07-12: the browser was
-    // "correcting" our scroll reset out from under us. Re-asserting scroll
-    // top after paint (double rAF, so it runs once layout has settled)
-    // wins that fight regardless of which theme just mounted.
-    //
-    // 2026-08 caveat, since the mechanism above is no longer the whole story:
-    // heroes are now dynamic imports, so on a COLD chunk this effect fires
-    // while the incoming hero is still `loading` and its DOM does not exist
-    // yet — the intro tweens this was written to outrace have not started, and
-    // `rotatingRef` is already consumed by the time they do. The guard still
-    // works in practice (the `loading` placeholder holds 100dvh, so the
-    // document is at scrollY 0 with nothing for anchoring to pull against, and
-    // a warm chunk resolves synchronously enough to behave as before), but do
-    // not treat the comment above as describing the cold path. If a future
-    // theme reintroduces the scroll drag, key this off the resolved component
-    // rather than `theme?.id`, or move the re-assert into the hero's own mount.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      });
-    });
-  }, [theme?.id]);
+    if (!rotated.current || !slug) return;
+    rotated.current = false;
+    let tries = 0;
+    const id = window.setInterval(() => {
+      const h1 = document.querySelector<HTMLElement>("main h1");
+      if (h1 || ++tries > 40) {
+        window.clearInterval(id);
+        if (h1) {
+          if (!h1.hasAttribute("tabindex")) h1.setAttribute("tabindex", "-1");
+          h1.focus({ preventScroll: true });
+          window.scrollTo({ top: 0, behavior: "auto" });
+        }
+      }
+    }, 50);
+    return () => window.clearInterval(id);
+  }, [slug]);
 
-  if (!theme) return <Placeholder />;
-
-  switch (theme.layout) {
-    case "aethera":   return <AetheraHero   key={theme.id} theme={theme} />;
-    case "avatar":    return <AvatarHero    key={theme.id} theme={theme} />;
-    case "ledger":    return <LedgerHero    key={theme.id} theme={theme} />;
-    default: {
-      // Exhaustiveness guard: adding a LayoutVariant without a case above is a
-      // compile error here instead of a silent undefined render.
-      const exhausted: never = theme.layout;
-      return exhausted;
-    }
-  }
+  if (!slug) return <Placeholder />;
+  const Page = HEROES[slug];
+  return <Page key={slug} />;
 }

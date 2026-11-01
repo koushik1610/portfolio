@@ -1,0 +1,304 @@
+/* Hallmark · shape: Map / Diagram · genre: modern-minimal · theme: Blueprint (by request) · redesign: full
+ * hero: Ledge, inverted for person-first reading: the name at the head of the sheet, the correlation engine elevation as the tall field beneath, the note and title block filling the right strip · nav: edge-aligned, a keylined KK and the next-theme button · footer: colophon block under a heavy rule · imagery: one photograph, the portrait printed as a cyanotype in the title block · signature: the correlation engine's real example drawn as a keylined HTML elevation, measured by a dimension string reading 15 · blueprint: cyanotype
+ * axes: mid/geometric-sans/neutral · posture: drenched · contrast: pass · fold: pass · job: hire, Email me in the hero and again at the close · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: H, the register and the limits notes carry the most words; the register sets status before the muted caveat column, and each limit is a numbered sheet note */
+/* Hallmark · waive 42 · nav holds a keylined KK mark and the next-theme button only, no inline links · a drawing sheet with one action keeps its border strip empty */
+/* Hallmark · waive 49b · the email cell holds koushik.kotamraju1610@gmail.com, which wraps once at 320 only · an email address cannot be shortened and the full address is the contact fact */
+/* Hallmark · waive 23 · the accent is the white line ink, which is every keyline in the drawing · Blueprint's only signal is the white line, so its coverage is the drawing itself, not a fill */
+/* Hallmark · waive 44c · the name, sentence and actions sit above the correlation engine drawing, not beside it · the council required the person to be read before the artifact; the drawing is the sheet's field below the title, as on a real drawing */
+
+/* Contrast, computed from tokens.css (WCAG 2): ink on paper 10.47, ink on paper-2 12.20, ink on paper-3 14.19,
+ * muted on paper 6.14, muted on paper-2 7.15, muted on paper-3 8.32, accent-ink on ink (primary button) 11.32,
+ * accent-ink on ink-2 (primary hover) 9.18, rule keyline on paper 8.06, rule-2 inner keyline on paper 3.66. */
+
+/* ── Sheet ─────────────────────────────────────────────────────────────── */
+[data-theme="blueprint"] body { background: var(--color-paper); }
+[data-theme="blueprint"] ::selection { background: var(--color-ink); color: var(--color-accent-ink); }
+[data-theme="blueprint"] { scrollbar-color: var(--color-muted) var(--color-paper); }
+[data-theme="blueprint"] .bp-root .th-skip { color: var(--color-accent-ink); background: var(--color-ink); text-decoration: none; }
+[data-theme="blueprint"] .bp-root { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); }
+[data-theme="blueprint"] .bp-root h1,
+[data-theme="blueprint"] .bp-root h2 { text-wrap: balance; font-family: var(--font-display); font-weight: 600; text-transform: uppercase; line-height: 1.02; letter-spacing: var(--tracking-display); overflow-wrap: break-word; min-width: 0; }
+[data-theme="blueprint"] .bp-root h3 { font-family: var(--font-body); font-weight: 500; font-size: var(--text-title); letter-spacing: 0; text-transform: none; }
+[data-theme="blueprint"] .bp-num { font-family: var(--font-outlier); font-weight: 500; font-variant-numeric: tabular-nums; }
+[data-theme="blueprint"] .bp-code { font-family: var(--font-outlier); font-weight: 500; font-size: 0.9em; }
+[data-theme="blueprint"] .bp-root a { color: var(--color-ink); text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+[data-theme="blueprint"] .bp-root a:hover { text-decoration-color: transparent; }
+[data-theme="blueprint"] .bp-root a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+[data-theme="blueprint"] .bp-root .lead { color: var(--color-ink-2); }
+
+/* The drafting grid: only under a drawing. */
+[data-theme="blueprint"] .bp-grid {
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(var(--color-grid-2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-2) 1px, transparent 1px),
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: var(--sheet-inset) var(--sheet-inset);
+}
+
+/* Dimension string: hairline, a 45 degree tick at each end, short extension lines. */
+[data-theme="blueprint"] .bp-dim { position: relative; display: block; width: 100%; height: var(--rule-hair); background: var(--color-rule); }
+[data-theme="blueprint"] .bp-dim::before,
+[data-theme="blueprint"] .bp-dim::after { content: ""; position: absolute; top: calc(var(--tick) / -2); width: var(--rule-hair); height: var(--tick); background: var(--color-rule); transform: rotate(45deg); }
+[data-theme="blueprint"] .bp-dim::before { left: 0; }
+[data-theme="blueprint"] .bp-dim::after { right: 0; }
+
+[data-theme="blueprint"] .bp-caption { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; font-size: var(--text-md); font-weight: 500; color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-stamp { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2rem; padding: 0 var(--space-xs); border: var(--rule-hair) solid var(--color-rule); outline: var(--rule-hair) solid var(--color-rule-2); outline-offset: 3px; color: var(--color-ink); font-size: var(--text-md); }
+
+[data-theme="blueprint"] .bp-note { font-size: var(--text-sm); line-height: 1.55; color: var(--color-ink-2); max-width: 42ch; }
+[data-theme="blueprint"] .bp-note b { font-weight: 500; color: var(--color-ink); }
+
+/* ── Controls ──────────────────────────────────────────────────────────── */
+[data-theme="blueprint"] .th-btn { min-height: 48px; padding: 0 var(--space-lg); border: var(--rule-hair) solid var(--color-rule); border-radius: 0; background: transparent; color: var(--color-ink); font-family: var(--font-body); font-weight: 500; font-size: var(--text-md); white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+[data-theme="blueprint"] .th-btn:hover { background: var(--color-paper-3); border-color: var(--color-ink); }
+[data-theme="blueprint"] .th-btn:active { transform: translateY(1px); }
+[data-theme="blueprint"] .th-btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+[data-theme="blueprint"] .th-btn:disabled,
+[data-theme="blueprint"] .th-btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+[data-theme="blueprint"] .th-btn[aria-busy="true"] { cursor: progress; }
+[data-theme="blueprint"] .th-btn--primary { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-accent-ink); }
+[data-theme="blueprint"] .th-btn--primary:hover { background: var(--color-ink-2); border-color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-root a.th-btn { color: var(--color-ink); text-decoration: none; }
+[data-theme="blueprint"] .bp-root a.th-btn--primary { color: var(--color-accent-ink); }
+[data-theme="blueprint"] .bp-root a.th-btn:visited { color: var(--color-ink); }
+[data-theme="blueprint"] .bp-root a.th-btn--primary:visited { color: var(--color-accent-ink); }
+
+[data-theme="blueprint"] .sc-next { min-height: 44px; padding: 0 var(--space-xs); border: 0; background: transparent; color: var(--color-ink); font-family: var(--font-body); font-weight: 500; font-size: var(--text-sm); white-space: nowrap; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; cursor: pointer; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="blueprint"] .sc-next:hover { text-decoration-color: transparent; }
+[data-theme="blueprint"] .sc-next:active { opacity: 0.8; }
+[data-theme="blueprint"] .sc-next:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+[data-theme="blueprint"] .sc-next:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Nav ───────────────────────────────────────────────────────────────── */
+[data-theme="blueprint"] .bp-nav { border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+[data-theme="blueprint"] .bp-nav-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; }
+[data-theme="blueprint"] .bp-root .bp-wordmark { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 0 var(--space-xs); border: var(--rule-hair) solid var(--color-rule); font-weight: 500; text-decoration: none; transition: background-color var(--dur-micro) var(--ease-out); }
+[data-theme="blueprint"] .bp-root .bp-wordmark:hover { background: var(--color-paper-3); }
+
+/* ── Hero: the sheet ───────────────────────────────────────────────────── */
+[data-theme="blueprint"] .bp-hero { padding-block: var(--space-md) var(--space-lg); }
+[data-theme="blueprint"] .bp-hero-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(224px + var(--space-xl) + var(--rule-hair));
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas: "name strip" "drawing strip";
+  column-gap: var(--space-xl);
+  row-gap: var(--space-lg);
+  min-height: calc(100svh - 64px - var(--space-md) - var(--space-lg));
+}
+[data-theme="blueprint"] .bp-hero-name { grid-area: name; display: grid; gap: var(--space-md); align-content: start; padding-top: var(--space-xs); }
+[data-theme="blueprint"] .bp-hero-name h1 { max-width: none; font-size: clamp(2.5rem, 4.4vw + 0.5rem, 5rem); }
+[data-theme="blueprint"] .bp-lede { font-size: var(--text-lead); line-height: 1.4; color: var(--color-ink-2); max-width: 60ch; }
+[data-theme="blueprint"] .bp-hero-name .th-cta-row { margin-top: var(--space-2xs); }
+
+/* The drawing field: keyline, a second keyline 5px inside. */
+[data-theme="blueprint"] .bp-drawing { grid-area: drawing; position: relative; margin: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--space-sm); padding: var(--space-lg); border: var(--rule-hair) solid var(--color-rule); min-height: 330px; }
+[data-theme="blueprint"] .bp-drawing::after { content: ""; position: absolute; inset: 5px; border: var(--rule-hair) solid var(--color-rule-2); pointer-events: none; }
+[data-theme="blueprint"] .bp-elev { align-self: center; justify-self: center; width: min(100%, 640px); display: grid; gap: var(--space-md); }
+
+[data-theme="blueprint"] .bp-instance { position: relative; display: grid; gap: 0; padding: var(--space-lg) var(--space-lg) var(--space-lg); border: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); }
+[data-theme="blueprint"] .bp-instance-tag { position: absolute; top: calc(-1 * var(--space-sm)); left: var(--space-md); padding: 0 var(--space-xs); background: var(--color-paper); font-size: var(--text-sm); font-weight: 500; line-height: 1.6; }
+[data-theme="blueprint"] .bp-findings { --g: var(--space-lg); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--g); }
+[data-theme="blueprint"] .bp-finding { display: grid; gap: var(--space-2xs); padding: var(--space-sm) var(--space-md); border: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-finding-name { font-weight: 500; line-height: 1.3; }
+[data-theme="blueprint"] .bp-finding-sev { font-size: var(--text-sm); color: var(--color-muted); }
+/* The join: a line down from each finding's centre, across, and down to the path. */
+[data-theme="blueprint"] .bp-join { position: relative; display: block; height: var(--space-md); margin-inline: calc(25% - var(--space-lg) / 4); border: var(--rule-hair) solid var(--color-rule); border-top: 0; }
+[data-theme="blueprint"] .bp-join::after { content: ""; position: absolute; left: 50%; top: 100%; width: var(--rule-hair); height: var(--space-md); background: var(--color-rule); }
+[data-theme="blueprint"] .bp-path { justify-self: center; margin-top: var(--space-md); padding: var(--space-sm) var(--space-lg); border: var(--rule-heavy) solid var(--color-ink); font-weight: 500; text-align: center; }
+
+[data-theme="blueprint"] .bp-span { display: grid; gap: var(--space-xs); }
+[data-theme="blueprint"] .bp-span .bp-dim::before { top: calc(var(--tick) / -2); }
+[data-theme="blueprint"] .bp-span-value { font-variant-numeric: tabular-nums; justify-self: center; display: flex; gap: var(--space-xs); align-items: baseline; font-size: var(--text-sm); font-weight: 500; }
+[data-theme="blueprint"] .bp-span-value .bp-num { font-size: var(--text-xl); font-variant-numeric: tabular-nums; }
+/* Extension lines from the instance's edges down to the dimension string. */
+[data-theme="blueprint"] .bp-span { position: relative; padding-top: var(--space-xs); }
+[data-theme="blueprint"] .bp-span::before,
+[data-theme="blueprint"] .bp-span::after { content: ""; position: absolute; top: calc(-1 * var(--space-md)); height: calc(var(--space-md) + var(--space-xs) + var(--space-xs)); width: var(--rule-hair); background: var(--color-rule-2); }
+[data-theme="blueprint"] .bp-span::before { left: 0; }
+[data-theme="blueprint"] .bp-span::after { right: 0; }
+
+/* The one motion: the hero's dimension string draws itself once from its left tick. */
+@keyframes bp-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+[data-theme="blueprint"] .bp-dim--draw { transform-origin: left center; animation: bp-draw var(--dur-long) var(--ease-out) 200ms both; }
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="blueprint"] .bp-dim--draw { animation: none; transform: none; }
+}
+
+/* The corner strip: a drawing note above, the title block at the foot. */
+[data-theme="blueprint"] .bp-strip { grid-area: strip; display: grid; grid-template-rows: auto auto; align-content: space-between; gap: var(--space-lg); padding-left: var(--space-xl); border-left: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-strip .bp-note { padding-top: var(--space-xs); }
+[data-theme="blueprint"] .bp-titleblock { display: grid; grid-template-columns: minmax(0, 1fr); border: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-photo { position: relative; margin: 0; isolation: isolate; overflow: hidden; aspect-ratio: 17 / 30; background: var(--color-paper-3); border-bottom: var(--rule-hair) solid var(--color-rule); }
+/* The cyanotype: a grey print screened onto the sheet's darkest blue, so shadows take the blue and light stays white. */
+/* The frame is about 15% narrower than the print and anchored right, so the left margin of the photograph is trimmed and the face sits further from the frame edge. */
+[data-theme="blueprint"] .bp-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 30%; transform: scale(1.1) translateX(-2.5%); transform-origin: 50% 30%; filter: grayscale(1) contrast(1.3) brightness(0.9); mix-blend-mode: screen; }
+[data-theme="blueprint"] .bp-photo::after { content: ""; position: absolute; inset: 5px; z-index: 2; border: var(--rule-hair) solid var(--color-rule-2); pointer-events: none; }
+[data-theme="blueprint"] .bp-tb-cells { margin: 0; display: grid; grid-template-rows: repeat(3, auto); align-content: stretch; }
+[data-theme="blueprint"] .bp-tb-cells > div { display: grid; gap: var(--space-3xs); align-content: start; padding: var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-tb-cells dd.bp-num { white-space: nowrap; }
+[data-theme="blueprint"] .bp-tb-cells > div:last-child { border-bottom: 0; }
+[data-theme="blueprint"] .bp-tb-cells dt { font-size: var(--text-xs); font-weight: 500; color: var(--color-muted); }
+[data-theme="blueprint"] .bp-tb-cells dd { overflow-wrap: break-word; margin: 0; font-size: var(--text-sm); font-weight: 500; line-height: 1.35; }
+
+/* ── Sections ─────────────────────────────────────────────────────────── */
+[data-theme="blueprint"] .bp-section { padding-block: var(--section-gap) 0; }
+[data-theme="blueprint"] .bp-owns { padding-top: var(--section-gap-s); }
+[data-theme="blueprint"] .bp-work { padding-top: var(--section-gap-l); }
+[data-theme="blueprint"] .bp-career { padding-top: var(--section-gap-l); }
+[data-theme="blueprint"] .bp-band { margin-top: var(--section-gap-l); padding-block: var(--section-gap-s); background: var(--color-paper-2); color: var(--color-ink); border-block: var(--rule-hair) solid var(--color-rule-2); }
+[data-theme="blueprint"] .bp-decision { margin-top: calc(var(--section-gap-l) + var(--section-gap-s)); padding-top: var(--section-gap); }
+[data-theme="blueprint"] .bp-band--deep { background: var(--color-paper-3); color: var(--color-ink); }
+
+[data-theme="blueprint"] .bp-split-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-md) var(--gap-columns); align-items: end; margin-bottom: var(--space-2xl); }
+[data-theme="blueprint"] .bp-split-head .lead { max-width: 48ch; }
+
+/* Measured figures: value in mono with its unit, the string beneath, its context under that. */
+[data-theme="blueprint"] .bp-owns-figs,
+[data-theme="blueprint"] .bp-elevation { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-3xl); row-gap: var(--space-lg); }
+[data-theme="blueprint"] .bp-owns-figs > .bp-caption,
+[data-theme="blueprint"] .bp-elevation > .bp-caption,
+[data-theme="blueprint"] .bp-elevation > .bp-note { grid-column: 1 / -1; }
+[data-theme="blueprint"] .bp-measure { display: grid; gap: var(--space-md); align-content: start; }
+[data-theme="blueprint"] .bp-measure-value { font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-xs) var(--space-md); }
+[data-theme="blueprint"] .bp-measure-value .bp-num { font-variant-numeric: tabular-nums; font-size: clamp(3rem, 4vw + 1rem, 5rem); line-height: 1; letter-spacing: -0.02em; }
+[data-theme="blueprint"] .bp-measure-label { font-size: var(--text-lg); font-weight: 500; }
+[data-theme="blueprint"] .bp-measure-context { max-width: 52ch; color: var(--color-ink-2); }
+
+/* The elevation of a comparison: two columns parted by one heavy line. */
+[data-theme="blueprint"] .bp-elevation { position: relative; }
+[data-theme="blueprint"] .bp-elevation > :nth-child(2) { position: relative; }
+[data-theme="blueprint"] .bp-elevation > :nth-child(2)::before { content: ""; position: absolute; left: calc(-1 * var(--space-3xl) / 2); top: 0; bottom: 0; width: var(--rule-heavy); background: var(--color-rule); }
+[data-theme="blueprint"] .bp-elevation--text { padding-block: var(--space-lg); border-block: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-elevation--text > div { display: grid; gap: var(--space-sm); align-content: start; }
+[data-theme="blueprint"] .bp-elevation--text p { color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-note--wide { margin-top: var(--space-md); max-width: 64ch; }
+
+/* The register. */
+[data-theme="blueprint"] .bp-work h2 { margin-bottom: var(--space-2xl); }
+[data-theme="blueprint"] .bp-register-wrap { border: var(--rule-hair) solid var(--color-rule); background: var(--color-paper-2); }
+[data-theme="blueprint"] .bp-register { width: 100%; border-collapse: collapse; caption-side: bottom; }
+[data-theme="blueprint"] .bp-register caption { padding: var(--space-sm) var(--space-md); border-top: var(--rule-hair) solid var(--color-rule); text-align: left; }
+[data-theme="blueprint"] .bp-register th,
+[data-theme="blueprint"] .bp-register td { padding: var(--space-lg) var(--space-md); text-align: left; vertical-align: top; border-bottom: var(--rule-hair) solid var(--color-rule-2); border-left: var(--rule-hair) solid var(--color-rule-2); line-height: 1.45; }
+[data-theme="blueprint"] .bp-register tr > :first-child { border-left: 0; }
+[data-theme="blueprint"] .bp-register thead th { padding-block: var(--space-sm); font-size: var(--text-sm); font-weight: 500; color: var(--color-muted); white-space: nowrap; border-bottom: var(--rule-heavy) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-register tbody tr:last-child > * { border-bottom: 0; }
+[data-theme="blueprint"] .bp-register tbody th { font-weight: 500; font-size: var(--text-lg); line-height: 1.3; width: 20%; overflow-wrap: break-word; }
+[data-theme="blueprint"] .bp-register td.bp-num { width: 4.5rem; color: var(--color-muted); }
+[data-theme="blueprint"] .bp-register td:nth-child(3) { width: 30%; color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-register td:nth-child(4) { width: 8rem; font-weight: 500; }
+[data-theme="blueprint"] .bp-register td:nth-child(5) { font-size: var(--text-sm); color: var(--color-muted); }
+[data-theme="blueprint"] .bp-register tr[data-status="partial"] td:nth-child(4),
+[data-theme="blueprint"] .bp-register tr[data-status="research"] td:nth-child(4) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+
+/* The decision record. */
+[data-theme="blueprint"] .bp-decision .bp-split-head { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); align-items: start; }
+[data-theme="blueprint"] .bp-details { margin-top: var(--space-lg); }
+[data-theme="blueprint"] .bp-details summary { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+[data-theme="blueprint"] .bp-details summary:hover { text-decoration-color: transparent; }
+[data-theme="blueprint"] .bp-details summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+[data-theme="blueprint"] .bp-details:not([open]) dl { display: none; }
+[data-theme="blueprint"] .bp-details dl { margin: var(--space-lg) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); }
+[data-theme="blueprint"] .bp-details dl > div { display: grid; gap: var(--space-xs); align-content: start; padding-top: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-details dt { font-weight: 500; }
+[data-theme="blueprint"] .bp-details dd { margin: 0; font-size: var(--text-sm); line-height: 1.6; color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-caption--end { margin-top: var(--space-xl); }
+
+/* Career: one dimension string, a tick at each role's start, the key below. */
+[data-theme="blueprint"] .bp-career h2 { margin-bottom: var(--space-2xl); }
+[data-theme="blueprint"] .bp-timeline { margin: 0; display: grid; gap: var(--space-md); }
+[data-theme="blueprint"] .bp-timeline-line { position: relative; padding-block: var(--space-xl) var(--space-xs); }
+[data-theme="blueprint"] .bp-tick { position: absolute; top: 0; bottom: 0; width: var(--rule-hair); background: var(--color-rule); }
+[data-theme="blueprint"] .bp-tick .bp-num { position: absolute; top: 0; left: var(--space-xs); font-size: var(--text-sm); line-height: 1; }
+[data-theme="blueprint"] .bp-timeline-ends { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--color-muted); }
+[data-theme="blueprint"] .bp-roles { list-style: none; counter-reset: bp-role; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap-columns); margin-top: var(--space-lg); }
+[data-theme="blueprint"] .bp-roles li { counter-increment: bp-role; display: grid; gap: var(--space-2xs); align-content: start; padding-top: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-roles li::before { content: counter(bp-role); font-family: var(--font-outlier); font-weight: 500; font-size: var(--text-sm); }
+[data-theme="blueprint"] .bp-role-title { font-weight: 500; font-size: var(--text-lg); line-height: 1.3; }
+[data-theme="blueprint"] .bp-role-org { color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-role-period { font-size: var(--text-sm); color: var(--color-muted); }
+
+/* Limits: the sheet's notes, numbered, in the note voice. */
+[data-theme="blueprint"] .bp-limits h2 { margin-bottom: var(--space-2xl); }
+[data-theme="blueprint"] .bp-limits-notes { list-style: none; counter-reset: bp-limit; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2xl) var(--space-3xl); }
+[data-theme="blueprint"] .bp-limits-notes li { counter-increment: bp-limit; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-md); align-items: start; padding-top: var(--space-md); border-top: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-limits-notes li::before { content: counter(bp-limit); display: inline-flex; align-items: center; justify-content: center; min-width: 2rem; min-height: 2rem; border: var(--rule-hair) solid var(--color-rule); font-family: var(--font-outlier); font-weight: 500; font-size: var(--text-sm); }
+[data-theme="blueprint"] .bp-limit-body { display: grid; gap: var(--space-xs); min-width: 0; }
+[data-theme="blueprint"] .bp-limit-line { font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink); max-width: 52ch; }
+[data-theme="blueprint"] .bp-limit-details { margin-top: 0; }
+[data-theme="blueprint"] .bp-limit-details:not([open]) p { display: none; }
+[data-theme="blueprint"] .bp-limit-details p { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; max-width: 62ch; }
+
+/* Contact: a title block of cells. */
+[data-theme="blueprint"] .bp-contact { margin-top: var(--section-gap-l); }
+[data-theme="blueprint"] .bp-contact-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--space-2xl) var(--gap-columns); align-items: start; }
+[data-theme="blueprint"] .bp-contact-head { display: grid; gap: var(--space-lg); }
+[data-theme="blueprint"] .bp-contact-cells { list-style: none; display: grid; border: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-contact-cells li { display: grid; gap: var(--space-2xs); padding: var(--space-sm) var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-contact-cells li:last-child { border-bottom: 0; }
+[data-theme="blueprint"] .bp-cell-label { font-size: var(--text-xs); font-weight: 500; color: var(--color-muted); }
+[data-theme="blueprint"] .bp-contact-cells a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; overflow-wrap: anywhere; }
+[data-theme="blueprint"] .bp-ask { grid-column: 1 / -1; padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-rule-2); }
+[data-theme="blueprint"] .sc-ask-head { font-family: var(--font-body); font-weight: 500; font-size: var(--text-title); letter-spacing: 0; text-transform: none; }
+[data-theme="blueprint"] .sc-ask-note { color: var(--color-muted); font-size: var(--text-sm); }
+[data-theme="blueprint"] .sc-ask-links a { min-height: 44px; font-weight: 500; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="blueprint"] .sc-ask-links a:hover { color: var(--color-ink); text-decoration-color: transparent; }
+[data-theme="blueprint"] .sc-ask-links a:active { opacity: 0.8; }
+[data-theme="blueprint"] .sc-ask-links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* Footer: colophon block under a heavy rule. */
+[data-theme="blueprint"] .bp-footer { padding-block: var(--space-2xl) var(--space-3xl); border-top: var(--rule-heavy) solid var(--color-rule); }
+[data-theme="blueprint"] .bp-footer-inner { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr); gap: var(--space-lg) var(--gap-columns); align-items: start; font-size: var(--text-sm); color: var(--color-ink-2); }
+[data-theme="blueprint"] .bp-footer-name { font-size: var(--text-lg); font-weight: 500; color: var(--color-ink); }
+[data-theme="blueprint"] .bp-footer-links { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-md); }
+[data-theme="blueprint"] .bp-footer-links a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--space-xs); }
+
+/* ── 1024px and down ──────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  [data-theme="blueprint"] .bp-hero-sheet { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "name" "drawing" "strip"; min-height: 0; row-gap: var(--space-xl); }
+  [data-theme="blueprint"] .bp-hero-name { padding-top: var(--space-xl); }
+  [data-theme="blueprint"] .bp-strip { align-content: start; }
+  [data-theme="blueprint"] .bp-strip { grid-template-rows: auto auto; padding-left: 0; border-left: 0; }
+  [data-theme="blueprint"] .bp-titleblock { grid-template-columns: 176px minmax(0, 1fr); max-width: 560px; }
+  [data-theme="blueprint"] .bp-photo { aspect-ratio: auto; min-height: 264px; border-bottom: 0; border-right: var(--rule-hair) solid var(--color-rule); }
+  [data-theme="blueprint"] .bp-split-head { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="blueprint"] .bp-decision .bp-split-head { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="blueprint"] .bp-roles { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-xl); }
+  [data-theme="blueprint"] .bp-contact-grid { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="blueprint"] .bp-details:not([open]) dl { display: none; }
+[data-theme="blueprint"] .bp-details dl { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="blueprint"] .bp-footer-inner { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── 640px and down ───────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  [data-theme="blueprint"] .bp-drawing { padding: var(--space-md); min-height: 0; }
+  [data-theme="blueprint"] .bp-instance { padding: var(--space-lg) var(--space-sm) var(--space-md); }
+  [data-theme="blueprint"] .bp-findings { --g: var(--space-sm); gap: var(--space-sm); }
+  [data-theme="blueprint"] .bp-finding { padding: var(--space-xs) var(--space-sm); }
+  [data-theme="blueprint"] .bp-join { margin-inline: calc(25% - var(--space-sm) / 4); }
+  [data-theme="blueprint"] .bp-path { padding: var(--space-xs) var(--space-sm); }
+  [data-theme="blueprint"] .bp-titleblock { grid-template-columns: 128px minmax(0, 1fr); }
+  [data-theme="blueprint"] .bp-photo { min-height: 192px; }
+  [data-theme="blueprint"] .bp-owns-figs,
+  [data-theme="blueprint"] .bp-elevation { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-2xl); }
+  [data-theme="blueprint"] .bp-elevation > :nth-child(2)::before { left: 0; right: 0; top: calc(-1 * var(--space-2xl) / 2); bottom: auto; width: auto; height: var(--rule-heavy); }
+  [data-theme="blueprint"] .bp-roles { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="blueprint"] .bp-limits-notes { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="blueprint"] .sc-next { font-size: var(--text-md); }
+  /* The register restacks: each row a labelled block. */
+  [data-theme="blueprint"] .bp-register thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  [data-theme="blueprint"] .bp-register tbody tr { display: grid; grid-template-columns: 3rem minmax(0, 1fr); padding: var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule-2); }
+  [data-theme="blueprint"] .bp-register tbody tr:last-child { border-bottom: 0; }
+  [data-theme="blueprint"] .bp-register tbody th,
+  [data-theme="blueprint"] .bp-register tbody td { display: block; width: auto; padding: 0; border: 0; }
+  [data-theme="blueprint"] .bp-register td.bp-num { width: auto; grid-row: 1; }
+  [data-theme="blueprint"] .bp-register tbody th { grid-column: 2; }
+  [data-theme="blueprint"] .bp-register tbody td:nth-child(n + 3) { grid-column: 2; width: auto; margin-top: var(--space-xs); }
+  [data-theme="blueprint"] .bp-register td.bp-empty { display: none; }
+}

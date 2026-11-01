@@ -1,69 +1,68 @@
 # Koushik Kotamraju
 
-> Cloud security engineer building AI-native security platforms — production agentic systems, not prototypes. 9 years across detection engineering, IAM privilege analysis and identity governance, and multi-agent orchestration at enterprise scale. Open to Staff / Principal Cloud Security and AI Security roles. Portfolio: koushik.io
+> Principal security engineer at Yahoo, on the cloud security team (the Paranoids). Ten years in engineering, nine of them in cloud security on AWS. Owns the AWS security baseline for every engineering team on AWS and builds the AI tooling that runs it: models where they help, deterministic gates where a decision touches access, and a benchmark before any tool is trusted. Open to Principal and Staff security engineering roles and to cloud security management. Portfolio: https://koushik.io
 
-## Current Role
+Source: the Ascend master resume, v7, locked 2026-10-31. Every figure below is a public figure. Where a claim has a limit, the limit is stated next to it.
 
-Senior Technical Security Engineer at Yahoo (Feb 2022 – present). Member of a small senior cloud security team (Paranoids) securing 2,800+ accounts across AWS and GCP, spanning every Yahoo business unit.
+## Current role
 
-## Key Technical Achievements
+Principal Technical Security Engineer, Yahoo, Cloud Security (Oct 2026 to present). Senior Technical Security Engineer on the same team from Feb 2022 to Sep 2026.
 
-**Secure-by-Default Guardrails & Detection Engineering**
-Defines and operates Yahoo's company-wide cloud security baselines. Owns the AWS Cloud Alerts Detection system: 200+ active Python/Lambda detection signatures evaluating resource configurations across 1,400+ AWS accounts, producing per-resource findings and the account/BU/org security-posture scores (CSPM) the company is measured against — each with CIS-style audit and remediation guidance, deployed via Terraform. Primary point of contact for the AWS security baselines program: coordinated the program's largest control expansion (50+ new baselines) with Checkov parity analysis and risk × likelihood × impact severity re-scoring, grounded in a MITRE ATT&CK gap analysis against real-world attack techniques from cloud incident response data. Built the organization's first GenAI security capability from zero prior art — the first AI-service guardrails (Amazon Bedrock, SageMaker), the first GenAI detection signatures, and the usage governance that gated company-wide GenAI adoption.
+## What he owns
 
-**Posture Management & Security Metrics**
-Designed and launched the org-wide High Severity Alert Enforcement Program — converted untracked critical cloud alerts into SLA-driven remediation tickets across the AWS estate and defined the posture metrics leadership uses to track risk burn-down. Presented the framework as an internal technical talk to engineers across the company, one of four such talks between 2023 and 2025.
+**The AWS security baseline.** Took ownership of baseline releases at month three in 2022 and has held it since: decides which controls ship for every engineering team on AWS, when each becomes enforced, and which are merged or retired.
 
-**IAM Privilege Escalation Detection & Identity Governance**
-Built an AI-native IAM audit agent organised around 10 vulnerability classes: critically permissive policies, role assumption chains, compute-to-data escalation, unused access, long-lived credentials, cross-account confused deputy, federated trust misconfiguration, identity persistence mechanisms, AI/ML service escalation, and logging and monitoring evasion indicators. Findings are matched against pathfinding.cloud, DataDog's public catalogue of 65+ documented escalation paths; that catalogue is theirs, the taxonomy and the semantic analysis layer are his. Combines static IAM policy graph analysis with LLM semantic interpretation to catch transitive permission chains and policy conditions rule-based tools miss. Built the GOAT benchmark first — 11 synthetic Terraform fixtures with 32 ground-truth findings — and evaluated the agent against all 32 before trusting it. Distributed org-wide via the internal security marketplace. Also built a toxic-combination correlation engine over CIS-based alert data, chaining findings into privilege-escalation paths across three classes (misconfig+misconfig, misconfig+IAM, IAM+IAM) — catching chains single-finding scanners miss.
+**Detection signatures.** Deploys and maintains 200+ Python detection signatures that monitor the baseline across 1,400+ AWS accounts, covering AWS service controls and IAM. Each failed control becomes a per-resource finding with remediation steps the account owner can act on. Owns their correctness: fixed two controls whose findings never reached the ticketing system for months, and a shared policy-evaluation helper that hid real access along with the false positives it had been masking, then audited the fleet for the same pattern. This is configuration-state detection, not detection and response.
 
-**IAM research project — CIEM Research**
-A CIEM research and design project (Cloud Infrastructure Entitlement Management). Research and design stage: no implementation yet. 62 toxic IAM combinations catalogued by hand across 8 attack categories, each mapped to MITRE ATT&CK and each carrying a manually determined keystone permission whose removal breaks that chain. The catalogue is a draft pending citation re-verification. The tool boundary was drawn before any code existed: IAM research project retains granted-versus-used correlation, catalogue synthesis, and alert-to-trust-policy validation, and delegates asset resolution and escalation-path analysis to systems that already own them.
+**The high-severity enforcement program.** Designed and launched it for every AWS account owner. A three-tier severity model based on what an attacker gains sets each deadline, the full control-to-tier mapping was published a quarter before enforcement, and declining a fix is a written exception with an expiry. Posture metrics follow detection state, not ticket state, so suppressing a finding cannot improve the chart.
 
-**GCP attack-path analysis: Attack-Path Operationalization (GCP built, AWS designed)**
-An operationalization layer over a native cloud security platform's attack-path analysis, which computes the highest-signal data available and exposes it only through a console: no structured export, no cross-finding correlation, and no history past the retention window. Implemented on GCP at an initial release: Security Command Center export, AI enrichment, business-context mapping, longitudinal tracking, dashboards (BigQuery, Vertex AI/Gemini, Terraform), and a coverage rotation that cycles resources through the platform's hard cap on how many can be designated for simulation at once. The AWS side is designed but not built: an architecture, a written gap analysis of that platform's exposure findings, and a roadmap phase. The unified cross-cloud view depends on the unbuilt side and does not exist yet. The written risk analysis names its own obsolescence condition, which is the vendor raising the limit the rotation was built around.
+## What he built
 
-**Agentic Security Reviews**
-Conducted 100+ cloud security reviews under Yahoo's Paranoid Security Review (PSR) program — partnering with the Product Security, Network, and Identity teams to threat-model and approve new cloud services and architectures before launch across Mail, Sports, Finance, and Central Tech, including third-party vendor integrations and AI/ML platform reviews. Designed and shipped the agentic SOAR-style review platform behind that throughput, eliminating a multi-week backlog. Built a cross-ticket intelligence layer from a large corpus of historical security review tickets — 1,700+ knowledge nodes across many security domains, technology stacks, and application profiles — wired into an autonomous Claude Code review agent with passive detection rules, slash commands, and bidirectional MCP integration with Jira and Confluence. Established as the team's standard review methodology.
+**correlation engine.** Correlates cloud alerts into toxic combinations: findings that are low severity alone but form a privilege-escalation path together, such as a missing IMDSv2 requirement and an over-privileged IAM role on the same instance. 15 AWS combinations, defined from documented escalation paths in DataDog's public pathfinding.cloud catalog.
 
-**Autonomous Threat Intelligence Pipeline**
-Autonomous 5-stage agentic pipeline (triage → analyze → decompose → peer review → synthesize) orchestrating 19 foundation models across 5 providers through a dynamic, performance-weighted allocation router that updates model assignments after each run. Output: vetted security initiative proposals from $1.40 per full sweep on metered pricing, the low end of the observed range. No single-model baseline run has been recorded, so no comparison figure is claimed.
+**security MCP baselines.** Extended the security team's MCP server for Claude users from answering process questions to serving the AWS, GCP, Kubernetes, and Docker security baselines as MCP tools, so engineers get the applicable controls where they build. In evals that mimicked feature work across repositories, Terraform included, Claude identified and fetched the applicable baseline in every trial.
 
-**AI Security Operations Tooling**
-- Security Ops Platform: FastAPI + Databricks SQL, dozens of API endpoints. Deterministic AI advisor trained on a large corpus of historical cloud security tickets for CSPM alert triage. 4-signal scoring model, confidence clamped 5–95%, hard deny gate for 6 critical baseline categories where auto-remediation is never appropriate. Adopted as team's primary operational workflow.
-- Baseline Research Pipeline: Ingests 21 security intelligence feeds daily through 4-stage Claude orchestration (triage → analyze → draft → verify). CIS/NIST baseline discovery-to-draft in under 30 minutes at under $0.05/run. Processes 330+ items/day.
-- Fleet-scale IaC policy-as-code coverage scanner written in Go, measuring Checkov adoption across the organization's entire repository estate.
+**attack-research pipeline.** Proposed and built an LLM pipeline that turns new AWS, GCP, Docker, and Kubernetes attack techniques from public bulletins and research blogs into draft baseline controls. A cheap model triages, a stronger one analyzes, and every draft waits for human review. A partner detection team adopted its staged design.
 
-**Force Multiplication**
-Coached engineers on sister security teams on AI-assisted security engineering; distributed an AI security engineering toolkit (pre-commit security review, multi-perspective threat analysis) across the security organization. Pipeline architectures since adopted by other security teams.
+**review-aws-iam-policies.** An IAM analysis tool covering 10 privilege-escalation classes. Pairs deterministic checks with a model pass, tags each finding with its source, and maps paths to pathfinding.cloud (65+ paths, DataDog's catalog). Benchmarked against 32 ground-truth findings in 11 synthetic Terraform fixtures written before the evaluation.
 
-## What Makes This Background Unusual
+**GCP attack-path analysis.** Proposed and built on GCP (Cloud Run, Security Command Center, BigQuery, Terraform) to rotate resources through the platform's attack-path simulation limit, so simulation covers the full resource set and its results reach resource owners. The AWS side is designed, not built.
 
-- Deep cloud identity expertise (IAM privilege escalation, CIEM, toxic combinations) combined with production AI systems engineering — not "uses AI tools," but ships multi-agent platforms with deterministic safety bounds (confidence clamping, hard deny gates, human-in-the-loop approval).
-- Benchmark discipline: built the evaluation before trusting the tool (authored GOAT — 11 synthetic Terraform fixtures, 32 ground-truth findings — and evaluated the agent against all 32 before shipping).
-- Small-team force multiplication: security coverage scaled through systems, not headcount, across one of the larger AWS/GCP estates operated by a team this size.
+**AI-assisted review workspace.** Runs cloud security reviews through a workspace built for a coding assistant (skills, hooks, rules, commands) that assembles each dossier, pulls detected state, walks the control checklist, and drafts findings. Nothing is written until he approves the exact text.
 
-## Technical Stack
+**Suppression advisor.** A deterministic advisory engine for alert-suppression requests: scores each request on four signals, caps confidence so it never reads as certain, and hard-blocks exceptions in categories where none is allowed. Rules over a model, because the decision gates access.
 
-AWS, GCP, IAM, CIEM, CNAPP, CSPM, AI-SPM, Zero Trust, DevSecOps, Python, FastAPI, Databricks, Terraform, Amazon Bedrock, Vertex AI, Multi-Agent Orchestration, LLM Security, MCP, MITRE ATT&CK, Checkov, Docker, CIS Benchmarks, NIST CSF
+## Reviews and influence
 
-Depth is uneven and worth stating. AWS security engineering, AWS IAM analysis, Python, and detection engineering are built. GCP and Azure are reviewed rather than built, and Azure is one substantial review, not a parallel to the other two. Containers are the managed non-Kubernetes scheduler: control authorship, task-role escalation paths, registry hygiene. Kubernetes is control authorship and architecture review; he has not operated a cluster in production.
+- 100+ cloud security architecture reviews since 2021 across AWS, GCP, and Azure for every business unit. Each objection is tied to a named written control; each accepted risk has an owner and an expiry.
+- Co-authored the largest control release in the baseline program's history as one of a small senior group, writing most of it and running its gap analysis.
+- Four internal technical talks (2023 to 2025). Taught assistant-driven development to a partner team whose engineers now ship into a platform he owns.
 
-## Career History
+## Personal research
 
-- Yahoo — Sr. Technical Security Engineer (Feb 2022 – Present)
-- Cyber Reconnaissance Inc (CYR3CON) — Cyber Security Architect (May 2019 – Jan 2022): led infrastructure and security for an AI-driven threat-intelligence product company — secure multi-account AWS architecture for ML/NLP workloads (90% external attack-surface reduction), cross-account CI/CD with zero static credentials, GuardDuty/Security Hub operations, cloud-based honeypots
-- Cyber Reconnaissance — Intern → Team Lead (Dec 2017 – May 2019): cloud migration, network security, physical data center
-- Infosys Limited — Systems Engineer (Dec 2015 – May 2017): Dell Boomi cloud integration, EDI workflows, 80% processing speed improvement
+- A research pipeline routing work across 19 models from 5 providers: cheap-model triage, a mid-tier evaluation council, and anonymized peer review before synthesis. Full sweeps run from $1.40 on metered pricing.
+- IAM research project, research and design with no code yet: 62 IAM toxic combinations catalogued by hand across 8 attack categories, each with the keystone permission whose removal breaks the chain.
 
-## Education
+## Earlier
 
-- M.S. Software Engineering, Arizona State University (2017–2019)
-- B.E. Computer Science, Birla Institute of Technology, MESRA (2011–2015)
+- CYR3CON, Cyber Security Architect and Team Lead, Infrastructure and Security (Dec 2017 to Jan 2022; intern until Apr 2019). Led the infrastructure and security teams, up to 7 engineers: sprint planning, project scope, mentoring. Designed the multi-account AWS foundation as code with no static credentials in the deployment path. Ran on-prem data-center servers, firewalls, and VMs. Deployed a honeypot network for the company's threat-intelligence product.
+- Infosys, Systems Engineer (Dec 2015 to May 2017). Automated a US logistics client's partner data exchange on Dell Boomi, raising throughput about 80%.
+
+## Where the depth stops
+
+- Kubernetes: authored controls and reviewed architectures; has not operated a cluster in production.
+- Detection: builds posture evaluation, not streaming detection and response, and has not carried a D&R pager.
+
+## Education and certifications
+
+- M.S. Software Engineering, Arizona State University (2017 to 2019)
+- B.E. Computer Science, Birla Institute of Technology, Mesra (2011 to 2015)
+- AWS Certified Security, Specialty (lapsed Dec 2024); AWS Certified Solutions Architect, Associate (lapsed May 2023)
 
 ## Links
 
 - Portfolio: https://koushik.io
+- Résumé: https://koushik.io/resume/
 - GitHub: https://github.com/koushik1610
 - LinkedIn: https://www.linkedin.com/in/koushikkotamraju/
 - Email: koushik.kotamraju1610@gmail.com

@@ -59,8 +59,17 @@ scan "banned slop vocabulary"                     '\b(seamless|robust|leverage|e
 # ── Content-policy gates (these ARE hard failures) ────────────────────────────
 echo
 hard=0
-for pat in '150\+' '\$3\.20' '55% (cheaper|cost)' 'graph-theoretic' 'minimum cut-set' '100% recall' '0% false' 'new_baselines_v6'; do
-  n=$(grep -rIoE "$pat" "${TARGETS[@]}" 2>/dev/null | wc -l | tr -d ' ')
+# The content gate scans where numbers and sentences actually live, not only the
+# theme folders, and strips comments first: lib/stats.ts records each retraction
+# in a comment on purpose, and that paper trail must not fail the check.
+CONTENT=(components lib app public/llms.txt)
+stripped() {
+  find "${CONTENT[@]}" -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.css' -o -name '*.txt' \) 2>/dev/null \
+    | while read -r f; do perl -0pe 's{/\*.*?\*/}{}gs; s{(^|\s)//[^\n]*}{$1}g' "$f"; done
+}
+for pat in '150\+' '120\+' '\$3\.20' '55% (cheaper|cost)' 'graph-theoretic' 'minimum cut-set' '100% recall' '0% false' 'new_baselines_v6' \
+           '2,800\+' '1,700\+' '50\+ (new )?baselines' '\bPSR\b' 'Splunk'; do
+  n=$(stripped | grep -oE "$pat" | wc -l | tr -d ' ')
   if [ "$n" != "0" ]; then echo "  HARD FAIL: retracted claim present: $pat ($n)"; hard=$((hard+1)); fi
 done
 

@@ -1,38 +1,15 @@
 import { notFound } from "next/navigation";
-import { themes } from "@/lib/themes";
+import { THEME_SLUGS, isThemeSlug } from "@/lib/themes";
 import Hero from "@/components/Hero";
-import WidgetStack from "@/components/WidgetStack";
 
-// Generate a static page for every theme layout name and ID
+/* /theme/<slug>/ forces one theme (lib/rotation.ts reads the path), so a link
+   to a specific theme stays stable. */
 export function generateStaticParams() {
-  const slugs = new Set<string>();
-  themes.forEach((t) => {
-    slugs.add(t.layout);
-    slugs.add(t.id);
-  });
-  return [...slugs].map((name) => ({ name }));
+  return THEME_SLUGS.map((name) => ({ name }));
 }
 
-export default async function ThemeDevPage({
-  params,
-}: {
-  params: Promise<{ name: string }>;
-}) {
+export default async function ThemePage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
-  const exists = themes.some((t) => t.layout === name || t.id === name);
-  if (!exists) notFound();
-
-  // ThemeApplier (in root layout) reads getCurrentTheme(), which detects
-  // /theme/[name] in window.location.pathname and returns the forced theme.
-  // No client-side hydration trick needed — the URL is the source of truth.
-  // Composition matches app/page.tsx — see the comment there for why only
-  // Hero and WidgetStack are rendered.
-  return (
-    <>
-      <WidgetStack />
-      <main>
-        <Hero />
-      </main>
-    </>
-  );
+  if (!isThemeSlug(name)) notFound();
+  return <Hero />;
 }

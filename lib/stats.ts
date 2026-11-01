@@ -41,91 +41,92 @@ export interface CanonicalStat {
 }
 
 export const STATS = {
-  cloudAccounts: {
-    value: "2,800+",
-    label: "cloud accounts",
-    context: "Secured across AWS and GCP, spanning every Yahoo business unit, by a small senior team.",
-  },
+  /* REFRESHED 2026-10-31 against Ascend master v7 (locked 2026-10-31). Removed:
+     cloudAccounts "2,800+" (the master never states it), knowledgeNodes "1,700+"
+     (the review corpus it describes is a never-ship item), and baselines "50+"
+     (on the master's never_ship list as unsourced). Added: the correlation engine's 15, the
+     CYR3CON team of up to 7, and the engineering / cloud-security year split. */
   awsDetectionScope: {
     value: "1,400+",
     label: "AWS accounts",
-    context: "The CSPM detection scope evaluated by the AWS Cloud Alerts Detection system.",
+    context: "Monitored against the AWS security baseline by the detection signatures I deploy and maintain.",
   },
   signatures: {
     value: "200+",
     label: "detection signatures",
-    context: "Active Python and Lambda signatures producing the account and org security-posture scores the company is measured against.",
+    context: "Python signatures covering AWS service controls and IAM, each turning a failed control into a per-resource finding with remediation steps the owner can act on.",
+  },
+  awsToxicCombinations: {
+    value: "15",
+    label: "toxic combinations in correlation engine",
+    context: "AWS findings that are low severity alone but form a privilege-escalation path together, defined from documented paths in DataDog's public pathfinding.cloud catalog.",
   },
   escalationPaths: {
     value: "65+",
     label: "escalation paths",
-    /* ATTRIBUTION, 2026-08-29. The path catalogue is pathfinding.cloud, a public
-       project maintained by DataDog. The agent fetches its definitions and
-       matches findings against them. The count is theirs, so every sentence
-       using it says "matched against", never "built" or "discovered". What is
-       his here is the ten-class taxonomy, the semantic layer that reasons across
-       objects, and the GOAT benchmark. */
-    context: "Matched against pathfinding.cloud, DataDog's public escalation-path catalogue, by an IAM audit agent organised around 10 vulnerability classes: critically permissive policies, role assumption chains, compute-to-data escalation, unused access, long-lived credentials, cross-account confused deputy, federated trust misconfiguration, identity persistence, AI/ML service escalation, and logging evasion.",
+    /* ATTRIBUTION. The path catalogue is pathfinding.cloud, a public project
+       maintained by DataDog. Every sentence using this count says "mapped to"
+       or "matched against", never "built" or "discovered". */
+    context: "Mapped from pathfinding.cloud, DataDog's public escalation-path catalog, by review-aws-iam-policies across 10 privilege-escalation classes.",
+  },
+  escalationClasses: {
+    value: "10",
+    label: "privilege-escalation classes",
+    context: "The classes review-aws-iam-policies checks, pairing deterministic checks with a model pass and tagging every finding with its source.",
   },
   goatFindings: {
     value: "32",
     label: "ground-truth findings",
-    context: "The GOAT benchmark was built first (11 synthetic Terraform fixtures), then the agent was evaluated against all 32 before being trusted.",
+    context: "The benchmark came first: 11 synthetic Terraform fixtures and 32 ground-truth findings, written before the tool was evaluated against them.",
   },
   toxicCombinations: {
     value: "62",
-    label: "toxic combinations",
-    /* CORRECTION, 2026-08-29. This previously read "minimum cut-set dissolution
-       action", which implies a solver running over a live graph. There is no
-       graph and no solver: IAM research project is research and design, no code, and each
-       keystone permission was determined by hand as part of the catalogue work.
-       The hand-authored version is still a strong claim. The computed one was a
-       claim a Staff technical round would open by asking where the graph is
-       stored. The catalogue is also a draft pending citation re-verification. */
-    context: "Catalogued by hand across 8 attack categories, each entry carrying the keystone permission whose removal breaks that chain. Research and design; the catalogue is a draft pending citation review.",
+    label: "IAM toxic combinations",
+    /* IAM research project is research and design with no code. Each keystone permission
+       was determined by hand; there is no graph and no solver. */
+    context: "IAM research project: catalogued by hand across 8 attack categories, each with the keystone permission whose removal breaks the chain. Research and design, no code yet.",
   },
   securityReviews: {
-    /* CORRECTION, 2026-08-29. Published as "150+", which no source supports. The
-       counting rule (assigned reviewer, ticket, written outcome; consultations
-       and contributed findings excluded) yields a figure whose honest tier is
-       100+. This is the one number on the site a reference could be asked to
-       confirm, so it is the one that had to come down. */
+    /* 100+ is the honest tier from the 2026-08-29 counting rule. Never 150+. */
     value: "100+",
-    label: "security reviews",
-    context: "Paranoid Security Reviews threat-modelling and approving new cloud architectures before launch, across Mail, Sports, Finance, and Central Tech.",
-  },
-  knowledgeNodes: {
-    value: "1,700+",
-    label: "knowledge nodes",
-    context: "A cross-ticket intelligence layer built from a large corpus of historical security review tickets.",
+    label: "architecture reviews",
+    context: "Cloud security architecture reviews since 2021 across AWS, GCP, and Azure for every business unit, each objection tied to a named written control.",
   },
   modelsOrchestrated: {
     value: "19",
-    label: "models · 5 providers",
-    context: "Orchestrated through a performance-weighted allocation router that reassigns models after every run.",
+    label: "models, 5 providers",
+    context: "A personal research pipeline: cheap-model triage, a mid-tier evaluation council, and anonymized peer review before a final synthesis.",
   },
   costPerRun: {
-    /* CORRECTION, 2026-08-29. The "$3.20 single-model baseline, 55% reduction"
-       comparison is withdrawn. No baseline run was ever recorded and no document
-       defines the baseline configuration; $3.20 is the arithmetic result of
-       dividing $1.40 by the complement of a percentage that traces to a
-       published property of cheap-executor/expensive-advisor routing rather than
-       to a measurement of this pipeline. $1.40 itself is the low end of an
-       observed range on metered pricing, so it is stated as "from". One baseline
-       sweep would make the comparison real; until then it is not published. */
+    /* "$3.20 baseline, 55% reduction" stays withdrawn: no baseline run exists. */
     value: "$1.40",
-    label: "per run, at the low end",
-    context: "The low end of the observed range for one full sweep of the 5-stage pipeline on metered pricing.",
+    label: "per full sweep, from",
+    context: "The low end of the observed range for one full sweep of the personal research pipeline on metered pricing.",
   },
-  baselines: {
-    value: "50+",
-    label: "new baselines",
-    context: "Shipped in the AWS security baseline program's largest control expansion, with Checkov parity analysis and severity re-scoring.",
+  mcpBaselines: {
+    value: "4",
+    label: "baselines served as MCP tools",
+    context: "AWS, GCP, Kubernetes, and Docker. In evals mimicking feature work, Claude fetched the applicable baseline in every trial.",
+  },
+  severityTiers: {
+    value: "3",
+    label: "severity tiers",
+    context: "The enforcement program's model, set by what an attacker gains. Declining a fix is a written exception with an expiry.",
+  },
+  teamLed: {
+    value: "7",
+    label: "engineers led, at peak",
+    context: "Team lead for the infrastructure and security teams at CYR3CON: sprint planning, project scoping, and mentoring.",
   },
   experience: {
+    value: "10 years",
+    label: "in engineering",
+    context: "Nine of them in cloud security on AWS, from CYR3CON to Yahoo.",
+  },
+  cloudYears: {
     value: "9 years",
-    label: "experience",
-    context: "Across detection engineering, IAM privilege analysis and identity governance, and multi-agent orchestration at enterprise scale.",
+    label: "in cloud security",
+    context: "Infrastructure and security at a threat-intelligence startup, then the AWS baseline at Yahoo.",
   },
 } as const satisfies Record<string, CanonicalStat>;
 
@@ -137,12 +138,17 @@ export type StatKey = keyof typeof STATS;
  * reading the DOM without llms.txt still gets the full story regardless of
  * which theme the week's rotation happens to serve.
  */
+const S = STATS;
 export const SR_SUMMARY =
-  "Koushik Kotamraju is a Senior Technical Security Engineer at Yahoo (Paranoids), " +
-  "a cloud security engineer building AI-native security platforms: production systems, not prototypes. " +
-  "Nine years across detection engineering, IAM privilege analysis and identity governance, and multi-agent orchestration. " +
-  "He secures 2,800+ cloud accounts across AWS and GCP, owns 200+ detection signatures evaluating 1,400+ AWS accounts, " +
-  "built an IAM audit agent organised around 10 IAM vulnerability classes and matched against DataDog's public 65+ escalation-path catalogue, evaluated it against " +
-  "the 32 ground-truth findings of a benchmark he authored first, catalogued 62 IAM toxic combinations by hand, " +
-  "conducted 100+ Paranoid Security Reviews, and orchestrates 19 foundation models across 5 providers from $1.40 per research run. " +
-  "He is open to Staff and Principal Security Engineer and AI Security Engineer roles.";
+  "Koushik Kotamraju is a Principal Technical Security Engineer at Yahoo, on the cloud security team (the Paranoids). " +
+  `${S.experience.value} in engineering, ${S.cloudYears.value} of them in cloud security on AWS. ` +
+  `He owns the AWS security baseline for every engineering team on AWS and deploys and maintains ${S.signatures.value} detection signatures across ${S.awsDetectionScope.value} AWS accounts. ` +
+  `He built correlation engine, which correlates alerts into ${S.awsToxicCombinations.value} AWS toxic combinations drawn from DataDog's public pathfinding.cloud catalog; ` +
+  `extended the security MCP to serve ${S.mcpBaselines.value} baselines (AWS, GCP, Kubernetes, Docker) to Claude; proposed and built attack-research pipeline and GCP attack-path analysis; ` +
+  `and benchmarked review-aws-iam-policies against ${S.goatFindings.value} ground-truth findings he wrote first. ` +
+  `He has led ${S.securityReviews.value} cloud security architecture reviews since 2021, and earlier led infrastructure and security teams of up to ${S.teamLed.value} engineers at CYR3CON. ` +
+  "He is open to Principal and Staff security engineering roles and to cloud security management.";
+
+/** The meta description, used by the home page and the résumé. */
+export const SITE_DESCRIPTION =
+  `Principal security engineer at Yahoo. Owns the AWS security baseline for every engineering team, with ${S.signatures.value} detection signatures across ${S.awsDetectionScope.value} AWS accounts, and builds AI tooling for security work with deterministic gates where access is decided.`;

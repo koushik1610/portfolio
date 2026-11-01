@@ -1,4 +1,20 @@
-# DESIGN.md — koushik.io
+# DESIGN.md, koushik.io
+
+> **2026-10-31: this document is partly superseded.** The site was rebuilt as five themes
+> under [Hallmark](https://github.com/nutlope/hallmark): console, ink, darkroom, brutal,
+> blueprint. Where this file disagrees with what follows, these win:
+> - **Hallmark's Floor binds every theme** (`~/.claude/skills/hallmark/SKILL.md`): tokens only,
+>   no eyebrows or tracked-capital labels, no middle-dot meta strings, the hero fits 1280x800,
+>   about 80 words a screen, a stamp on line 1 of every theme stylesheet, `sloplint --render`
+>   clean before shipping.
+> - **Typography is per theme**, the faces Hallmark's theme material names, self-hosted in
+>   `public/fonts` via `lib/fonts.ts`. "Geist Sans and Geist Mono. Nothing else" no longer holds.
+> - **Token names are Hallmark's** (`--color-paper`, `--color-ink`, `--color-accent`, ...), set in
+>   each theme's `tokens.css` under `:root[data-theme="<slug>"]`. The `vars` contract in
+>   `lib/themes.ts` and the token table below are retired.
+> - **The fixed widget stack is gone.** "Next theme" and "Ask an AI about me" live inside each
+>   theme (`components/SiteControls.tsx`).
+> - The artifact contract, the motion rules, and the responsive rules below still apply.
 
 The design system for a site whose concept is **many design systems**. This file holds the
 invariants every theme obeys and the contract for how a theme is allowed to differ. It does
