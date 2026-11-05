@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 
-DEFAULT_MASTER = Path.home() / "Code/projects/koushik-docs/ascend-run-2026-10-31/master-v7.json"
+DEFAULT_MASTER = Path.home() / "Code/projects/koushik-docs/ascend-run-2026-10-31/master-v8.json"
 OUT = Path(__file__).resolve().parent.parent / "lib" / "resume.ts"
 
 # Bullet IDs per role, in render order. Every ID must exist in the master.

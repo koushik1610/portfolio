@@ -74,7 +74,7 @@
 [data-theme="status"] .st-sys--shipped .st-sys__state { color: var(--color-accent); }
 [data-theme="status"] .st-sys--partial .st-sys__state, [data-theme="status"] .st-pill { padding: var(--space-2xs) var(--space-xs); background: var(--color-accent-2); color: var(--color-ink); }
 [data-theme="status"] .st-sys--partial .st-sys__state { margin-block: calc(-1 * var(--space-2xs)); }
-[data-theme="status"] .st-sys--research .st-sys__state { margin-block: calc(-1 * (var(--space-2xs) + var(--rule-bar))); padding: var(--space-2xs) var(--space-xs); border: var(--rule-bar) solid var(--color-ink); color: var(--color-ink); }
+[data-theme="status"] .st-sys--progress .st-sys__state { margin-block: calc(-1 * (var(--space-2xs) + var(--rule-bar))); padding: var(--space-2xs) var(--space-xs); border: var(--rule-bar) solid var(--color-ink); color: var(--color-ink); }
 [data-theme="status"] .st-sys__chev { grid-column: 4; grid-row: 1; align-self: start; transition: transform var(--dur-short) var(--ease-out); }
 [data-theme="status"] details[open] > .st-sys__row .st-sys__chev { transform: rotate(180deg); }
 [data-theme="status"] .st-sys__more { display: grid; gap: var(--space-sm); max-width: 72ch; margin-inline-start: calc((100% - 3 * var(--space-lg) - 1.25em) * 3 / 11 + var(--space-lg)); padding-bottom: var(--space-lg); color: var(--color-ink-2); }
@@ -179,7 +179,7 @@
   [data-theme="status"] .st-sys__row { grid-template-columns: minmax(0, 1fr) 1.25em; }
   [data-theme="status"] .st-sys__state { grid-column: 1; grid-row: 2; justify-self: start; text-align: left; }
   [data-theme="status"] .st-sys__body { grid-row: 3; }
-  [data-theme="status"] .st-sys--partial .st-sys__state, [data-theme="status"] .st-sys--research .st-sys__state { margin-block: 0; }
+  [data-theme="status"] .st-sys--partial .st-sys__state, [data-theme="status"] .st-sys--progress .st-sys__state { margin-block: 0; }
   [data-theme="status"] .st-sys__chev { grid-column: 2; }
   [data-theme="status"] .st-gapcard__head { flex-wrap: wrap; padding: var(--space-md); }
   [data-theme="status"] .st-gapcard__open { padding: var(--space-md); }

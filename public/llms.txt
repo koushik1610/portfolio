@@ -2,7 +2,7 @@
 
 > Principal security engineer at Yahoo, on the cloud security team (the Paranoids). Ten years in engineering, nine of them in cloud security on AWS. Owns the AWS security baseline for every engineering team on AWS and builds the AI tooling that runs it: models where they help, deterministic gates where a decision touches access, and a benchmark before any tool is trusted. Open to Principal and Staff security engineering roles and to cloud security management. Portfolio: https://koushik.io
 
-Source: the Ascend master resume, v7, locked 2026-10-31. Every figure below is a public figure. Where a claim has a limit, the limit is stated next to it.
+Source: the Ascend master resume, v8, locked 2026-11-05. Every figure below is a public figure. Where a claim has a limit, the limit is stated next to it.
 
 ## Current role
 
@@ -18,15 +18,15 @@ Principal Technical Security Engineer, Yahoo, Cloud Security (Oct 2026 to presen
 
 ## What he built
 
-**correlation engine.** Correlates cloud alerts into toxic combinations: findings that are low severity alone but form a privilege-escalation path together, such as a missing IMDSv2 requirement and an over-privileged IAM role on the same instance. 15 AWS combinations, defined from documented escalation paths in DataDog's public pathfinding.cloud catalog.
+**AI-assisted toxic-combination correlation engine.** Identifies toxic combinations in cloud misconfigurations, which carry higher risk than the individual findings: for example, a missing IMDSv2 requirement and an over-privileged IAM role on the same instance form one privilege-escalation path. 15 AWS combinations, defined from documented escalation paths in DataDog's public pathfinding.cloud catalog.
 
-**security MCP baselines.** Extended the security team's MCP server for Claude users from answering process questions to serving the AWS, GCP, Kubernetes, and Docker security baselines as MCP tools, so engineers get the applicable controls where they build. In evals that mimicked feature work across repositories, Terraform included, Claude identified and fetched the applicable baseline in every trial.
+**Security controls over MCP.** Embedded security controls into the security team's MCP server, bringing the AWS, GCP, Kubernetes, and Docker baselines into the context of Claude and other AI engines. Developers shift security left, and the code and infrastructure they build is more secure by default. In evals that mimicked feature work across repositories, Terraform included, Claude identified and fetched the applicable baseline in every trial.
 
-**attack-research pipeline.** Proposed and built an LLM pipeline that turns new AWS, GCP, Docker, and Kubernetes attack techniques from public bulletins and research blogs into draft baseline controls. A cheap model triages, a stronger one analyzes, and every draft waits for human review. A partner detection team adopted its staged design.
+**Attack-research pipeline.** Proposed and built an LLM pipeline that turns new AWS, GCP, Docker, and Kubernetes attack techniques from public bulletins and research blogs into draft baseline controls. A cheap model triages, a stronger one analyzes, and every draft waits for human review. A partner detection team adopted its staged design.
 
 **review-aws-iam-policies.** An IAM analysis tool covering 10 privilege-escalation classes. Pairs deterministic checks with a model pass, tags each finding with its source, and maps paths to pathfinding.cloud (65+ paths, DataDog's catalog). Benchmarked against 32 ground-truth findings in 11 synthetic Terraform fixtures written before the evaluation.
 
-**GCP attack-path analysis.** Proposed and built on GCP (Cloud Run, Security Command Center, BigQuery, Terraform) to rotate resources through the platform's attack-path simulation limit, so simulation covers the full resource set and its results reach resource owners. The AWS side is designed, not built.
+**AI-enabled GCP attack-path analysis.** Analyzes GCP attack-path simulation and toxic combinations from Security Command Center. Proposed and built on Cloud Run, BigQuery, and Terraform to rotate resources through the platform's simulation limit, so simulation covers the full resource set and its results reach resource owners. The AWS side is designed, not built.
 
 **AI-assisted review workspace.** Runs cloud security reviews through a workspace built for a coding assistant (skills, hooks, rules, commands) that assembles each dossier, pulls detected state, walks the control checklist, and drafts findings. Nothing is written until he approves the exact text.
 
@@ -38,10 +38,10 @@ Principal Technical Security Engineer, Yahoo, Cloud Security (Oct 2026 to presen
 - Co-authored the largest control release in the baseline program's history as one of a small senior group, writing most of it and running its gap analysis.
 - Four internal technical talks (2023 to 2025). Taught assistant-driven development to a partner team whose engineers now ship into a platform he owns.
 
-## Personal research
+## Research and in progress
 
 - A research pipeline routing work across 19 models from 5 providers: cheap-model triage, a mid-tier evaluation council, and anonymized peer review before synthesis. Full sweeps run from $1.40 on metered pricing.
-- IAM research project, research and design with no code yet: 62 IAM toxic combinations catalogued by hand across 8 attack categories, each with the keystone permission whose removal breaks the chain.
+- In progress: a context correlation engine for security incidents, bringing complete context around an asset's configuration history and how to kill the attack chain, based on AI triage of the incident.
 
 ## Earlier
 

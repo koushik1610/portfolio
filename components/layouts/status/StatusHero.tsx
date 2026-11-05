@@ -30,7 +30,7 @@ import { SiteIcon, ContactLabel, type IconName } from "@/components/icons/SiteIc
 const STATE: Record<BuildStatus, { label: string; icon: IconName; word: string }> = {
   shipped: { label: "Shipped", icon: "check", word: "shipped" },
   partial: { label: "Partly built", icon: "fileDescription", word: "partly built" },
-  research: { label: "Research, no code", icon: "fileDescription", word: "research" },
+  progress: { label: "In progress", icon: "fileDescription", word: "in progress" },
 };
 
 /* The banner and the list read the same array, so the headline can be checked by

@@ -22,7 +22,7 @@ import { ContactLabel } from "@/components/icons/SiteIcon";
    controls flip state in one frame, and only :active presses.
 
    THE FILL RULE (one rule, page-wide). Yellow marks the single figure a recruiter
-   filters on: years. Ink marks work that is research, not built. Everything else
+   filters on: years. Ink marks work in progress, not built. Everything else
    is paper. Bands (the miss, the footer) are surfaces, not fills. */
 
 const FACTS: ReadonlyArray<{ key: string; stat: CanonicalStat; filter?: true }> = [
@@ -35,7 +35,7 @@ const FACTS: ReadonlyArray<{ key: string; stat: CanonicalStat; filter?: true }> 
 const STATUS_WORD: Record<BuildStatus, string> = {
   shipped: "Shipped",
   partial: "Partial",
-  research: "Research",
+  progress: "In progress",
 };
 
 const baseline = projectById("baseline");
@@ -196,7 +196,7 @@ export default function BrutalHero() {
             <ul className="br-cells br-work-list">
               {work.map((p) => (
                 <li className="br-work-row" key={p.id}>
-                  <div className={p.status === "research" ? "br-cell br-work-status br-fill-ink" : "br-cell br-work-status"}>
+                  <div className={p.status === "progress" ? "br-cell br-work-status br-fill-ink" : "br-cell br-work-status"}>
                     <span className="br-status-text">{STATUS_WORD[p.status]}</span>
                   </div>
                   <div className="br-cell br-work-body">

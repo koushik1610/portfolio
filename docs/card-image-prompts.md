@@ -28,7 +28,7 @@ glowing baton down a line of desks labeled by station, a sharp-eyed conductor
 dog routing the baton to whichever runner is fastest. Five distinct breeds =
 five model providers.
 
-### GCP attack-path analysis (AI-SPM platform)
+### GCP attack-path analysis
 A keen hunting hound in ranger's gear standing on a ridge at dusk, surveying a
 vast valley where two distant fortress-cities (one blue, one red) are connected
 by glowing trail-lines like constellations; the hound traces one bright path to
@@ -39,7 +39,7 @@ A wise owl in a dispatcher's chair at a control desk covered in small alert
 lamps, one paw resting on a large brass "DENY" lever, calmly sorting glowing
 tickets into trays.
 
-### IAM research project (IAM toxic combinations)
+### Incident context engine
 A composed dog in a vest holding shears, cutting one keystone strand of a
 tangled glowing web of interlocked chains and snakes; the whole web visibly
 begins to collapse from that single cut.

@@ -20,10 +20,10 @@ const WORK = PROJECTS.filter((p) => p.id !== "baseline");
 /* The brief names d-11; decisionById throws on a held or missing record. */
 const PRINT = decisionById("d-11");
 
-const STATUS_TEXT = { shipped: "Shipped", partial: "Partly built", research: "Research, no code" } as const;
+const STATUS_TEXT = { shipped: "Shipped", partial: "Partly built", progress: "In progress" } as const;
 /* How far each frame is developed, read from status: shipped prints at full
-   density, partial is under-exposed below its fold, research stays a negative. */
-const DEVELOP = { shipped: "full", partial: "half", research: "none" } as const;
+   density, partial is under-exposed below its fold, work in progress stays a negative. */
+const DEVELOP = { shipped: "full", partial: "half", progress: "none" } as const;
 /* CAREER periods carry an en dash; the copy rules forbid one, so it reads "to". */
 const period = (p: string) => p.replace(/\s*–\s*/, " to ");
 
@@ -102,7 +102,7 @@ export default function DarkroomHero() {
           <div className="container">
             <div className="dr-work__head">
               <h2 id="dr-work-h" className="dr-h2">My contact sheet</h2>
-              <p className="dr-work__line">Developed as far as the work is: shipped prints in full, partial work half, research stays a negative.</p>
+              <p className="dr-work__line">Developed as far as the work is: shipped prints in full, partial work half, work in progress stays a negative.</p>
             </div>
             <ol className="dr-sheetgrid">
               {WORK.map((p, i) => {

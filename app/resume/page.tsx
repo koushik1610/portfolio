@@ -61,7 +61,7 @@ export default function ResumePage() {
         </section>
 
         <section aria-labelledby="rs-proj">
-          <h2 id="rs-proj">Personal research</h2>
+          <h2 id="rs-proj">Research and in progress</h2>
           <ul className="rs-bullets">
             {projects.map((p) => <li key={p}>{p}</li>)}
           </ul>

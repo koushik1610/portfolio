@@ -48,7 +48,7 @@ const NAV = [
 const STATUS_TEXT: Record<Project["status"], string> = {
   shipped: "Shipped",
   partial: "Partly built",
-  research: "Research only",
+  progress: "In progress",
 };
 
 /** The first clause of a recorded option, for the one reading on the first

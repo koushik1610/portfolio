@@ -27,7 +27,7 @@ import { ContactLabel } from "@/components/icons/SiteIcon";
    drawing is HTML text; only the lines are decoration. The sheet's title block
    carries the photograph, printed as a cyanotype. */
 
-const STATUS: Record<BuildStatus, string> = { shipped: "Shipped", partial: "Partial", research: "Research" };
+const STATUS: Record<BuildStatus, string> = { shipped: "Shipped", partial: "Partial", progress: "In progress" };
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -102,7 +102,7 @@ function Figure({ stat }: { stat: CanonicalStat }) {
 }
 
 export default function BlueprintHero() {
-  const toxic-combinations = projectById("toxic-combinations");
+  const engine = projectById("toxic-combinations");
   const baseline = projectById("baseline");
   const iam = projectById("iam-review");
   const decision = decisionById("d-05");
@@ -131,7 +131,7 @@ export default function BlueprintHero() {
               <CtaRow />
             </div>
 
-            <figure className="bp-drawing bp-grid" aria-label={`${toxic-combinations.name}: ${toxic-combinations.prose.short}`}>
+            <figure className="bp-drawing bp-grid" aria-label={`${engine.name}: ${engine.prose.short}`}>
               <div className="bp-elev">
                 <div className="bp-instance">
                   <p className="bp-instance-tag">{TOXIC_COMBINATION_EXAMPLE.resource}</p>
@@ -154,13 +154,13 @@ export default function BlueprintHero() {
                 </div>
               </div>
               <figcaption className="bp-caption">
-                <Stamp n={1}>{toxic-combinations.name}, elevation</Stamp>
+                <Stamp n={1}>{engine.name}, elevation</Stamp>
               </figcaption>
             </figure>
 
             <aside className="bp-strip" aria-label="Title block">
               <p className="bp-note">
-                <b>Note.</b> {toxic-combinations.caveat}
+                <b>Note.</b> {engine.caveat}
               </p>
               <div className="bp-titleblock">
                 <div className="bp-photo">

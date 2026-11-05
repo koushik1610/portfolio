@@ -83,7 +83,7 @@ Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-ho
 | `ink` | Ink | The project register with honest state pills and a status filter | Light |
 | `darkroom` | Darkroom | His photograph printed as Plate 01, the figures set as an edition | Dark |
 | `brutal` | Brutal | A boxed fact sheet, and the miss he has not yet closed, stated in full | Light |
-| `blueprint` | Blueprint | the correlation engine's escalation path drawn as an elevation, his photo as a cyanotype in the title block | Mid |
+| `blueprint` | Blueprint | A toxic-combination escalation path drawn as an elevation, his photo as a cyanotype in the title block | Mid |
 | `status` | Wayfind | The career as a status page: real build states, one open known gap, decisions as changes, no invented uptime | Light |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

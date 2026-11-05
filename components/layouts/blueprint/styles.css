@@ -1,11 +1,11 @@
 /* Hallmark · shape: Map / Diagram · genre: modern-minimal · theme: Blueprint (by request) · redesign: full
- * hero: Ledge, inverted for person-first reading: the name at the head of the sheet, the correlation engine elevation as the tall field beneath, the note and title block filling the right strip · nav: edge-aligned, a keylined KK and the next-theme button · footer: colophon block under a heavy rule · imagery: one photograph, the portrait printed as a cyanotype in the title block · signature: the correlation engine's real example drawn as a keylined HTML elevation, measured by a dimension string reading 15 · blueprint: cyanotype
+ * hero: Ledge, inverted for person-first reading: the name at the head of the sheet, the correlation elevation as the tall field beneath, the note and title block filling the right strip · nav: edge-aligned, a keylined KK and the next-theme button · footer: colophon block under a heavy rule · imagery: one photograph, the portrait printed as a cyanotype in the title block · signature: the correlation engine's real example drawn as a keylined HTML elevation, measured by a dimension string reading 15 · blueprint: cyanotype
  * axes: mid/geometric-sans/neutral · posture: drenched · contrast: pass · fold: pass · job: hire, Email me in the hero and again at the close · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: H, the register and the limits notes carry the most words; the register sets status before the muted caveat column, and each limit is a numbered sheet note */
 /* Hallmark · waive 42 · nav holds a keylined KK mark and the next-theme button only, no inline links · a drawing sheet with one action keeps its border strip empty */
 /* Hallmark · waive 49b · the email cell holds koushik.kotamraju1610@gmail.com, which wraps once at 320 only · an email address cannot be shortened and the full address is the contact fact */
 /* Hallmark · waive 23 · the accent is the white line ink, which is every keyline in the drawing · Blueprint's only signal is the white line, so its coverage is the drawing itself, not a fill */
-/* Hallmark · waive 44c · the name, sentence and actions sit above the correlation engine drawing, not beside it · the council required the person to be read before the artifact; the drawing is the sheet's field below the title, as on a real drawing */
+/* Hallmark · waive 44c · the name, sentence and actions sit above the correlation drawing, not beside it · the council required the person to be read before the artifact; the drawing is the sheet's field below the title, as on a real drawing */
 
 /* Contrast, computed from tokens.css (WCAG 2): ink on paper 10.47, ink on paper-2 12.20, ink on paper-3 14.19,
  * muted on paper 6.14, muted on paper-2 7.15, muted on paper-3 8.32, accent-ink on ink (primary button) 11.32,
@@ -204,7 +204,7 @@
 [data-theme="blueprint"] .bp-register td:nth-child(4) { width: 8rem; font-weight: 500; }
 [data-theme="blueprint"] .bp-register td:nth-child(5) { font-size: var(--text-sm); color: var(--color-muted); }
 [data-theme="blueprint"] .bp-register tr[data-status="partial"] td:nth-child(4),
-[data-theme="blueprint"] .bp-register tr[data-status="research"] td:nth-child(4) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+[data-theme="blueprint"] .bp-register tr[data-status="progress"] td:nth-child(4) { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 
 /* The decision record. */
 [data-theme="blueprint"] .bp-decision .bp-split-head { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); align-items: start; }

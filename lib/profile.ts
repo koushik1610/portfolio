@@ -78,9 +78,9 @@ function assertProse(where: string, p: Prose): Prose {
 /* ── Identity ────────────────────────────────────────────────────────────── */
 
 /* REFRESHED 2026-10-31 from Ascend master v7. Promotion to Principal (Oct 2026),
-   "10 years in engineering, 9 in cloud security", and the work named in v7
-   (correlation engine, the security MCP, attack-research pipeline, GCP attack-path analysis). Every sentence below is a
-   restatement of a master bullet or summary, never a new claim. */
+   "10 years in engineering, 9 in cloud security". Master v8 (2026-11-05) describes
+   each initiative by what it does. Every sentence below is a restatement of a
+   master bullet or summary, never a new claim. */
 export const IDENTITY = {
   name: "Koushik Kotamraju",
   /* The HR title. The master's `label` is the short form for resume headers. */
@@ -144,8 +144,8 @@ export const PORTRAITS = {
 
 /* ── Projects ────────────────────────────────────────────────────────────── */
 
-/** How much of the thing exists. Never flatten `research` into `shipped`. */
-export type BuildStatus = "shipped" | "partial" | "research";
+/** How much of the thing exists. Never flatten `progress` into `shipped`. */
+export type BuildStatus = "shipped" | "partial" | "progress";
 
 export interface Project {
   id: string;
@@ -184,13 +184,14 @@ export const PROJECTS: ReadonlyArray<Project> = [
   },
   {
     id: "toxic-combinations", // PR7
-    name: "correlation engine",
+    name: "Toxic-combination correlation engine",
+    shortName: "Correlation engine",
     prose: assertProse("PROJECTS.toxic-combinations", {
-      short: "Low-severity alerts that form an escalation path together.",
+      short: "Misconfigurations riskier together than alone.",
       medium:
-        "Correlates cloud alerts into toxic combinations, like a missing IMDSv2 requirement and an over-privileged role on one instance. 15 AWS combinations, from pathfinding.cloud.",
+        "AI-assisted engine that identifies toxic combinations in cloud misconfigurations, higher risk than the individual findings. 15 AWS combinations, from pathfinding.cloud.",
       full:
-        "Two findings that are low severity alone can form a privilege-escalation path together: a missing IMDSv2 requirement and an over-privileged IAM role on the same instance is one. correlation engine correlates cloud alerts into those toxic combinations. I defined 15 AWS combinations from documented escalation paths in DataDog's public pathfinding.cloud catalog.",
+        "Two findings that are low severity alone can form a privilege-escalation path together: a missing IMDSv2 requirement and an over-privileged IAM role on the same instance is one. I built an AI-assisted correlation engine that identifies these toxic combinations in cloud misconfigurations, which carry higher risk than the individual findings. I defined 15 AWS combinations from DataDog's public pathfinding.cloud catalog.",
     }),
     stat: STATS.awsToxicCombinations,
     statLabel: "AWS combinations",
@@ -200,13 +201,14 @@ export const PROJECTS: ReadonlyArray<Project> = [
   },
   {
     id: "security-mcp", // PR8, PR8p
-    name: "security MCP",
+    name: "Security controls over MCP",
+    shortName: "Security MCP",
     prose: assertProse("PROJECTS.security-mcp", {
-      short: "Security baselines inside the coding assistant.",
+      short: "Security controls in context for AI coding tools.",
       medium:
-        "Extended the team's MCP server for Claude users to serve AWS, GCP, Kubernetes, and Docker baselines as tools, so the secure configuration arrives while code is written.",
+        "Embedded security controls in a security MCP server, in context for Claude and other AI engines, so developers shift left and build more secure by default.",
       full:
-        "The security team's MCP server for Claude users used to answer process questions. I extended it to serve the AWS, GCP, Kubernetes, and Docker security baselines as MCP tools, so engineers get the applicable controls where they build rather than at review. In evals that mimicked feature work across repositories, Terraform included, Claude identified and fetched the applicable baseline in every trial.",
+        "I embedded security controls into the security team's MCP server, bringing AWS, GCP, Kubernetes, and Docker baselines into the context of Claude and other AI engines. Developers shift security left, and the code and infrastructure they build is more secure by default. In evals that mimicked feature work across repositories, Terraform included, Claude identified and fetched the applicable baseline in every trial.",
     }),
     stat: STATS.mcpBaselines,
     stack: ["MCP", "Claude", "Evals", "Terraform"],
@@ -231,13 +233,13 @@ export const PROJECTS: ReadonlyArray<Project> = [
   },
   {
     id: "attack-research-pipeline", // PR2, PR2m
-    name: "attack-research pipeline",
+    name: "Attack-research pipeline",
     prose: assertProse("PROJECTS.attack-research-pipeline", {
       short: "New attack research in, draft baseline controls out.",
       medium:
         "An LLM pipeline that turns new AWS, GCP, Docker, and Kubernetes attack techniques into draft controls. A cheap model triages, a stronger one analyzes, a human reviews every draft.",
       full:
-        "I proposed and built attack-research pipeline, an LLM pipeline that reads public bulletins and research blogs for new AWS, GCP, Docker, and Kubernetes attack techniques and turns them into draft baseline controls. A cheap model triages, a stronger one analyzes, and every draft waits for human review. A partner detection team adopted its staged design for their own workflow, and I fixed two configuration weaknesses in their deployment during the handoff.",
+        "I proposed and built an LLM pipeline that reads public bulletins and research blogs for new AWS, GCP, Docker, and Kubernetes attack techniques and turns them into draft baseline controls. A cheap model triages, a stronger one analyzes, and every draft waits for human review. A partner detection team adopted its staged design for their own workflow, and I fixed two configuration weaknesses in their deployment during the handoff.",
     }),
     stack: ["Python", "LLM pipelines", "Human review"],
     status: "shipped",
@@ -246,34 +248,33 @@ export const PROJECTS: ReadonlyArray<Project> = [
     id: "attack-path-analysis", // PR5, PR5m
     name: "GCP attack-path analysis",
     prose: assertProse("PROJECTS.attack-path-analysis", {
-      short: "Attack-path simulation that covers the full resource set.",
+      short: "AI analysis of GCP attack paths and toxic combinations.",
       medium:
-        "Built on GCP (Cloud Run, Security Command Center, BigQuery, Terraform) to rotate resources through the platform's simulation limit, so results reach resource owners.",
+        "AI-enabled analysis of GCP attack-path simulation and toxic combinations from Security Command Center, built on Cloud Run, BigQuery, and Terraform.",
       full:
-        "GCP's attack-path simulation only covers a bounded set of resources at a time. I proposed and built GCP attack-path analysis on Cloud Run, Security Command Center, BigQuery, and Terraform to rotate resources through that limit, so simulation covers the full resource set and its results reach the people who own the resources. The AWS side is designed and not built.",
+        "AI-enabled analysis of GCP's attack-path simulation and the toxic combinations from Security Command Center. Simulation only covers a bounded set of resources at a time, so I proposed and built a system on Cloud Run, BigQuery, and Terraform that rotates resources through that limit, covering the full resource set and reaching the people who own the resources. The AWS side is designed and not built.",
     }),
     stack: ["GCP", "Security Command Center", "BigQuery", "Terraform"],
     status: "partial",
     caveat: "GCP is built. AWS is designed, not built.",
   },
   {
-    id: "iam-research", // P2
-    name: "IAM research project",
-    prose: assertProse("PROJECTS.iam-research", {
-      short: "62 IAM toxic combinations, catalogued by hand.",
+    id: "incident-context", // P2
+    name: "Incident context engine",
+    prose: assertProse("PROJECTS.incident-context", {
+      short: "Full incident context, and how to kill the chain.",
       medium:
-        "Research and design, no code yet. 62 IAM toxic combinations across 8 attack categories, each with the keystone permission whose removal breaks the chain.",
+        "In progress. A context correlation engine for security incidents: an asset's configuration history, and how to kill the attack chain based on AI triage.",
       full:
-        "A personal research project at the design stage. 62 IAM toxic combinations catalogued by hand across 8 attack categories, each carrying the keystone permission whose removal breaks the chain. There is no code yet, no graph and no solver: the keystones were worked out by hand as part of the catalogue.",
+        "In progress. I am building a context correlation engine for security incidents. It brings the complete context around an asset's configuration history and, based on AI triage of the incident, shows how to kill the attack chain.",
     }),
-    stat: STATS.toxicCombinations,
-    stack: ["IAM", "CIEM", "Research"],
-    status: "research",
-    caveat: "No code yet. The keystones are hand-authored.",
+    stack: ["Incident response", "AI triage", "Correlation"],
+    status: "progress",
+    caveat: "In progress, not shipped.",
   },
 ] as const;
 
-/* the correlation engine's worked example, from master bullet PR7 ("a missing IMDSv2 requirement
+/* The correlation engine's worked example, from master bullet PR7 ("a missing IMDSv2 requirement
    and an over-privileged IAM role on the same instance"). Themes that draw it
    read it from here so the example exists once. */
 export const TOXIC_COMBINATION_EXAMPLE = {
@@ -284,7 +285,7 @@ export const TOXIC_COMBINATION_EXAMPLE = {
 } as const;
 
 /** The revision every surface was written against: the Ascend master's lock. */
-export const CONTENT_REVISION = { label: "Rev. Oct 2026", master: "Ascend master v7, locked 2026-10-31" } as const;
+export const CONTENT_REVISION = { label: "Rev. Nov 2026", master: "Ascend master v8, locked 2026-11-05" } as const;
 
 export const projectById = (id: string): Project => {
   const p = PROJECTS.find((x) => x.id === id);
@@ -332,9 +333,9 @@ export const CAPABILITIES: ReadonlyArray<Capability> = [
     prose: assertProse("CAPABILITIES.identity", {
       short: "Escalation paths found by combining findings.",
       medium:
-        "correlation engine correlates alerts into 15 AWS toxic combinations. review-aws-iam-policies covers 10 escalation classes, benchmarked against 32 findings written first.",
+        "An AI-assisted engine identifies 15 AWS toxic combinations. review-aws-iam-policies covers 10 escalation classes, benchmarked against 32 findings written first.",
       full:
-        "correlation engine correlates low-severity alerts into 15 AWS toxic combinations drawn from DataDog's public pathfinding.cloud catalog. review-aws-iam-policies covers 10 privilege-escalation classes, pairs deterministic checks with a model pass, and was benchmarked against 32 ground-truth findings in 11 Terraform fixtures written before evaluation.",
+        "An AI-assisted correlation engine identifies 15 AWS toxic combinations drawn from DataDog's public pathfinding.cloud catalog. review-aws-iam-policies covers 10 privilege-escalation classes, pairs deterministic checks with a model pass, and was benchmarked against 32 ground-truth findings in 11 Terraform fixtures written before evaluation.",
     }),
     stat: STATS.awsToxicCombinations,
   },
@@ -344,9 +345,9 @@ export const CAPABILITIES: ReadonlyArray<Capability> = [
     prose: assertProse("CAPABILITIES.ai-tooling", {
       short: "Models where they help, rules where access is decided.",
       medium:
-        "Baselines served to Claude over MCP, an AI-assisted review workspace, attack-research pipeline, and a deterministic suppression advisor. Human approval on every write.",
+        "Baselines served to Claude over MCP, an AI-assisted review workspace, an attack-research pipeline, and a deterministic suppression advisor. Human approval on every write.",
       full:
-        "Serves AWS, GCP, Kubernetes, and Docker baselines to Claude through the security MCP. Runs reviews through an assistant workspace that drafts findings, with nothing written until I approve the exact text. Built a deterministic advisory engine for suppression requests, and chose rules over a model because the decision gates access.",
+        "Serves AWS, GCP, Kubernetes, and Docker baselines to Claude through a security MCP server. Runs reviews through an assistant workspace that drafts findings, with nothing written until I approve the exact text. Built a deterministic advisory engine for suppression requests, and chose rules over a model because the decision gates access.",
     }),
     stat: STATS.modelsOrchestrated,
   },
@@ -396,7 +397,7 @@ export const CAREER: ReadonlyArray<Role> = [
     org: "Yahoo, Cloud Security",
     title: "Principal Technical Security Engineer",
     period: "Oct 2026 – now",
-    note: "Owns the AWS security baseline and the 200+ signatures behind it. Built correlation engine, extended the security MCP, and runs attack-research pipeline and GCP attack-path analysis.",
+    note: "Owns the AWS security baseline and the 200+ signatures behind it. Built its toxic-combination correlation engine and AI-enabled GCP attack-path analysis, and embedded security controls in its MCP server.",
     current: true,
   },
   {

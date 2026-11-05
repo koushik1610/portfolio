@@ -61,11 +61,10 @@ Ordered by how hard each is to fake. Figures are the sanitized public values.
   Security, Network, and Identity. Cross-org influence, repeated judgment calls.
   (Was published as 150+ until 2026-08-29. No source supports 150; the counting rule
   yields a tier of 100+. This is the figure a reference could be asked to confirm.)
-- **Original IAM research.** 62 toxic permission combinations across 8 attack categories,
-  catalogued BY HAND, each carrying the keystone permission whose removal breaks that
-  chain. IAM research project is research and design: there is no code, no graph, and no solver, and
-  "graph-theoretic minimum cut-set" was withdrawn on 2026-08-29 because it implies one.
-  The rare part is reconciling *granted* against *actually used* from CloudTrail.
+- **Incident context engine, in progress.** Correlates the complete context around an
+  asset's configuration history and, from AI triage of an incident, shows how to kill the
+  attack chain. In progress, so it is never presented as shipped. "Graph-theoretic minimum
+  cut-set" stays withdrawn (2026-08-29).
 - **Benchmark before trust.** Authored the GOAT benchmark first (11 synthetic Terraform
   fixtures, 32 ground-truth findings), then evaluated the IAM audit agent against it.
 - **Deterministic decision path.** Models generate and rank; deterministic logic decides;
@@ -109,8 +108,8 @@ claims. All seven are corrected in code; the ceiling on what may be said is
 `koushik-docs/extraction/extract-2026-08-29.md`, not this file and not the resume.
 
 Reviews are 100+, not 150+. The cost comparison ($3.20 baseline, 55% reduction) is
-withdrawn entirely: no baseline run exists, so $1.40 ships as "from". IAM research project is research
-with no code and hand-authored keystones. GCP attack-path analysis is built on GCP with the AWS side
+withdrawn entirely: no baseline run exists, so $1.40 ships as "from". The incident context
+engine is in progress. GCP attack-path analysis is built on GCP with the AWS side
 designed only, so there is no cross-cloud view. The 65+ escalation paths are DataDog's
 public pathfinding.cloud catalogue and must be attributed. The four talks were at an
 internal programme, not an external AWS event. Go, EKS, and Kubernetes-as-a-peer left the

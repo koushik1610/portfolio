@@ -20,7 +20,7 @@ import { NextThemeButton, AskAI, CopyEmail } from "@/components/SiteControls";
 import { ContactLabel } from "@/components/icons/SiteIcon";
 
 /* Ink: a notice printed in plain black. The page is a register of the work,
-   and its one colour means "shipped". Partial and research are outlined in ink
+   and its one colour means "shipped". Partial and in-progress are outlined in ink
    with the caveat set beside them, so the state of each thing is the first
    column a reader meets, not a footnote. */
 
@@ -29,14 +29,14 @@ type Filter = "all" | BuildStatus;
 const STATE_LABEL: Record<BuildStatus, string> = {
   shipped: "Shipped",
   partial: "Partial",
-  research: "Research",
+  progress: "In progress",
 };
 
 const FILTERS: ReadonlyArray<{ key: Filter; label: string }> = [
   { key: "all", label: "All" },
   { key: "shipped", label: "Shipped" },
   { key: "partial", label: "Partial" },
-  { key: "research", label: "Research" },
+  { key: "progress", label: "In progress" },
 ];
 
 const countFor = (f: Filter) => (f === "all" ? PROJECTS.length : PROJECTS.filter((p) => p.status === f).length);
@@ -66,7 +66,7 @@ const splitPeriod = (period: string) => {
 };
 
 /* The state, set in type: teal over a full rule for shipped, ink over a half
-   rule for partial, ink over a dashed rule for research. No filled chip. */
+   rule for partial, ink over a dashed rule for in progress. No filled chip. */
 function State({ status }: { status: BuildStatus }) {
   return <span className={`ink-state ink-state--${status}`}>{STATE_LABEL[status]}</span>;
 }

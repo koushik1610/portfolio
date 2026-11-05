@@ -44,7 +44,7 @@ export const STATS = {
   /* REFRESHED 2026-10-31 against Ascend master v7 (locked 2026-10-31). Removed:
      cloudAccounts "2,800+" (the master never states it), knowledgeNodes "1,700+"
      (the review corpus it describes is a never-ship item), and baselines "50+"
-     (on the master's never_ship list as unsourced). Added: the correlation engine's 15, the
+     (on the master's never_ship list as unsourced). Added: the 15 AWS toxic combinations, the
      CYR3CON team of up to 7, and the engineering / cloud-security year split. */
   awsDetectionScope: {
     value: "1,400+",
@@ -58,7 +58,7 @@ export const STATS = {
   },
   awsToxicCombinations: {
     value: "15",
-    label: "toxic combinations in correlation engine",
+    label: "AWS toxic combinations",
     context: "AWS findings that are low severity alone but form a privilege-escalation path together, defined from documented paths in DataDog's public pathfinding.cloud catalog.",
   },
   escalationPaths: {
@@ -78,13 +78,6 @@ export const STATS = {
     value: "32",
     label: "ground-truth findings",
     context: "The benchmark came first: 11 synthetic Terraform fixtures and 32 ground-truth findings, written before the tool was evaluated against them.",
-  },
-  toxicCombinations: {
-    value: "62",
-    label: "IAM toxic combinations",
-    /* IAM research project is research and design with no code. Each keystone permission
-       was determined by hand; there is no graph and no solver. */
-    context: "IAM research project: catalogued by hand across 8 attack categories, each with the keystone permission whose removal breaks the chain. Research and design, no code yet.",
   },
   securityReviews: {
     /* 100+ is the honest tier from the 2026-08-29 counting rule. Never 150+. */
@@ -143,8 +136,8 @@ export const SR_SUMMARY =
   "Koushik Kotamraju is a Principal Technical Security Engineer at Yahoo, on the cloud security team (the Paranoids). " +
   `${S.experience.value} in engineering, ${S.cloudYears.value} of them in cloud security on AWS. ` +
   `He owns the AWS security baseline for every engineering team on AWS and deploys and maintains ${S.signatures.value} detection signatures across ${S.awsDetectionScope.value} AWS accounts. ` +
-  `He built correlation engine, which correlates alerts into ${S.awsToxicCombinations.value} AWS toxic combinations drawn from DataDog's public pathfinding.cloud catalog; ` +
-  `extended the security MCP to serve ${S.mcpBaselines.value} baselines (AWS, GCP, Kubernetes, Docker) to Claude; proposed and built attack-research pipeline and GCP attack-path analysis; ` +
+  `He built an AI-assisted correlation engine that identifies ${S.awsToxicCombinations.value} AWS toxic combinations drawn from DataDog's public pathfinding.cloud catalog; ` +
+  `embedded security controls in an MCP server that serves ${S.mcpBaselines.value} baselines (AWS, GCP, Kubernetes, Docker) to Claude and other AI engines; proposed and built an attack-research pipeline and AI-enabled GCP attack-path analysis; ` +
   `and benchmarked review-aws-iam-policies against ${S.goatFindings.value} ground-truth findings he wrote first. ` +
   `He has led ${S.securityReviews.value} cloud security architecture reviews since 2021, and earlier led infrastructure and security teams of up to ${S.teamLed.value} engineers at CYR3CON. ` +
   "He is open to Principal and Staff security engineering roles and to cloud security management.";
