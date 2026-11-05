@@ -14,7 +14,7 @@
 <h3 align="center">koushik.io</h3>
 
   <p align="center">
-    Personal site for Koushik Kotamraju, Principal Technical Security Engineer at Yahoo. Five themes, each one a different design built from a Hallmark theme material, all reading from one content layer.
+    Personal site for Koushik Kotamraju, Principal Technical Security Engineer at Yahoo. Six themes, each one a different design built from a Hallmark theme material, all reading from one content layer.
     <br />
     <br />
     <a href="https://koushik.io"><strong>View the live site</strong></a>
@@ -50,7 +50,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About the project
 
-A personal site that shows one of five themes. A new visitor gets the week's theme and keeps it on later visits; "Next theme" in each theme's nav moves to the next one. Every theme carries the same facts: who he is and at what level, the AWS baseline he owns, the work with its honest build status, at least one decision record with the option he rejected, his career, and a way to reach him.
+A personal site that shows one of six themes. A new visitor gets the week's theme and keeps it on later visits; "Next theme" in each theme's nav moves to the next one. Every theme carries the same facts: who he is and at what level, the AWS baseline he owns, the work with its honest build status, at least one decision record with the option he rejected, his career, and a way to reach him.
 
 The themes were rebuilt in October 2026 with [Hallmark](https://github.com/nutlope/hallmark), a design skill whose linter fails the defaults generated pages fall into (eyebrows, tracked capitals, a centred template, invented numbers). A review council picked the five materials from the themes Hallmark dealt for this brief. Every page passes `sloplint --render` with zero FAIL, and every waiver is written into the page's own stylesheet with its reason.
 
@@ -84,6 +84,7 @@ Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-ho
 | `darkroom` | Darkroom | His photograph printed as Plate 01, the figures set as an edition | Dark |
 | `brutal` | Brutal | A boxed fact sheet, and the miss he has not yet closed, stated in full | Light |
 | `blueprint` | Blueprint | the correlation engine's escalation path drawn as an elevation, his photo as a cyanotype in the title block | Mid |
+| `status` | Wayfind | The career as a status page: real build states, one open known gap, decisions as changes, no invented uptime | Light |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -92,17 +93,18 @@ Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-ho
 ```
 lib/profile.ts, lib/stats.ts      every sentence and every number
 lib/resume.ts                     generated from the Ascend master by scripts/sync-resume.py
-lib/themes.ts                     the five slugs, names, and Hallmark genres
+lib/themes.ts                     the slugs, names, and Hallmark genres
 lib/rotation.ts                   which theme a visitor sees, and the pre-paint <head> script
 lib/fonts.ts                      every face, self-hosted
 components/Hero.tsx               slug to theme component (a Record, so a missing theme fails the build)
-components/SiteControls.tsx       "Next theme" and "Ask an AI about me"
+components/SiteControls.tsx       "Next theme", "Copy email" and "Ask an AI about me"
+components/icons/                 icon paths from itshover (Apache-2.0), animated with CSS
 components/layouts/<slug>/        <Name>Hero.tsx, styles.css, tokens.css
 app/globals.css                   the shared base every theme inherits
 app/resume/                       one neutral, print-first résumé for all themes
 ```
 
-Each theme's colours and faces live in its `tokens.css`, scoped to `:root[data-theme="<slug>"]`. All five token files load up front (about 2 KB each), so colours resolve the moment the head script sets `data-theme`, before the theme's own code arrives. Every rule in a theme's `styles.css` starts with its `[data-theme]` selector, because theme CSS stays loaded after a rotation.
+Each theme's colours and faces live in its `tokens.css`, scoped to `:root[data-theme="<slug>"]`. All the token files load up front (about 2 KB each), so colours resolve the moment the head script sets `data-theme`, before the theme's own code arrives. Every rule in a theme's `styles.css` starts with its `[data-theme]` selector, because theme CSS stays loaded after a rotation.
 
 `npm run check` runs `scripts/check-themes.mjs`, which fails on an unscoped selector, a colour or font literal outside `tokens.css`, a missing Hallmark stamp, or a theme missing the decision record, the action row, the controls, or the screen-reader summary. Then ESLint.
 
@@ -173,6 +175,7 @@ node ~/.claude/skills/hallmark/scripts/sloplint.mjs components/layouts/ink --gen
 ## Acknowledgments
 
 * [nutlope/hallmark](https://github.com/nutlope/hallmark), the theme materials and the linter
+* [itshover](https://github.com/itshover/itshover), icon paths (Apache-2.0)
 * [Fontsource](https://fontsource.org) for the open-licensed font files
 * [othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 * [shields.io](https://shields.io)

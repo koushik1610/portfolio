@@ -111,8 +111,9 @@ export const IDENTITY = {
 /* ── Contact ─────────────────────────────────────────────────────────────── */
 
 export interface ContactLink {
-  /** Short key. Themes render this as the label column. */
-  k: string;
+  /** Short key. Themes render this as the label column. A closed set, so
+   *  renaming one fails where its icon is mapped instead of losing the icon. */
+  k: "Email" | "LinkedIn" | "GitHub";
   /** Display value. Never the raw URL where a handle reads better. */
   v: string;
   href: string;
@@ -635,6 +636,8 @@ export const heldDecisions = () => DECISIONS.filter((d) => !d.published);
 
 export interface Miss {
   source: string;
+  /** One line a theme can head the record with. */
+  title: string;
   supposedToCatch: string;
   whyItDidnt: string;
   howFound: string;
@@ -646,6 +649,7 @@ export interface Miss {
 
 export const THE_MISS: Miss = {
   source: "E1",
+  title: "Two controls ran correctly and delivered nothing",
   supposedToCatch: "Two configuration controls, evaluated continuously across the estate. One covers key management on a secrets store, the other covers end-of-life language runtimes on serverless functions. Both had working detections, both were enabled, and both appeared healthy in every operational view.",
   whyItDidnt: "During earlier debugging of each detection, the call that delivers findings to the consuming system had been commented out and a debug print left in its place. The commenting was never reverted. Both detections then ran on schedule, executed correctly, and produced correct findings, which went to a log stream and nowhere else. The mechanism is not \"we had no coverage\". The mechanism is that the pipeline's health signal was \"the detection ran\", and nothing anywhere checked \"the detection's output arrived\". A detection producing zero delivered findings is indistinguishable from a detection covering a clean estate, and there was no control that could tell the difference.",
   howFound: "By me, and not by looking. I was doing an unrelated hygiene pass across the detection fleet, cleaning up module-level imports that were only needed by test paths, and read the production path of these two while I was in the file. Nothing surfaced it. Nothing would have.",

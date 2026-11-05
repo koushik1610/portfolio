@@ -6,7 +6,7 @@ import localFont from "next/font/local";
    fetches at build time and makes CI depend on a third party.
 
    `preload: false` is the line that matters. The default preloads every face
-   on every page, which would download all five themes' type to render one. With
+   on every page, which would download every theme's type to render one. With
    it off, a browser fetches a face only when rendered text resolves to it, so a
    visitor pays for the active theme's faces and nothing else. The cost is a
    short swap on a cold load, softened by the metric-matched fallback.
@@ -45,7 +45,9 @@ const plexMono = localFont({
 const epilogue = localFont({ display: "swap", preload: false, src: "../public/fonts/Epilogue-var.woff2", weight: "100 900", variable: "--nf-epilogue" });
 const libreFranklin = localFont({ display: "swap", preload: false, src: "../public/fonts/LibreFranklin-var.woff2", weight: "100 900", variable: "--nf-libre-franklin" });
 
+const chivoMono = localFont({ display: "swap", preload: false, src: "../public/fonts/ChivoMono-var.woff2", weight: "100 900", variable: "--nf-chivo-mono" });
+
 /** All font variable classes, for <html className>. */
 export const fontVariables = [
-  hostGrotesk, atkinsonMono, sofiaCondensed, barlow, chakraPetch, plexSans, plexMono, epilogue, libreFranklin,
+  hostGrotesk, atkinsonMono, sofiaCondensed, barlow, chakraPetch, plexSans, plexMono, epilogue, libreFranklin, chivoMono,
 ].map((f) => f.variable).join(" ");

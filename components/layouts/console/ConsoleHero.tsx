@@ -17,7 +17,8 @@ import {
 } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import { SkipLink, skipTarget, CtaRow, SrSummary } from "@/components/layouts/_shared/ThemePrimitives";
-import { NextThemeButton, AskAI } from "@/components/SiteControls";
+import { NextThemeButton, AskAI, CopyEmail } from "@/components/SiteControls";
+import { ContactLabel } from "@/components/icons/SiteIcon";
 
 /* Console. A versioned record where the replaced value stays visible: every
    decision is set as a reading, the rejected option struck above the decided
@@ -347,15 +348,16 @@ export default function ConsoleHero() {
               <dl className="cn-contact__list">
                 {CONTACT.map((c) => (
                   <div className="cn-contact__row" key={c.k}>
-                    <dt>{c.k}</dt>
+                    <dt><ContactLabel k={c.k} /></dt>
                     <dd>
                       <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                        {c.v}
+                        {c.v}{c.ext ? <span className="visually-hidden"> (opens in a new tab)</span> : null}
                       </a>
                     </dd>
                   </div>
                 ))}
               </dl>
+              <CopyEmail />
               <AskAI className="cn-ask" />
             </div>
           </div>
@@ -430,7 +432,7 @@ function Record({
         </div>
       </dl>
       <details className="cn-more" open={open} onToggle={(e) => onToggle(e.currentTarget.open)}>
-        <summary ref={summaryRef}>What it cost</summary>
+        <summary ref={summaryRef}>What it cost<span className="visually-hidden">: {d.title}</span></summary>
         <dl className="cn-more__list">
           {more
             .filter(([, v]) => v)

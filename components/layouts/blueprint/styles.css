@@ -122,11 +122,21 @@
 [data-theme="blueprint"] .bp-span::before { left: 0; }
 [data-theme="blueprint"] .bp-span::after { right: 0; }
 
-/* The one motion: the hero's dimension string draws itself once from its left tick. */
+/* The one motion: the drawing forms in the order a toxic combination does. Two findings,
+   then the connector joining them, then the path, then the dimension. Under a second, once. */
+@keyframes bp-appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bp-join-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+[data-theme="blueprint"] .bp-elev .bp-finding { animation: bp-appear var(--dur-short) var(--ease-out) both; }
+[data-theme="blueprint"] .bp-elev .bp-finding:nth-child(2) { animation-delay: 120ms; }
+[data-theme="blueprint"] .bp-elev .bp-join { animation: bp-join-in var(--dur-short) var(--ease-out) 300ms both; }
+[data-theme="blueprint"] .bp-elev .bp-path { animation: bp-appear var(--dur-short) var(--ease-out) 460ms both; }
 @keyframes bp-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-[data-theme="blueprint"] .bp-dim--draw { transform-origin: left center; animation: bp-draw var(--dur-long) var(--ease-out) 200ms both; }
+[data-theme="blueprint"] .bp-dim--draw { transform-origin: left center; animation: bp-draw var(--dur-long) var(--ease-out) 620ms both; }
 @media (prefers-reduced-motion: reduce) {
-  [data-theme="blueprint"] .bp-dim--draw { animation: none; transform: none; }
+  [data-theme="blueprint"] .bp-dim--draw,
+  [data-theme="blueprint"] .bp-elev .bp-finding,
+  [data-theme="blueprint"] .bp-elev .bp-join,
+  [data-theme="blueprint"] .bp-elev .bp-path { animation: none; transform: none; opacity: 1; }
 }
 
 /* The corner strip: a drawing note above, the title block at the foot. */
@@ -202,7 +212,6 @@
 [data-theme="blueprint"] .bp-details summary { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
 [data-theme="blueprint"] .bp-details summary:hover { text-decoration-color: transparent; }
 [data-theme="blueprint"] .bp-details summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
-[data-theme="blueprint"] .bp-details:not([open]) dl { display: none; }
 [data-theme="blueprint"] .bp-details dl { margin: var(--space-lg) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); }
 [data-theme="blueprint"] .bp-details dl > div { display: grid; gap: var(--space-xs); align-content: start; padding-top: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule); }
 [data-theme="blueprint"] .bp-details dt { font-weight: 500; }
@@ -231,7 +240,6 @@
 [data-theme="blueprint"] .bp-limit-body { display: grid; gap: var(--space-xs); min-width: 0; }
 [data-theme="blueprint"] .bp-limit-line { font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink); max-width: 52ch; }
 [data-theme="blueprint"] .bp-limit-details { margin-top: 0; }
-[data-theme="blueprint"] .bp-limit-details:not([open]) p { display: none; }
 [data-theme="blueprint"] .bp-limit-details p { margin-top: var(--space-sm); color: var(--color-ink-2); line-height: 1.6; max-width: 62ch; }
 
 /* Contact: a title block of cells. */
@@ -270,7 +278,6 @@
   [data-theme="blueprint"] .bp-decision .bp-split-head { grid-template-columns: minmax(0, 1fr); }
   [data-theme="blueprint"] .bp-roles { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-xl); }
   [data-theme="blueprint"] .bp-contact-grid { grid-template-columns: minmax(0, 1fr); }
-  [data-theme="blueprint"] .bp-details:not([open]) dl { display: none; }
 [data-theme="blueprint"] .bp-details dl { grid-template-columns: minmax(0, 1fr); }
   [data-theme="blueprint"] .bp-footer-inner { grid-template-columns: minmax(0, 1fr); }
 }
@@ -302,3 +309,7 @@
   [data-theme="blueprint"] .bp-register tbody td:nth-child(n + 3) { grid-column: 2; width: auto; margin-top: var(--space-xs); }
   [data-theme="blueprint"] .bp-register td.bp-empty { display: none; }
 }
+
+/* The cells and their copy control stay one column of the contact grid. */
+[data-theme="blueprint"] .bp-contact-reach { display: grid; gap: var(--space-sm); align-content: start; min-width: 0; }
+[data-theme="blueprint"] .sc-copy { justify-self: start; font-size: var(--text-sm); }

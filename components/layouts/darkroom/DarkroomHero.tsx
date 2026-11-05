@@ -3,7 +3,8 @@ import "./styles.css";
 import { IDENTITY, PORTRAITS, PROJECTS, CAREER, CONTACT, AVAILABILITY, projectById, decisionById } from "@/lib/profile";
 import { STATS } from "@/lib/stats";
 import { SkipLink, skipTarget, CtaRow, SrSummary } from "@/components/layouts/_shared/ThemePrimitives";
-import { NextThemeButton, AskAI } from "@/components/SiteControls";
+import { NextThemeButton, AskAI, CopyEmail } from "@/components/SiteControls";
+import { ContactLabel } from "@/components/icons/SiteIcon";
 
 /* Darkroom: a print room with the lights off. One photograph (the portrait),
    the figures as an edition, the work as a contact sheet whose frames are
@@ -109,6 +110,7 @@ export default function DarkroomHero() {
                 return (
                   <li key={p.id} className={`dr-frame dr-frame--${dev}`}>
                     <div className="dr-frame__print">
+                      {dev === "none" ? null : <span className="dr-frame__veil" aria-hidden="true" />}
                       {/* Every frame carries its name. An unexposed negative carries it
                           only as edge print; a developed frame carries the name and one
                           line: the stat when the project has one, else its short line. */}
@@ -198,11 +200,12 @@ export default function DarkroomHero() {
               <ul className="dr-contact__links">
                 {CONTACT.map((c) => (
                   <li key={c.k}>
-                    <span className="dr-contact__k">{c.k}</span>
-                    <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{c.v}</a>
+                    <span className="dr-contact__k"><ContactLabel k={c.k} /></span>
+                    <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{c.v}{c.ext ? <span className="visually-hidden"> (opens in a new tab)</span> : null}</a>
                   </li>
                 ))}
               </ul>
+              <CopyEmail />
             </div>
             <AskAI className="dr-ask" />
           </div>
@@ -217,7 +220,7 @@ export default function DarkroomHero() {
             <li><a href="/resume/">Résumé</a></li>
             <li><a href="/llms.txt">llms.txt</a></li>
             {CONTACT.filter((c) => c.ext).map((c) => (
-              <li key={c.k}><a href={c.href} target="_blank" rel="noopener noreferrer">{c.k}</a></li>
+              <li key={c.k}><a href={c.href} target="_blank" rel="noopener noreferrer">{c.k}<span className="visually-hidden"> (opens in a new tab)</span></a></li>
             ))}
           </ul>
           <p className="dr-footer__colophon">Set in Sofia Sans Extra Condensed and Barlow. The portrait is the only photograph.</p>

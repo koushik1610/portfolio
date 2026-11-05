@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { nextTheme, resolveTheme } from "@/lib/rotation";
 import { THEME_SLUGS, themeBySlug } from "@/lib/themes";
+import { EMAIL } from "@/lib/profile";
+import { SiteIcon } from "@/components/icons/SiteIcon";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    SITE CONTROLS. Replaces the fixed top-right WidgetStack (deleted 2026-10-31).
@@ -31,8 +33,48 @@ export function NextThemeButton({ className }: { className?: string }) {
 
   return (
     <button type="button" className={className ? `sc-next ${className}` : "sc-next"} onClick={nextTheme}>
+      <SiteIcon name="refresh" className="sc-next__icon" />
       Next theme{label ? `: ${label}` : ""}
     </button>
+  );
+}
+
+/** Copies the address, for a recruiter pasting it into another tool. If the
+ *  clipboard is refused the address is still on screen beside it, so the
+ *  failure message says so instead of pretending. */
+export function CopyEmail({ className }: { className?: string }) {
+  const [state, setState] = useState<"idle" | "done" | "failed">("idle");
+  /* Bumped on every click, so a repeat copy restarts the timer and the status
+     region's text changes and is announced again. */
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    if (state === "idle") return;
+    const id = window.setTimeout(() => setState("idle"), 2500);
+    return () => window.clearTimeout(id);
+  }, [state, attempt]);
+
+  const copy = async () => {
+    setAttempt((n) => n + 1);
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setState("done");
+    } catch {
+      setState("failed");
+    }
+  };
+
+  const message = state === "done" ? "Copied" : state === "failed" ? "Copy failed, the address is on this page" : "";
+
+  return (
+    <>
+      <button type="button" className={className ? `sc-copy ${className}` : "sc-copy"} onClick={copy}>
+        <SiteIcon name={state === "done" ? "check" : "copy"} className={state === "done" ? "ic--draw" : undefined} />
+        {message || "Copy email"}
+      </button>
+      {/* Outside the button: a button's children are presentational in ARIA. */}
+      <span className="visually-hidden" role="status">{message ? `${message}${attempt % 2 ? "" : "\u00A0"}` : ""}</span>
+    </>
   );
 }
 

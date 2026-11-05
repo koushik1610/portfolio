@@ -1,8 +1,8 @@
 # DESIGN.md, koushik.io
 
-> **2026-10-31: this document is partly superseded.** The site was rebuilt as five themes
+> **2026-10-31: this document is partly superseded.** The site was rebuilt as themes
 > under [Hallmark](https://github.com/nutlope/hallmark): console, ink, darkroom, brutal,
-> blueprint. Where this file disagrees with what follows, these win:
+> blueprint, status. Where this file disagrees with what follows, these win:
 > - **Hallmark's Floor binds every theme** (`~/.claude/skills/hallmark/SKILL.md`): tokens only,
 >   no eyebrows or tracked-capital labels, no middle-dot meta strings, the hero fits 1280x800,
 >   about 80 words a screen, a stamp on line 1 of every theme stylesheet, `sloplint --render`

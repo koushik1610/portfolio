@@ -37,6 +37,7 @@ const HEROES: Record<ThemeSlug, ComponentType> = {
   darkroom: dynamic(() => import("./layouts/darkroom/DarkroomHero"), { ssr: false, loading: Placeholder }),
   brutal: dynamic(() => import("./layouts/brutal/BrutalHero"), { ssr: false, loading: Placeholder }),
   blueprint: dynamic(() => import("./layouts/blueprint/BlueprintHero"), { ssr: false, loading: Placeholder }),
+  status: dynamic(() => import("./layouts/status/StatusHero"), { ssr: false, loading: Placeholder }),
 };
 
 export default function Hero() {

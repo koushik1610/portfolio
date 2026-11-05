@@ -1,5 +1,5 @@
 /* ink tokens: Hallmark scaffold output (theme.mjs scaffold ink), scoped to this theme's
-   data-theme so five token sets can load at once without colliding. Faces point at
+   data-theme so the token sets can load at once without colliding. Faces point at
    the self-hosted files in lib/fonts.ts; the literal family name stays for the font gates. */
 :root[data-theme="ink"] {
   color-scheme: light;

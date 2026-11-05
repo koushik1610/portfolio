@@ -14,7 +14,8 @@ import {
   type BuildStatus,
 } from "@/lib/profile";
 import { SkipLink, skipTarget, CtaRow, SrSummary } from "@/components/layouts/_shared/ThemePrimitives";
-import { NextThemeButton, AskAI } from "@/components/SiteControls";
+import { NextThemeButton, AskAI, CopyEmail } from "@/components/SiteControls";
+import { ContactLabel } from "@/components/icons/SiteIcon";
 
 /* Brutal: a boxed fact sheet. Every fact and every sentence is imported from
    lib/profile.ts and lib/stats.ts; nothing below types a figure. Nothing moves:
@@ -261,7 +262,7 @@ export default function BrutalHero() {
                   <h3>{boundaryName(b.id)}</h3>
                   <p className="br-bound-lead">{boundaryLead(b.id, b.text)}</p>
                   <details className="br-more">
-                    <summary>The whole boundary</summary>
+                    <summary>The whole boundary<span className="visually-hidden">: {boundaryName(b.id)}</span></summary>
                     <p>{b.text}</p>
                   </details>
                 </div>
@@ -279,13 +280,14 @@ export default function BrutalHero() {
                 <ul>
                   {CONTACT.map((c) => (
                     <li key={c.k}>
-                      <span className="br-label">{c.k}</span>
+                      <span className="br-label"><ContactLabel k={c.k} /></span>
                       <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                        {c.v}
+                        {c.v}{c.ext ? <span className="visually-hidden"> (opens in a new tab)</span> : null}
                       </a>
                     </li>
                   ))}
                 </ul>
+                <CopyEmail />
                 <CtaRow />
               </div>
               <div className="br-cell br-contact-ask">

@@ -8,6 +8,8 @@
 /* Hallmark · answered F6 · the status selector sets the words Shipped, Partial and Research; no figure renders in it */
 /* Hallmark · dismissed 23 · the flagged rule is an inline link hover, a word-sized fill, never viewport scale */
 /* Hallmark · waive 44c · the hero ends at 672px of 900 and the fact grid's head starts at the fold · the council asked for the name at the top of its box instead of a box stretched to the screen, so the scope grid begins on the first screen */
+/* Hallmark · waive 72 · the flagged br-cell overflow is the text of closed details, which renders inside its box when opened · closed disclosures stay in the DOM unhidden so find-in-page reaches them (council UX round 1) */
+/* Hallmark · waive 71 · each section head sits under its own 3px rule by design, so the measured space above is to that rule, not to the previous section · the section gap above the rule is 120px */
 
 [data-theme="brutal"] { scrollbar-color: var(--color-ink) var(--color-paper); }
 
@@ -116,7 +118,6 @@
 [data-theme="brutal"] .br-more > summary { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 44px; font-weight: 700; cursor: pointer; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; list-style-position: inside; }
 [data-theme="brutal"] .br-more > summary:hover { background: var(--color-accent); color: var(--color-accent-ink); }
 [data-theme="brutal"] .br-more > summary:active { background: var(--color-ink); color: var(--color-paper); }
-[data-theme="brutal"] .br-more:not([open]) > :not(summary) { display: none; }
 [data-theme="brutal"] .br-more[open] > summary { margin-block-end: var(--space-sm); }
 [data-theme="brutal"] .br-more p { max-width: 65ch; line-height: 1.55; }
 
@@ -179,7 +180,7 @@
 [data-theme="brutal"] .br-contact-links { display: grid; gap: var(--space-xl); align-content: start; }
 [data-theme="brutal"] .br-contact-links ul { display: grid; gap: var(--space-md); min-width: 0; }
 [data-theme="brutal"] .br-contact-links li { min-width: 0; }
-[data-theme="brutal"] .br-contact-links li a { font-weight: 700; font-size: var(--text-xl); overflow-wrap: break-word; }
+[data-theme="brutal"] .br-contact-links li a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; font-size: var(--text-xl); overflow-wrap: break-word; }
 [data-theme="brutal"] .br-contact-ask .sc-ask-head { font-family: var(--font-display); font-weight: 700; font-size: var(--text-title); letter-spacing: 0; }
 [data-theme="brutal"] .br-contact-ask .sc-ask-note { color: var(--color-muted); font-size: var(--text-sm); }
 [data-theme="brutal"] .br-contact-ask .sc-ask-links { gap: var(--space-2xs) var(--space-lg); }
@@ -248,3 +249,8 @@
   [data-theme="brutal"] .br-root .th-btn:active,
   [data-theme="brutal"] .br-root .sc-next:active { transform: none; }
 }
+
+/* Nothing moves in this theme, the shared icon motion included. */
+[data-theme="brutal"] .sc-next__icon { transition: none; }
+[data-theme="brutal"] .sc-next:hover .sc-next__icon, [data-theme="brutal"] .sc-next:focus-visible .sc-next__icon { transform: none; }
+[data-theme="brutal"] .ic--draw path { animation: none; }

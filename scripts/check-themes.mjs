@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Enforces the rules that keep five themes from leaking into each other, so a
+/* Enforces the rules that keep the themes from leaking into each other, so a
    scope mistake fails `npm run check` instead of waiting for a review:
 
    1. Every selector in components/layouts/<slug>/styles.css starts with

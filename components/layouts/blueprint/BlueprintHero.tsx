@@ -18,7 +18,8 @@ import {
 } from "@/lib/profile";
 import { STATS, type CanonicalStat } from "@/lib/stats";
 import { SkipLink, skipTarget, CtaRow, SrSummary } from "@/components/layouts/_shared/ThemePrimitives";
-import { NextThemeButton, AskAI } from "@/components/SiteControls";
+import { NextThemeButton, AskAI, CopyEmail } from "@/components/SiteControls";
+import { ContactLabel } from "@/components/icons/SiteIcon";
 
 /* Blueprint: one drawing sheet. The hero is a keylined elevation of the correlation engine's own
    example (one instance, two findings that are low severity alone, one path),
@@ -346,7 +347,7 @@ export default function BlueprintHero() {
                   <div className="bp-limit-body">
                     <p className="bp-limit-line">{b.line}</p>
                     <details className="bp-details bp-limit-details">
-                      <summary>The full limit</summary>
+                      <summary>The full limit<span className="visually-hidden">: {b.id}</span></summary>
                       <p>{b.text}</p>
                     </details>
                   </div>
@@ -367,16 +368,19 @@ export default function BlueprintHero() {
               <p className="lead">{AVAILABILITY}.</p>
               <CtaRow />
             </div>
-            <ul className="bp-contact-cells">
-              {CONTACT.map((c) => (
-                <li key={c.k}>
-                  <span className="bp-cell-label">{c.k}</span>
-                  <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                    {c.v}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="bp-contact-reach">
+              <ul className="bp-contact-cells">
+                {CONTACT.map((c) => (
+                  <li key={c.k}>
+                    <span className="bp-cell-label"><ContactLabel k={c.k} /></span>
+                    <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                      {c.v}{c.ext ? <span className="visually-hidden"> (opens in a new tab)</span> : null}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <CopyEmail />
+            </div>
             <AskAI className="bp-ask" />
           </div>
         </section>

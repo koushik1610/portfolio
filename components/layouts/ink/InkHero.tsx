@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import "./styles.css";
 import {
   IDENTITY,
@@ -16,7 +16,8 @@ import {
 } from "@/lib/profile";
 import { STATS, type CanonicalStat } from "@/lib/stats";
 import { SkipLink, skipTarget, CtaRow, SrSummary } from "@/components/layouts/_shared/ThemePrimitives";
-import { NextThemeButton, AskAI } from "@/components/SiteControls";
+import { NextThemeButton, AskAI, CopyEmail } from "@/components/SiteControls";
+import { ContactLabel } from "@/components/icons/SiteIcon";
 
 /* Ink: a notice printed in plain black. The page is a register of the work,
    and its one colour means "shipped". Partial and research are outlined in ink
@@ -89,7 +90,7 @@ function RegisterRow({ p, hidden }: { p: Project; hidden: boolean }) {
           </p>
         ) : null}
         <details className="ink-more">
-          <summary>In full</summary>
+          <summary>In full<span className="visually-hidden">: {p.name}</span></summary>
           <p>{p.prose.medium}</p>
         </details>
       </div>
@@ -108,6 +109,25 @@ function RegisterRow({ p, hidden }: { p: Project; hidden: boolean }) {
 export default function InkHero() {
   const [filter, setFilter] = useState<Filter>("all");
   const shown = countFor(filter);
+
+  /* A rule slides to the chosen state, measured so it survives the phone's 2x2 grid.
+     Width comes from scaleX on a 100px bar: transform is the only animated property. */
+  const filterRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLSpanElement>(null);
+  useLayoutEffect(() => {
+    const group = filterRef.current;
+    const bar = barRef.current;
+    if (!group || !bar) return;
+    const place = () => {
+      const on = group.querySelector<HTMLElement>('[aria-pressed="true"]');
+      if (!on) return;
+      bar.style.transform = `translate(${on.offsetLeft}px, ${on.offsetTop + on.offsetHeight + 3}px) scaleX(${on.offsetWidth / 100})`;
+    };
+    place();
+    const ro = new ResizeObserver(place);
+    ro.observe(group);
+    return () => ro.disconnect();
+  }, [filter]);
 
   const baseline = projectById("baseline");
   /* d-01: d-03 is console's lead and d-11 is darkroom's. Its quote is trimmed,
@@ -144,7 +164,8 @@ export default function InkHero() {
           <div className="container">
             <div className="ink-register__head">
               <h2 id="ink-work">How far each project got</h2>
-              <div className="ink-filter" role="group" aria-label="Show projects by state">
+              <div ref={filterRef} className="ink-filter" role="group" aria-label="Show projects by state">
+                <span ref={barRef} className="ink-filter__bar" aria-hidden="true" />
                 {FILTERS.map((f) => (
                   <button
                     key={f.key}
@@ -319,15 +340,16 @@ export default function InkHero() {
               <dl className="ink-links">
                 {CONTACT.map((c) => (
                   <div key={c.k}>
-                    <dt>{c.k}</dt>
+                    <dt><ContactLabel k={c.k} /></dt>
                     <dd>
                       <a href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                        {c.v}
+                        {c.v}{c.ext ? <span className="visually-hidden"> (opens in a new tab)</span> : null}
                       </a>
                     </dd>
                   </div>
                 ))}
               </dl>
+              <CopyEmail />
             </div>
             <AskAI className="ink-ask" />
           </div>

@@ -91,7 +91,13 @@
 [data-theme="console"] .cn-reading .cn-row--now { padding-block: var(--space-lg); }
 [data-theme="console"] .cn-reading .cn-cells > p { padding-block: var(--space-md); }
 [data-theme="console"] .cn-reading .cn-cells > p + p { padding-left: var(--space-lg); }
-[data-theme="console"] .cn-struck { color: var(--color-muted); font-size: var(--text-md); text-decoration-line: line-through; text-decoration-color: var(--color-muted); text-decoration-thickness: 1.5px; }
+[data-theme="console"] .cn-struck { color: var(--color-muted); font-size: var(--text-md); text-decoration-line: none; background: linear-gradient(var(--color-muted), var(--color-muted)) no-repeat 0 55% / 100% 1.5px; -webkit-box-decoration-break: clone; box-decoration-break: clone; animation: cn-strike var(--dur-long) var(--ease-out) 240ms both; }
+/* The rejection is the event: the strike draws through the option, once on load and again
+   when a record is chosen. It rests struck. A background is dropped in forced colours, so
+   the real text decoration comes back there. */
+@keyframes cn-strike { from { background-size: 0% 1.5px; } to { background-size: 100% 1.5px; } }
+@media (forced-colors: active) { [data-theme="console"] .cn-struck { background: none; text-decoration-line: line-through; } }
+@media (prefers-reduced-motion: reduce) { [data-theme="console"] .cn-struck { animation: none; } }
 [data-theme="console"] .cn-measured { color: var(--color-ink); font-size: var(--text-lg); line-height: 1.45; letter-spacing: -0.01em; max-width: 62ch; }
 [data-theme="console"] .cn-measured--lead { font-size: clamp(1.5rem, 1.5vw + 1rem, 2.5rem); line-height: 1.2; letter-spacing: -0.025em; max-width: none; }
 
@@ -151,7 +157,6 @@
 [data-theme="console"] .cn-more summary:hover::after { color: var(--color-accent); text-decoration-color: var(--color-accent); }
 [data-theme="console"] .cn-more summary:active { opacity: 0.8; }
 [data-theme="console"] .cn-more__list { display: grid; gap: var(--space-lg); margin: 0; padding: var(--space-md) var(--space-lg) var(--space-xl); }
-[data-theme="console"] .cn-more:not([open]) > .cn-more__list { display: none; }
 [data-theme="console"] .cn-more__list > div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-lg); }
 [data-theme="console"] .cn-more__list dt { color: var(--color-muted); font-size: var(--text-sm); font-weight: 500; }
 [data-theme="console"] .cn-more__list dd { margin: 0; max-width: 68ch; color: var(--color-ink-2); }
@@ -183,7 +188,7 @@
 
 /* Contact. */
 [data-theme="console"] .cn-contact__list { margin: 0; }
-[data-theme="console"] .cn-contact__row { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-lg); align-items: center; min-height: 64px; padding: var(--space-xs) var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="console"] .cn-contact__row { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-lg); align-items: baseline; min-height: 64px; padding: var(--space-xs) var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
 [data-theme="console"] .cn-contact__row:last-child { border-bottom: 0; }
 [data-theme="console"] .cn-contact__row dt { color: var(--color-muted); font-size: var(--text-sm); font-weight: 500; }
 [data-theme="console"] .cn-contact__row dd { margin: 0; min-width: 0; overflow-wrap: break-word; }
@@ -257,3 +262,7 @@
   [data-theme="console"] .cn-root .sc-next:active,
   [data-theme="console"] .cn-ver:active { transform: none; }
 }
+
+/* Copy email sits in line with the contact rows above it. */
+[data-theme="console"] .cn-contact__panels .sc-copy { padding-inline: var(--space-lg); font-size: var(--text-sm); }
+@media (max-width: 40rem) { [data-theme="console"] .cn-contact__panels .sc-copy { padding-inline: var(--space-md); } }

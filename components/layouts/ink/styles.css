@@ -65,7 +65,8 @@
 [data-theme="ink"] .ink-register { padding-block: var(--space-xl) var(--section-gap); }
 [data-theme="ink"] .ink-register__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-lg) var(--gap-columns); }
 [data-theme="ink"] .ink-register h2 { font-size: var(--text-section); }
-[data-theme="ink"] .ink-filter { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+[data-theme="ink"] .ink-filter { position: relative; display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+[data-theme="ink"] .ink-filter__bar { position: absolute; left: 0; top: 0; z-index: 1; width: 100px; height: 3px; border-radius: var(--radius-pill); background: var(--color-ink); transform-origin: left top; pointer-events: none; transition: transform var(--dur-short) var(--ease-out); }
 [data-theme="ink"] .ink-filter__btn { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 44px; padding: 0 var(--space-md); border: var(--rule-hair) solid var(--color-edge); border-radius: var(--radius-pill); background: var(--color-paper); color: var(--color-ink); font-size: var(--text-sm); font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
 [data-theme="ink"] .ink-filter__btn:hover { border-color: var(--color-ink); background: var(--color-paper-2); }
 [data-theme="ink"] .ink-filter__btn:active { transform: translateY(1px); }
