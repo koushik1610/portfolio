@@ -1,0 +1,231 @@
+/* Hallmark · shape: Credential (the badge, then the baseline figures, the work as its access log, one decision on a band, the badges held before, contact on the badge's back laid flat) · genre: atmospheric · theme: Midnight (by request) · redesign: full
+ * hero: Stage, the name across all but the badge's own column, the badge hanging from the top edge of the screen · nav: a wordmark, four section links (desktop) and the next-theme control at the left edge, the right edge left to the strap · footer: a line of colophon · imagery: the owner's photograph on the badge, in the moonlight duotone · signature: an ID badge on a lanyard, a hand-written damped pendulum, drag or arrow keys to swing, a button to turn it to the contact side
+ * axes: dark/grotesk-sans/cool · posture: committed · contrast: pass · fold: pass · budget: about 4 KB gzipped of theme JS (the component and the pendulum, no dependencies) · keyboard: skip link, KK, Work, Decision, Career, Contact (desktop), next theme, Email me, Résumé, the badge (arrow keys swing it), the back-side links when it is turned, Turn the badge, then the page · loop: requestAnimationFrame runs only while the badge moves and is on screen; it sleeps once |theta| and |phi| are under 2e-3 rad and both angular speeds under 4e-3 rad/s (atRest in physics.ts), and is cancelled off screen (IntersectionObserver), on hidden tabs and on unmount · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V5 · weakest: P, a badge can read as a gimmick; its Access list is computed from the shipped projects and the work section says so, so the toy carries a checkable claim */
+
+[data-theme="badge"] { scrollbar-color: var(--color-muted) var(--color-paper); }
+[data-theme="badge"] main:focus-visible { outline: none; }
+[data-theme="badge"] ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+[data-theme="badge"] .bd-root a:focus-visible,
+[data-theme="badge"] .bd-root button:focus-visible,
+[data-theme="badge"] .bd-root summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+[data-theme="badge"] .th-skip { color: var(--color-accent-ink); }
+[data-theme="badge"] .bd-root a { text-underline-offset: 0.2em; transition: text-decoration-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+[data-theme="badge"] .bd-root a:hover { text-decoration-color: var(--color-accent); }
+
+/* Type: one family at two widths. The expanded 300 is for display sizes only (h1, h2, figures);
+   item titles take 400 expanded, and everything under 20px reads at the normal width. */
+[data-theme="badge"] h1, [data-theme="badge"] h2 { font-weight: var(--display-weight); font-variation-settings: "wdth" 125; font-stretch: var(--display-stretch); line-height: 1.04; letter-spacing: var(--tracking-display); text-wrap: balance; }
+[data-theme="badge"] h1 { max-width: 9ch; font-size: clamp(3.5rem, 11.2vw, 10.5rem); line-height: 0.98; letter-spacing: -0.025em; }
+[data-theme="badge"] h2 { font-size: var(--text-section); }
+[data-theme="badge"] h3 { font-weight: 500; letter-spacing: 0; text-wrap: balance; }
+[data-theme="badge"] .lead { color: var(--color-ink-2); }
+
+/* Controls: square, 500, the azure rectangle beside an outlined secondary. */
+[data-theme="badge"] .th-cta-row { gap: var(--space-sm); }
+[data-theme="badge"] .th-btn,
+[data-theme="badge"] .bd-turn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 var(--space-lg); border: var(--rule-hair) solid var(--color-edge); border-radius: 0; background: transparent; color: var(--color-ink); font-size: var(--text-md); font-weight: 500; white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform 150ms ease-out; }
+[data-theme="badge"] .th-btn--primary { border-color: var(--color-accent); background: var(--color-accent); color: var(--color-accent-ink); }
+[data-theme="badge"] .th-btn:hover, [data-theme="badge"] .bd-turn:hover { background: var(--color-paper-2); border-color: var(--color-muted); }
+[data-theme="badge"] .th-btn--primary:hover { background: var(--color-focus); border-color: var(--color-focus); }
+[data-theme="badge"] .th-btn:active, [data-theme="badge"] .bd-turn:active { transform: scale(0.97); }
+[data-theme="badge"] .bd-turn:disabled { opacity: 0.5; cursor: not-allowed; }
+[data-theme="badge"] .bd-turn[aria-pressed="true"] { background: var(--color-paper-3); border-color: var(--color-muted); }
+
+/* Nav: over the hero, so the hero (and the strap) starts at the top edge of the screen. */
+[data-theme="badge"] .bd-nav { position: absolute; inset-inline: 0; top: 0; z-index: var(--z-raised); }
+[data-theme="badge"] .bd-nav__in { display: flex; align-items: center; gap: var(--space-lg); min-height: 72px; }
+[data-theme="badge"] .bd-wordmark { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; font-variation-settings: "wdth" 125; text-decoration: none; }
+/* Nav links are plain at rest, set apart by their place in the bar and a step of ink;
+   the underline arrives on hover and on focus. */
+[data-theme="badge"] .bd-nav .sc-next, [data-theme="badge"] .bd-nav__links a { color: var(--color-ink-2); text-decoration: none; }
+[data-theme="badge"] .bd-nav .sc-next:hover, [data-theme="badge"] .bd-nav .sc-next:focus-visible, [data-theme="badge"] .bd-nav__links a:hover, [data-theme="badge"] .bd-nav__links a:focus-visible { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); }
+[data-theme="badge"] .sc-next { padding: 0; font-size: var(--text-sm); }
+[data-theme="badge"] .bd-nav__links { display: flex; gap: var(--space-lg); padding-inline: var(--space-xs) var(--space-md); font-size: var(--text-sm); }
+[data-theme="badge"] .bd-nav__links a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
+[data-theme="badge"] .bd-nav__links a:active { opacity: 0.8; }
+
+/* Hero */
+[data-theme="badge"] .bd-hero { overflow: clip; }
+/* The rig is as wide as the badge plus its swing room, and the name takes the rest, so the
+   name grows toward the badge instead of leaving an empty centre. */
+[data-theme="badge"] .bd-hero__in { --bd-w: clamp(240px, 20vw, 288px); display: grid; grid-template-columns: minmax(0, 1fr) calc(var(--bd-w) + var(--space-2xl)); column-gap: var(--space-xl); min-height: 100svh; }
+[data-theme="badge"] .bd-hero__who { align-self: center; display: grid; gap: var(--space-lg); padding-block: var(--space-3xl) var(--space-2xl); }
+[data-theme="badge"] .bd-hero__who .lead { max-width: 36ch; }
+[data-theme="badge"] .bd-hero__who .th-cta-row { padding-top: var(--space-xs); }
+
+/* The rig: the strap is drawn in the rig's own pixels; the pendulum box hangs from
+   the rig's top centre and rotates around it. */
+[data-theme="badge"] .bd-rig { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; min-width: 0; }
+[data-theme="badge"] .bd-strap { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+[data-theme="badge"] .bd-strap path { fill: none; stroke: var(--color-rule-2); stroke-width: 18; vector-effect: non-scaling-stroke; }
+[data-theme="badge"] .bd-pend { position: relative; display: flex; flex-direction: column; justify-content: flex-end; width: var(--bd-w); padding-block: var(--space-3xl) var(--space-lg); transform-origin: 50% 0; transform: rotate(var(--bd-theta, 0rad)); }
+
+[data-theme="badge"] .bd-badge { position: relative; transform-origin: 50% var(--bd-pivot, 0px); transform: rotate(var(--bd-phi, 0rad)); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+[data-theme="badge"] .bd-badge.is-held { cursor: grabbing; }
+[data-theme="badge"] .bd-badge:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 6px; }
+/* The clip: a bar the strap loops round, a steel body, and a jaw through the slot. Flat
+   steps of lightness, no gradient. The badge turns on its clip around the bar; useLanyard measures it
+   and sets --bd-pivot. */
+[data-theme="badge"] .bd-clip { position: absolute; z-index: var(--z-raised); top: -24px; left: 50%; width: 26px; height: 42px; transform: translateX(-50%); pointer-events: none; }
+[data-theme="badge"] .bd-clip > span { position: absolute; left: 50%; transform: translateX(-50%); }
+[data-theme="badge"] .bd-clip__bar { top: 0; width: 26px; height: 6px; border-radius: 3px; background: var(--color-metal); box-shadow: inset 0 1px 0 var(--color-metal-hi); }
+[data-theme="badge"] .bd-clip__body { top: 6px; width: 16px; height: 16px; border-radius: 2px; background: var(--color-metal-2); box-shadow: inset 0 1px 0 var(--color-metal), inset 0 -2px 0 var(--color-metal-3); }
+[data-theme="badge"] .bd-clip__jaw { top: 22px; width: 6px; height: 20px; border-radius: 0 0 3px 3px; background: var(--color-metal); box-shadow: inset 1px 0 0 var(--color-metal-hi); }
+/* Each face turns on its own, and the face in front rests at transform: none, so its text is
+   drawn flat and sharp instead of from a 3D layer. */
+[data-theme="badge"] .bd-card { display: grid; }
+[data-theme="badge"] .bd-face { position: relative; grid-area: 1 / 1; display: grid; align-content: start; padding: var(--space-xl) var(--space-md) var(--space-md); border: var(--rule-hair) solid var(--color-card-edge); background: var(--color-card); box-shadow: inset 0 1px 0 var(--color-card-hi); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+/* The slot punched through the card where the jaw goes: rounded, showing the ground, its
+   lower lip catching the light. Shared by every card cut like the badge (.bd-surface). */
+[data-theme="badge"] .bd-face::before, [data-theme="badge"] .bd-surface::before { content: ""; position: absolute; top: var(--space-sm); left: 50%; width: 44px; height: 10px; transform: translateX(-50%); border-radius: 5px; background: var(--color-paper); box-shadow: inset 0 -1px 0 var(--color-card-hi); }
+[data-theme="badge"] .bd-face--back { transform: perspective(1400px) rotateY(180deg); align-content: center; gap: var(--space-md); }
+[data-theme="badge"] .bd-badge.is-turned .bd-face--front { transform: perspective(1400px) rotateY(-180deg); }
+[data-theme="badge"] .bd-badge.is-turned .bd-face--back { transform: none; }
+/* The face turned away is also hidden, halfway through the turn, so it leaves the tab
+   order and the accessibility tree and never sits painted under the other face. */
+[data-theme="badge"] .bd-face { transition: transform 600ms var(--ease-in-out), visibility 0s linear 300ms; }
+[data-theme="badge"] .bd-face--back, [data-theme="badge"] .bd-badge.is-turned .bd-face--front { visibility: hidden; }
+[data-theme="badge"] .bd-badge.is-turned .bd-face--back { visibility: visible; }
+
+/* Photograph as moonlight: shadows in the ground's blue, highlights in ink-2. */
+[data-theme="badge"] .bd-photo { position: relative; isolation: isolate; aspect-ratio: 4 / 3; overflow: hidden; background: var(--color-ink-2); }
+[data-theme="badge"] .bd-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; transform: scale(1.3); transform-origin: 54% 44%; filter: grayscale(1) contrast(1.3) brightness(0.9); mix-blend-mode: multiply; pointer-events: none; }
+[data-theme="badge"] .bd-photo::after { content: ""; position: absolute; inset: 0; background: var(--color-paper); mix-blend-mode: lighten; box-shadow: inset 0 0 0 1px var(--color-photo-edge); }
+
+[data-theme="badge"] .bd-badge__name { margin-top: var(--space-md); font-size: var(--text-lg); font-weight: 500; line-height: 1.2; }
+[data-theme="badge"] .bd-badge__title { margin-top: var(--space-2xs); color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.35; }
+[data-theme="badge"] .bd-badge__org { color: var(--color-muted); font-size: var(--text-sm); }
+[data-theme="badge"] .bd-access { display: grid; gap: var(--space-2xs); margin-top: var(--space-md); padding-top: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule-2); }
+[data-theme="badge"] .bd-badge__label { color: var(--color-muted); font-size: var(--text-xs); font-weight: 500; }
+[data-theme="badge"] .bd-access ul { display: grid; gap: var(--space-3xs); list-style: none; font-size: var(--text-sm); line-height: 1.35; }
+
+[data-theme="badge"] .bd-back__links { display: grid; list-style: none; }
+[data-theme="badge"] .bd-back__links a { display: grid; gap: var(--space-3xs); padding-block: var(--space-xs); min-height: 44px; border-top: var(--rule-hair) solid var(--color-rule-2); text-decoration: none; }
+[data-theme="badge"] .bd-back__links .ic-label { color: var(--color-muted); font-size: var(--text-xs); }
+[data-theme="badge"] .bd-back__v { font-size: var(--text-sm); font-weight: 500; overflow-wrap: break-word; text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 0.2em; }
+[data-theme="badge"] .bd-back__links a:hover .bd-back__v { text-decoration-color: var(--color-accent); }
+[data-theme="badge"] .bd-back__note { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.4; }
+
+[data-theme="badge"] .bd-rig__controls { display: grid; justify-items: center; gap: var(--space-xs); padding-bottom: var(--space-2xl); text-align: center; }
+[data-theme="badge"] .bd-hint { max-width: 30ch; color: var(--color-muted); font-size: var(--text-xs); }
+
+/* Section heads: the head on the left, its one line on the right, baselines aligned. */
+[data-theme="badge"] .bd-head { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); justify-content: space-between; align-items: end; gap: var(--space-lg) var(--gap-columns); margin-bottom: var(--space-2xl); }
+[data-theme="badge"] .bd-head .lead { max-width: 46ch; }
+
+/* What I own: the figure as the statement. */
+[data-theme="badge"] .bd-own { padding-block: var(--section-gap-s) var(--section-gap); }
+/* Two figures at one size on one baseline: the values open each column. */
+[data-theme="badge"] .bd-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-columns); align-items: stretch; margin: 0; }
+[data-theme="badge"] .bd-fig { display: grid; gap: var(--space-xs); align-content: start; padding: var(--space-2xl) var(--space-xl) var(--space-xl); }
+[data-theme="badge"] .bd-fig dd { margin: 0; }
+[data-theme="badge"] .bd-fig dt { order: 1; color: var(--color-ink-2); font-size: var(--text-lg); }
+[data-theme="badge"] .bd-fig__value { order: 0; font-size: clamp(4rem, 9vw, 8.5rem); font-weight: var(--display-weight); font-variation-settings: "wdth" 125; letter-spacing: -0.03em; line-height: 0.9; font-variant-numeric: tabular-nums; }
+[data-theme="badge"] .bd-fig__context { order: 2; max-width: 44ch; color: var(--color-muted); font-size: var(--text-sm); line-height: 1.5; }
+
+/* The work as the access log behind the badge: one entry per project, hairline rows, the
+   status in words in the last column. Shipped reads in ink, the rest in muted. */
+[data-theme="badge"] .bd-work { padding-block: var(--section-gap-s) var(--section-gap); }
+/* The log is printed on the badge's card: the same edge, top light and slot. */
+[data-theme="badge"] .bd-logcard { padding: var(--space-2xl) var(--space-xl) var(--space-lg); }
+[data-theme="badge"] .bd-entries { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left; }
+[data-theme="badge"] .bd-entries thead th:first-child { width: 38%; }
+[data-theme="badge"] .bd-entries thead th:last-child { width: 9rem; }
+[data-theme="badge"] .bd-entries thead th { padding: 0 var(--space-md) var(--space-sm) 0; border-bottom: var(--rule-hair) solid var(--color-rule-2); color: var(--color-muted); font-size: var(--text-xs); font-weight: 500; }
+[data-theme="badge"] .bd-entries thead th:last-child, [data-theme="badge"] .bd-entry__state { padding-right: 0; text-align: right; }
+[data-theme="badge"] .bd-entry > * { padding: var(--space-lg) var(--space-md) var(--space-lg) 0; border-bottom: var(--rule-hair) solid var(--color-rule-2); vertical-align: baseline; }
+[data-theme="badge"] .bd-entry__name { font-size: var(--text-title); font-weight: 400; font-variation-settings: "wdth" 125; line-height: 1.2; }
+[data-theme="badge"] .bd-entry:last-child > * { border-bottom: 0; padding-bottom: var(--space-sm); }
+[data-theme="badge"] .bd-entry__body p + p { margin-top: var(--space-2xs); }
+[data-theme="badge"] .bd-entry__caveat { color: var(--color-muted); font-size: var(--text-sm); }
+[data-theme="badge"] .bd-entry > .bd-entry__state { padding-right: 0; font-size: var(--text-sm); font-weight: 500; white-space: nowrap; }
+[data-theme="badge"] .bd-entry--partial .bd-entry__state, [data-theme="badge"] .bd-entry--progress .bd-entry__state { color: var(--color-muted); }
+
+/* The decision, on the one band. */
+[data-theme="badge"] .bd-decision { padding-block: var(--section-gap-s); background: var(--color-paper-2); }
+[data-theme="badge"] .bd-decision .bd-head { align-items: start; }
+[data-theme="badge"] .bd-choice { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--gap-columns); margin: 0; }
+[data-theme="badge"] .bd-choice > div { display: grid; gap: var(--space-sm); align-content: start; padding-top: var(--space-md); border-top: var(--rule-hair) solid var(--color-rule-2); }
+[data-theme="badge"] .bd-choice dt { color: var(--color-muted); font-size: var(--text-sm); font-weight: 500; }
+[data-theme="badge"] .bd-choice dd { margin: 0; max-width: 40ch; font-size: var(--text-lg); line-height: 1.45; }
+[data-theme="badge"] .bd-more { margin-top: var(--space-xl); }
+[data-theme="badge"] .bd-more summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; font-size: var(--text-sm); font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-edge); text-underline-offset: 0.2em; transition: text-decoration-color var(--dur-micro) var(--ease-out); }
+[data-theme="badge"] .bd-more summary:hover { text-decoration-color: var(--color-accent); }
+[data-theme="badge"] .bd-more summary:active { opacity: 0.8; }
+[data-theme="badge"] .bd-more__body { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); margin: var(--space-lg) 0 0; color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.55; }
+[data-theme="badge"] .bd-more__body dt { margin-bottom: var(--space-2xs); color: var(--color-ink); font-weight: 500; }
+[data-theme="badge"] .bd-more__body dd { margin: 0; }
+
+/* Career as the badges held before this one: the same card, slot and edge, laid in a row.
+   The current one in ink, the older ones in muted. */
+[data-theme="badge"] .bd-career { padding-block: var(--section-gap); }
+[data-theme="badge"] .bd-career__h { margin-bottom: var(--space-2xl); }
+[data-theme="badge"] .bd-surface { position: relative; border: var(--rule-hair) solid var(--color-card-edge); background: var(--color-card); box-shadow: inset 0 1px 0 var(--color-card-hi); }
+[data-theme="badge"] .bd-passes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap-columns); list-style: none; }
+[data-theme="badge"] .bd-pass { display: grid; align-content: start; gap: var(--space-xs); min-height: 220px; padding: var(--space-xl) var(--space-lg) var(--space-lg); color: var(--color-muted); }
+[data-theme="badge"] .bd-pass.is-current { color: var(--color-ink); }
+[data-theme="badge"] .bd-pass h3 { font-size: var(--text-title); font-weight: 400; font-variation-settings: "wdth" 125; line-height: 1.2; }
+[data-theme="badge"] .bd-pass__when { font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+[data-theme="badge"] .bd-pass__org { margin-top: auto; padding-top: var(--space-md); font-size: var(--text-sm); }
+
+/* Contact */
+[data-theme="badge"] .bd-contact { padding-block: var(--section-gap-s) var(--section-gap); border-top: var(--rule-hair) solid var(--color-rule); }
+[data-theme="badge"] .bd-contact__in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "main pass" "ask pass"; gap: var(--space-2xl) var(--gap-columns); }
+[data-theme="badge"] .bd-contact__main { grid-area: main; }
+[data-theme="badge"] .bd-contact__pass { grid-area: pass; align-self: start; display: grid; gap: var(--space-sm); padding: var(--space-2xl) var(--space-xl) var(--space-xl); }
+[data-theme="badge"] .bd-ask { grid-area: ask; }
+[data-theme="badge"] .bd-contact__main { display: grid; gap: var(--space-lg); align-content: start; }
+[data-theme="badge"] .bd-links { display: grid; list-style: none; }
+[data-theme="badge"] .bd-links li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 var(--space-md); align-items: center; padding-top: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule-2); }
+[data-theme="badge"] .bd-links li .ic-label { grid-column: 1 / -1; }
+[data-theme="badge"] .bd-links .ic-label { color: var(--color-muted); font-size: var(--text-sm); }
+[data-theme="badge"] .bd-links a { display: inline-block; padding-block: var(--space-sm); min-height: 48px; overflow-wrap: break-word; }
+[data-theme="badge"] .sc-copy { font-size: var(--text-sm); }
+[data-theme="badge"] .sc-ask { align-content: start; gap: var(--space-md); }
+[data-theme="badge"] .sc-ask-head { font-weight: var(--display-weight); font-variation-settings: "wdth" 125; font-size: var(--text-section); line-height: 1.04; }
+[data-theme="badge"] .sc-ask-note { color: var(--color-muted); }
+
+/* Footer */
+[data-theme="badge"] .bd-footer { border-top: var(--rule-hair) solid var(--color-rule); }
+[data-theme="badge"] .bd-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-xs) var(--space-lg); padding-block: var(--space-xl); color: var(--color-muted); font-size: var(--text-sm); }
+
+/* The one settle: the hero's text from 0.6 to full, once, from a visible default. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme="badge"] .bd-hero__who { animation: bd-settle var(--dur-long) var(--ease-out) both; }
+}
+@keyframes bd-settle { from { opacity: 0.6; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="badge"] .bd-face, [data-theme="badge"] .th-btn, [data-theme="badge"] .bd-turn { transition: none; }
+  [data-theme="badge"] .bd-badge { cursor: auto; }
+}
+
+@media (max-width: 64rem) {
+  /* The section links are a desktop aid; on a narrow screen the page is one scroll. */
+  [data-theme="badge"] .bd-nav__links { display: none; }
+  [data-theme="badge"] .bd-hero__in { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  [data-theme="badge"] .bd-hero__who { padding-block: var(--space-3xl) var(--space-xl); }
+  /* On a narrow screen the strap hangs from a rule under the actions. */
+  [data-theme="badge"] .bd-rig { border-top: var(--rule-hair) solid var(--color-rule); }
+  [data-theme="badge"] .bd-pend { padding-block: var(--space-2xl) var(--space-lg); }
+  [data-theme="badge"] .bd-head, [data-theme="badge"] .bd-figs { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="badge"] .bd-contact__in { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "pass" "ask"; }
+  [data-theme="badge"] .bd-passes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* The log restacks: name and status on one line, what it covers beneath. */
+  [data-theme="badge"] .bd-entries thead { display: none; }
+  [data-theme="badge"] .bd-entries, [data-theme="badge"] .bd-entries tbody { display: block; }
+  [data-theme="badge"] .bd-entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-xs) var(--space-md); padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
+  [data-theme="badge"] .bd-entry > * { display: block; width: auto; padding: 0; border: 0; }
+  [data-theme="badge"] .bd-entry__body { grid-column: 1 / -1; grid-row: 2; }
+  [data-theme="badge"] .bd-more__body { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 40rem) {
+  [data-theme="badge"] .bd-fig, [data-theme="badge"] .bd-logcard { padding: var(--space-xl) var(--space-md) var(--space-md); }
+  [data-theme="badge"] .bd-nav__in { justify-content: space-between; }
+  [data-theme="badge"] .bd-choice { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="badge"] .bd-passes { grid-template-columns: minmax(0, 1fr); }
+  /* Long project names would break mid-word in the expanded cut at this width. */
+  [data-theme="badge"] .bd-entry__name { font-variation-settings: "wdth" 100; }
+  [data-theme="badge"] .bd-pass { min-height: 0; }
+  [data-theme="badge"] .bd-links li { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+}
