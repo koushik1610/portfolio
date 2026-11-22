@@ -13,6 +13,11 @@ import "@/components/layouts/darkroom/tokens.css";
 import "@/components/layouts/brutal/tokens.css";
 import "@/components/layouts/blueprint/tokens.css";
 import "@/components/layouts/status/tokens.css";
+import "@/components/layouts/depth/tokens.css";
+import "@/components/layouts/fold/tokens.css";
+import "@/components/layouts/helix/tokens.css";
+import "@/components/layouts/deck/tokens.css";
+import "@/components/layouts/badge/tokens.css";
 import "./resume/tokens.css";
 import "./globals.css";
 

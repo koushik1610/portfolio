@@ -38,6 +38,11 @@ const HEROES: Record<ThemeSlug, ComponentType> = {
   brutal: dynamic(() => import("./layouts/brutal/BrutalHero"), { ssr: false, loading: Placeholder }),
   blueprint: dynamic(() => import("./layouts/blueprint/BlueprintHero"), { ssr: false, loading: Placeholder }),
   status: dynamic(() => import("./layouts/status/StatusHero"), { ssr: false, loading: Placeholder }),
+  depth: dynamic(() => import("./layouts/depth/DepthHero"), { ssr: false, loading: Placeholder }),
+  fold: dynamic(() => import("./layouts/fold/FoldHero"), { ssr: false, loading: Placeholder }),
+  helix: dynamic(() => import("./layouts/helix/HelixHero"), { ssr: false, loading: Placeholder }),
+  deck: dynamic(() => import("./layouts/deck/DeckHero"), { ssr: false, loading: Placeholder }),
+  badge: dynamic(() => import("./layouts/badge/BadgeHero"), { ssr: false, loading: Placeholder }),
 };
 
 export default function Hero() {

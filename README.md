@@ -14,7 +14,7 @@
 <h3 align="center">koushik.io</h3>
 
   <p align="center">
-    Personal site for Koushik Kotamraju, Principal Technical Security Engineer at Yahoo. Six themes, each one a different design built from a Hallmark theme material, all reading from one content layer.
+    Personal site for Koushik Kotamraju, Principal Technical Security Engineer at Yahoo. Eleven themes, each one a different design built from a Hallmark theme material, all reading from one content layer.
     <br />
     <br />
     <a href="https://koushik.io"><strong>View the live site</strong></a>
@@ -50,7 +50,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About the project
 
-A personal site that shows one of six themes. A new visitor gets the week's theme and keeps it on later visits; "Next theme" in each theme's nav moves to the next one. Every theme carries the same facts: who he is and at what level, the AWS baseline he owns, the work with its honest build status, at least one decision record with the option he rejected, his career, and a way to reach him.
+A personal site that shows one of eleven themes. A new visitor gets the week's theme and keeps it on later visits; "Next theme" in each theme's nav moves to the next one. Every theme carries the same facts: who he is and at what level, the AWS baseline he owns, the work with its honest build status, at least one decision record with the option he rejected, his career, and a way to reach him.
 
 The themes were rebuilt in October 2026 with [Hallmark](https://github.com/nutlope/hallmark), a design skill whose linter fails the defaults generated pages fall into (eyebrows, tracked capitals, a centred template, invented numbers). A review council picked the five materials from the themes Hallmark dealt for this brief. Every page passes `sloplint --render` with zero FAIL, and every waiver is written into the page's own stylesheet with its reason.
 
@@ -69,7 +69,7 @@ The themes were rebuilt in October 2026 with [Hallmark](https://github.com/nutlo
 * [![Next][Next.js]][Next-url]
 * [![TypeScript][TypeScript]][TypeScript-url]
 
-Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-hosted woff2 files in `public/fonts` (all SIL OFL), loaded through `next/font/local` with preloading off, so a visitor downloads only the active theme's faces. There is no animation library; the little motion there is uses CSS.
+Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-hosted woff2 files in `public/fonts` (all SIL OFL), loaded through `next/font/local` with preloading off, so a visitor downloads only the active theme's faces. There is no animation library. Motion is CSS where it can be; the depth tilt, the helix drag, the deck lean and the badge pendulum are small hand-written scripts that stop when idle and honour reduced motion.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,6 +85,11 @@ Static export to GitHub Pages. Plain scoped CSS, no framework. Fonts are self-ho
 | `brutal` | Brutal | A boxed fact sheet, and the miss he has not yet closed, stated in full | Light |
 | `blueprint` | Blueprint | A toxic-combination escalation path drawn as an elevation, his photo as a cyanotype in the title block | Mid |
 | `status` | Wayfind | The career as a status page: real build states, one open known gap, decisions as changes, no invented uptime | Light |
+| `depth` | Broadside (red-bill) | His cut-out portrait stands in front of his name and turns toward the cursor, on a drenched red bill | Red |
+| `fold` | Piste | A closed foldable phone with his lock screen; scrolling unfolds it into the page | Light |
+| `helix` | Formwork | A turning 3D ribbon of tiles (his photo and his projects) over a full-width name | Mid |
+| `deck` | Grid | Swiss and calm: a tilted 3D deck of real cards (projects, a figure, a decision) beside the name | Light |
+| `badge` | Midnight | An access badge on a lanyard: drag it to swing it, turn it over for contact details | Dark |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -106,7 +111,9 @@ app/resume/                       one neutral, print-first résumé for all them
 
 Each theme's colours and faces live in its `tokens.css`, scoped to `:root[data-theme="<slug>"]`. All the token files load up front (about 2 KB each), so colours resolve the moment the head script sets `data-theme`, before the theme's own code arrives. Every rule in a theme's `styles.css` starts with its `[data-theme]` selector, because theme CSS stays loaded after a rotation.
 
-`npm run check` runs `scripts/check-themes.mjs`, which fails on an unscoped selector, a colour or font literal outside `tokens.css`, a missing Hallmark stamp, or a theme missing the decision record, the action row, the controls, or the screen-reader summary. Then ESLint.
+`npm run check` runs `scripts/check-themes.mjs`, which fails on an unscoped selector, a colour or font literal outside `tokens.css`, a face that `lib/fonts.ts` does not register, a missing Hallmark stamp, or a theme missing the decision record, the action row, the controls, or the screen-reader summary. Then ESLint. `npm run smoke` loads every theme from the served export and checks for one h1 that reads the name, the Email me control and no horizontal scroll at 375px.
+
+The design rules every theme follows beyond Hallmark are in `docs/ui-guidelines.md`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

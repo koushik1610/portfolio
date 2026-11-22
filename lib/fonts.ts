@@ -28,6 +28,7 @@ const barlow = localFont({
   src: [
     { path: "../public/fonts/Barlow-300.woff2", weight: "300" },
     { path: "../public/fonts/Barlow-400.woff2", weight: "400" },
+    { path: "../public/fonts/Barlow-500.woff2", weight: "500" },
   ],
   variable: "--nf-barlow",
 });
@@ -47,7 +48,28 @@ const libreFranklin = localFont({ display: "swap", preload: false, src: "../publ
 
 const chivoMono = localFont({ display: "swap", preload: false, src: "../public/fonts/ChivoMono-var.woff2", weight: "100 900", variable: "--nf-chivo-mono" });
 
+/* 2026-11-20 themes (depth, fold, helix, deck, badge). All SIL OFL 1.1, from
+   Fontsource. */
+const sixCaps = localFont({ display: "swap", preload: false, src: "../public/fonts/SixCaps-400.woff2", weight: "400", variable: "--nf-six-caps" });
+const bevan = localFont({ display: "swap", preload: false, src: "../public/fonts/Bevan-400.woff2", weight: "400", variable: "--nf-bevan" });
+const archivoNarrow = localFont({ display: "swap", preload: false, src: "../public/fonts/ArchivoNarrow-var.woff2", weight: "400 700", variable: "--nf-archivo-narrow" });
+const archivo = localFont({ display: "swap", preload: false, src: "../public/fonts/Archivo-var.woff2", weight: "100 900", variable: "--nf-archivo" });
+const oswald = localFont({ display: "swap", preload: false, src: "../public/fonts/Oswald-var.woff2", weight: "200 700", variable: "--nf-oswald" });
+const barlowCondensed = localFont({
+  display: "swap",
+  preload: false,
+  src: [
+    { path: "../public/fonts/BarlowCondensed-500.woff2", weight: "500" },
+    { path: "../public/fonts/BarlowCondensed-800.woff2", weight: "800" },
+  ],
+  variable: "--nf-barlow-condensed",
+});
+const radioCanadaBig = localFont({ display: "swap", preload: false, src: "../public/fonts/RadioCanadaBig-var.woff2", weight: "400 700", variable: "--nf-radio-canada-big" });
+const radioCanada = localFont({ display: "swap", preload: false, src: "../public/fonts/RadioCanada-var.woff2", weight: "300 700", variable: "--nf-radio-canada" });
+const monaSans = localFont({ display: "swap", preload: false, src: "../public/fonts/MonaSans-var.woff2", weight: "200 900", declarations: [{ prop: "font-stretch", value: "75% 125%" }], variable: "--nf-mona-sans" });
+
 /** All font variable classes, for <html className>. */
 export const fontVariables = [
   hostGrotesk, atkinsonMono, sofiaCondensed, barlow, chakraPetch, plexSans, plexMono, epilogue, libreFranklin, chivoMono,
+  sixCaps, bevan, archivoNarrow, archivo, oswald, barlowCondensed, radioCanadaBig, radioCanada, monaSans,
 ].map((f) => f.variable).join(" ");
