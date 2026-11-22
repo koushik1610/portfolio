@@ -11,7 +11,8 @@
    4. Every theme renders a published decision record (through the throwing
       decisionById, so a held or missing record fails loudly), the CTA row, the
       site controls, and the SrSummary (the council's per-theme content contract).
-   5. Every theme's tokens.css is one block scoped to :root[data-theme="<slug>"]. */
+   5. Every theme's tokens.css is one block scoped to :root[data-theme="<slug>"].
+   6. Every --nf-* face a tokens.css names is registered in lib/fonts.ts. */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
@@ -19,6 +20,7 @@ const root = new URL("..", import.meta.url).pathname;
 const layouts = join(root, "components/layouts");
 const slugs = readdirSync(layouts).filter((d) => !d.startsWith("_"));
 const errors = [];
+const fontsTs = readFileSync(join(root, "lib/fonts.ts"), "utf8");
 
 const COLOR = /#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|oklab|lab|lch|color-mix)\(|\b(?:white|black)\b/i;
 
@@ -86,6 +88,11 @@ for (const slug of slugs) {
     const tok = readFileSync(tokPath, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
     const sels = [...tok.matchAll(/([^{}]+)\{/g)].map((m) => m[1].trim());
     for (const sel of sels) if (sel !== `:root[data-theme="${slug}"]`) errors.push(`${slug}/tokens.css: block not scoped to :root[data-theme="${slug}"]: ${sel.slice(0, 60)}`);
+    // 6. Every self-hosted face a theme names must be registered in lib/fonts.ts,
+    //    or the var() falls through to the system fallback without an error.
+    for (const m of tok.matchAll(/var\((--nf-[a-z0-9-]+)\)/g)) {
+      if (!fontsTs.includes(`"${m[1]}"`)) errors.push(`${slug}/tokens.css: ${m[1]} is not registered in lib/fonts.ts`);
+    }
   }
 
   {

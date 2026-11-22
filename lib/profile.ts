@@ -135,11 +135,14 @@ export const AVAILABILITY = "Open to Principal and Staff security roles, and sec
 
 /* ── Photographs ─────────────────────────────────────────────────────────── */
 
-/* The two real images of him. Themes that carry a portrait read it from here so
+/* The real images of him. Themes that carry a portrait read it from here so
    alt text is written once. */
 export const PORTRAITS = {
-  photo: { src: "/profile.jpeg", alt: "Koushik Kotamraju" },
+  photo: { src: "/profile.jpeg", alt: "Koushik Kotamraju", width: 724, height: 1086 },
   avatar: { src: "/my-3d-avatar.png", alt: "A 3D-rendered portrait of Koushik Kotamraju" },
+  /* The same photograph with the background removed (macOS Vision person mask,
+     made locally, 2026-11-20), cropped to the figure. Transparent WebP. */
+  cutout: { src: "/profile-cutout.webp", alt: "Koushik Kotamraju", width: 658, height: 754 },
 } as const;
 
 /* ── Projects ────────────────────────────────────────────────────────────── */
