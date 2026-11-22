@@ -1,0 +1,41 @@
+/* helix tokens: Hallmark scaffold output (theme.mjs scaffold formwork), scoped to this theme so the token sets can load together. */
+:root[data-theme="helix"] {
+  color-scheme: light;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+  --color-paper: oklch(92% 0.01 80); --color-paper-2: oklch(87% 0.011 80); --color-paper-3: oklch(82% 0.012 80);
+  --color-plate: oklch(96.5% 0.006 80); --color-plate-ink: oklch(95% 0.006 80);
+  --color-ink: oklch(18% 0.005 270); --color-ink-2: oklch(28% 0.006 80); --color-muted: oklch(31.5% 0.008 80);
+  --color-rule: oklch(82% 0.012 80);
+  --color-accent: oklch(66% 0.21 38); --color-accent-ink: oklch(18% 0.005 270); --color-focus: oklch(42% 0.15 38);
+  --color-accent-deep: oklch(48% 0.17 38);
+  --texture-opacity: 0.05;
+  --font-display: var(--nf-oswald), "Oswald", ui-sans-serif, sans-serif; --font-body: var(--nf-archivo), "Archivo", ui-sans-serif, sans-serif;
+  --font-outlier: var(--nf-archivo-narrow), "Archivo Narrow", ui-sans-serif, sans-serif;
+  --radius-card: 0; --radius-pill: 0; --rule-hair: 1px; --rule-bar: 3px;
+  --shadow-card: 6px 6px 0 var(--color-ink);
+  --tracking-display: -0.005em; --display-weight: 700;
+  /* helix additions: the ribbon's tile radius (the spec asks for rounded tiles; every other edge stays square),
+     the pressed-in secondary, the focus ring on the ink band, and the cast grain as faint specks, on the hero band only. */
+  --radius-tile: 0.42; /* a share of the tile width: the tiles read as cut stadiums, like a skatepark bowl */
+  --shadow-press: inset 0 2px 3px oklch(18% 0.005 270 / 0.3);
+  --shadow-raise: 0 3px 0 var(--color-accent-deep);
+  --color-focus-ink: oklch(66% 0.21 38);
+  --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 -0.16'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+/* Contrast, computed with scripts/contrast.py (2026-11-22), hex from the OKLCH tokens. The paper is
+   formwork's light end: warm off-white concrete at L 92 (paper-2 87, paper-3 82, plate 96.5), same
+   hue 80, after council rounds 2 and 3 read the mid grey as dated.
+   ink #111114 on paper #e8e4dd 14.88:1 · ink-2 #2a2926 on paper 11.48:1 · muted #34312d on paper 10.21:1
+   muted on paper-2 #d8d4cc 8.75:1 · ink-2 on paper-2 9.84:1 · ink on paper-2 12.75:1 · ink on plate #f6f3ef 17.04:1
+   accent-ink #111114 on accent #f65311 5.53:1 (Email label) · accent on ink 5.53:1 (hover, focus on the ink band)
+   accent-deep #a72900 on paper 5.60:1 (link hover) · plate-ink #f1eeea on ink 16.30:1
+   focus #8c2000 on paper 7.14:1, on paper-2 6.12:1
+   control boundary: every button carries a 2px ink border, ink on paper 14.88:1 (orange on paper alone is 2.69:1, so it never stands as an edge). */

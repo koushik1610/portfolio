@@ -1,0 +1,244 @@
+/* Hallmark · shape: Marquee Hero · genre: editorial · theme: Formwork (by request) · redesign: full
+ * hero: Ledge (the ribbon fills the field, the name rests under it across the full width, the lede and actions on one row beneath) · nav: edge-aligned, the KK wordmark, four anchors, the next-theme control · footer: a mast on a darker pour, the name over the revision line · imagery: photographs (crops of the one portrait, on the ribbon's tiles) · signature: a ribbon of portrait tiles on a travelling wave across the hero above the name (never edge-on), turning slowly, faster when dragged or scrolled, held by Pause · formwork: cast
+ * axes: mid/display-condensed/warm · posture: restrained · contrast: pass · fold: pass · budget: about 4 KB gzipped JS for the theme chunk, no dependencies · offscreen: an IntersectionObserver on the stage cancels the frame loop (cancelAnimationFrame, speed zeroed) and sets is-offscreen, which pauses the CSS wave; a hidden tab cancels it too, and run() refuses to start while either holds · keyboard: skip link, KK, Work, Decision, Career, Contact, Next theme, Email me, Résumé, Turn the ribbon, Pause the ribbon, then the page · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V5 · weakest: H, a moving ribbon can out-shout a name; the name is set across the full width in ink, in front of the ribbon, and the tiles are printed black and white so the orange stays on Email */
+/* Hallmark · waive 71 · the project and career rows are an index: each h3 sits at the top of its row beside its own state and line, under a hairline · the space above it is the row padding, not a section seam */
+/* Hallmark · waive 44c · the hero ends near 640px of a 900px screen · the council asked for a shorter ribbon so the name leads; the statement ink band starts directly below, so the first screen reads hero then statement with no empty fold */
+/* Hallmark · waive 22 · orange on Email and on the shipped state of each project · the build spec names both as the one signal, and the second use carries a state (shipped) as an underline bar, never decoration */
+
+[data-theme="helix"] { scroll-padding-top: var(--space-md); scrollbar-color: var(--color-ink-2) var(--color-paper); }
+[data-theme="helix"] .hx-root { background-color: var(--color-paper); color: var(--color-ink); }
+[data-theme="helix"] main:focus-visible { outline: none; }
+[data-theme="helix"] ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+[data-theme="helix"] h1,
+[data-theme="helix"] h2,
+[data-theme="helix"] h3 { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; text-wrap: balance; }
+[data-theme="helix"] h2 { font-size: var(--text-section); line-height: 1.02; }
+[data-theme="helix"] h3 { font-size: var(--text-title); line-height: 1.05; }
+[data-theme="helix"] p,
+[data-theme="helix"] dd { color: var(--color-ink-2); }
+[data-theme="helix"] .lead { color: var(--color-ink); }
+[data-theme="helix"] a { text-underline-offset: 0.2em; }
+[data-theme="helix"] .num { font-variant-numeric: tabular-nums; }
+[data-theme="helix"] .hx-root a:focus-visible,
+[data-theme="helix"] .hx-root button:focus-visible,
+[data-theme="helix"] .hx-root summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+[data-theme="helix"] .th-skip { color: var(--color-accent-ink); }
+
+/* Controls: the formwork pair. Oswald capitals, square, an orange primary raised on a
+   hard edge and a pressed-in secondary. Both press to 0.97. */
+[data-theme="helix"] .th-cta-row { gap: var(--space-sm); }
+[data-theme="helix"] .th-btn { min-height: 48px; padding: 0 var(--space-lg); border: 2px solid var(--color-ink); border-radius: 0; font-family: var(--font-body); font-size: var(--text-md); font-weight: 600; letter-spacing: 0; white-space: nowrap; text-decoration: none; transition: transform 150ms ease-out, background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+[data-theme="helix"] .th-btn--primary { background: var(--color-accent); color: var(--color-accent-ink); box-shadow: var(--shadow-raise); }
+[data-theme="helix"] .th-btn--secondary { background: var(--color-paper-2); color: var(--color-ink); box-shadow: var(--shadow-press); }
+[data-theme="helix"] .th-btn:hover { border-color: var(--color-ink); }
+[data-theme="helix"] .th-btn--primary:hover { background: var(--color-ink); color: var(--color-accent); }
+[data-theme="helix"] .th-btn--secondary:hover { background: var(--color-plate); }
+[data-theme="helix"] .th-btn:active { transform: scale(0.97); }
+[data-theme="helix"] .th-btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+[data-theme="helix"] .th-btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
+
+/* Nav */
+[data-theme="helix"] .hx-nav { position: relative; z-index: var(--z-raised); background-image: var(--texture-grain); background-size: 120px 120px; }
+[data-theme="helix"] .hx-nav__in { display: flex; align-items: center; gap: var(--space-lg); min-height: 64px; }
+[data-theme="helix"] .hx-wordmark { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; text-decoration: none; }
+[data-theme="helix"] .hx-wordmark:hover { color: var(--color-accent-deep); }
+[data-theme="helix"] .hx-nav__links { display: flex; gap: var(--space-lg); margin-inline: auto var(--space-xs); font-size: var(--text-sm); font-weight: 500; }
+[data-theme="helix"] .hx-nav__links a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; text-decoration: none; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="helix"] .hx-nav__links a:hover { text-decoration: underline; color: var(--color-accent-deep); }
+[data-theme="helix"] .hx-nav__links a:active,
+[data-theme="helix"] .hx-wordmark:active { opacity: 0.8; }
+[data-theme="helix"] .sc-next { padding: 0; font-size: var(--text-sm); font-weight: 500; white-space: nowrap; }
+[data-theme="helix"] .sc-next:hover { color: var(--color-accent-deep); }
+
+/* ── Hero: the ribbon above, the name at the base ───────────────────────── */
+/* The cast grain lives on the first screen only (nav and hero), a small tile at low opacity. */
+[data-theme="helix"] .hx-hero { position: relative; display: grid; grid-template-rows: clamp(170px, 33svh, 340px) auto; overflow-x: clip; padding-bottom: var(--space-lg); background-image: var(--texture-grain); background-size: 120px 120px; }
+
+/* The ribbon. Each tile sits at its index along the axis and is turned about it by
+   index times the twist; the spin element turns the whole set, and the boost element
+   adds whatever the pointer, the scroll or the button gave it. */
+[data-theme="helix"] .hx-stage {
+  /* Ribbon geometry. --hx-tiles comes from TILES.length (inline). The step is the
+     largest that keeps the whole ribbon inside the stage: one free step at each end,
+     and the tile height plus the slope's drop inside the stage height. So no tile is
+     cut by the viewport and nothing reaches the name. */
+  --hx-count: var(--hx-tiles);
+  --hx-slope: 4deg;
+  --hx-rise: 0.0698; /* sin(4deg): vertical drop per step of length */
+  --hx-tall: 3.2; /* tile height in steps */
+  --hx-ends: 2; /* free steps left over the two ends together */
+  --hx-step: min(72px, 100cqw / (var(--hx-count) + var(--hx-ends)), 100cqh / (var(--hx-tall) + var(--hx-count) * var(--hx-rise) + 0.6));
+  --hx-w: calc(var(--hx-step) * 0.98);
+  --hx-h: calc(var(--hx-step) * var(--hx-tall));
+  /* The wave: tile i faces the viewer at amp x sin(i x wave + phase). --hx-amp and
+     --hx-wave are set inline from AMPLITUDE and WAVE_STEP in physics.ts (one source);
+     both stay under 90, so no tile goes edge-on. */
+  --hx-period: 18s;
+  position: relative; grid-row: 1; z-index: 0; container-type: size; perspective: 1500px;
+  /* Both ends dissolve over the free step and the first tiles, never a hard cut. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, var(--color-ink) 12% 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, var(--color-ink) 12% 88%, transparent);
+  touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none;
+}
+[data-theme="helix"] .hx-stage.is-dragging { cursor: grabbing; }
+@property --hx-phase { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+@keyframes hx-wave { from { --hx-phase: 0deg; } to { --hx-phase: 360deg; } }
+[data-theme="helix"] .hx-ribbon { position: absolute; left: 50%; top: 50%; width: calc(var(--hx-step) * var(--hx-count)); height: 0; transform-style: preserve-3d; transform: translateX(-50%) rotateZ(var(--hx-slope)); animation: hx-wave var(--hx-period) linear infinite; }
+[data-theme="helix"] .hx-stage:hover .hx-ribbon,
+[data-theme="helix"] .hx-hero:focus-within .hx-ribbon,
+[data-theme="helix"] .hx-stage[data-paused] .hx-ribbon,
+[data-theme="helix"] .hx-stage.is-offscreen .hx-ribbon { animation-play-state: paused; }
+
+/* A tile is one crop of the pre-printed black-and-white portrait. Its resting angle
+   (--hx-a0) is the static pose; where CSS sin() exists the wave is live. */
+[data-theme="helix"] .hx-tile { position: absolute; left: 0; top: calc(var(--hx-h) / -2); width: var(--hx-w); height: var(--hx-h); border-radius: calc(var(--hx-w) * var(--radius-tile)); background: var(--hx-photo) var(--cx) var(--cy) / var(--cz) auto no-repeat, var(--color-paper-3); box-shadow: inset 0 0 0 2px var(--color-ink); transform: translateX(calc(var(--i) * var(--hx-step) + var(--hx-step) / 2 - var(--hx-w) / 2)) rotateX(var(--hx-a0)); }
+@supports (transform: rotateX(calc(1deg * sin(1deg)))) {
+  [data-theme="helix"] .hx-tile { transform: translateX(calc(var(--i) * var(--hx-step) + var(--hx-step) / 2 - var(--hx-w) / 2)) rotateX(calc(var(--hx-amp) * sin(var(--i) * var(--hx-wave) + var(--hx-phase) + var(--hx-boost, 0deg)))); }
+}
+
+[data-theme="helix"] .hx-hero__text { grid-row: 2; position: relative; z-index: 1; padding-top: var(--space-lg); container-type: inline-size; display: grid; gap: var(--space-lg); }
+/* The name is fitted to the column: the container width over the name's measured
+   width in ems at Oswald 700, so it fills the row at every size and never wraps. */
+[data-theme="helix"] .hx-name { --hx-fit: 8.8; max-width: none; margin: 0; font-size: calc(100cqi / var(--hx-fit)); line-height: 1; letter-spacing: var(--tracking-display); white-space: nowrap; }
+[data-theme="helix"] .hx-hero__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--space-lg); }
+[data-theme="helix"] .hx-hero__who { display: grid; grid-template-columns: minmax(0, 44ch) auto; align-items: end; gap: var(--space-md) var(--space-xl); }
+[data-theme="helix"] .hx-hero__who .lead { max-width: 44ch; }
+[data-theme="helix"] .hx-controls { display: flex; gap: var(--space-md); }
+[data-theme="helix"] .hx-ctl { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--color-ink); font-size: var(--text-sm); font-weight: 500; white-space: nowrap; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; cursor: pointer; transition: transform 150ms ease-out, color var(--dur-micro) var(--ease-out); }
+[data-theme="helix"] .hx-ctl:hover { color: var(--color-accent-deep); }
+[data-theme="helix"] .hx-ctl:active { transform: scale(0.97); }
+[data-theme="helix"] .hx-ctl:disabled { opacity: 0.55; cursor: not-allowed; }
+[data-theme="helix"] .hx-ctl[aria-pressed="true"] { text-decoration-thickness: 3px; }
+
+/* ── Statement on the ink band ───────────────────────────────────────────── */
+[data-theme="helix"] .hx-statement { padding-block: var(--section-gap-s); background: var(--color-ink); color: var(--color-plate-ink); }
+[data-theme="helix"] .hx-statement__in { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--gap-columns); align-items: end; }
+[data-theme="helix"] .hx-statement__line { max-width: 24ch; color: var(--color-plate-ink); font-family: var(--font-display); font-size: clamp(2.25rem, 4.4vw + 0.25rem, 4.5rem); font-weight: 700; line-height: 1.02; text-transform: uppercase; text-wrap: balance; }
+[data-theme="helix"] .hx-statement__side { max-width: 34ch; color: var(--color-plate-ink); font-size: var(--text-lg); line-height: 1.45; }
+[data-theme="helix"] .hx-statement__fig { font-family: var(--font-outlier); font-weight: 500; }
+
+/* ── What I own: the baseline and its two figures, on a darker pour ─────── */
+/* Below the hero the sections alternate pours: a darker cast band (paper-2 between
+   two ink bars) and the light paper, each with one strong object on it. */
+[data-theme="helix"] .hx-own,
+[data-theme="helix"] .hx-decision,
+[data-theme="helix"] .hx-contact { background: var(--color-paper-2); border-block: var(--rule-bar) solid var(--color-ink); }
+[data-theme="helix"] .hx-own { padding-block: var(--section-gap); }
+[data-theme="helix"] .hx-own__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: end; padding-bottom: var(--space-2xl); }
+[data-theme="helix"] .hx-own__head .lead { color: var(--color-ink); }
+/* The figures cast as one plate, on the hard shadow. */
+[data-theme="helix"] .hx-figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: var(--space-xl); background: var(--color-plate); border: var(--rule-bar) solid var(--color-ink); box-shadow: var(--shadow-card); }
+[data-theme="helix"] .hx-figure { display: grid; align-content: start; gap: var(--space-sm); padding-right: var(--space-xl); }
+[data-theme="helix"] .hx-figure + .hx-figure { padding-left: var(--space-xl); border-left: var(--rule-hair) solid var(--color-ink); }
+[data-theme="helix"] .hx-figure dd { margin: 0; }
+[data-theme="helix"] .hx-figure__value { color: var(--color-ink); font-family: var(--font-display); font-size: clamp(5rem, 12.5vw, 13rem); font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-display); }
+[data-theme="helix"] .hx-figure__label { color: var(--color-ink); font-family: var(--font-outlier); font-size: var(--text-lg); font-weight: 500; }
+[data-theme="helix"] .hx-figure__context { max-width: 46ch; }
+
+/* ── The work: an index of projects with their state ────────────────────── */
+[data-theme="helix"] .hx-work { padding-block: var(--section-gap-l) var(--section-gap); }
+[data-theme="helix"] .hx-work h2 { padding-bottom: var(--space-2xl); }
+[data-theme="helix"] .hx-projects { list-style: none; padding-inline: var(--space-xl); background: var(--color-plate); border: var(--rule-bar) solid var(--color-ink); box-shadow: var(--shadow-card); }
+[data-theme="helix"] .hx-project { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 2fr) minmax(0, 5fr); gap: var(--gap-columns); padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-paper-3); }
+[data-theme="helix"] .hx-project:last-child { border-bottom: 0; }
+[data-theme="helix"] .hx-project h3 { max-width: 22ch; }
+[data-theme="helix"] .hx-state { align-self: start; color: var(--color-ink); font-family: var(--font-outlier); font-size: var(--text-lg); font-weight: 500; line-height: 1.3; }
+[data-theme="helix"] .hx-state.is-shipped { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 4px; text-underline-offset: 0.25em; }
+[data-theme="helix"] .hx-project__body { display: grid; gap: var(--space-2xs); }
+[data-theme="helix"] .hx-project__caveat { color: var(--color-muted); font-size: var(--text-sm); }
+
+/* ── The decision: two plates, the choice and the one it beat ───────────── */
+[data-theme="helix"] .hx-decision { padding-block: var(--section-gap); }
+[data-theme="helix"] .hx-decision__head { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--gap-columns); align-items: end; padding-bottom: var(--space-2xl); }
+[data-theme="helix"] .hx-decision__problem { max-width: 52ch; font-size: var(--text-lg); line-height: 1.45; }
+[data-theme="helix"] .hx-plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-columns); }
+[data-theme="helix"] .hx-plate { display: grid; align-content: start; gap: var(--space-md); padding: var(--space-xl); background: var(--color-plate); border: var(--rule-bar) solid var(--color-ink); box-shadow: var(--shadow-card); }
+[data-theme="helix"] .hx-plate p { color: var(--color-ink); font-size: var(--text-lg); line-height: 1.45; }
+[data-theme="helix"] .hx-plate--rejected { background: var(--color-paper-3); box-shadow: var(--shadow-press); }
+[data-theme="helix"] .hx-more { margin-top: var(--space-2xl); border-top: var(--rule-hair) solid var(--color-ink); }
+[data-theme="helix"] .hx-more summary { display: flex; align-items: center; min-height: 56px; font-weight: 500; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="helix"] .hx-more summary:hover { color: var(--color-accent-deep); }
+[data-theme="helix"] .hx-more summary:active { opacity: 0.8; }
+[data-theme="helix"] .hx-more__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-columns); margin: 0; padding-block: var(--space-md) var(--space-sm); }
+[data-theme="helix"] .hx-more__list dt { font-weight: 500; }
+[data-theme="helix"] .hx-more__list dd { margin: var(--space-2xs) 0 0; }
+
+/* ── Career ──────────────────────────────────────────────────────────────── */
+[data-theme="helix"] .hx-career { padding-block: var(--section-gap); }
+[data-theme="helix"] .hx-career__in { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--gap-columns); }
+[data-theme="helix"] .hx-roles { list-style: none; }
+[data-theme="helix"] .hx-role { display: grid; grid-template-columns: 10rem minmax(0, 1fr) minmax(0, 13rem); gap: var(--gap-columns); align-items: baseline; padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-paper-3); }
+[data-theme="helix"] .hx-role:first-child { padding-top: 0; }
+[data-theme="helix"] .hx-role { align-items: start; }
+[data-theme="helix"] .hx-role__when { display: grid; gap: var(--space-2xs); color: var(--color-ink); font-family: var(--font-outlier); font-weight: 500; }
+[data-theme="helix"] .hx-role__when span:first-child { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; line-height: 1.05; text-transform: uppercase; }
+[data-theme="helix"] .hx-role h3 { font-size: var(--text-xl); }
+
+/* ── Contact ─────────────────────────────────────────────────────────────── */
+[data-theme="helix"] .hx-contact { padding-block: var(--section-gap); border-bottom: 0; }
+[data-theme="helix"] .hx-contact__in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap-columns); align-items: start; }
+[data-theme="helix"] .hx-contact__main { display: grid; gap: var(--space-lg); padding: var(--space-xl); background: var(--color-plate); border: var(--rule-bar) solid var(--color-ink); box-shadow: var(--shadow-card); }
+[data-theme="helix"] .hx-contact__main .lead { max-width: 40ch; }
+[data-theme="helix"] .hx-links { display: grid; list-style: none; border-top: var(--rule-hair) solid var(--color-ink); }
+[data-theme="helix"] .hx-links li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs) var(--space-lg); padding-block: var(--space-xs); border-bottom: var(--rule-hair) solid var(--color-paper-3); }
+[data-theme="helix"] .hx-links__k { min-width: 6rem; color: var(--color-muted); font-size: var(--text-sm); font-weight: 500; }
+[data-theme="helix"] .hx-links a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="helix"] .hx-links a:hover { color: var(--color-accent-deep); }
+[data-theme="helix"] .hx-links a:active { opacity: 0.8; }
+[data-theme="helix"] .sc-copy { margin-left: auto; font-size: var(--text-sm); }
+[data-theme="helix"] .sc-copy:hover,
+[data-theme="helix"] .sc-ask-links a:hover { color: var(--color-accent-deep); }
+[data-theme="helix"] .hx-ask { padding-top: var(--space-xs); }
+[data-theme="helix"] .sc-ask-head { font-size: var(--text-xl); }
+[data-theme="helix"] .sc-ask-note { color: var(--color-muted); }
+
+/* ── Footer: the name as a mast over the revision line ──────────────────── */
+[data-theme="helix"] .hx-footer { padding-block: var(--space-2xl) var(--space-xl); background: var(--color-paper-3); border-top: var(--rule-bar) solid var(--color-ink); color: var(--color-ink); }
+[data-theme="helix"] .hx-footer__in { display: grid; gap: var(--space-lg); }
+[data-theme="helix"] .hx-footer p { color: var(--color-ink); }
+[data-theme="helix"] .hx-footer__mark { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 700; line-height: 1; text-transform: uppercase; }
+
+/* ── Narrow screens ──────────────────────────────────────────────────────── */
+@media (max-width: 64rem) {
+  [data-theme="helix"] .hx-nav__links { display: none; }
+  [data-theme="helix"] .sc-next { margin-left: auto; }
+  [data-theme="helix"] .hx-statement__in,
+  [data-theme="helix"] .hx-own__head,
+  [data-theme="helix"] .hx-decision__head,
+  [data-theme="helix"] .hx-career__in,
+  [data-theme="helix"] .hx-contact__in { grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+  [data-theme="helix"] .hx-project { grid-template-columns: minmax(0, 1fr) auto; }
+  [data-theme="helix"] .hx-project__body { grid-column: 1 / -1; }
+  [data-theme="helix"] .hx-more__list { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="helix"] .hx-hero__who { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 40rem) {
+  /* Phones: a shorter ribbon of the first nine tiles, set larger. */
+  [data-theme="helix"] .hx-hero { min-height: 0; grid-template-rows: 230px auto; }
+  [data-theme="helix"] .hx-stage { --hx-count: var(--hx-phone-count); --hx-amp: var(--hx-amp-phone); --hx-wave: var(--hx-wave-phone); --hx-slope: 6deg; --hx-rise: 0.1045; --hx-ends: 1; }
+  [data-theme="helix"] .hx-tile[data-phone-hidden] { display: none; }
+  [data-theme="helix"] .hx-name { --hx-fit: 4.88; white-space: normal; }
+  [data-theme="helix"] .hx-name span { display: block; }
+  [data-theme="helix"] .hx-hero__row { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="helix"] .hx-figures,
+  [data-theme="helix"] .hx-plates { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="helix"] .hx-figure + .hx-figure { margin-top: var(--space-lg); padding-top: var(--space-lg); padding-left: 0; border-left: 0; border-top: var(--rule-hair) solid var(--color-ink); }
+  [data-theme="helix"] .hx-role { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); }
+  [data-theme="helix"] .hx-plate,
+  [data-theme="helix"] .hx-figures,
+  [data-theme="helix"] .hx-contact__main { padding: var(--space-lg); }
+  [data-theme="helix"] .hx-projects { padding-inline: var(--space-lg); }
+  [data-theme="helix"] .hx-figure { padding-right: 0; }
+}
+
+/* Reduced motion: the ribbon rests in its twisted pose; a drag or the button still
+   turns it by hand. The press scale is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="helix"] .hx-ribbon { animation: none; }
+  [data-theme="helix"] .hx-ctl--pause { display: none; }
+  [data-theme="helix"] .th-btn,
+  [data-theme="helix"] .hx-ctl { transition: background-color var(--dur-micro) linear, color var(--dur-micro) linear; }
+  [data-theme="helix"] .th-btn:active,
+  [data-theme="helix"] .hx-ctl:active { transform: none; }
+}
