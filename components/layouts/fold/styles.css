@@ -1,0 +1,323 @@
+/* Hallmark · shape: Fold Stage (a sticky scroll stage, then one device screen per section, stacked) · genre: playful · theme: Piste (by request) · redesign: full
+ * hero: custom (a closed foldable between the two halves of the name; scrolling opens it and the open screen holds the hero) · nav: edge-aligned, overlaid on the stage, the KK wordmark, four anchors and the next-theme control · footer: a colophon line · imagery: photographs (the owner's own, PORTRAITS.photo, on the lock screen and the open screen; one file, one request) · signature: the phone unfolding on scroll into the first section · piste: snow
+ * axes: light/display-condensed/cool · posture: restrained (cobalt only on Email me and link hover) · contrast: pass · fold: pass · v2.0.0
+ * budget: about 4 KB gzipped of theme JS, all markup; the unfold is CSS scroll-driven animation with no script
+ * keyboard: skip link, KK, Work, Decision, Career, Contact, Next theme, Email me, Résumé, Unfold (lock screen, removed from the tab order once the cover turns away), then each section's links, the decision's disclosure, the contact CTAs, the contact links and Copy email, the four Ask links 
+ * static: what reduced motion renders is the static path (mode 1: the device open, in flow, no sticky stage), and so is no scroll-timeline support; sloplint's render tier emulates prefers-reduced-motion: reduce, so its 1280x800, 1440x900, 1920x1080, 1440 full and 375 screenshots are that path; the animated path (mode 2) is checked by hand in Chrome at the closed, mid-turn, grow and open positions */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V5 · weakest: E, a scroll-driven stage has to reserve every box; the device, the name and the copy are sized from one width in calc, so nothing waits on a measurement */
+/* Hallmark · waive 47b · one frame, the foldable phone, with the owner's photograph and real project states inside · the device is the theme's one object (spec, fold section); no status bar, no clock, no battery, no app icons */
+/* Hallmark · waive 47c · the phone body is plain ink geometry around real content: a photograph, a job title, two real projects with their state · the foldable is the signature the spec names, kept to bezel and hinge */
+/* Hallmark · waive 71 · each project name heads a dense row on the projects screen and sits beside its line across the fold, not above it · the row's own rule above every name is the board's divider, so the space under a name is the row, not a gap */
+/* Hallmark · dismissed F8 · fd-slide, fd-grow, fd-turn and the name keyframes are phases of one pattern, the unfold, on one timeline (--fd-unfold); there is no second scroll pattern on the page */
+
+/* The theme owns its scroll padding (html carries data-theme, and this selector
+   outranks globals.css's `html`), so the Unfold jump below depends on one token. */
+[data-theme="fold"] { --fd-jump-pad: var(--space-3xl); scroll-padding-top: var(--fd-jump-pad); scrollbar-color: var(--color-muted) var(--color-paper); }
+[data-theme="fold"] main:focus-visible { outline: none; }
+[data-theme="fold"] ::selection { background: var(--color-ink); color: var(--color-paper); }
+[data-theme="fold"] .fd-root { --fd-r: 36px; font-size: 1.0625rem; }
+[data-theme="fold"] .fd-root a:focus-visible,
+[data-theme="fold"] .fd-root button:focus-visible,
+[data-theme="fold"] .fd-root summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+[data-theme="fold"] .fd-root a { text-underline-offset: 0.2em; }
+[data-theme="fold"] .th-skip { color: var(--color-accent-ink); }
+[data-theme="fold"] h1, [data-theme="fold"] h2, [data-theme="fold"] h3 { text-transform: uppercase; text-wrap: balance; line-height: 1; }
+[data-theme="fold"] h2 { font-size: var(--text-display-s); max-width: 20ch; }
+[data-theme="fold"] h3 { font-size: var(--text-2xl); }
+[data-theme="fold"] .lead { max-width: 44ch; }
+
+/* Controls: the pair from the material. Square, condensed capitals, cobalt only on Email me. */
+[data-theme="fold"] .th-cta-row { gap: var(--space-sm); }
+[data-theme="fold"] .th-btn { min-height: 52px; padding: 0 var(--space-lg); border: 0; border-radius: 0; background: transparent; color: var(--color-ink); box-shadow: inset 0 0 0 var(--rule-bar) var(--color-ink); font-family: var(--font-display); font-size: var(--text-lg); font-weight: 800; white-space: nowrap; text-box: trim-both cap alphabetic; transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform 150ms ease-out; }
+[data-theme="fold"] .fd-root .th-cta-row a { font-size: var(--text-lg); text-transform: uppercase; }
+[data-theme="fold"] .th-btn--primary { background: var(--color-accent); color: var(--color-accent-ink); box-shadow: none; }
+[data-theme="fold"] .th-btn:hover { background: var(--color-paper-2); }
+[data-theme="fold"] .th-btn--primary:hover { background: var(--color-accent-deep); }
+[data-theme="fold"] .th-btn:active { transform: scale(0.97); background: var(--color-ink); color: var(--color-paper); }
+[data-theme="fold"] .th-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Nav: laid over the top of the stage, so the closed phone owns the first screen. */
+[data-theme="fold"] .fd-nav { position: absolute; inset: 0 0 auto; z-index: var(--z-raised); }
+[data-theme="fold"] .fd-nav__in { display: flex; align-items: center; gap: var(--space-lg); min-height: 72px; padding-inline: var(--gutter); max-width: var(--container); margin-inline: auto; }
+[data-theme="fold"] .fd-wordmark { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 800; text-decoration: none; }
+[data-theme="fold"] .fd-nav__links { display: flex; gap: var(--space-lg); margin-left: auto; font-size: var(--text-sm); font-weight: 500; }
+[data-theme="fold"] .fd-nav__links a, [data-theme="fold"] .fd-wordmark { transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="fold"] .fd-nav__links a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; text-decoration: none; }
+[data-theme="fold"] .fd-nav__links a:hover, [data-theme="fold"] .fd-wordmark:hover { color: var(--color-accent); text-decoration: underline; }
+[data-theme="fold"] .fd-nav__links a:active, [data-theme="fold"] .fd-wordmark:active { opacity: 0.8; }
+[data-theme="fold"] .sc-next { font-size: var(--text-sm); font-weight: 500; }
+
+/* ── The hero: three modes ────────────────────────────────────────────────
+   1. Static (the default; also no scroll-timeline support, reduced motion, or the
+      effect's CSS failing): the device is shown open, in flow under the nav, with
+      no sticky stage. Every rule in this block outside the @supports and the
+      40rem media query is static, and the other two modes only override it.
+   2. Animated (@supports animation-timeline, motion welcome, 40rem and wider):
+      the block headed "The unfold" below. It makes the stage tall, sticks the
+      frame, shows the cover and runs the fd-* keyframes from the closed pose to
+      exactly the static layout, so the end of the scroll IS the static hero.
+   3. Mobile (under 40rem, the media query at the end of the file): no fold. The
+      cover is shown flat as the lock screen above the name, lede and actions;
+      the right panel, the inner face and the Unfold link are not rendered.
+   One width drives the device: --fd-w is the open device, aligned to the page
+   container; --fd-h is capped by the screen; the name is sized so its longer
+   half (--fd-em, 4.4em of Barlow Condensed 800 caps, measured) fits the left screen, and in mode 2
+   also fits beside the closed phone. */
+@property --fd-w { syntax: "<length>"; inherits: true; initial-value: 0px; }
+@property --fd-h { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+[data-theme="fold"] .fd-hero { --fd-b: 10px; --fd-ratio: 1.45; --fd-s0: 0.56; --fd-s: var(--fd-s0); --fd-navh: 72px; --fd-pad: var(--space-xl); --fd-em: 4.4; }
+[data-theme="fold"] .fd-stage { position: relative; }
+[data-theme="fold"] .fd-open { display: none; }
+[data-theme="fold"] .fd-frame { container-type: inline-size; padding: var(--fd-navh) 0 var(--space-lg); }
+[data-theme="fold"] .fd-device {
+  --fd-w: min(100cqi - 2 * var(--gutter), var(--container) - 2 * var(--gutter));
+  --fd-h: min(var(--fd-w) / var(--fd-ratio), 100svh - var(--fd-navh) - var(--space-lg));
+  --fd-in: calc(var(--fd-b) + var(--fd-pad));
+  --fd-f: calc((var(--fd-w) / 2 - var(--fd-b) - 2 * var(--fd-pad)) / var(--fd-em));
+  position: relative; width: var(--fd-w); height: var(--fd-h); margin-inline: auto; perspective: 2400px;
+}
+
+/* The words, laid over the left screen and centred in it: the name, then the
+   lede and actions right under it. */
+[data-theme="fold"] .fd-text { position: absolute; inset: 0 auto 0 0; z-index: var(--z-raised); display: flex; flex-direction: column; justify-content: center; width: 50%; padding: var(--fd-in); pointer-events: none; }
+[data-theme="fold"] .fd-group { display: grid; gap: var(--space-xl); pointer-events: auto; }
+[data-theme="fold"] .fd-name { max-width: none; font-size: var(--fd-f); line-height: 1; }
+[data-theme="fold"] .fd-name span { display: block; width: max-content; }
+[data-theme="fold"] .fd-copy { display: grid; gap: var(--space-lg); max-width: calc(var(--fd-f) * var(--fd-em)); }
+
+/* The device: two panels on a hinge, each with its own bezel, so the closed pose
+   shows one panel and nothing else. */
+[data-theme="fold"] .fd-body { position: absolute; inset: 0; transform-style: preserve-3d; }
+[data-theme="fold"] .fd-panel { position: absolute; top: 0; bottom: 0; width: 50%; transform-style: preserve-3d; }
+[data-theme="fold"] .fd-panel--right { left: 50%; color: var(--color-paper); padding: var(--fd-b) var(--fd-b) var(--fd-b) 0; border-radius: 0 var(--fd-r) var(--fd-r) 0; background: var(--color-ink); }
+[data-theme="fold"] .fd-panel--left { left: 0; transform-origin: 100% 50%; }
+[data-theme="fold"] .fd-face { position: absolute; inset: 0; background: var(--color-ink); backface-visibility: hidden; }
+[data-theme="fold"] .fd-face--inner { padding: var(--fd-b) 0 var(--fd-b) var(--fd-b); border-radius: var(--fd-r) 0 0 var(--fd-r); }
+[data-theme="fold"] .fd-face--cover { display: none; padding: var(--fd-b); border-radius: 0 var(--fd-r) var(--fd-r) 0; transform: rotateY(180deg); }
+[data-theme="fold"] .fd-screen { position: relative; height: 100%; overflow: hidden; background: var(--color-paper); }
+[data-theme="fold"] .fd-face--inner .fd-screen { border-radius: calc(var(--fd-r) - var(--fd-b)) 0 0 calc(var(--fd-r) - var(--fd-b)); }
+[data-theme="fold"] .fd-panel--right .fd-screen { border-radius: 0 calc(var(--fd-r) - var(--fd-b)) calc(var(--fd-r) - var(--fd-b)) 0; }
+[data-theme="fold"] .fd-face--cover .fd-screen { border-radius: 0 calc(var(--fd-r) - var(--fd-b)) calc(var(--fd-r) - var(--fd-b)) 0; }
+/* The crease: a soft shade either side of the fold line and a thin highlight on
+   it, laid over both screens so the open device reads as one folded panel. */
+[data-theme="fold"] .fd-hinge { position: absolute; top: var(--fd-b); bottom: var(--fd-b); left: calc(50% - var(--space-lg)); width: calc(2 * var(--space-lg)); background: linear-gradient(90deg in oklch, var(--color-crease-clear), var(--color-crease-shade) 44%, var(--color-crease-light) 50%, var(--color-crease-shade) 56%, var(--color-crease-clear)); transform: translateZ(3px); pointer-events: none; }
+[data-theme="fold"] .fd-photo { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: contrast(1.1) saturate(1.15); }
+
+/* The lock screen: the job title where a clock would be, three real projects with
+   their state as text, and the one control. No status bar, no time, no icons. */
+[data-theme="fold"] .fd-lock { display: flex; flex-direction: column; container-type: inline-size; }
+[data-theme="fold"] .fd-lock__photo { position: absolute; inset: 0; transform: scale(1.35); transform-origin: 56% 88%; }
+[data-theme="fold"] .fd-lock__top { position: relative; display: grid; gap: var(--space-xs); padding: 6cqi 6cqi 10cqi; background: linear-gradient(180deg in oklch, var(--color-scrim), var(--color-scrim) 55%, var(--color-scrim-clear)); color: var(--color-paper); text-align: center; }
+[data-theme="fold"] .fd-lock__title { margin-inline: auto; max-width: 18ch; font-family: var(--font-display); font-size: 8.5cqi; font-weight: 800; line-height: 1; text-transform: uppercase; text-wrap: balance; }
+[data-theme="fold"] .fd-lock__org { font-size: calc(var(--text-sm) / var(--fd-s)); font-weight: 500; }
+[data-theme="fold"] .fd-lock__notes { position: relative; display: grid; gap: calc(var(--space-xs) / var(--fd-s)); margin-top: auto; padding: 0 calc(var(--space-md) / var(--fd-s)); list-style: none; }
+[data-theme="fold"] .fd-note { display: flex; justify-content: space-between; gap: calc(var(--space-sm) / var(--fd-s)); padding: calc(var(--space-sm) / var(--fd-s)) calc(var(--space-md) / var(--fd-s)); background: var(--color-paper); color: var(--color-ink); font-size: calc(var(--text-xs) / var(--fd-s)); line-height: 1.25; }
+[data-theme="fold"] .fd-note__name { font-weight: 500; }
+[data-theme="fold"] .fd-note__state { color: var(--color-ink-2); white-space: nowrap; }
+[data-theme="fold"] .fd-unfold { position: relative; display: inline-flex; align-items: center; align-self: center; min-height: calc(44px / var(--fd-s)); margin: calc(var(--space-md) / var(--fd-s)) 0 calc(var(--space-lg) / var(--fd-s)); padding: 0 calc(var(--space-lg) / var(--fd-s)); background: var(--color-ink); color: var(--color-paper); font-family: var(--font-display); font-size: calc(var(--text-lg) / var(--fd-s)); font-weight: 800; text-decoration: none; text-transform: uppercase; transition: background-color var(--dur-micro) var(--ease-out), transform 150ms ease-out; }
+[data-theme="fold"] .fd-unfold:hover { background: var(--color-ink-2); text-decoration: underline; }
+[data-theme="fold"] .fd-unfold:active { transform: scale(0.97); }
+
+/* ── The unfold (mode 2) ──────────────────────────────────────────────────
+   The stage is --fd-stage tall and the frame sticks for the 100svh less than that.
+   The scroll is cut into named phases. Each phase is its own short keyframe
+   (from, to) with its own animation-range on the one timeline, so a stop is
+   written once, as a custom property, and nothing is matched by hand:
+
+     --fd-at-hold    the closed pose holds until here (phone at --fd-s0, name beside it)
+     --fd-at-gone    the last name has faded out where it stands
+     --fd-at-turned  the cover has turned 180deg on the hinge and the device is centred
+     --fd-at-crease  the crease has faded in on the opened panels
+     --fd-at-back    the last name starts to fade in on the screen
+     --fd-at-grown   the device is full size and the words are on the left screen;
+                     from here to the end the open state holds, exactly the static hero
+
+   Phases: turn (hold to turned) turns the cover and slides the device; grow
+   (turned to grown) scales it; travel (hold to grown) moves the first name and
+   copy; the last name fades out (hold to gone), moves while unseen (gone to
+   back) and fades in (back to grown). The cover leaves the tab order halfway
+   through the turn, when it passes 90deg. Transforms are split across the
+   individual translate, rotate and scale properties, so two phases never write
+   the same property. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 40rem) {
+    [data-theme="fold"] { scroll-behavior: smooth; }
+    /* --fd-open-at places #fold-open (the Unfold link's target) where a jump
+       lands on the end of the timeline: the stage's height less one screen,
+       plus --fd-jump-pad, the theme's own scroll-padding-top, which the jump
+       subtracts again. Both come from tokens set in this file. */
+    [data-theme="fold"] .fd-stage {
+      --fd-stage: 260svh; --fd-open-at: calc(var(--fd-stage) - 100svh + var(--fd-jump-pad));
+      --fd-at-hold: 12%; --fd-at-gone: 22%; --fd-at-turned: 55%; --fd-at-crease: 60%; --fd-at-back: 70%; --fd-at-grown: 80%;
+      --fd-turn: contain var(--fd-at-hold) contain var(--fd-at-turned);
+      --fd-grow: contain var(--fd-at-turned) contain var(--fd-at-grown);
+      --fd-travel: contain var(--fd-at-hold) contain var(--fd-at-grown);
+      --fd-out: contain var(--fd-at-hold) contain var(--fd-at-gone);
+      --fd-unseen: contain var(--fd-at-gone) contain var(--fd-at-back);
+      --fd-back-in: contain var(--fd-at-back) contain var(--fd-at-grown);
+      --fd-crease-in: contain var(--fd-at-turned) contain var(--fd-at-crease);
+      height: var(--fd-stage); view-timeline: --fd-unfold block;
+    }
+    [data-theme="fold"] .fd-frame { position: sticky; top: 0; display: grid; place-items: center; height: 100svh; padding: 0; container-type: size; }
+    [data-theme="fold"] .fd-open { display: block; position: absolute; left: 0; top: var(--fd-open-at); width: 1px; height: 1px; }
+    [data-theme="fold"] .fd-device {
+      --fd-h: min(var(--fd-w) / var(--fd-ratio), 100cqh - 2 * var(--space-xl));
+      /* The name takes the smaller of two fits: the longer half across the open
+         left screen, and the same half in the paper beside the closed phone. */
+      --fd-phone-w: calc(var(--fd-s0) * var(--fd-w) / 2);
+      --fd-side-w: calc((100cqi - var(--fd-phone-w)) / 2 - var(--gutter) - var(--space-lg));
+      --fd-fit-open: calc((var(--fd-w) / 2 - var(--fd-b) - 2 * var(--fd-pad)) / var(--fd-em));
+      --fd-fit-closed: calc(var(--fd-side-w) / var(--fd-em));
+      --fd-f: min(var(--fd-fit-open), var(--fd-fit-closed));
+      --fd-left: calc((var(--fd-w) - 100cqi) / 2 + var(--gutter));
+      --fd-right: calc((100cqi + var(--fd-w)) / 2 - var(--gutter));
+      --fd-ptop: calc(var(--fd-h) * (1 - var(--fd-s0)) / 2);
+      --fd-pbot: calc(var(--fd-h) * (1 + var(--fd-s0)) / 2);
+    }
+    [data-theme="fold"] .fd-face--cover { display: block; }
+    [data-theme="fold"] .fd-body,
+    [data-theme="fold"] .fd-panel--left,
+    [data-theme="fold"] .fd-face--cover,
+    [data-theme="fold"] .fd-hinge,
+    [data-theme="fold"] .fd-group,
+    [data-theme="fold"] .fd-name__last,
+    [data-theme="fold"] .fd-copy { animation-duration: 1ms; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: --fd-unfold; }
+    [data-theme="fold"] .fd-body { animation-name: fd-slide, fd-grow; animation-range: var(--fd-turn), var(--fd-grow); animation-timeline: --fd-unfold, --fd-unfold; }
+    [data-theme="fold"] .fd-panel--left { translate: 0 0 2px; animation-name: fd-turn; animation-range: var(--fd-turn); }
+    [data-theme="fold"] .fd-face--cover { animation-name: fd-cover; animation-timing-function: step-end; animation-range: var(--fd-turn); }
+    [data-theme="fold"] .fd-hinge { animation-name: fd-fade-in; animation-range: var(--fd-crease-in); }
+    [data-theme="fold"] .fd-group { animation-name: fd-group; animation-range: var(--fd-travel); }
+    [data-theme="fold"] .fd-copy { animation-name: fd-copy; animation-range: var(--fd-travel); }
+    /* fd-fade-in fills forwards only: a backwards fill would hold the last name
+       at 0 from the first frame and hide it in the closed pose. */
+    [data-theme="fold"] .fd-name__last { animation-name: fd-last, fd-fade-out, fd-fade-in; animation-range: var(--fd-unseen), var(--fd-out), var(--fd-back-in); animation-fill-mode: both, both, forwards; animation-timeline: --fd-unfold, --fd-unfold, --fd-unfold; }
+  }
+}
+@keyframes fd-slide { from { translate: calc(var(--fd-w) * var(--fd-s0) * -0.25) 0 0; } to { translate: 0 0 0; } }
+@keyframes fd-grow { from { scale: var(--fd-s0); } to { scale: 1; } }
+@keyframes fd-turn { from { rotate: y 180deg; } to { rotate: y 0deg; } }
+/* step-end over the turn: visible for the first half, hidden from the moment the
+   cover passes 90deg. */
+@keyframes fd-cover { 0% { visibility: visible; } 50%, 100% { visibility: hidden; } }
+@keyframes fd-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fd-fade-out { from { opacity: 1; } to { opacity: 0; } }
+/* The group carries the first name and the copy: closed, its top meets the
+   phone's top at the left gutter; open, it is centred on the left screen (the
+   50% is half its own height, the one size CSS cannot know in advance). */
+@keyframes fd-group { from { translate: calc(var(--fd-left) - var(--fd-in)) calc(var(--fd-ptop) - var(--fd-h) / 2 + 50%); } to { translate: 0 0; } }
+/* Closed, the last name sits right-aligned at the gutter with its foot on the
+   phone's foot. It moves only while it is faded out. */
+@keyframes fd-last { from { translate: calc(var(--fd-right) - var(--fd-left) - 100%) calc(var(--fd-pbot) - var(--fd-ptop) - 2 * var(--fd-f)); } to { translate: 0 0; } }
+/* Closed, the copy sits under the first name rather than under both lines. */
+@keyframes fd-copy { from { translate: 0 calc(var(--space-lg) - var(--space-xl) - var(--fd-f)); } to { translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="fold"] .th-btn, [data-theme="fold"] .fd-unfold { transition: background-color var(--dur-micro) linear, color var(--dur-micro) linear; }
+  [data-theme="fold"] .th-btn:active, [data-theme="fold"] .fd-unfold:active { transform: none; }
+}
+
+/* ── Sections: the open device's screens, in sequence ────────────────────
+   Every section past the hero is one sheet: a screen of the unfolded device at
+   full content width, with the bezel's corner radius (--fd-r), a 2px ink edge
+   and the crease down its centre, the same shade and highlight as the hero's
+   hinge. No status bar or other system chrome. The sheets stack one per
+   section, a short gap apart like screens in a sequence, and each lays out its
+   two halves its own way: the baseline's figures set large on the right; the
+   projects as dense rows across the fold, name on the left, line and state on
+   the right; the decision on the night screen; the roles as a timetable; the
+   contact split between writing and asking. */
+[data-theme="fold"] .fd-sec { padding-block: var(--space-2xl) 0; }
+[data-theme="fold"] .fd-own { padding-top: var(--section-gap-s); }
+[data-theme="fold"] .fd-contact { padding-bottom: var(--section-gap-s); }
+[data-theme="fold"] .fd-sheet { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-2xl) calc(2 * var(--space-2xl)); align-items: start; padding: var(--space-2xl); border: var(--rule-bar) solid var(--color-ink); border-radius: var(--fd-r); }
+[data-theme="fold"] .fd-sheet::before { content: ""; position: absolute; top: 0; bottom: 0; left: calc(50% - var(--space-lg)); width: calc(2 * var(--space-lg)); background: linear-gradient(90deg in oklch, var(--color-crease-clear), var(--color-crease-shade) 44%, var(--color-crease-light) 50%, var(--color-crease-shade) 56%, var(--color-crease-clear)); pointer-events: none; }
+[data-theme="fold"] .fd-sheet--ink { background: var(--color-ink); color: var(--color-paper); }
+[data-theme="fold"] .fd-sheet__wide { grid-column: 1 / -1; }
+
+/* The baseline: the method on the left, the two figures large on the right. */
+[data-theme="fold"] .fd-own__head { display: grid; gap: var(--space-lg); }
+[data-theme="fold"] .fd-figs { display: grid; margin: 0; }
+[data-theme="fold"] .fd-fig { display: grid; align-content: start; gap: var(--space-xs); }
+[data-theme="fold"] .fd-fig + .fd-fig { margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-rule); }
+[data-theme="fold"] .fd-fig dt { order: 2; font-weight: 500; }
+[data-theme="fold"] .fd-fig dd { margin: 0; }
+[data-theme="fold"] .fd-fig__value { order: 1; font-family: var(--font-display); font-size: clamp(3.5rem, 7.5vw, 8rem); font-weight: 800; line-height: 0.9; font-variant-numeric: tabular-nums; }
+[data-theme="fold"] .fd-fig__context { order: 3; max-width: 46ch; color: var(--color-ink-2); }
+
+/* The projects: dense rows that cross the fold on the sheet's own two columns. */
+[data-theme="fold"] .fd-board { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; list-style: none; border-top: var(--rule-bar) solid var(--color-ink); }
+[data-theme="fold"] .fd-run { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: baseline; padding-block: var(--space-lg); border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="fold"] .fd-run__name { font-size: var(--text-2xl); max-width: none; }
+[data-theme="fold"] .fd-run__body { grid-column: 2; grid-row: 1; display: grid; gap: var(--space-2xs); padding-right: calc(var(--space-3xl) + var(--space-lg)); }
+[data-theme="fold"] .fd-run__caveat { color: var(--color-muted); font-size: var(--text-md); }
+[data-theme="fold"] .fd-run__state { grid-column: 2; grid-row: 1; justify-self: end; font-weight: 500; white-space: nowrap; }
+
+/* The decision, on the night screen. */
+[data-theme="fold"] .fd-decision h2 { max-width: none; }
+[data-theme="fold"] .fd-decision__body { display: grid; gap: var(--space-lg); }
+[data-theme="fold"] .fd-record { display: grid; margin: 0; }
+[data-theme="fold"] .fd-record > div { display: grid; gap: var(--space-2xs); padding-block: var(--space-md); border-top: var(--rule-hair) solid var(--color-ink-2); }
+[data-theme="fold"] .fd-record > div:first-child { border-top: var(--rule-bar) solid var(--color-paper); }
+[data-theme="fold"] .fd-record dt { font-weight: 500; }
+[data-theme="fold"] .fd-record dd { margin: 0; max-width: 62ch; }
+[data-theme="fold"] .fd-record--quiet > div:first-child { border-top: var(--rule-hair) solid var(--color-ink-2); }
+[data-theme="fold"] .fd-record--quiet { color: var(--color-rule); }
+[data-theme="fold"] .fd-more summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; font-weight: 500; text-decoration: underline; text-underline-offset: 0.2em; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="fold"] .fd-more summary:hover { color: var(--color-paper-3); }
+[data-theme="fold"] .fd-more summary:active { opacity: 0.8; }
+[data-theme="fold"] .fd-quote { font-size: var(--text-lead); }
+
+/* The roles, as a timetable. */
+[data-theme="fold"] .fd-roles { display: grid; list-style: none; border-top: var(--rule-bar) solid var(--color-ink); }
+[data-theme="fold"] .fd-roles li { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-2xs) var(--space-lg); padding-block: var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="fold"] .fd-roles__when { grid-row: 1 / span 2; color: var(--color-ink-2); font-variant-numeric: tabular-nums; }
+[data-theme="fold"] .fd-roles__title { font-size: var(--text-xl); max-width: none; font-variant-numeric: tabular-nums; }
+[data-theme="fold"] .fd-roles__org { grid-column: 2; }
+
+/* Contact: writing on the left, asking on the right. */
+[data-theme="fold"] .fd-contact__main { display: grid; gap: var(--space-lg); }
+[data-theme="fold"] .fd-links { display: grid; list-style: none; }
+[data-theme="fold"] .fd-links li { display: grid; grid-template-columns: 8rem minmax(0, 1fr) auto; gap: var(--space-md); align-items: center; border-bottom: var(--rule-hair) solid var(--color-rule); }
+[data-theme="fold"] .fd-links a { display: inline-flex; align-items: center; min-height: 48px; overflow-wrap: anywhere; transition: color var(--dur-micro) var(--ease-out); }
+[data-theme="fold"] .fd-links a:hover, [data-theme="fold"] .sc-ask-links a:hover { color: var(--color-accent); }
+[data-theme="fold"] .fd-links a:active, [data-theme="fold"] .sc-ask-links a:active { opacity: 0.8; }
+[data-theme="fold"] .sc-copy { font-size: var(--text-sm); font-weight: 500; }
+[data-theme="fold"] .sc-ask { align-content: start; gap: var(--space-md); }
+[data-theme="fold"] .sc-ask-head { max-width: 14ch; font-size: var(--text-display-s); text-transform: uppercase; }
+[data-theme="fold"] .sc-ask-note { color: var(--color-muted); font-size: var(--text-md); }
+
+[data-theme="fold"] .fd-footer { border-top: var(--rule-bar) solid var(--color-ink); }
+[data-theme="fold"] .fd-footer__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-xs) var(--space-lg); padding-block: var(--space-lg); font-size: var(--text-sm); }
+[data-theme="fold"] .fd-footer__name { font-weight: 500; }
+
+@media (max-width: 64rem) {
+  [data-theme="fold"] .fd-sheet { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="fold"] .fd-sheet::before { display: none; }
+  [data-theme="fold"] .fd-run { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-xs) var(--space-md); }
+  [data-theme="fold"] .fd-run__body { grid-column: 1 / -1; grid-row: 2; padding-right: 0; }
+}
+
+/* Under 640px the fold is skipped: the lock screen sits above the content. */
+@media (max-width: 39.99rem) {
+  [data-theme="fold"] .fd-nav__links { display: none; }
+  [data-theme="fold"] .fd-nav__in { justify-content: space-between; min-height: 56px; }
+  [data-theme="fold"] .fd-hero { --fd-s: 1; --fd-navh: 56px; }
+  [data-theme="fold"] .fd-frame { padding-bottom: var(--space-md); }
+  [data-theme="fold"] .fd-device { --fd-f: calc((100cqi - 2 * var(--gutter)) / var(--fd-em)); display: flex; flex-direction: column; gap: var(--space-lg); width: auto; height: auto; margin-inline: var(--gutter); perspective: none; }
+  [data-theme="fold"] .fd-text { position: static; order: 2; width: auto; padding: 0; gap: var(--space-lg); justify-content: start; }
+  [data-theme="fold"] .fd-copy { max-width: none; }
+  [data-theme="fold"] .fd-body { position: relative; order: 1; inset: auto; width: min(70%, 260px); aspect-ratio: 0.66; }
+  [data-theme="fold"] .fd-panel--right, [data-theme="fold"] .fd-face--inner, [data-theme="fold"] .fd-hinge, [data-theme="fold"] .fd-unfold { display: none; }
+  [data-theme="fold"] .fd-panel--left { width: 100%; }
+  [data-theme="fold"] .fd-face--cover { display: block; transform: none; backface-visibility: visible; border-radius: var(--fd-r); }
+  [data-theme="fold"] .fd-face--cover .fd-screen { border-radius: calc(var(--fd-r) - var(--fd-b)); }
+  [data-theme="fold"] .fd-lock__top { padding-bottom: var(--space-xl); }
+  [data-theme="fold"] .fd-lock__notes { padding-bottom: var(--space-md); }
+  [data-theme="fold"] .fd-root { --fd-r: 24px; }
+  [data-theme="fold"] .fd-sheet { padding: var(--space-lg); }
+  [data-theme="fold"] .fd-fig__value { font-size: var(--text-display); }
+  [data-theme="fold"] .fd-links li { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: var(--space-xs); }
+  [data-theme="fold"] .fd-roles li { grid-template-columns: minmax(0, 1fr); }
+  [data-theme="fold"] .fd-roles__when { grid-row: auto; }
+  [data-theme="fold"] .fd-roles__org { grid-column: 1; }
+}
