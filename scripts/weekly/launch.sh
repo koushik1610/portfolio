@@ -1,72 +1,65 @@
 #!/usr/bin/env bash
-# Open an unattended Claude Code session in iTerm2 for the weekly theme work.
+# The Thursday-night portfolio run (docs/weekly-theme-sprints.md).
 #
-#   scripts/weekly/launch.sh friday    Friday research and planning run
-#   scripts/weekly/launch.sh sprint    one 5-hour build sprint
-#   scripts/weekly/launch.sh lastcall  Thursday-night run that spends what is left
-#                                      of the week, only if a full sprint fits
+#   scripts/weekly/launch.sh check    Thursday 12:00. No Claude session: reads usage,
+#                                     plans tonight's two windows, schedules them,
+#                                     and sends a macOS notification.
+#   scripts/weekly/launch.sh first    First window: reel research, triage, plan, build.
+#   scripts/weekly/launch.sh second   Second window: continue the build until the deadline.
 #
-# Why an interactive session and not `claude -p`: Claude in Chrome (Instagram
-# on the web), computer use (iPhone Mirroring) and the status line (live usage
-# figures for the guard) all need an interactive session.
+# A 5-hour window starts with the first message sent after the previous window
+# ends, so tonight's windows are anchored backwards from the weekly reset:
+#   deadline = reset - 30 min (04:30 for a 05:00 reset)
+#   second   = deadline - 5 h (23:30)
+#   first    = deadline - 10 h (18:30)
+# If one of the owner's own windows is still open when a run is due, the run moves
+# to the moment that window ends, so it never shares the owner's window.
 #
-# launchd calls this (scripts/weekly/schedule.sh installs the jobs). The Mac
-# must be awake and logged in; launchd runs a missed job at the next wake.
+# Runs are interactive iTerm2 sessions: Claude in Chrome (Instagram), computer use
+# (iPhone Mirroring) and the status line (live usage for the guard) need one.
 set -euo pipefail
 
-mode="${1:?usage: launch.sh friday|sprint|lastcall}"
+mode="${1:?usage: launch.sh check|first|second}"
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo="$(cd "$here/../.." && pwd)"
 state="${XDG_STATE_HOME:-$HOME/.local/state}/claude-cost"
 mkdir -p "$state"
 log="$state/weekly-launch.log"
+plan_file="$state/thursday-plan.json"
 now=$(date +%s)
-week=604800
+WEEK=604800
+WINDOW=18000
+MIN_RUN=3600   # a run shorter than an hour is not worth starting
+
+say() { echo "$(date '+%a %d %b %H:%M') $mode: $*" >> "$log"; }
+notify() { osascript -e "display notification \"$1\" with title \"Portfolio run\"" 2>/dev/null || true; }
+at() { date -r "$1" '+%a %H:%M'; }
 
 usage=$("$here/usage.sh" 2>/dev/null || echo '{}')
 reset=$(printf '%s' "$usage" | jq -r '.week_resets_at // empty')
-if [ -z "$reset" ]; then
-  # No snapshot yet: assume the reset is Friday 05:00 local (observed 2026-11-22).
-  reset=$(date -v+fri -v5H -v0M -v0S +%s)
-fi
-# The snapshot can predate a reset that has since passed; roll it forward.
-while [ "$reset" -le "$now" ]; do reset=$((reset + week)); done
+# No snapshot yet: assume Friday 05:00 local (observed 2026-11-22).
+[ -z "$reset" ] && reset=$(date -v+fri -v5H -v0M -v0S +%s)
+# A snapshot written before a reset still holds the old time; roll it forward.
+while [ "$reset" -le "$now" ]; do reset=$((reset + WEEK)); done
 deadline=$((reset - 1800))
+five_end=$(printf '%s' "$usage" | jq -r '.five_resets_at // 0')
+open_window=0
+[ "$five_end" -gt $((now + 300)) ] && open_window=1
 
-case "$mode" in
-  friday)   prompt_file="$here/prompts/friday.md";  end=$((now + 3 * 3600)) ;;
-  sprint)   prompt_file="$here/prompts/sprint.md";  end=$((now + 5 * 3600 - 600)) ;;
-  lastcall)
-    plan=$(printf '%s' "$usage" | python3 "$here/budget.py")
-    if [ "$(printf '%s' "$plan" | jq -r '.sprints')" -lt 1 ]; then
-      echo "$(date) lastcall skipped: $(printf '%s' "$plan" | jq -r '.reason')" >> "$log"
-      exit 0
-    fi
-    prompt_file="$here/prompts/sprint.md"; end=$((now + 5 * 3600 - 600))
-    [ "$end" -gt "$deadline" ] && end=$deadline ;;
-  *) echo "unknown mode: $mode" >&2; exit 2 ;;
-esac
-[ "$end" -gt "$deadline" ] && end=$deadline
-if [ "$now" -ge "$deadline" ]; then
-  echo "$(date) $mode skipped: inside the 30 minutes before the weekly reset" >> "$log"
-  exit 0
-fi
+budget=$(printf '%s' "$usage" | python3 "$here/budget.py")
+windows=$(printf '%s' "$budget" | jq -r '.windows')
+bmode=$(printf '%s' "$budget" | jq -r '.mode')
 
-settings="$state/sprint-settings.json"
-jq -n --arg guard "$here/guard.sh" '{
-  hooks: { PreToolUse: [ { matcher: "*", hooks: [ { type: "command", command: $guard } ] } ] }
-}' > "$settings"
-
-echo "$(date) launching $mode: deadline $(date -r "$deadline"), end $(date -r "$end")" >> "$log"
-
-# Claude in Chrome needs Chrome running with the extension signed in.
-open -ga "Google Chrome" || true
-
-cmd="cd $(printf %q "$repo") && THEME_SPRINT=1 SPRINT_MODE=$mode SPRINT_DEADLINE=$deadline SPRINT_END=$end claude --chrome --permission-mode auto --settings $(printf %q "$settings") --name weekly-$mode-$(date +%Y%m%d-%H%M) $(printf %q "Read $prompt_file and follow it exactly. Mode: $mode.")"
-
-if [ "${DRY_RUN:-0}" = "1" ]; then echo "$cmd"; exit 0; fi
-
-osascript - "$cmd" <<'APPLESCRIPT'
+launch() { # prompt file, end epoch
+  local prompt_file="$1" end="$2" settings="$state/sprint-settings.json"
+  jq -n --arg guard "$here/guard.sh" \
+    '{hooks: {PreToolUse: [{matcher: "*", hooks: [{type: "command", command: $guard}]}]}}' > "$settings"
+  local cmd
+  cmd="cd $(printf %q "$repo") && THEME_SPRINT=1 SPRINT_MODE=$mode BUDGET_MODE=$bmode SPRINT_DEADLINE=$deadline SPRINT_END=$end claude --chrome --permission-mode auto --settings $(printf %q "$settings") --name portfolio-$mode-$(date +%Y%m%d) $(printf %q "Read $prompt_file and follow it exactly. Run: $mode. Budget mode: $bmode.")"
+  say "launching until $(at "$end"), budget $bmode ($windows window(s))"
+  if [ "${DRY_RUN:-0}" = "1" ]; then echo "$cmd"; return; fi
+  open -ga "Google Chrome" || true
+  osascript - "$cmd" <<'APPLESCRIPT'
 on run argv
   tell application "iTerm"
     activate
@@ -75,3 +68,48 @@ on run argv
   end tell
 end run
 APPLESCRIPT
+}
+
+case "$mode" in
+  check)
+    "$here/schedule.sh" clear-runs >/dev/null
+    first=$((deadline - 2 * WINDOW)); second=$((deadline - WINDOW))
+    if [ "$windows" -le 1 ]; then
+      # One window or a research-only night: use the last window before the reset.
+      first=$second; second=0
+    fi
+    [ "$first" -lt "$now" ] && first=$((now + 300))
+    "$here/schedule.sh" add-run first "$first" >/dev/null
+    [ "$second" -gt 0 ] && "$here/schedule.sh" add-run second "$second" >/dev/null
+    cutoff=$((first - WINDOW))
+    jq -n --argjson f "$first" --argjson s "$second" --argjson d "$deadline" \
+      --argjson c "$cutoff" --argjson b "$budget" \
+      '{first:$f, second:$s, deadline:$d, own_window_cutoff:$c, budget:$b}' > "$plan_file"
+    msg="Tonight: $(at "$first")"
+    [ "$second" -gt 0 ] && msg="$msg and $(at "$second")"
+    msg="$msg, stop $(at "$deadline"). $(printf '%s' "$budget" | jq -r '.reason'). A Claude session you start after $(at "$cutoff") delays the first window."
+    say "$msg"; notify "$msg"; echo "$msg" ;;
+  first|second)
+    if [ "$open_window" = "1" ]; then
+      # Someone else's window is still open: move to its end, never share it.
+      if [ $((five_end + MIN_RUN)) -le "$deadline" ]; then
+        "$here/schedule.sh" add-run "$mode" "$five_end" >/dev/null
+        if [ "$mode" = "first" ]; then
+          "$here/schedule.sh" clear-runs second >/dev/null
+          nxt=$((five_end + WINDOW))
+          [ $((nxt + MIN_RUN)) -le "$deadline" ] && "$here/schedule.sh" add-run second "$nxt" >/dev/null
+        fi
+        say "a 5-hour window is open until $(at "$five_end"); moved there"
+        notify "Portfolio $mode run moved to $(at "$five_end") (a window was still open)"
+      else
+        say "a window is open until $(at "$five_end"), too close to the deadline; skipped"
+      fi
+      exit 0
+    fi
+    if [ "$now" -ge $((deadline - MIN_RUN)) ]; then say "less than an hour to the deadline; skipped"; exit 0; fi
+    if [ "$mode" = "second" ] && [ "$windows" -lt 1 ]; then say "week budget spent; skipped"; exit 0; fi
+    end=$((now + WINDOW - 600)); [ "$end" -gt "$deadline" ] && end=$deadline
+    if [ "$mode" = "first" ]; then launch "$here/prompts/thursday.md" "$end"
+    else launch "$here/prompts/sprint.md" "$end"; fi ;;
+  *) echo "unknown mode: $mode" >&2; exit 2 ;;
+esac
