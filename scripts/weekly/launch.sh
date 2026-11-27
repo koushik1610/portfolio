@@ -56,18 +56,20 @@ launch() { # prompt file, end epoch
     '{hooks: {PreToolUse: [{matcher: "*", hooks: [{type: "command", command: $guard}]}]}}' > "$settings"
   local cmd
   cmd="cd $(printf %q "$repo") && THEME_SPRINT=1 SPRINT_MODE=$mode BUDGET_MODE=$bmode SPRINT_DEADLINE=$deadline SPRINT_END=$end claude --chrome --permission-mode auto --settings $(printf %q "$settings") --name portfolio-$mode-$(date +%Y%m%d) $(printf %q "Read $prompt_file and follow it exactly. Run: $mode. Budget mode: $bmode.")"
+  # LAUNCH_TEST=1 opens the window with a harmless command instead of Claude.
+  [ "${LAUNCH_TEST:-0}" = "1" ] && cmd="echo 'portfolio $mode launch test OK'; date | tee $(printf %q "$state/launch-test.ok")"
   say "launching until $(at "$end"), budget $bmode ($windows window(s))"
   if [ "${DRY_RUN:-0}" = "1" ]; then echo "$cmd"; return; fi
   open -ga "Google Chrome" || true
-  osascript - "$cmd" <<'APPLESCRIPT'
-on run argv
-  tell application "iTerm"
-    activate
-    set w to (create window with default profile)
-    tell current session of w to write text (item 1 of argv)
-  end tell
-end run
-APPLESCRIPT
+  # Open a .command file in iTerm. Opening a file needs no Automation
+  # permission, so no macOS prompt can block an unattended run.
+  # (AppleScript did: it timed out on the prompt on 2026-11-26.)
+  local script="$state/portfolio-$mode.command"
+  printf '#!/bin/zsh -l\n%s\n' "$cmd" > "$script"
+  chmod 700 "$script"
+  if ! open -a iTerm "$script"; then
+    say "could not open iTerm"; notify "Portfolio $mode run failed to open iTerm"; return 1
+  fi
 }
 
 case "$mode" in
@@ -90,6 +92,7 @@ case "$mode" in
     msg="$msg, stop $(at "$deadline"). $(printf '%s' "$budget" | jq -r '.reason'). A Claude session you start after $(at "$cutoff") delays the first window."
     say "$msg"; notify "$msg"; echo "$msg" ;;
   first|second)
+    if [ "${LAUNCH_TEST:-0}" = "1" ]; then launch test "$now"; exit; fi
     if [ "$open_window" = "1" ]; then
       # Someone else's window is still open: move to its end, never share it.
       if [ $((five_end + MIN_RUN)) -le "$deadline" ]; then

@@ -78,8 +78,10 @@ Mirroring) and the status line (live usage for the guard) do not work with `clau
 
 Requirements: the Mac is awake and logged in on Thursday night (launchd runs a missed job at
 the next wake), Chrome is signed in with the Claude extension, iTerm2 is installed, and iPhone
-Mirroring is paired for research-only nights. The first run asks macOS for permission to
-control iTerm; approve it once.
+Mirroring is paired for research-only nights. The session opens as a `.command` file in
+iTerm2, so no macOS Automation permission is needed. (The first run, on 2026-11-26, used
+AppleScript and timed out on that permission prompt.) To test the launch without Claude:
+`LAUNCH_TEST=1 scripts/weekly/launch.sh first`.
 
 ## The pieces
 
